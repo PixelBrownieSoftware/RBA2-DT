@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d278500e68dd834c88d9a94dec6c6f1, type: 3}
+  m_Name: gd_idle
+  m_EditorClassIdentifier: 
+  animation:
+  - timer: 0.05
+    sprite: {fileID: 547399124627345785, guid: 541b803975876f1499c3c7de13bee886, type: 3}
+  - timer: 0.05
+    sprite: {fileID: 3520306811054075458, guid: 541b803975876f1499c3c7de13bee886,
+      type: 3}
+  - timer: 0.05
+    sprite: {fileID: 1206975453344547848, guid: 541b803975876f1499c3c7de13bee886,
+      type: 3}
+  - timer: 0.05
+    sprite: {fileID: 3520306811054075458, guid: 541b803975876f1499c3c7de13bee886,
+      type: 3}

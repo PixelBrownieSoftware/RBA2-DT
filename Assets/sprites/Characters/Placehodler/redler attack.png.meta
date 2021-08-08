@@ -1,0 +1,777 @@
+fileFormatVersion: 2
+guid: 3a5b8d45453c65746be54dafa5a8286b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4568364415507927788
+    second: redler attack_0
+  - first:
+      213: 6925791279254245256
+    second: redler attack_1
+  - first:
+      213: -1605918104136887010
+    second: redler attack_2
+  - first:
+      213: 3719737403761490781
+    second: redler attack_3
+  - first:
+      213: -7482929568275006684
+    second: redler attack_4
+  - first:
+      213: 727580522696804908
+    second: redler attack_5
+  - first:
+      213: 5932962950669725519
+    second: redler attack_6
+  - first:
+      213: 413044487494590047
+    second: redler attack_7
+  - first:
+      213: -8214355594292332218
+    second: redler attack_8
+  - first:
+      213: 16854058100753759
+    second: redler attack_9
+  - first:
+      213: 3986289083052040537
+    second: redler attack_10
+  - first:
+      213: -8438550067796857526
+    second: redler attack_11
+  - first:
+      213: -7785656209339214185
+    second: redler attack_12
+  - first:
+      213: 3866851923264754557
+    second: redler attack_13
+  - first:
+      213: 8711836413362514104
+    second: redler attack_14
+  - first:
+      213: 8532021023721653607
+    second: redler attack_15
+  - first:
+      213: 3021684958997277956
+    second: redler attack_16
+  - first:
+      213: -6382482774306155457
+    second: redler attack_17
+  - first:
+      213: -5170705593387238284
+    second: redler attack_18
+  - first:
+      213: 4625467207238948897
+    second: redler attack_28
+  - first:
+      213: 7647218764891313038
+    second: redler attack_29
+  - first:
+      213: -1005998238751304495
+    second: redler attack_30
+  - first:
+      213: -1533555821805724631
+    second: redler attack_31
+  - first:
+      213: -3596597076025178036
+    second: redler attack_32
+  - first:
+      213: 4969762054864015933
+    second: redler attack_33
+  - first:
+      213: 4622090710322805676
+    second: redler attack_34
+  - first:
+      213: -47607284047865
+    second: redler attack_35
+  - first:
+      213: 3225603765505001158
+    second: redler attack_36
+  - first:
+      213: 166188064717754504
+    second: redler attack_37
+  - first:
+      213: 2833063154156203261
+    second: redler attack_38
+  - first:
+      213: 6664267443538343630
+    second: redler attack_39
+  - first:
+      213: 5579023707735853333
+    second: redler attack_40
+  - first:
+      213: 3885294391858033531
+    second: redler attack_41
+  - first:
+      213: -3225389939771778042
+    second: redler attack_42
+  - first:
+      213: 1869876006144744371
+    second: redler attack_43
+  - first:
+      213: 2959882172376283501
+    second: redler attack_44
+  - first:
+      213: -6924743799992065989
+    second: redler attack_45
+  - first:
+      213: -7989924347419652244
+    second: redler attack_46
+  - first:
+      213: 6288129848038127883
+    second: redler attack_47
+  - first:
+      213: 5301010385448374838
+    second: redler attack_48
+  - first:
+      213: -4193383874821094963
+    second: redler attack_49
+  - first:
+      213: 307273195039588822
+    second: redler attack_50
+  - first:
+      213: -3982289513912336406
+    second: redler attack_51
+  - first:
+      213: 8275429588791446845
+    second: redler attack_52
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: redler attack_28
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 95
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12812bf0be5f03040800000000000000
+      internalID: 4625467207238948897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_29
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 90
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e835c0133f0602a60800000000000000
+      internalID: 7647218764891313038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_30
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 56
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d45f8e8ee9f902f0800000000000000
+      internalID: -1005998238751304495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_31
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 56
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92c990eea17b7bae0800000000000000
+      internalID: -1533555821805724631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_32
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 55
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c488f43d302561ec0800000000000000
+      internalID: -3596597076025178036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_33
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 56
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d32926a024428f440800000000000000
+      internalID: 4969762054864015933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_34
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 56
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab7c6c1307f42040800000000000000
+      internalID: 4622090710322805676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_35
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 50
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 700eeb093b4dffff0800000000000000
+      internalID: -47607284047865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_36
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 54
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c68615e885a3cc20800000000000000
+      internalID: 3225603765505001158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_37
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 53
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88059631a2b6e4200800000000000000
+      internalID: 166188064717754504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_38
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 53
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfc6ab1bdef015720800000000000000
+      internalID: 2833063154156203261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_39
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 53
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec6bd4c5eeb3c7c50800000000000000
+      internalID: 6664267443538343630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_40
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 52
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5190415d08cac6d40800000000000000
+      internalID: 5579023707735853333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_41
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 52
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b73f38a0aa65be530800000000000000
+      internalID: 3885294391858033531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_42
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 53
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60cd8c940fc1d33d0800000000000000
+      internalID: -3225389939771778042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_43
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 53
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb9840125223f910800000000000000
+      internalID: 1869876006144744371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_44
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 54
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d69ff75572d931920800000000000000
+      internalID: 2959882172376283501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_45
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 53
+        width: 25
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3062e8e33e56ef90800000000000000
+      internalID: -6924743799992065989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_46
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 53
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6f8ec173261e1190800000000000000
+      internalID: -7989924347419652244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_47
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 54
+        width: 39
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b09f7d5e7cce34750800000000000000
+      internalID: 6288129848038127883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_48
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 54
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6329e4f0cd8f09940800000000000000
+      internalID: 5301010385448374838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_49
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 54
+        width: 37
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc10076559b1ec5c0800000000000000
+      internalID: -4193383874821094963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_50
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 10
+        width: 31
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d18557c757a34400800000000000000
+      internalID: 307273195039588822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_51
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 10
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeffd7249c01cb8c0800000000000000
+      internalID: -3982289513912336406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler attack_52
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 10
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3dcbabad5b38d270800000000000000
+      internalID: 8275429588791446845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

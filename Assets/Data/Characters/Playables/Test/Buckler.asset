@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Buckler
+  m_EditorClassIdentifier: 
+  level: 35
+  money: 0
+  maxSkillPointsB: 2
+  maxHitPointsB: 17
+  strengthB: 8
+  vitalityB: 5
+  dexterityB: 3
+  luckB: 4
+  agilityB: 1
+  battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  healthGT: 3
+  staminaGT: 1
+  strengthGT: 2
+  vitalityGT: 2
+  dexterityGT: 3
+  agilityGT: 1
+  luckGT: 1
+  maxSkillPointsGMax: 2
+  maxSkillPointsGMin: 1
+  maxHitPointsGMax: 6
+  maxHitPointsGMin: 4
+  turnIcons: 1
+  currentMoves:
+  - {fileID: 11400000, guid: 7450e5639919f934c9a4412f228e2f74, type: 2}
+  moveLearn:
+  - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
+  - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 1, g: 0.7325124, b: 0, a: 1}
+  characterColour2: {r: 0.7830189, g: 0.5021409, b: 0.2031417, a: 1}
+  skillAffinities: []
+  aiPages:
+  - ai: []
+  anim: {fileID: 9100000, guid: 5aef83e9d7b213e489bc029ea5e6ff5f, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 11400000, guid: ccfcc177a830cb44fa408078fead83d9,
+    type: 2}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 1
+  equip_sword: 0
+  equip_staff: 0

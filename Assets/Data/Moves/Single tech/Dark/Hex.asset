@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
+  m_Name: Hex
+  m_EditorClassIdentifier: 
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  power: 8
+  moveType: 1
+  moveTarg: 0
+  element: 9
+  preAnimations: []
+  animations: []
+  endAnimations: []
+  statusInflictChance: []
+  onParty: 0
+  fixedValue: 0
+  cost: 0
+  statusType: 0
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  moveRequirements: []

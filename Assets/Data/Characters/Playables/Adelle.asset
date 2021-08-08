@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Adelle
+  m_EditorClassIdentifier: 
+  level: 1
+  money: 0
+  maxSkillPointsB: 13
+  maxHitPointsB: 9
+  strengthB: 1
+  vitalityB: 2
+  dexterityB: 4
+  luckB: 1
+  agilityB: 2
+  battleImage: {fileID: 4510202146524330274, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  healthGT: 1
+  staminaGT: 1
+  strengthGT: 2
+  vitalityGT: 3
+  dexterityGT: 2
+  agilityGT: 2
+  luckGT: 1
+  maxSkillPointsGMax: 5
+  maxSkillPointsGMin: 3
+  maxHitPointsGMax: 3
+  maxHitPointsGMin: 2
+  currentMoves: []
+  moveLearn:
+  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+  - {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 0.82977045, g: 0.31835172, b: 0.9245283, a: 1}
+  characterColour2: {r: 0.5330172, g: 0.14217694, b: 0.6698113, a: 1}
+  skillAffinities: []
+  aiPages:
+  - ai:
+    - move: {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+  anim: {fileID: 9100000, guid: bb1d546b6dd0be6458be60d9978082ed, type: 2}
+  items: []
+  defaultWeapon: {fileID: 0}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 0
+  equip_sword: 0
+  equip_staff: 1

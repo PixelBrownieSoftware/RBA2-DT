@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Flinty
+  m_EditorClassIdentifier: 
+  level: 2
+  experience: 0
+  maxSkillPointsB: 7
+  maxHitPointsB: 18
+  strengthB: 4
+  vitalityB: 3
+  dexterityB: 2
+  luckB: 2
+  agilityB: 1
+  expB: 1
+  battleImage: {fileID: 0}
+  healthGT: 1
+  staminaGT: 1
+  strengthGT: 3
+  vitalityGT: 2
+  dexterityGT: 3
+  agilityGT: 1
+  luckGT: 3
+  maxSkillPointsGMax: 3
+  maxSkillPointsGMin: 2
+  maxHitPointsGMax: 5
+  maxHitPointsGMin: 2
+  currentMoves: []
+  moveLearn: []
+  character_AI: []
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 1, g: 0.95, b: 0.75, a: 1}
+  characterColour2: {r: 1, g: 0.95, b: 0.75, a: 1}
+  skillAffinities: []
+  idleAnim: {fileID: 0}
+  attackAnim: {fileID: 0}
+  hurtAnim: {fileID: 0}
+  castAnim: {fileID: 0}
+  customAnims: []
+  anim: {fileID: 0}
+  persistence: 0

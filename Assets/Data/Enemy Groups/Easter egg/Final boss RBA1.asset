@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Name: Final boss RBA1
+  m_EditorClassIdentifier: 
+  fleeable: 0
+  fixedPlayers: 1
+  sceneToGoTo: 
+  members:
+  - memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
+    levType: 1
+    level: 35
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  members_Player:
+  - memberDat: {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
+    levType: 1
+    level: 30
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
+    levType: 1
+    level: 30
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
+    levType: 1
+    level: 30
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 5399aed7d56626e4a8a534cc3b3e7327, type: 2}
+    levType: 1
+    level: 30
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  bg1: {fileID: 21300000, guid: 5a339771bf3f4704d8fa3195e3b585a6, type: 3}
+  bg2: {fileID: 21300000, guid: 5c0ef5051754eae4da8d0ef8a94d111e, type: 3}
+  material1: {fileID: 2100000, guid: 9944d8a085f518b46b460a164d4b2049, type: 2}
+  material2: {fileID: 2100000, guid: da61820889be83046aedf35ea1f2f817, type: 2}

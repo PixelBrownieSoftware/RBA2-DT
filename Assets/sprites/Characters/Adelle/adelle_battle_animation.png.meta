@@ -1,0 +1,564 @@
+fileFormatVersion: 2
+guid: 3b6d7b2125e932d4987a1ad48d543f3c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6117234002989987638
+    second: adelle_battle_animation_0
+  - first:
+      213: -5099731821783700165
+    second: adelle_battle_animation_1
+  - first:
+      213: 8434387151331358290
+    second: adelle_battle_animation_2
+  - first:
+      213: -1436502307870037360
+    second: adelle_battle_animation_3
+  - first:
+      213: -7215516283833811747
+    second: adelle_battle_animation_5
+  - first:
+      213: 1606982010986043884
+    second: adelle_battle_animation_6
+  - first:
+      213: 1736292122000569446
+    second: adelle_battle_animation_7
+  - first:
+      213: -2091303095018413160
+    second: adelle_battle_animation_8
+  - first:
+      213: 7214579003842210186
+    second: adelle_battle_animation_9
+  - first:
+      213: -4345389467414477428
+    second: adelle_battle_animation_10
+  - first:
+      213: -7241406297415363556
+    second: adelle_battle_animation_12
+  - first:
+      213: -4174418615895264802
+    second: adelle_battle_animation_14
+  - first:
+      213: 2786070167893240766
+    second: adelle_battle_animation_21
+  - first:
+      213: 1055803639871391102
+    second: adelle_battle_animation_23
+  - first:
+      213: 6349829770578953501
+    second: adelle_battle_animation_25
+  - first:
+      213: 3516294631282387496
+    second: adelle_battle_animation_26
+  - first:
+      213: 4725511616560941271
+    second: adelle_battle_animation_28
+  - first:
+      213: -75801314935319676
+    second: adelle_battle_animation_30
+  - first:
+      213: 5948458897477597868
+    second: adelle_battle_animation_33
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: adelle_battle_animation_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 212
+        width: 33
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 637b82c4ae7c4e450800000000000000
+      internalID: 6117234002989987638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_1
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 212
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3da3d87dec1a39b0800000000000000
+      internalID: -5099731821783700165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_2
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 214
+        width: 54
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25679354d66fc0570800000000000000
+      internalID: 8434387151331358290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_3
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 212
+        width: 41
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09aa06c03c4801ce0800000000000000
+      internalID: -1436502307870037360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_5
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 212
+        width: 37
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddcf9075b265ddb90800000000000000
+      internalID: -7215516283833811747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_6
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 203
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce91445ff952d4610800000000000000
+      internalID: 1606982010986043884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_7
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 138
+        width: 37
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66437265c7c881810800000000000000
+      internalID: 1736292122000569446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_8
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 146
+        width: 36
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893a0cf4ae23af2e0800000000000000
+      internalID: -2091303095018413160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 147
+        width: 50
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a89a10821655f1460800000000000000
+      internalID: 7214579003842210186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_10
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 147
+        width: 51
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8549006d4312b3c0800000000000000
+      internalID: -4345389467414477428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_12
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 147
+        width: 51
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c14d740d65b518b90800000000000000
+      internalID: -7241406297415363556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_14
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 147
+        width: 52
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed1f8c7c26c7116c0800000000000000
+      internalID: -4174418615895264802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_21
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 82
+        width: 49
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbe6947e0c1aa620800000000000000
+      internalID: 2786070167893240766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_23
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 82
+        width: 49
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75491b01d7f6ae00800000000000000
+      internalID: 1055803639871391102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_25
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 82
+        width: 52
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d150f8398802f1850800000000000000
+      internalID: 6349829770578953501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_26
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 81
+        width: 48
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82a233746536cc030800000000000000
+      internalID: 3516294631282387496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_28
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 80
+        width: 49
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d8c81747c3649140800000000000000
+      internalID: 4725511616560941271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_30
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 81
+        width: 52
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 483d5cd0b13b2fef0800000000000000
+      internalID: -75801314935319676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adelle_battle_animation_33
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 17
+        width: 54
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caaf929d9db2d8250800000000000000
+      internalID: 5948458897477597868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

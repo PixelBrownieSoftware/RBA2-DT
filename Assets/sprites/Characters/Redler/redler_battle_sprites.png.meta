@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: fdf890ac9f1571a449f10975fa63959e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2256471256328960009
+    second: redler_battle_sprites_0
+  - first:
+      213: 7724248293481007793
+    second: redler_battle_sprites_1
+  - first:
+      213: 4759239689162159606
+    second: redler_battle_sprites_2
+  - first:
+      213: -7727392226469089568
+    second: redler_battle_sprites_3
+  - first:
+      213: -1085553651711207845
+    second: redler_battle_sprites_4
+  - first:
+      213: 2371612938721040085
+    second: redler_battle_sprites_5
+  - first:
+      213: 1948409925728738834
+    second: redler_battle_sprites_6
+  - first:
+      213: 1585242059435584447
+    second: redler_battle_sprites_7
+  - first:
+      213: -8827597228360464463
+    second: redler_battle_sprites_8
+  - first:
+      213: 4475801740015904015
+    second: redler_battle_sprites_9
+  - first:
+      213: -1482898762603609382
+    second: redler_battle_sprites_10
+  - first:
+      213: 4944495087838196312
+    second: redler_battle_sprites_11
+  - first:
+      213: -7278414314720599111
+    second: redler_battle_sprites_12
+  - first:
+      213: 3396334290007140133
+    second: redler_battle_sprites_13
+  - first:
+      213: 7574633586475412729
+    second: redler_battle_sprites_14
+  - first:
+      213: 6359463684169322220
+    second: redler_battle_sprites_15
+  - first:
+      213: 3380517281710998712
+    second: redler_battle_sprites_16
+  - first:
+      213: -1072756313481542681
+    second: redler_battle_sprites_17
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: redler_battle_sprites_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 908fd5ff6a8905f10800000000000000
+      internalID: 2256471256328960009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_1
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba4ad9e5ea023b60800000000000000
+      internalID: 7724248293481007793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_2
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5737128473c0240800000000000000
+      internalID: 4759239689162159606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_3
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eee13526b9c2c490800000000000000
+      internalID: -7727392226469089568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_4
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b56102d84b65fe0f0800000000000000
+      internalID: -1085553651711207845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_5
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 191
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d610350769a9e020800000000000000
+      internalID: 2371612938721040085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21e18eb11842a0b10800000000000000
+      internalID: 1948409925728738834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_7
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbaaab0149eff510800000000000000
+      internalID: 1585242059435584447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_8
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b70a5767131e7580800000000000000
+      internalID: -8827597228360464463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_9
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0529bef7fd3d1e30800000000000000
+      internalID: 4475801740015904015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_10
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad24521ae6fab6be0800000000000000
+      internalID: -1482898762603609382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_11
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 126
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8527248d5106e9440800000000000000
+      internalID: 4944495087838196312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b3e5f25eb0edfa90800000000000000
+      internalID: -7278414314720599111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_13
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 527aa5eca04322f20800000000000000
+      internalID: 3396334290007140133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_14
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fc2c916d118e1960800000000000000
+      internalID: 7574633586475412729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_15
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceec8e0e68a514850800000000000000
+      internalID: 6359463684169322220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_16
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b404759e820aee20800000000000000
+      internalID: 3380517281710998712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redler_battle_sprites_17
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 61
+        width: 85
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e3006c01ddcc11f0800000000000000
+      internalID: -1072756313481542681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Trunko
+  m_EditorClassIdentifier: 
+  level: 9
+  experience: 0
+  maxSkillPointsB: 11
+  maxHitPointsB: 17
+  strengthB: 2
+  vitalityB: 3
+  dexterityB: 3
+  luckB: 1
+  agilityB: 1
+  expB: 1
+  battleImage: {fileID: 0}
+  healthGT: 1
+  staminaGT: 1
+  strengthGT: 4
+  vitalityGT: 3
+  dexterityGT: 2
+  agilityGT: 3
+  luckGT: 1
+  maxSkillPointsGMax: 3
+  maxSkillPointsGMin: 3
+  maxHitPointsGMax: 2
+  maxHitPointsGMin: 1
+  currentMoves: []
+  moveLearn: []
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 1, g: 0.95, b: 0.75, a: 1}
+  characterColour2: {r: 1, g: 0.95, b: 0.75, a: 1}
+  skillAffinities: []
+  aiPages:
+  - ai: []
+  idleAnim: {fileID: 0}
+  attackAnim: {fileID: 0}
+  hurtAnim: {fileID: 0}
+  castAnim: {fileID: 0}
+  customAnims: []
+  anim: {fileID: 0}
+  persistence: 0

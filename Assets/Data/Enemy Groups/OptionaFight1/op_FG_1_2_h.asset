@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Name: op_FG_1_2_h
+  m_EditorClassIdentifier: 
+  fleeable: 1
+  sceneToGoTo: 
+  members:
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+    levType: 1
+    level: 6
+    maxLevel: 5
+    extraSkills:
+    - {fileID: 11400000, guid: 046974abf3ae3954abe88b2280960a49, type: 2}
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 0ec938a4357528b48be71c7985cec35f, type: 2}
+    levType: 1
+    level: 6
+    maxLevel: 8
+    extraSkills:
+    - {fileID: 11400000, guid: 046974abf3ae3954abe88b2280960a49, type: 2}
+    passives: []
+    weaponSelections: []

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d278500e68dd834c88d9a94dec6c6f1, type: 3}
+  m_Name: mal_idle
+  m_EditorClassIdentifier: 
+  animation:
+  - timer: 0.05
+    sprite: {fileID: 2689256570523816831, guid: 16af8cdc6b326074aa8adde2592c0950,
+      type: 3}
+  - timer: 0.05
+    sprite: {fileID: -3990425371367573722, guid: 16af8cdc6b326074aa8adde2592c0950,
+      type: 3}
+  - timer: 0.05
+    sprite: {fileID: -2557424127253923722, guid: 16af8cdc6b326074aa8adde2592c0950,
+      type: 3}
+  - timer: 0.05
+    sprite: {fileID: -3990425371367573722, guid: 16af8cdc6b326074aa8adde2592c0950,
+      type: 3}

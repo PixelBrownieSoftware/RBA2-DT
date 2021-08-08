@@ -1,0 +1,1 @@
+{"skilldata":[{"name":"Attack","power":15,"moveType":0,"element":0,"status_effect":0,"status_inflict_chance":0.0},{"name":"Heal","power":0,"moveType":2,"element":12,"status_effect":0,"status_inflict_chance":0.0}]}

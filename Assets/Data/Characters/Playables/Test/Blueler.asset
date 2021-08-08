@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Blueler
+  m_EditorClassIdentifier: 
+  level: 40
+  money: 0
+  maxSkillPointsB: 14
+  maxHitPointsB: 22
+  strengthB: 2
+  vitalityB: 3
+  dexterityB: 3
+  luckB: 1
+  agilityB: 1
+  battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  healthGT: 1
+  staminaGT: 1
+  strengthGT: 5
+  vitalityGT: 4
+  dexterityGT: 2
+  agilityGT: 1
+  luckGT: 1
+  maxSkillPointsGMax: 3
+  maxSkillPointsGMin: 2
+  maxHitPointsGMax: 5
+  maxHitPointsGMin: 4
+  turnIcons: 1
+  currentMoves:
+  - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
+  - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
+  moveLearn:
+  - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
+  - {fileID: 11400000, guid: f8d671362d997fa488651b6ae300f7a0, type: 2}
+  - {fileID: 11400000, guid: 046974abf3ae3954abe88b2280960a49, type: 2}
+  - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 0.4198113, g: 0.60606354, b: 1, a: 1}
+  characterColour2: {r: 0.15886435, g: 0.4047911, b: 0.9622642, a: 1}
+  skillAffinities: []
+  aiPages:
+  - ai: []
+  anim: {fileID: 9100000, guid: 682198652be5a3a478df24bfef579e04, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 11400000, guid: 2827398d741f92042bd658657c6b7b36, type: 2}
+  defaultRangedWeapon: {fileID: 0}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 1
+  equip_sword: 1
+  equip_staff: 1

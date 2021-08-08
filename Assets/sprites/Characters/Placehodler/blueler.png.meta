@@ -1,0 +1,483 @@
+fileFormatVersion: 2
+guid: 6b42b41ac8b74824b8b9bfce8cba849b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6990903321844928530
+    second: blueler_0
+  - first:
+      213: -1335281829162279734
+    second: blueler_1
+  - first:
+      213: 525706425481483076
+    second: blueler_2
+  - first:
+      213: -4438135845025312152
+    second: blueler_3
+  - first:
+      213: 996709031104833205
+    second: blueler_4
+  - first:
+      213: -6014667624875617035
+    second: blueler_5
+  - first:
+      213: 3586891274521935822
+    second: blueler_6
+  - first:
+      213: -8631757200825723880
+    second: blueler_7
+  - first:
+      213: -1841241103143163004
+    second: blueler_8
+  - first:
+      213: -2045564330454506790
+    second: blueler_9
+  - first:
+      213: -4504619800217006712
+    second: blueler_10
+  - first:
+      213: 7297674627478330657
+    second: blueler_11
+  - first:
+      213: 5725586623647440870
+    second: blueler_12
+  - first:
+      213: -7734078895825867440
+    second: blueler_13
+  - first:
+      213: 6987348939038342649
+    second: blueler_14
+  - first:
+      213: 3233857599068582316
+    second: blueler_15
+  - first:
+      213: -4671787218527643965
+    second: blueler_16
+  - first:
+      213: 8670330371621953345
+    second: blueler_17
+  - first:
+      213: -6502510800423330807
+    second: blueler_18
+  - first:
+      213: 2735086496175511364
+    second: blueler_19
+  - first:
+      213: 9025462728382973556
+    second: blueler_20
+  - first:
+      213: -4260139005553712972
+    second: blueler_21
+  - first:
+      213: -4177712029343282004
+    second: blueler_22
+  - first:
+      213: 9190889987833047552
+    second: blueler_23
+  - first:
+      213: 4860117964833225345
+    second: blueler_24
+  - first:
+      213: 1202840773131047077
+    second: blueler_25
+  - first:
+      213: -7594545049228329015
+    second: blueler_26
+  - first:
+      213: 204890806890123370
+    second: blueler_27
+  - first:
+      213: -3855973745157757240
+    second: blueler_28
+  - first:
+      213: -6430866644776815577
+    second: blueler_29
+  - first:
+      213: 1662106299488330381
+    second: blueler_30
+  - first:
+      213: -722869501848636247
+    second: blueler_31
+  - first:
+      213: -3227558725568014671
+    second: blueler_32
+  - first:
+      213: 1863684419323795816
+    second: blueler_33
+  - first:
+      213: -6086850046695938987
+    second: blueler_34
+  - first:
+      213: 266909781996565395
+    second: blueler_35
+  - first:
+      213: -2523530293266019216
+    second: blueler_36
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: blueler_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 266
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2105aa5288da40160800000000000000
+      internalID: 6990903321844928530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_7
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 257
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 814dc511f86d53880800000000000000
+      internalID: -8631757200825723880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_8
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 255
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48bad45d8f89276e0800000000000000
+      internalID: -1841241103143163004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_9
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 255
+        width: 34
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad2ac0e4412bc93e0800000000000000
+      internalID: -2045564330454506790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_24
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 143
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18af06cf98b927340800000000000000
+      internalID: 4860117964833225345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_25
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 142
+        width: 39
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a015db6f4951b010800000000000000
+      internalID: 1202840773131047077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_29
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 42
+        width: 57
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7247b28dbd8f0c6a0800000000000000
+      internalID: -6430866644776815577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_30
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 29
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82e0f78fdcf01710800000000000000
+      internalID: 1662106299488330381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_31
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 22
+        width: 36
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a4395b940ad7f5f0800000000000000
+      internalID: -722869501848636247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_32
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 21
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b65ece70786533d0800000000000000
+      internalID: -3227558725568014671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_33
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 32
+        width: 57
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869993bea132dd910800000000000000
+      internalID: 1863684419323795816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueler_35
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 36
+        width: 53
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3937bf6580144b300800000000000000
+      internalID: 266909781996565395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

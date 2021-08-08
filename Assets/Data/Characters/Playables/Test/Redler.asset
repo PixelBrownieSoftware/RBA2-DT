@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Redler
+  m_EditorClassIdentifier: 
+  level: 40
+  money: 0
+  maxSkillPointsB: 21
+  maxHitPointsB: 25
+  strengthB: 5
+  vitalityB: 4
+  dexterityB: 4
+  luckB: 3
+  agilityB: 1
+  battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  healthGT: 2
+  staminaGT: 3
+  strengthGT: 3
+  vitalityGT: 3
+  dexterityGT: 3
+  agilityGT: 1
+  luckGT: 3
+  maxSkillPointsGMax: 3
+  maxSkillPointsGMin: 2
+  maxHitPointsGMax: 4
+  maxHitPointsGMin: 3
+  turnIcons: 1
+  currentMoves:
+  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+  - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
+  moveLearn:
+  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+  - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  elementAffinities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  characterColour: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
+  characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
+  skillAffinities: []
+  aiPages:
+  - ai: []
+  anim: {fileID: 9100000, guid: 40ef012e39931da4496866c815e0d64b, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 11400000, guid: c87e4789633efb84bb6d99541fe1a132, type: 2}
+  defaultRangedWeapon: {fileID: 0}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 1
+  equip_sword: 1
+  equip_staff: 1
