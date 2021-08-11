@@ -24,8 +24,7 @@ public class o_battleCharDataN : ScriptableObject
         public ELEMENT el;
         public int points;
     }
-
-    public int level;
+    
     public float money;
 
     /// Base stats the character starts with

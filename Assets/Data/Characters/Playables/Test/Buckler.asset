@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Buckler
   m_EditorClassIdentifier: 
-  level: 35
   money: 0
   maxSkillPointsB: 2
   maxHitPointsB: 17
@@ -35,8 +34,6 @@ MonoBehaviour:
   maxHitPointsGMax: 6
   maxHitPointsGMin: 4
   turnIcons: 1
-  currentMoves:
-  - {fileID: 11400000, guid: 7450e5639919f934c9a4412f228e2f74, type: 2}
   moveLearn:
   - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
   - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
@@ -57,7 +54,29 @@ MonoBehaviour:
   characterColour2: {r: 0.7830189, g: 0.5021409, b: 0.2031417, a: 1}
   skillAffinities: []
   aiPages:
-  - ai: []
+  - ai:
+    - move: {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
   anim: {fileID: 9100000, guid: 5aef83e9d7b213e489bc029ea5e6ff5f, type: 2}
   items: []
   defaultPhysWeapon: {fileID: 0}

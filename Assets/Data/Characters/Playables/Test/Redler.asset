@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Redler
   m_EditorClassIdentifier: 
-  level: 40
   money: 0
   maxSkillPointsB: 21
   maxHitPointsB: 25
@@ -35,10 +34,6 @@ MonoBehaviour:
   maxHitPointsGMax: 4
   maxHitPointsGMin: 3
   turnIcons: 1
-  currentMoves:
-  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
-  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
-  - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
   moveLearn:
   - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
   - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
@@ -61,7 +56,40 @@ MonoBehaviour:
   characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
   skillAffinities: []
   aiPages:
-  - ai: []
+  - ai:
+    - move: {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 19
+      element: 0
+      healthPercentage: 0.5
+      name: 
+      onParty: 1
+      isImportant: 1
+      number1: 0
+      number2: 0
   anim: {fileID: 9100000, guid: 40ef012e39931da4496866c815e0d64b, type: 2}
   items: []
   defaultPhysWeapon: {fileID: 11400000, guid: c87e4789633efb84bb6d99541fe1a132, type: 2}

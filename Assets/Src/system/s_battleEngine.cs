@@ -280,8 +280,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         //c.animHandler.
                         SetStatsPlayer(ref c, mem);
                         c.render.color = Color.white;
+                        c.inBattle = true;
                         //c.animHandler.runtimeAnimatorController.animationClips[0].wrapMode = WrapMode.Loop;
                         //c.PlayAnimation("idle");
+                        HP_GUIS[charIndex].bc = c;
+                        charIndex++;
+                        /*
                         if (c != null && HP_GUIS.Length > charIndex)
                         {
                             if (c.inBattle)
@@ -290,6 +294,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 charIndex++;
                             }
                         }
+                        */
                     }
                 }
                 else
@@ -355,17 +360,17 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             currentPartyCharactersQueue.Clear();
             currentPartyCharactersQueue = new Queue<o_battleCharacter>();
-            int i = 0;
             foreach (o_battleCharacter c in bcs)
             {
                 o_battleCharDataN bc = c.battleCharData;
 
                 if (c.health > 0 && c.inBattle)
                 {
-                    for(int i2 =0; i2 < bc.turnIcons; i2++)
+                    for (int i2 = 0; i2 < bc.turnIcons; i2++)
+                    {
+                        StartCoroutine(TurnIconFX(TURN_ICON_FX.APPEAR, fullTurn));
                         fullTurn++;
-                    StartCoroutine(TurnIconFX(TURN_ICON_FX.APPEAR, i));
-                    i++;
+                    }
                     StartCoroutine(PlayFadeCharacter(c, new Color(1, 1, 1, 0), Color.white));
                     yield return new WaitForSeconds(0.15f);
                     currentPartyCharactersQueue.Enqueue(c);
@@ -431,7 +436,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         //charObj.sprites[0] = enem.characterAnims[0];
         //charObj.rend.sprite = enem.characterAnims[0];
         charObj.name = enem.name;
-        charObj.level = enem.level;
+        charObj.level = mem.level;
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.vitality = tempVit;
@@ -587,7 +592,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         //charObj.sprites[0] = enem.characterAnims[0];
         //charObj.rend.sprite = enem.characterAnims[0];
         charObj.name = enem.name;
-        charObj.level = enem.level;
+        charObj.level = mem.level;
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.vitality = tempVit;

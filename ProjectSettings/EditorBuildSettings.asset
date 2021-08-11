@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/cutscene1.unity
     guid: afd809c68dc32084da607a42cac9e108
   - enabled: 1
-    path: Assets/Scenes/RBA1FinalBoss.unity
+    path: Assets/Scenes/afterRBA1FinalBoss.unity
     guid: 5637412530960634a81504354a90cd46
   - enabled: 1
     path: Assets/Scenes/EMPTY_SCENE.unity

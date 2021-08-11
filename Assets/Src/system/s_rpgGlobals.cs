@@ -344,7 +344,8 @@ public class s_rpgGlobals : s_globals
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
         rpgScene.SetActive(false);
         rpgSceneGUI.SetActive(false);
-        overWorld.SetActive(true);
+        if(overWorld != null)
+            overWorld.SetActive(true);
         if(!isFlee)
             locationObjectName.isDone = true;
         player.gameObject.SetActive(true);

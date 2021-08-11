@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fleeable: 0
   fixedPlayers: 1
-  sceneToGoTo: 
+  sceneToGoTo: afterRBA1FinalBoss
   members:
   - memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
     levType: 1

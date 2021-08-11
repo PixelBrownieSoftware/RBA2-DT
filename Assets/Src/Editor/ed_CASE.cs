@@ -69,6 +69,7 @@ public class ed_CASE : Editor
     bool isLoadedCharacter = false;
     string directoryMove;
     string element;
+    int level = 1;
 
     //public List<o_ite> itemdata;
     public List<s_move> skilldata;
@@ -126,7 +127,7 @@ public class ed_CASE : Editor
                 EditorGUILayout.LabelField("Simulated stats based on level");
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Name: " + charaData.name);
-                charaData.level = (int)EditorGUILayout.Slider(charaData.level, 1, 100);
+                level = (int)EditorGUILayout.Slider(level, 1, 100);
                 {
                     int tempHPMin = charaData.maxHitPointsB;
                     int tempSPMin = charaData.maxSkillPointsB;
@@ -137,7 +138,7 @@ public class ed_CASE : Editor
                     int tempDx = charaData.dexterityB;
                     int tempLuc = charaData.luckB;
 
-                    for (int i = 1; i < charaData.level; i++)
+                    for (int i = 1; i < level; i++)
                     {
                         if (i % charaData.strengthGT == 0)
                             tempStr++;
