@@ -12,52 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Blake
   m_EditorClassIdentifier: 
-  level: 1
-  experience: 0
-  maxSkillPointsB: 9
-  maxHitPointsB: 17
-  strengthB: 3
-  vitalityB: 2
-  dexterityB: 2
-  luckB: 1
-  agilityB: 2
-  expB: 1
+  money: 0
+  maxSkillPoints: 26
+  maxHitPoints: 67
+  characterPassive: {fileID: 0}
   battleImage: {fileID: -7423024270623625298, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
-  healthGT: 1
-  staminaGT: 1
-  strengthGT: 2
-  vitalityGT: 2
-  dexterityGT: 2
-  agilityGT: 3
-  luckGT: 1
-  maxSkillPointsGMax: 2
-  maxSkillPointsGMin: 2
-  maxHitPointsGMax: 3
-  maxHitPointsGMin: 3
-  currentMoves: []
+  turnIcons: 1
   moveLearn: []
   elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+    strike: 1
+    peirce: 7
+    fire: -2
+    ice: -2
+    water: -3
+    electric: 2
+    wind: 0
+    earth: 0
+    psychic: -3
+    light: 0
+    dark: 0
+    heal: 0
+    support: 1
+  elementWeaknesses:
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    bio: 0
   characterColour: {r: 0.427451, g: 0.9529412, b: 0.75734156, a: 1}
   characterColour2: {r: 0.23713954, g: 0.6531249, b: 0.6886792, a: 1}
-  skillAffinities: []
   aiPages:
   - ai: []
   anim: {fileID: 9100000, guid: a1f0a3838b5e04d4aa74107dc82ab91a, type: 2}
   items: []
-  defaultWeapon: {fileID: 11400000, guid: ea56d6dc8a0ee6b41b1076c9bef09136, type: 2}
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 0}
   persistence: 0
   equip_fist: 0
   equip_gun: 1

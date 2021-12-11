@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/afterRBA1FinalBoss.unity
+- path: Assets/Scenes/Title.unity
   isLoaded: 0
   isActive: 0
   isSubScene: 0
@@ -7,7 +7,47 @@ sceneSetups:
   isLoaded: 1
   isActive: 1
   isSubScene: 0
+- path: Assets/Scenes/Intro.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/3d.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/BattleScene.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/Overworld.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
 - path: Assets/Scenes/cutscene1.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+<<<<<<< HEAD
+- path: Assets/Scenes/prentice_training.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/Title.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/Overworld.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/battle_scene.unity
+=======
+- path: Assets/Scenes/RBA1FinalBoss.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/EMPTY_SCENE.unity
+>>>>>>> parent of aa53cbbb (11/08/2021)
   isLoaded: 0
   isActive: 0
   isSubScene: 0

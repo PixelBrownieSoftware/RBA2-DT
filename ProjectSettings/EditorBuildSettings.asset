@@ -21,15 +21,20 @@ EditorBuildSettings:
     path: Assets/Scenes/3d.unity
     guid: 03e183f6be639b24382b99cd4bfa07ea
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
+    path: Assets/Scenes/battle_scene.unity
     guid: 1260f7814899ad44785b5c7fb058f7b0
   - enabled: 1
     path: Assets/Scenes/cutscene1.unity
     guid: afd809c68dc32084da607a42cac9e108
   - enabled: 1
-    path: Assets/Scenes/afterRBA1FinalBoss.unity
+    path: Assets/Scenes/RBA1FinalBoss.unity
     guid: 5637412530960634a81504354a90cd46
   - enabled: 1
     path: Assets/Scenes/EMPTY_SCENE.unity
     guid: c1cf75604d5d452429cec8154478b504
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/prentice_training.unity
+    guid: 02af41e676e25f24b83d3b28543b141b
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 431da21225760c04cbb208494dfa4e58,
+      type: 2}

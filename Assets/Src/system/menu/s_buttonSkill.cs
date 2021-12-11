@@ -226,12 +226,14 @@ public class s_buttonSkill : s_button
         if (d.passives.Find(x => x == passiveButton) != null)
             return false;
 
+        /*
         if (d.strength >= passiveButton.strReq
         && d.vitality >= passiveButton.vitReq
         && d.dexterity >= passiveButton.dxReq
         && d.agility >= passiveButton.agiReq)
             return true;
         else
+        */
             return false;
     }
 
@@ -239,13 +241,14 @@ public class s_buttonSkill : s_button
     {
         if (d.currentMoves.Find(x => x == moveButton) != null)
             return false;
-
+        /*
         if (d.strength >= moveButton.strReq
         && d.vitality >= moveButton.vitReq
         && d.dexterity >= moveButton.dxReq
         && d.agility >= moveButton.agiReq)
             return true;
         else
+        */
             return false;
     }
 

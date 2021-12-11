@@ -1,7 +1,5 @@
 ScriptsOnlyBuild:
   usedScripts:
-    Assembly-CSharp-Editor.dll:
-    - ed_CASE
     Assembly-CSharp.dll:
     - c_player
     - o_battleCharDataN
@@ -29,6 +27,7 @@ ScriptsOnlyBuild:
     - s_modeButton
     - s_move
     - s_moveanim
+    - s_overworldObj
     - s_overworldPlayerTargetMenu
     - s_partyMemberButton
     - s_partyMenu
@@ -98,8 +97,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -130,7 +131,6 @@ ScriptsOnlyBuild:
     - MagnumFoundation2.System.Core.s_objpooler
     - MagnumFoundation2.System.Core.s_soundmanager
     - MagnumFoundation2.System.s_camera
-    - MagnumFoundation2.s_mapholder
     - s_button
     - s_intro
     - s_menucontroller
@@ -166,11 +166,11 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 3222}
+      Script: {instanceID: 3224}
     - Class: 114
-      Script: {instanceID: 4004}
+      Script: {instanceID: 4006}
     - Class: 114
-      Script: {instanceID: 5158}
+      Script: {instanceID: 5160}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -213,7 +213,7 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 5154}
+      Script: {instanceID: 5156}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -300,87 +300,87 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2412}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2602}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2680}
     - Class: 114
-      Script: {instanceID: 2702}
+      Script: {instanceID: 2704}
     - Class: 114
-      Script: {instanceID: 2794}
+      Script: {instanceID: 2796}
     - Class: 114
-      Script: {instanceID: 3188}
+      Script: {instanceID: 3190}
     - Class: 114
-      Script: {instanceID: 3222}
+      Script: {instanceID: 3224}
     - Class: 114
-      Script: {instanceID: 3402}
+      Script: {instanceID: 3404}
     - Class: 114
-      Script: {instanceID: 3470}
+      Script: {instanceID: 3472}
     - Class: 114
-      Script: {instanceID: 3570}
+      Script: {instanceID: 3572}
     - Class: 114
-      Script: {instanceID: 3574}
+      Script: {instanceID: 3576}
     - Class: 114
-      Script: {instanceID: 3628}
+      Script: {instanceID: 3630}
     - Class: 114
-      Script: {instanceID: 3698}
+      Script: {instanceID: 3700}
     - Class: 114
-      Script: {instanceID: 3704}
+      Script: {instanceID: 3706}
     - Class: 114
-      Script: {instanceID: 3748}
+      Script: {instanceID: 3750}
     - Class: 114
-      Script: {instanceID: 3950}
+      Script: {instanceID: 3952}
     - Class: 114
-      Script: {instanceID: 3968}
+      Script: {instanceID: 3970}
     - Class: 114
-      Script: {instanceID: 3998}
+      Script: {instanceID: 4000}
     - Class: 114
-      Script: {instanceID: 4004}
+      Script: {instanceID: 4006}
     - Class: 114
-      Script: {instanceID: 4016}
+      Script: {instanceID: 4018}
     - Class: 114
-      Script: {instanceID: 4168}
+      Script: {instanceID: 4170}
     - Class: 114
-      Script: {instanceID: 4288}
+      Script: {instanceID: 4290}
     - Class: 114
-      Script: {instanceID: 4728}
+      Script: {instanceID: 4730}
     - Class: 114
-      Script: {instanceID: 4754}
+      Script: {instanceID: 4756}
     - Class: 114
-      Script: {instanceID: 4788}
+      Script: {instanceID: 4790}
     - Class: 114
-      Script: {instanceID: 4950}
+      Script: {instanceID: 4952}
     - Class: 114
-      Script: {instanceID: 4958}
+      Script: {instanceID: 4960}
     - Class: 114
-      Script: {instanceID: 5158}
+      Script: {instanceID: 5160}
     - Class: 114
-      Script: {instanceID: 5426}
+      Script: {instanceID: 5428}
     - Class: 114
-      Script: {instanceID: 5476}
+      Script: {instanceID: 5478}
     - Class: 114
-      Script: {instanceID: 5638}
-    - Class: 114
-      Script: {instanceID: 5670}
+      Script: {instanceID: 5640}
     - Class: 114
       Script: {instanceID: 5672}
     - Class: 114
-      Script: {instanceID: 5746}
+      Script: {instanceID: 5674}
     - Class: 114
-      Script: {instanceID: 5786}
+      Script: {instanceID: 5748}
     - Class: 114
-      Script: {instanceID: 5800}
+      Script: {instanceID: 5788}
     - Class: 114
-      Script: {instanceID: 5954}
+      Script: {instanceID: 5802}
     - Class: 114
-      Script: {instanceID: 5972}
+      Script: {instanceID: 5956}
     - Class: 114
-      Script: {instanceID: 6046}
+      Script: {instanceID: 5974}
     - Class: 114
-      Script: {instanceID: 6236}
+      Script: {instanceID: 6048}
     - Class: 114
-      Script: {instanceID: 6346}
+      Script: {instanceID: 6238}
     - Class: 114
-      Script: {instanceID: 6356}
+      Script: {instanceID: 6348}
+    - Class: 114
+      Script: {instanceID: 6358}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -429,15 +429,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1706}
     - Class: 114
-      Script: {instanceID: 5076}
-    - Class: 114
-      Script: {instanceID: 5746}
+      Script: {instanceID: 2434}
     - Class: 114
       Script: {instanceID: 5748}
     - Class: 114
-      Script: {instanceID: 5972}
+      Script: {instanceID: 5750}
     - Class: 114
-      Script: {instanceID: 6236}
+      Script: {instanceID: 5974}
+    - Class: 114
+      Script: {instanceID: 6238}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -455,15 +455,6 @@ ScriptsOnlyBuild:
     - Class: 483693784
       Script: {instanceID: 0}
     - Class: 1839735485
-      Script: {instanceID: 0}
-    Assets/Scenes/RBA1FinalBoss.unity:
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
       Script: {instanceID: 0}
     Assets/Scenes/Title.unity:
     - Class: 1
@@ -521,55 +512,55 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2404}
     - Class: 114
-      Script: {instanceID: 2482}
+      Script: {instanceID: 2484}
     - Class: 114
-      Script: {instanceID: 2718}
+      Script: {instanceID: 2720}
     - Class: 114
-      Script: {instanceID: 2826}
+      Script: {instanceID: 2828}
     - Class: 114
-      Script: {instanceID: 2860}
+      Script: {instanceID: 2862}
     - Class: 114
-      Script: {instanceID: 3240}
+      Script: {instanceID: 3242}
     - Class: 114
-      Script: {instanceID: 3366}
+      Script: {instanceID: 3368}
     - Class: 114
-      Script: {instanceID: 3376}
+      Script: {instanceID: 3378}
     - Class: 114
-      Script: {instanceID: 3512}
+      Script: {instanceID: 3514}
     - Class: 114
-      Script: {instanceID: 3580}
+      Script: {instanceID: 3582}
     - Class: 114
-      Script: {instanceID: 3630}
+      Script: {instanceID: 3632}
     - Class: 114
-      Script: {instanceID: 3896}
+      Script: {instanceID: 3898}
     - Class: 114
-      Script: {instanceID: 4080}
+      Script: {instanceID: 4082}
     - Class: 114
-      Script: {instanceID: 4126}
+      Script: {instanceID: 4128}
     - Class: 114
-      Script: {instanceID: 4250}
+      Script: {instanceID: 4252}
     - Class: 114
-      Script: {instanceID: 4256}
+      Script: {instanceID: 4258}
     - Class: 114
-      Script: {instanceID: 4432}
+      Script: {instanceID: 4434}
     - Class: 114
-      Script: {instanceID: 4598}
+      Script: {instanceID: 4600}
     - Class: 114
-      Script: {instanceID: 5030}
+      Script: {instanceID: 5032}
     - Class: 114
-      Script: {instanceID: 5206}
+      Script: {instanceID: 5208}
     - Class: 114
-      Script: {instanceID: 5252}
+      Script: {instanceID: 5254}
     - Class: 114
-      Script: {instanceID: 5370}
+      Script: {instanceID: 5372}
     - Class: 114
-      Script: {instanceID: 5618}
+      Script: {instanceID: 5620}
     - Class: 114
-      Script: {instanceID: 5668}
+      Script: {instanceID: 5670}
     - Class: 114
-      Script: {instanceID: 5782}
+      Script: {instanceID: 5784}
     - Class: 114
-      Script: {instanceID: 6066}
+      Script: {instanceID: 6068}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -587,6 +578,35 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
     - Class: 850595691
+      Script: {instanceID: 0}
+    Assets/Scenes/afterRBA1FinalBoss.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 2434}
+    - Class: 114
+      Script: {instanceID: 4058}
+    - Class: 114
+      Script: {instanceID: 4694}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     Assets/Scenes/cutscene1.unity:
     - Class: 1
@@ -606,19 +626,19 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 3628}
+      Script: {instanceID: 2434}
     - Class: 114
-      Script: {instanceID: 4056}
+      Script: {instanceID: 3630}
     - Class: 114
-      Script: {instanceID: 4692}
+      Script: {instanceID: 4058}
     - Class: 114
-      Script: {instanceID: 5076}
+      Script: {instanceID: 4694}
     - Class: 114
-      Script: {instanceID: 5746}
+      Script: {instanceID: 5748}
     - Class: 114
-      Script: {instanceID: 5972}
+      Script: {instanceID: 5974}
     - Class: 114
-      Script: {instanceID: 6236}
+      Script: {instanceID: 6238}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -704,7 +724,7 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: d125c0368e067ad70d2a3f8169e5a18d
+      Hash: e63dbb8f853eea5031ece21d44ae8d5d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: o_locationOverworld
@@ -806,7 +826,7 @@ ScriptsOnlyBuild:
     className: DepthOfField
   - hash:
       serializedVersion: 2
-      Hash: a20b880fce89d344621873211a462c2c
+      Hash: 7a379202640cd5d3143e63646091e7ca
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_battleEngine
@@ -854,7 +874,7 @@ ScriptsOnlyBuild:
     className: s_barGui
   - hash:
       serializedVersion: 2
-      Hash: c3242a79c63d17e41e7631cbdd70e423
+      Hash: f438200b2f4cf984219220995af12a40
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_hitObj
@@ -914,6 +934,12 @@ ScriptsOnlyBuild:
     className: GroupTrack
   - hash:
       serializedVersion: 2
+      Hash: a493f6c764272fd0907b5a434cd40b6d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: s_overworldObj
+  - hash:
+      serializedVersion: 2
       Hash: 54d8f12780f7f6df9b0603e66c9a5b3b
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
@@ -932,13 +958,13 @@ ScriptsOnlyBuild:
     className: PlaymodeTestsController
   - hash:
       serializedVersion: 2
-      Hash: f5db0e9c3900e27596104e3d1c93c3b1
+      Hash: f63d3e5859585648d95fcda2bee30e48
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_moveanim
   - hash:
       serializedVersion: 2
-      Hash: b8354d186f80c35f73145e922fc79b61
+      Hash: 5b493252c27f32c910b569ec69f1b2be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_partyMemberButton
@@ -956,7 +982,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: f206f49005b638d681c921a0a8ac232d
+      Hash: 466c144c623cf6baae71a9fbfc4680ef
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_statusMenu
@@ -1148,7 +1174,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 41421a258e4e8f5b6b9e45d662c1d56b
+      Hash: 96ac8c9c188ae6f36d19ddd8bd10ebe7
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.System.Core
     className: s_soundmanager
@@ -1172,13 +1198,13 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerBitField
   - hash:
       serializedVersion: 2
-      Hash: 8ef92b0bce84b40d3ca259a1ec7346fb
+      Hash: e49759a643fd04bdc4120bb3ba3f2afb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_rpgGlobals
   - hash:
       serializedVersion: 2
-      Hash: 6974cdfb91ab31aadf0fa7472a13ec7f
+      Hash: 7d0c76924203943c01fd20a7ef0a3a64
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_partyOverworldMenu
@@ -1268,7 +1294,7 @@ ScriptsOnlyBuild:
     className: UniversalAdditionalCameraData
   - hash:
       serializedVersion: 2
-      Hash: 8bd51d0d33b329cde56e59a27cabbc8e
+      Hash: ac289a3e052923beaee53d345898162e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_rpgEvents
@@ -1280,7 +1306,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: 98cb65de806cd20ada39d5dffabbb44e
+      Hash: 14a14b96c2a4dbc84507f1935568cb15
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.Objects
     className: ev_script
@@ -1292,7 +1318,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerColor
   - hash:
       serializedVersion: 2
-      Hash: 6cae70b4ac243c9dce819bf2a8fb06f8
+      Hash: ff569944a91bd32f05d93017b63fbfee
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: 
     className: s_triglink
@@ -1322,7 +1348,7 @@ ScriptsOnlyBuild:
     className: s_statReq
   - hash:
       serializedVersion: 2
-      Hash: e92d643d0ef1eb489c3be931adcb7870
+      Hash: df507ccd93a2336ad697e00204904c8c
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.Objects
     className: o_bullet
@@ -1430,7 +1456,7 @@ ScriptsOnlyBuild:
     className: AudioPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 623bb83201a0bf0cc9fa8b2519e4d603
+      Hash: b57e727435f0d8a09ecfe9280df011b2
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.Objects
     className: o_generic
@@ -1448,7 +1474,7 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 93a4499051bb9b47c6bb035750263b46
+      Hash: 780bf145c1c99c6af93a25cca8484135
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_battleMenu
@@ -1460,7 +1486,7 @@ ScriptsOnlyBuild:
     className: ColorAdjustments
   - hash:
       serializedVersion: 2
-      Hash: 3864f8b048ffda757642ad2c3bf8e3c8
+      Hash: bba9627e16f189fc56ad2e60da210705
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: c_player
@@ -1508,7 +1534,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: a9d9e073ed3e3ae6bc3494035a34058c
+      Hash: 00a1398b5b875c7a83cd783488523d59
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2
     className: s_mapholder
@@ -1526,7 +1552,7 @@ ScriptsOnlyBuild:
     className: PostProcessData
   - hash:
       serializedVersion: 2
-      Hash: c0e944a8c18aea32d722a1d9d957046c
+      Hash: fd45aee8ed6a375579dcf9590d276538
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: 
     className: s_BGM
@@ -1700,7 +1726,7 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 50ae5fb82af473e67388a610390d842d
+      Hash: a2c58b0577e2174d4f485f55de573765
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: s_enemyGroup
@@ -1742,7 +1768,7 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 8bd51d0d33b329cde56e59a27cabbc8e
+      Hash: ac289a3e052923beaee53d345898162e
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.System
     className: s_triggerhandler
@@ -1760,13 +1786,13 @@ ScriptsOnlyBuild:
     className: s_menuswitcher
   - hash:
       serializedVersion: 2
-      Hash: 23716d5a596870817629b34c53f8728f
+      Hash: 44f3c72e65122173a81bb45683459677
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: o_battleCharDataN
   - hash:
       serializedVersion: 2
-      Hash: 5a4662c804cef4f7bd3ccc8e718f5a7c
+      Hash: 4a0f4aee02b6c06121ad07a4fac0c99c
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.Objects
     className: o_trigger
@@ -1820,7 +1846,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 033b98f9282d4327aa2f1faebc36b951
+      Hash: b08c936b9fc44dd42a617ff41131d4b9
     assemblyName: com.magnumfoundation2.runtime.dll
     namespaceName: MagnumFoundation2.Objects
     className: o_character
@@ -1857,7 +1883,7 @@ ScriptsOnlyBuild:
   - Assets/Scenes/3d.unity
   - Assets/Scenes/BattleScene.unity
   - Assets/Scenes/cutscene1.unity
-  - Assets/Scenes/RBA1FinalBoss.unity
+  - Assets/Scenes/afterRBA1FinalBoss.unity
   - Assets/Scenes/EMPTY_SCENE.unity
   playerPath: C:/Users/hamza/Own Games/Unity/Builds/RedBlue adventures II - Darker
-    times Builds/2021/July/31-07-2021/RedBlue adventures II - Darker times.exe
+    times Builds/2021/August/31-08-2021/RedBlue adventures II - Darker times.exe

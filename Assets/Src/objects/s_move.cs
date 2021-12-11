@@ -84,10 +84,10 @@ public class s_move : s_ability
     }
     public STATUS_TYPE statusType;
 
-    public float strBuff;
-    public float vitBuff;
-    public float dexBuff;
-    public float agiBuff;
+    public int strBuff;
+    public int vitBuff;
+    public int dexBuff;
+    public int agiBuff;
 
     public moveRquirementList[] moveRequirements;
 

@@ -143,9 +143,7 @@ public class s_RPGSave : dat_save {
             foreach (var mv in a.currentMoves) {
                 mem.currentMoves.Add(mv.name);
             }
-
-            mem.level = a.level;
-            mem.experience = a.experience;
+            
             if(a.currentPhysWeapon != null)
                 mem.currentPhysWeapon = a.currentPhysWeapon.name;
             if (a.currentRangeWeapon != null)
@@ -202,10 +200,6 @@ public class s_rpgGlobals : s_globals
 
     public List<s_move> extraSkills = new List<s_move>();
     public List<s_passive> extraPassives = new List<s_passive>();
-
-    public GameObject overWorld;
-    public GameObject rpgScene;
-    public GameObject rpgSceneGUI;
 
     //So we can set it's object state once a level has been completed
     public o_locationOverworld locationObjectName;
@@ -310,9 +304,9 @@ public class s_rpgGlobals : s_globals
         else{
             AddItem("Medicine", 5);
             AddItem("Energy drink", 5);
-            AddPartyMember(partyMemberBaseData[0], 1);
-            AddPartyMember(partyMemberBaseData[1], 1);
-            AddPartyMember(partyMemberBaseData[2], 1);
+            //AddPartyMember(partyMemberBaseData[0], 1);
+            //AddPartyMember(partyMemberBaseData[1], 1);
+            //AddPartyMember(partyMemberBaseData[2], 1);
         }
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
     }
@@ -320,8 +314,6 @@ public class s_rpgGlobals : s_globals
     public new void Awake()
     {
         base.Awake();
-        rpgSceneGUI.SetActive(false);
-        rpgScene.SetActive(false);
         if (rpgGlSingleton == null) {
             rpgGlSingleton = this;
             DontDestroyOnLoad(gameObject);
@@ -341,19 +333,31 @@ public class s_rpgGlobals : s_globals
 
     public void SwitchToOverworld(bool isFlee)
     {
+<<<<<<< HEAD
+        if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo == "")
+        {
+            s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
+        } 
+        if (!isFlee)
+            if (locationObjectName != null)
+                locationObjectName.isDone = true;
+=======
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
         rpgScene.SetActive(false);
         rpgSceneGUI.SetActive(false);
-        if(overWorld != null)
-            overWorld.SetActive(true);
+        overWorld.SetActive(true);
         if(!isFlee)
             locationObjectName.isDone = true;
+>>>>>>> parent of aa53cbbb (11/08/2021)
         player.gameObject.SetActive(true);
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);
         s_camera.cam.cameraMode = s_camera.CAMERA_MODE.CHARACTER_FOCUS;
-        AddTriggerState(new triggerState(locationObjectName.name, "Overworld", true));
+        if (locationObjectName != null)
+            AddTriggerState(new triggerState(locationObjectName.name, "Overworld", true));
         SaveData();
+        if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo != "")
+            SceneManager.LoadScene(s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo);
     }
     public override void ClearAllThings()
     {
@@ -369,24 +373,17 @@ public class s_rpgGlobals : s_globals
     public IEnumerator SwitchToBattle(s_enemyGroup gr)
     {
         StartCoroutine(s_triggerhandler.GetInstance().Fade(Color.black, 0.25f));
-        if (overWorld == null)
-            overWorld = GameObject.Find("OverworldObj");
-        s_battleEngine.engineSingleton.enemyGroup = gr;
-        if (overWorld != null)
-        {
-            overWorld.SetActive(false);
-        }
         yield return StartCoroutine(s_camera.GetInstance().ZoomCamera(20, 0.6f));
-        rpgScene.SetActive(true);
-        rpgSceneGUI.SetActive(true);
+        yield return SceneManager.UnloadSceneAsync("Overworld", UnloadSceneOptions.None);
         player.gameObject.SetActive(false);
+        yield return SceneManager.LoadSceneAsync("battle_scene", LoadSceneMode.Additive);
+        s_battleEngine.engineSingleton.enemyGroup = gr;
         s_battleEngine.engineSingleton.isEnabled = true;
         s_battleEngine.engineSingleton.nonChangablePlayers = false;
         s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.StartBattle());
     }
     public IEnumerator SwitchToBattle(s_enemyGroup gr, o_locationOverworld lc) {
         locationObjectName = lc;
-        s_battleEngine.engineSingleton.enemyGroup = gr;
         yield return SwitchToBattle(gr);
     }
 
@@ -408,7 +405,6 @@ public class s_rpgGlobals : s_globals
     {
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
-            newCharacter.level = data.level;
             newCharacter.name = data.name;
             int tempHP = data.health;
             int tempSP = data.stamina;
@@ -433,10 +429,7 @@ public class s_rpgGlobals : s_globals
             {
                 newCharacter.currentRangeWeapon = GetWeapon(data.currentRangedWeapon);
             }
-
-            Array.Copy(newCharacter.characterDataSource.elementAffinities, 
-                newCharacter.elementAffinities,
-                newCharacter.characterDataSource.elementAffinities.Length);
+            
             //newCharacter.inBattle = true;
 
             newCharacter.currentMoves = new List<s_move>();
@@ -455,7 +448,7 @@ public class s_rpgGlobals : s_globals
         }
         partyMembers.Add(newCharacter);
     }
-    public void AddPartyMember(o_battleCharDataN data, int level) {
+    public void AddPartyMember(o_battleCharDataN data) {
 
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
@@ -469,17 +462,15 @@ public class s_rpgGlobals : s_globals
                     newCharacter.inBattle = false;
                 }
             }
-            newCharacter.level = level;
             newCharacter.name = data.name;
-            int tempHP = data.maxHitPointsB;
-            int tempSP = data.maxSkillPointsB;
-            int tempStr = data.strengthB;
-            int tempVit = data.vitalityB;
-            int tempDx = data.dexterityB;
-            //int tempAg = data.spe;
-            int tempAgi = data.agilityB;
-            int tempLuc = data.luckB;
+            int tempHP = data.maxHitPoints;
+            int tempSP = data.maxSkillPoints;
 
+            int tempStr = 5;
+            int tempVit = 5;
+            int tempDx = 5;
+            int tempAgi = 5;
+            
             if (data.defaultRangedWeapon != null)
             {
                 AddWeapon(data.defaultRangedWeapon.name);
@@ -491,38 +482,23 @@ public class s_rpgGlobals : s_globals
                 newCharacter.currentRangeWeapon = data.defaultRangedWeapon;
             }
 
-            Array.Copy(data.elementAffinities, newCharacter.elementAffinities, data.elementAffinities.Length);
             //newCharacter.inBattle = true;
-
+            newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
             
-            for (int i = 1; i < level; i++)
-            {
-                if (i % data.strengthGT == 0)
-                    tempStr++;
-                if (i % data.vitalityGT == 0)
-                    tempVit++;
-                if (i % data.dexterityGT == 0)
-                    tempDx++;
-                if (i % data.agilityGT == 0)
-                    tempAgi++;
-                if (i % data.luckGT == 0)
-                    tempLuc++;
-
-                tempHP += UnityEngine.Random.Range(data.maxHitPointsGMin, data.maxHitPointsGMax);
-                tempSP += UnityEngine.Random.Range(data.maxSkillPointsGMin, data.maxSkillPointsGMax);
-            }
             foreach (s_move mov in data.moveLearn)
             {
                 if (mov == null)
                     continue;
+                /*
                 if (mov.strReq <= tempStr
                     && mov.dxReq <= tempDx
                     && mov.vitReq <= tempVit
                     && mov.agiReq <= tempAgi)
                 {
-                    newCharacter.currentMoves.Add(mov);
                 }
+                */
+                    newCharacter.currentMoves.Add(mov);
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;
@@ -531,7 +507,6 @@ public class s_rpgGlobals : s_globals
             newCharacter.vitality = tempVit;
             newCharacter.dexterity = tempDx;
             newCharacter.agility = tempAgi;
-            newCharacter.luck = tempLuc;
         }
         newCharacter.characterDataSource = data;
         partyMembers.Add(newCharacter);
@@ -540,7 +515,6 @@ public class s_rpgGlobals : s_globals
     {
         o_battleCharPartyData newCharacter = partyMembers.Find(x => data.name == x.name);
         {
-            newCharacter.level = data.level;
             newCharacter.name = data.name;
 
             newCharacter.strength = data.strength;
@@ -554,7 +528,6 @@ public class s_rpgGlobals : s_globals
             newCharacter.maxStamina = data.maxStamina;
 
             newCharacter.currentMoves = data.currentMoves;
-            newCharacter.experience = data.experiencePoints;
         }
     }
     List<s_move> FindComboMoveReqList(s_move.moveRequirement req, o_battleCharacter pc)

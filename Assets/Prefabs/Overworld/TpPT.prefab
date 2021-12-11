@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7421384020106803046}
   m_Layer: 0
   m_Name: Bound
-  m_TagString: Untagged
+  m_TagString: BoundColl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7064863242225514834}
   m_Layer: 0
   m_Name: TpPT
-  m_TagString: Untagged
+  m_TagString: BattleTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,6 +165,7 @@ MonoBehaviour:
   gravity: 0
   rbody2d: {fileID: 0}
   rendererObj: {fileID: 4906098191542862117}
+  animHand: {fileID: 0}
   useCondition: 0
   disspearOnConditionTrue: 0
   logicType: 0
@@ -178,6 +179,7 @@ MonoBehaviour:
   switchD: 0
   conditions: []
   eventScript: {fileID: 0}
+  TRIGGER_T: 0
   mapName: First area
   locationType: 0
   isDone: 0

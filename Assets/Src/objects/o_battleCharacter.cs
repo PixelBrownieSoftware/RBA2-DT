@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ELEMENT_WEAKNESS {
+    NONE,
+    FRAIL,
+    NULL,
+    REFLECT,
+    ABSORB
+}
+
 public enum STATUS_EFFECT
 {
     NONE = -1,
@@ -13,40 +21,26 @@ public enum STATUS_EFFECT
     FROZEN,
     NAUSEA,
     CONFUSED,
-    INFATUATED
+    INFATUATED,
+    SMIRK,
+    RAGE,
+    STRAIN,
+    DEPRESSED
 }
 public enum ELEMENT { 
-    NORMAL,
-    FORCE,
+    NONE,
+    STRIKE,
     PEIRCE,
     FIRE,
     ICE,
+    WATER,
     ELECTRIC,
     EARTH,
     WIND,
     BIO,
     DARK,
     LIGHT,
-    PSYCHIC,
-    
-    //COMBO-EXCLUSIVE ELEMENTS
-    WATER,  //FIRE + ICE
-    NEUCLEAR,   //ELECTRIC + BIO
-    MAGMA,
-    BLESS,
-    CURSE,
-    NERVE,
-
-    ALMIGHTY,
-
-    UNKNOWN = -1
-}
-
-[System.Serializable]
-public class s_learnMove
-{
-    public string moveName;
-    public int level;
+    PSYCHIC
 }
 
 [System.Serializable]
@@ -201,8 +195,6 @@ public struct s_moveAnim
 public class o_battleCharPartyData
 {
     public string name;
-    public int level;
-    public float experience;
     public int maxHealth, health;
     public int maxStamina, stamina;
 
@@ -210,29 +202,17 @@ public class o_battleCharPartyData
     public int vitality;
     public int dexterity;
     public int agility;
-    public int luck;
 
     public int knowledgePoints;
     public bool inBattle;
+    public bool isActive = true;
 
     public o_battleCharDataN characterDataSource;
     public List<s_move> currentMoves = new List<s_move>();
     public List<s_move> extraSkills = new List<s_move>();
     public List<s_passive> passives = new List<s_passive>();
-    public float[] elementAffinities = new float[12] {
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1
-    };
+    public element_affinity elementAffinities;
+    public element_weaknesses elementWeakness;
     public o_weapon currentPhysWeapon;
     public o_weapon currentRangeWeapon;
     public s_consumable consumable;
@@ -313,20 +293,18 @@ public class s_statusEff
 
 public class o_battleCharacter : MonoBehaviour
 {
-    public int level;
     public int maxHealth, health;
     public int maxStamina, stamina;
-    public float experiencePoints;
 
     public int strength;
     public int vitality;
     public int dexterity;
     public int agility;
 
-    public float strengthBuff;
-    public float vitalityBuff;
-    public float dexterityBuff;
-    public float agilityBuff;
+    public int strengthBuff;
+    public int vitalityBuff;
+    public int dexterityBuff;
+    public int agilityBuff;
 
     public List<s_move> currentMoves;
     public List<s_move> extraSkills;
@@ -336,7 +314,8 @@ public class o_battleCharacter : MonoBehaviour
     public s_rpganim animations;
 
     public o_battleCharDataN battleCharData;
-    public float[] elementals = new float[12];
+    public element_weaknesses elementals;
+    public element_affinity elementalAffinities;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
     public Rigidbody2D rbody2d;
@@ -416,6 +395,9 @@ public class o_battleCharacter : MonoBehaviour
         {
             switch (stat.status)
             {
+                case STATUS_EFFECT.SMIRK:
+                    statusEffs.Add("smk");
+                    break;
                 case STATUS_EFFECT.POISON:
                     statusEffs.Add("psn");
                     break;
@@ -456,6 +438,9 @@ public class o_battleCharacter : MonoBehaviour
             }
             switch (statusEffs[statusFlipIndex])
             {
+                case "smk":
+                    statusEffectIcon.sprite = poisionIcon;
+                    break;
                 case "psn":
                     statusEffectIcon.sprite = poisionIcon;
                     break;
@@ -507,11 +492,23 @@ public class o_battleCharacter : MonoBehaviour
         }
         return false;
     }
+
     public void SetStatus(s_statusEff statEff)
     {
         if (statusEffects.Find(x => x.status == statEff.status) == null)
         {
-            statusEffects.Add(statEff);
+            if (statEff.status == STATUS_EFFECT.SMIRK)
+            {
+                if (statusEffects.Count > 0)
+                    statusEffects.Add(statEff);
+            }
+            else
+            {
+                statusEffects.Add(statEff);
+                if (statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK) != null) {
+                    statusEffects.Remove(statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK));
+                }
+            }
         }
     }
     public s_statusEff GetStatus(STATUS_EFFECT statEff) {

@@ -90,6 +90,7 @@ public class ed_move : Editor
 
                     EditorGUILayout.LabelField("Base damage: " + data.power);
                     string requirements = "Stat requirements: ";
+                    /*
                     if (data.strReq > 0)
                         requirements += " Str - " + data.strReq + " ";
                     if (data.vitReq > 0)
@@ -98,6 +99,7 @@ public class ed_move : Editor
                         requirements += " Dex - " + data.dxReq + " ";
                     if (data.agiReq > 0)
                         requirements += " Agi - " + data.agiReq + " ";
+                    */
                     EditorGUILayout.LabelField(requirements);
                     EditorGUILayout.BeginHorizontal();
                     string tech = "";

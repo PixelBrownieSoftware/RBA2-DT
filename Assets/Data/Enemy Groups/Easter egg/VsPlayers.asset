@@ -9,45 +9,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 576e9e2a0c156ca4b8a2c4dce793443c, type: 3}
   m_Name: VsPlayers
   m_EditorClassIdentifier: 
   fleeable: 1
-  fixedPlayers: 1
   sceneToGoTo: 
-  members:
-  - memberDat: {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
+  enemyMembers:
+  - memberDat: {fileID: 11400000, guid: b4879d456125ba64aacd8355126e379b, type: 2}
     levType: 1
-    level: 30
+    level: 15
     maxLevel: 0
     extraSkills: []
     passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
+  - memberDat: {fileID: 11400000, guid: b1e664686a7ed1f4294d3fa9e62fad7a, type: 2}
     levType: 1
-    level: 30
+    level: 15
     maxLevel: 0
     extraSkills: []
     passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
+  - memberDat: {fileID: 11400000, guid: 6450f15744802fd47b16b554552f4a36, type: 2}
     levType: 1
-    level: 30
+    level: 15
     maxLevel: 0
     extraSkills: []
     passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 5399aed7d56626e4a8a534cc3b3e7327, type: 2}
+  playerMembers:
+  - memberDat: {fileID: 11400000, guid: 96ed822c9b2791140ac520b584458c08, type: 2}
     levType: 1
-    level: 30
+    level: 6
     maxLevel: 0
     extraSkills: []
     passives: []
     weaponSelections: []
-  members_Player:
-  - memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
     levType: 1
-    level: 35
+    level: 6
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 0ec938a4357528b48be71c7985cec35f, type: 2}
+    levType: 1
+    level: 6
     maxLevel: 0
     extraSkills: []
     passives: []

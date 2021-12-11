@@ -170,7 +170,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuskins: {fileID: 11400000, guid: fea8b1fe441063a44b0f6fc1d3916841, type: 2}
   menuOffsetPosition: {x: 0, y: 0}
+  optionsOffsetPosition: {x: 0, y: 0}
   seperator: 0
+  play_button_size: 90
+  load_button_size: 90
+  option_button_size: 90
+  menuButtonOffset: {x: 0, y: 0}
   fade: {fileID: 0}
   _buttonList: []
   _keyList:
@@ -180,7 +185,7 @@ MonoBehaviour:
   - down
   - back
   - select
-  mainGameLoad: cutscene1
+  mainGameLoad: Overworld
   areaPartLoad: 97
 --- !u!1 &1061445916
 GameObject:

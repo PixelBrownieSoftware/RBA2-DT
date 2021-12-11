@@ -12,47 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Looney
   m_EditorClassIdentifier: 
-  level: 4
   money: 0.2
-  maxSkillPointsB: 6
-  maxHitPointsB: 8
-  strengthB: 2
-  vitalityB: 2
-  dexterityB: 1
-  luckB: 1
-  agilityB: 3
+  maxSkillPoints: 14
+  maxHitPoints: 26
+  characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
-  healthGT: 1
-  staminaGT: 1
-  strengthGT: 3
-  vitalityGT: 3
-  dexterityGT: 3
-  agilityGT: 2
-  luckGT: 1
-  maxSkillPointsGMax: 2
-  maxSkillPointsGMin: 2
-  maxHitPointsGMax: 3
-  maxHitPointsGMin: 2
   turnIcons: 1
-  currentMoves: []
   moveLearn:
   - {fileID: 11400000, guid: cd6f1c0bc01235046909664e132e2dce, type: 2}
   elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 2
-  - 2
-  - 2
-  - 2
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+    strike: 1
+    peirce: 0
+    fire: 0
+    ice: -4
+    water: 0
+    electric: -2
+    wind: -4
+    earth: -6
+    psychic: -5
+    light: -3
+    dark: 0
+    heal: -3
+    support: -6
+  elementWeaknesses:
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    bio: 0
   characterColour: {r: 0.9622642, g: 0.937638, b: 0.48567107, a: 1}
   characterColour2: {r: 0.8773585, g: 0.77332914, b: 0.33521718, a: 1}
-  skillAffinities: []
   aiPages:
   - ai:
     - move: {fileID: 11400000, guid: cd6f1c0bc01235046909664e132e2dce, type: 2}

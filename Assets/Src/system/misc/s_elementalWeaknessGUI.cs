@@ -25,36 +25,32 @@ public class s_elementalWeaknessGUI : MonoBehaviour
     void Update()
     {
         if (bcD != null) {
-            float aff = bcD.elementAffinities[(int)el];
-            if (aff > 1.999f)
-            {
-                weakTXT.text = "Frail";
-                weakImg.color = frail;
-            }
-            else if (aff < 2 && aff >= 1)
-            {
-                weakTXT.text = "";
-                weakImg.color = normal;
-            }
-            else if (aff < 1 && aff> 0) {
+            ELEMENT_WEAKNESS aff = bcD.elementWeakness[el];
+            switch (aff) {
+                case ELEMENT_WEAKNESS.FRAIL:
+                    weakTXT.text = "Frail";
+                    weakImg.color = frail;
+                    break;
 
-                weakTXT.text = "Res";
-                weakImg.color = resist;
-            }
-            else if (aff == 0)
-            {
-                weakTXT.text = "Void";
-                weakImg.color = voidDMG;
-            }
-            else if (aff < 0 && aff > -1.999f)
-            {
-                weakTXT.text = "Ref";
-                weakImg.color = reflect;
-            }
-            else if (aff < -2)
-            {
-                weakTXT.text = "Abs";
-                weakImg.color = absorb;
+                case ELEMENT_WEAKNESS.NONE:
+                    weakTXT.text = "";
+                    weakImg.color = normal;
+                    break;
+
+                case ELEMENT_WEAKNESS.ABSORB:
+                    weakTXT.text = "Abs";
+                    weakImg.color = absorb;
+                    break;
+
+                case ELEMENT_WEAKNESS.REFLECT:
+                    weakTXT.text = "Ref";
+                    weakImg.color = reflect;
+                    break;
+
+                case ELEMENT_WEAKNESS.NULL:
+                    weakTXT.text = "Void";
+                    weakImg.color = voidDMG;
+                    break;
             }
             weakTXTShadow.text = weakTXT.text;
         }

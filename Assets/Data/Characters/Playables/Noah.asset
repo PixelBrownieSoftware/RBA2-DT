@@ -12,48 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Noah
   m_EditorClassIdentifier: 
-  level: 4
   money: 0
-  maxSkillPointsB: 11
-  maxHitPointsB: 15
-  strengthB: 2
-  vitalityB: 3
-  dexterityB: 3
-  luckB: 1
-  agilityB: 1
+  maxSkillPoints: 15
+  maxHitPoints: 20
+  characterPassive: {fileID: 0}
   battleImage: {fileID: 6658302565525092250, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
-  healthGT: 1
-  staminaGT: 2
-  strengthGT: 2
-  vitalityGT: 2
-  dexterityGT: 2
-  agilityGT: 2
-  luckGT: 1
-  maxSkillPointsGMax: 4
-  maxSkillPointsGMin: 3
-  maxHitPointsGMax: 4
-  maxHitPointsGMin: 3
-  currentMoves: []
+  turnIcons: 1
   moveLearn:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 2
-  - 0.5
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+    strike: 0
+    peirce: -4
+    fire: -2
+    ice: 3
+    water: 4
+    electric: 0
+    wind: 2
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    heal: 4
+    support: 3
+  elementWeaknesses:
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    bio: 0
   characterColour: {r: 0.3915094, g: 0.7557806, b: 1, a: 1}
   characterColour2: {r: 0.19579923, g: 0.46207052, b: 0.754717, a: 1}
-  skillAffinities: []
   aiPages:
   - ai:
     - move: {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
@@ -80,7 +77,8 @@ MonoBehaviour:
       number2: 0
   anim: {fileID: 9100000, guid: 4cdca35113b95524e8ecf29561e58b23, type: 2}
   items: []
-  defaultWeapon: {fileID: 0}
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1

@@ -44,7 +44,7 @@ public class s_statusMenu : s_menucontroller
             {
                 health.text = "" + characterData.maxHealth;
                 stamina.text = "" + characterData.maxStamina;
-                nameCharacter.text = characterData.name + " Level - " + characterData.level;
+                nameCharacter.text = characterData.name;
                 str.amount = characterData.strength;
                 dx.amount = characterData.dexterity;
                 agi.amount = characterData.agility;

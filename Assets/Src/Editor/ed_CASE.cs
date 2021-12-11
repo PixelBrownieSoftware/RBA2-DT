@@ -26,6 +26,56 @@ public struct s_skillData
     public List<s_move> skilldata;
 }
 
+[System.Serializable]
+public class s_characterElementalAffinities
+{
+    public s_characterElementalAffinities(
+        int strike,
+        int peirce,
+        int fire,
+        int ice,
+        int water,
+        int electric,
+        int wind,
+        int earth,
+        int psychic,
+        int light,
+        int dark,
+        int heal,
+        int support)
+    {
+        this.strike = strike;
+        this.peirce = peirce;
+        this.fire = fire;
+        this.ice = ice;
+        this.water = water;
+        this.electric = electric;
+        this.wind = wind;
+        this.earth = earth;
+        this.psychic = psychic;
+        this.light = light;
+        this.dark = dark;
+        this.heal = heal;
+        this.support = support;
+    }
+
+
+    public int strike;
+    public int peirce;
+
+    public int fire;
+    public int ice;
+    public int water;
+    public int electric;
+    public int wind;
+    public int earth;
+    public int psychic;
+    public int light;
+    public int dark;
+    public int heal;
+    public int support;
+}
+
 [CanEditMultipleObjects]
 [CustomEditor(typeof(o_battleCharDataN))]
 public class ed_CASE : Editor
@@ -43,19 +93,11 @@ public class ed_CASE : Editor
 
     public STAT_DIST_AMOUNT spDist;
     public STAT_DIST_AMOUNT spGDist;
-
-    public STAT_DIST_AMOUNT strDist;
-    public STAT_DIST_AMOUNT vitDist;
-    public STAT_DIST_AMOUNT dexDist;
-    public STAT_DIST_AMOUNT agilDist;
-
     public STAT_DIST_AMOUNT hpDistG;
     public STAT_DIST_AMOUNT spDistG;
-    public STAT_DIST_AMOUNT strDistG;
-    public STAT_DIST_AMOUNT vitDistG;
-    public STAT_DIST_AMOUNT dexDistG;
-    public STAT_DIST_AMOUNT agilDistG;
 
+    private int statDist = 10;
+    
     public List<charAI> characterAI = null;
     Sprite[] sprites;
     int listArray;
@@ -69,7 +111,6 @@ public class ed_CASE : Editor
     bool isLoadedCharacter = false;
     string directoryMove;
     string element;
-    int level = 1;
 
     //public List<o_ite> itemdata;
     public List<s_move> skilldata;
@@ -111,7 +152,92 @@ public class ed_CASE : Editor
         }
         return lists;
     }
+    public void ChangeStatElementWeakness(ref ELEMENT_WEAKNESS stat, string elName)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField(elName);
+        stat = (ELEMENT_WEAKNESS)EditorGUILayout.EnumPopup(stat);
+        EditorGUILayout.EndHorizontal();
+    }
+    public void ChangeStatElemenAffinities(ref int stat, string elName)
+    {
+        EditorGUILayout.BeginHorizontal();
+        int amountDamagePlus = 0;
+        int amountDiscount = 0;
 
+        bool statNegative = stat < 0;
+
+        if (statNegative)
+        {
+            for (int i = 0; i < Mathf.Abs(stat); i++)
+            {
+                if (i % 3 == 0)
+                {
+                    amountDiscount++;
+                    continue;
+                }
+                amountDamagePlus++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < stat; i++)
+            {
+                if (i % 3 == 0)
+                {
+                    amountDiscount++;
+                    continue;
+                }
+                amountDamagePlus++;
+            }
+        }
+
+        string colBad = ColorUtility.ToHtmlStringRGB(Color.red);
+        string colGood = ColorUtility.ToHtmlStringRGB(Color.red);
+
+        if (statNegative)
+        {
+            EditorGUILayout.LabelField(elName + " - " + amountDamagePlus + " Damage" + " + " + amountDiscount + " Cost");
+        }
+        else
+        {
+            if (amountDamagePlus > 0)
+            {
+                EditorGUILayout.LabelField(elName + " + " + amountDamagePlus + " Damage" + " - " + amountDiscount + " Cost");
+            }
+            else {
+                EditorGUILayout.LabelField(elName);
+            }
+        }
+        if (charaData.elementAffinities.CalculateTotal() >= statDist)
+        {
+            int prevStat = stat;
+            stat = EditorGUILayout.IntSlider(stat, -15, 15);
+            if(stat > prevStat)
+                stat = prevStat;
+        }
+        else
+        {
+            stat = EditorGUILayout.IntSlider(stat, -15, 15);
+        }
+        EditorGUILayout.EndHorizontal();
+    }
+
+    public float ChangeStatFloatSlider(ref float stat1, float max, float min)
+    {
+        float curStat = stat1;
+        float prevStat = stat1;
+        curStat = EditorGUILayout.Slider(curStat, min, max);
+        /*
+        if (curStat != prevStat)
+        {
+            EditorUtility.SetDirty(charaData);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+        */
+        return curStat;
+    }
     public override void OnInspectorGUI()
     {
         if (GUILayout.Button("Save"))
@@ -120,14 +246,15 @@ public class ed_CASE : Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-        tabChar = GUILayout.Toolbar(tabChar, new string[] { "Overview", "Stats", "Moves", "Elements", "AI" });
+        tabChar = GUILayout.Toolbar(tabChar, new string[] { "Overview", "Stats", "Moves", "Elements", "AI", "Raw data" });
         switch (tabChar)
         {
             case 0:
-                EditorGUILayout.LabelField("Simulated stats based on level");
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Name: " + charaData.name);
-                level = (int)EditorGUILayout.Slider(level, 1, 100);
+<<<<<<< HEAD
+=======
+                charaData.level = (int)EditorGUILayout.Slider(charaData.level, 1, 100);
                 {
                     int tempHPMin = charaData.maxHitPointsB;
                     int tempSPMin = charaData.maxSkillPointsB;
@@ -138,7 +265,7 @@ public class ed_CASE : Editor
                     int tempDx = charaData.dexterityB;
                     int tempLuc = charaData.luckB;
 
-                    for (int i = 1; i < level; i++)
+                    for (int i = 1; i < charaData.level; i++)
                     {
                         if (i % charaData.strengthGT == 0)
                             tempStr++;
@@ -148,22 +275,27 @@ public class ed_CASE : Editor
                             tempDx++;
                         if (i % charaData.luckGT == 0)
                             tempLuc++;
+>>>>>>> parent of aa53cbbb (11/08/2021)
 
-                        tempHPMin += charaData.maxHitPointsGMin;
-                        tempSPMin += charaData.maxSkillPointsGMin;
+                int tempHPMin = charaData.maxHitPoints;
+                int tempSPMin = charaData.maxSkillPoints;
+                int tempHPMax = charaData.maxHitPoints;
+                int tempSPMax = charaData.maxSkillPoints;
+                /*
+                int tempStr = charaData.strength;
+                int tempVit = charaData.vitality;
+                int tempDx = charaData.dexterity;
+                int tempAgi = charaData.agility;
+                */
 
-                        tempHPMax += charaData.maxHitPointsGMax;
-                        tempSPMax += charaData.maxSkillPointsGMax;
-                        //tempHP += Random.Range(data.maxHitPointsGMin, data.maxHitPointsGMax);
-                        //tempSP += Random.Range(data.maxSkillPointsGMin, data.maxSkillPointsGMax);
-                    }
-                    EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
-                    EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
-                    EditorGUILayout.LabelField("Strength: " + tempStr);
-                    EditorGUILayout.LabelField("Vitality: " + tempVit);
-                    EditorGUILayout.LabelField("Dexterity: " + tempDx);
-                    EditorGUILayout.LabelField("Luck: " + tempLuc);
-                }
+                EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
+                EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
+                /*
+                EditorGUILayout.LabelField("Strength: " + tempStr);
+                EditorGUILayout.LabelField("Vitality: " + tempVit);
+                EditorGUILayout.LabelField("Dexterity: " + tempDx);
+                EditorGUILayout.LabelField("Agility: " + tempAgi);
+                */
                 base.OnInspectorGUI();
                 break;
 
@@ -205,6 +337,7 @@ public class ed_CASE : Editor
 
                 if (GUILayout.Button("Generate Stat distribution"))
                 {
+                    /*
                     #region HP
                     switch (hpDist)
                     {
@@ -287,90 +420,7 @@ public class ed_CASE : Editor
                             break;
                     }
                     #endregion
-
-                    #region SP
-                    switch (spDist)
-                    {
-                        case STAT_DIST_AMOUNT.VERY_LOW:
-                            charaData.maxSkillPointsB = Random.Range(BSvlowBoundPTS.x, BSvlowBoundPTS.y);
-                            break;
-                        case STAT_DIST_AMOUNT.LOW:
-                            charaData.maxSkillPointsB = Random.Range(BSlowBoundPTS.x, BSlowBoundPTS.y);
-                            break;
-                        case STAT_DIST_AMOUNT.AVERAGE:
-                            charaData.maxSkillPointsB = Random.Range(BSavgBoundPTS.x, BSavgBoundPTS.y);
-                            break;
-                        case STAT_DIST_AMOUNT.HIGH:
-                            charaData.maxSkillPointsB = Random.Range(BShighBoundPTS.x, BShighBoundPTS.y);
-                            break;
-                        case STAT_DIST_AMOUNT.VERY_HIGH:
-                            charaData.maxSkillPointsB = Random.Range(BSvhighBoundPTS.x, BSvhighBoundPTS.y);
-                            break;
-                    }
-                    switch (spDistG)
-                    {
-                        case STAT_DIST_AMOUNT.VERY_LOW:
-                            charaData.maxSkillPointsGMin = Random.Range(LWvlowBoundPTS.x, LWvlowBoundPTS.y);
-                            if (charaData.maxSkillPointsGMin > HGvlowBoundPTS.x)
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(charaData.maxSkillPointsGMin, HGvlowBoundPTS.y);
-                            }
-                            else
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(HGvlowBoundPTS.x, HGvlowBoundPTS.y);
-                            }
-                            break;
-
-                        case STAT_DIST_AMOUNT.LOW:
-                            charaData.maxSkillPointsGMin = Random.Range(LWlowBoundPTS.x, LWlowBoundPTS.y);
-                            if (charaData.maxSkillPointsGMin > HGlowBoundPTS.x)
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(charaData.maxHitPointsGMin, HGlowBoundPTS.y);
-                            }
-                            else
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(HGlowBoundPTS.x, HGlowBoundPTS.y);
-                            }
-                            break;
-
-                        case STAT_DIST_AMOUNT.AVERAGE:
-                            charaData.maxSkillPointsGMin = Random.Range(LWavgBoundPTS.x, LWavgBoundPTS.y);
-                            if (charaData.maxSkillPointsGMin > HGavgBoundPTS.x)
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(charaData.maxSkillPointsGMin, HGavgBoundPTS.y);
-                            }
-                            else
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(HGavgBoundPTS.x, HGavgBoundPTS.y);
-                            }
-                            break;
-
-                        case STAT_DIST_AMOUNT.HIGH:
-                            charaData.maxSkillPointsGMin = Random.Range(LWhighBoundPTS.x, LWhighBoundPTS.y);
-                            if (charaData.maxSkillPointsGMin > HGhighBoundPTS.x)
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(charaData.maxSkillPointsGMin, HGhighBoundPTS.y);
-                            }
-                            else
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(HGhighBoundPTS.x, HGhighBoundPTS.y);
-                            }
-                            break;
-
-                        case STAT_DIST_AMOUNT.VERY_HIGH:
-                            charaData.maxSkillPointsGMin = Random.Range(LWvhighBoundPTS.x, LWvhighBoundPTS.y);
-                            if (charaData.maxSkillPointsGMin > HGvhighBoundPTS.x)
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(charaData.maxSkillPointsGMin, HGvhighBoundPTS.y);
-                            }
-                            else
-                            {
-                                charaData.maxSkillPointsGMax = Random.Range(HGvhighBoundPTS.x, HGvhighBoundPTS.y);
-                            }
-                            break;
-                    }
-                    #endregion
-
+                    
                     #region STRENGTH
                     {
                         int statB = 0;
@@ -438,8 +488,6 @@ public class ed_CASE : Editor
                                 statG = Random.Range(vhighBoundG.x, vhighBoundG.y);
                                 break;
                         }
-                        charaData.vitalityB = statB;
-                        charaData.vitalityGT = statG;
                     }
                     #endregion
 
@@ -514,23 +562,17 @@ public class ed_CASE : Editor
                         charaData.agilityGT = statG;
                     }
                     #endregion
+                    */
                 }
 
                 EditorGUILayout.LabelField("Base stats");
                 hpDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Health distribution", hpDist);
                 spDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Stamina distribution", spDist);
-                strDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Strength distribution", strDist);
-                dexDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Dexterity distribution", dexDist);
-                vitDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Vitality distribution", vitDist);
-                agilDist = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Agility distribution", agilDist);
 
                 EditorGUILayout.LabelField("Growth stats");
                 hpDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Health growth distribution", hpDistG);
                 spDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Stamina growth distribution", spDistG);
-                strDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Strength growth distribution", strDistG);
-                dexDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Dexterity growth distribution", dexDistG);
-                vitDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Vitality growth distribution", vitDistG);
-                agilDistG = (STAT_DIST_AMOUNT)EditorGUILayout.EnumPopup("Agility growth distribution", agilDistG);
+
 
 
                 #endregion
@@ -545,81 +587,61 @@ public class ed_CASE : Editor
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Health: ");
-                charaData.maxHitPointsB = EditorGUILayout.IntField(charaData.maxHitPointsB);
+                charaData.maxHitPoints = EditorGUILayout.IntSlider(charaData.maxHitPoints, 1, 300);
                 EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth min: ");
-                charaData.maxHitPointsGMin = EditorGUILayout.IntField(charaData.maxHitPointsGMin);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth max: ");
-                charaData.maxHitPointsGMax = EditorGUILayout.IntField(charaData.maxHitPointsGMax);
-                EditorGUILayout.EndHorizontal();
-
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Stamina: ");
-                charaData.maxSkillPointsB = EditorGUILayout.IntField(charaData.maxSkillPointsB);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth min: ");
-                charaData.maxSkillPointsGMin = EditorGUILayout.IntField(charaData.maxSkillPointsGMin);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth max: ");
-                charaData.maxSkillPointsGMax = EditorGUILayout.IntField(charaData.maxSkillPointsGMax);
+                charaData.maxSkillPoints = EditorGUILayout.IntSlider(charaData.maxSkillPoints, 1, 300);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Total stats " + charaData.elementAffinities.CalculateTotal() + "/ " + statDist);
+                
 
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.strike, "Strike");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.peirce, "Peirce/Gun");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.fire, "Fire");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.water, "Water");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.ice, "Ice");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.electric, "Electric");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.wind, "Wind");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.earth, "Earth");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.psychic, "Psychic");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.light, "Light");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.dark, "Dark");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.heal, "Healing");
+                ChangeStatElemenAffinities(ref charaData.elementAffinities.support, "Support");
+                /*
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Strength: ");
-                charaData.strengthB = EditorGUILayout.IntField(charaData.strengthB);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth turns: ");
-                charaData.strengthGT = EditorGUILayout.IntField(charaData.strengthGT);
+                charaData.strength = EditorGUILayout.IntSlider(charaData.strength, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Vitality: ");
-                charaData.vitalityB = EditorGUILayout.IntField(charaData.vitalityB);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth turns: ");
-                charaData.vitalityGT = EditorGUILayout.IntField(charaData.vitalityGT);
+                charaData.vitality = EditorGUILayout.IntSlider(charaData.vitality, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Dexterity: ");
-                charaData.dexterityB = EditorGUILayout.IntField(charaData.dexterityB);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth turns: ");
-                charaData.dexterityGT = EditorGUILayout.IntField(charaData.dexterityGT);
+                charaData.dexterity = EditorGUILayout.IntSlider(charaData.dexterity, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Luck: ");
-                charaData.luckB = EditorGUILayout.IntField(charaData.luckB);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Growth turns: ");
-                charaData.luckGT = EditorGUILayout.IntField(charaData.luckGT);
+                EditorGUILayout.LabelField("Agility: ");
+                charaData.agility = EditorGUILayout.IntSlider(charaData.agility, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
+                */
                 break;
             #endregion
 
@@ -655,197 +677,30 @@ public class ed_CASE : Editor
             #endregion
 
             case 3:
-                /*
-                elementSliderSelector = (ELEMENT)EditorGUILayout.EnumPopup(elementSliderSelector);
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.strike, "Strike");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.peirce, "Peirce");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.fire, "Fire");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.ice, "Ice");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.water, "Water");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.electric, "Electric");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.wind, "Wind");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.earth, "Earth");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.psychic, "Psychic");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.dark, "Dark");
+                ChangeStatElementWeakness(ref charaData.elementWeaknesses.light, "Light");
 
                 EditorGUILayout.BeginHorizontal();
-                switch (elementSliderSelector)
+                /*
+                float elementWeakness = 0f;
+                if (elementSliderSelector > ELEMENT.UNKNOWN && elementSliderSelector < ELEMENT.PSYCHIC + 1)
                 {
-                    case ELEMENT.NORMAL:
-                        element = "Strike";
-                        break;
-                    case ELEMENT.PEIRCE:
-                        element = "Peirce";
-                        break;
-                    case ELEMENT.FORCE:
-                        element = "Force";
-                        break;
-                    case ELEMENT.FIRE:
-                        element = "Fire";
-                        break;
-                    case ELEMENT.ICE:
-                        element = "Ice";
-                        break;
-                    case ELEMENT.WIND:
-                        element = "Wind";
-                        break;
-                    case ELEMENT.ELECTRIC:
-                        element = "Electirc";
-                        break;
-                    case ELEMENT.EARTH:
-                        element = "Earth";
-                        break;
-                    case ELEMENT.POISON:
-                        element = "Poison";
-                        break;
-                }
-                if (elementSliderSelector != ELEMENT.UNKNOWN)
-                {
+                    elementWeakness = charaData.elementAffinities[(int)elementSliderSelector];
                     EditorGUILayout.LabelField(element + ": ");
-                    data.elementTypeCharts[(int)elementSliderSelector] = EditorGUILayout.Slider(data.elementTypeCharts[(int)elementSliderSelector], -1.9f, 2.9f);
-                    EditorGUILayout.EndHorizontal();
-                }
-                for (int i = 0; i < 13; i++)
-                {
-                    ELEMENT elemen = (ELEMENT)i;
-                    string str = "";
-
-                    switch (elemen)
-                    {
-
-                        case ELEMENT.NORMAL:
-                            str = "Strike";
-                            break;
-                        case ELEMENT.PEIRCE:
-                            str = "Peirce";
-                            break;
-                        case ELEMENT.PSYCHIC:
-                            str = "Psychic";
-                            break;
-                        case ELEMENT.WATER:
-                            str = "Water";
-                            break;
-                        case ELEMENT.LIGHT:
-                            str = "Light";
-                            break;
-                        case ELEMENT.DARK:
-                            str = "Dark";
-                            break;
-                        case ELEMENT.FORCE:
-                            str = "Force";
-                            break;
-                        case ELEMENT.FIRE:
-                            str = "Fire";
-                            break;
-                        case ELEMENT.ICE:
-                            str = "Ice";
-                            break;
-                        case ELEMENT.WIND:
-                            str = "Wind";
-                            break;
-                        case ELEMENT.ELECTRIC:
-                            str = "Electirc";
-                            break;
-                        case ELEMENT.EARTH:
-                            str = "Earth";
-                            break;
-                        case ELEMENT.POISON:
-                            str = "Poison";
-                            break;
-                    }
-
-                    ///NOTE THAT 
-                    ///-0.000001 -> -1 IS REFLECT
-                    ///-1.000001 -> -2 IS ABSORB
-                    ///THEY ARE CALCULATED BASED ON THEIR .0 POINTS
-                    ///THE FULL NUMBERS JUST TELL WHAT TYPE IT IS
-
-                    if (data.elementTypeCharts[i] == 0)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + " Immune");
-                    else if (data.elementTypeCharts[i] > 0 && data.elementTypeCharts[i] < 1)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + " Resistant");
-                    else if (data.elementTypeCharts[i] >= 1 && data.elementTypeCharts[i] < 2)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + "");
-                    else if (data.elementTypeCharts[i] >= 2 && data.elementTypeCharts[i] < 3)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + " Weak");
-                    else if (data.elementTypeCharts[i] < 0 && data.elementTypeCharts[i] > -1)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + " Reflect");
-                    else if (data.elementTypeCharts[i] <= 2 && data.elementTypeCharts[i] > -3)
-                        EditorGUILayout.LabelField(str + ": " + data.elementTypeCharts[i] + " Absorb");
-
-                }
-                EditorGUILayout.Space();
-
-                actionSliderSelector = (ACTION_TYPE)EditorGUILayout.EnumPopup(actionSliderSelector);
-                switch (actionSliderSelector)
-                {
-                    case ACTION_TYPE.COMFORT:
-                        element = "Comfort";
-                        break;
-
-                    case ACTION_TYPE.FLIRT:
-                        element = "Flirt";
-                        break;
-
-                    case ACTION_TYPE.INTELLECT:
-                        element = "Intellect";
-                        break;
-
-                    case ACTION_TYPE.PLAYFUL:
-                        element = "Playful";
-                        break;
-
-                    case ACTION_TYPE.THREAT:
-                        element = "Threat";
-                        break;
-
-                }
-                if (actionSliderSelector != ACTION_TYPE.NONE)
-                {
-                    EditorGUILayout.LabelField(element + ": ");
-                    data.actionTypeCharts[(int)actionSliderSelector] = EditorGUILayout.Slider(data.actionTypeCharts[(int)actionSliderSelector], -1.9f, 2.9f);
-                    EditorGUILayout.EndHorizontal();
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    ACTION_TYPE elemen = (ACTION_TYPE)i;
-                    string str = "";
-
-                    switch (elemen)
-                    {
-
-                        case ACTION_TYPE.COMFORT:
-                            str = "Comfort";
-                            break;
-
-                        case ACTION_TYPE.FLIRT:
-                            str = "Flirt";
-                            break;
-
-                        case ACTION_TYPE.INTELLECT:
-                            str = "Intellect";
-                            break;
-
-                        case ACTION_TYPE.PLAYFUL:
-                            str = "Playful";
-                            break;
-
-                        case ACTION_TYPE.THREAT:
-                            str = "Threat";
-                            break;
-                    }
-
-                    ///NOTE THAT 
-                    ///-0.000001 -> -1 IS REFLECT
-                    ///-1.000001 -> -2 IS ABSORB
-                    ///THEY ARE CALCULATED BASED ON THEIR .0 POINTS
-                    ///THE FULL NUMBERS JUST TELL WHAT TYPE IT IS
-
-                    if (data.actionTypeCharts[i] == 0)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + " Immune");
-                    else if (data.actionTypeCharts[i] > 0 && data.actionTypeCharts[i] < 1)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + " Resistant");
-                    else if (data.actionTypeCharts[i] >= 1 && data.actionTypeCharts[i] < 2)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + "");
-                    else if (data.actionTypeCharts[i] >= 2 && data.actionTypeCharts[i] < 3)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + " Weak");
-                    else if (data.actionTypeCharts[i] < 0 && data.actionTypeCharts[i] > -1)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + " Reflect");
-                    else if (data.actionTypeCharts[i] <= 2 && data.actionTypeCharts[i] > -3)
-                        EditorGUILayout.LabelField(str + ": " + data.actionTypeCharts[i] + " Absorb");
-
+                    charaData.elementAffinities[(int)elementSliderSelector] = 
+                        ChangeStatFloatSlider(ref charaData.elementAffinities[(int)elementSliderSelector], -1.9f, 2.9f);
                 }
                 */
+                EditorGUILayout.EndHorizontal();
                 break;
 
             #region AI
@@ -1130,7 +985,11 @@ public class ed_CASE : Editor
                     charaData.aiPages[0].ai = new charAI[charaData.moveLearn.Count];
                 }
                 break;
-                #endregion
+            #endregion
+
+            case 5:
+                base.OnInspectorGUI();
+                break;
         }
 
 

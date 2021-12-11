@@ -19,62 +19,33 @@ public class o_battleCharDataN : ScriptableObject
         public charAI[] ai;
     }
 
+<<<<<<< HEAD
+=======
     [System.Serializable]
     public struct skill_affinity {
         public ELEMENT el;
         public int points;
     }
-    
+
+    public int level;
+>>>>>>> parent of aa53cbbb (11/08/2021)
     public float money;
 
     /// Base stats the character starts with
-    public int maxSkillPointsB = 1;
-    public int maxHitPointsB = 1;
-    public int strengthB = 1;
-    public int vitalityB = 1;
-    public int dexterityB = 1;
-    public int luckB = 1;
-    public int agilityB = 1;
+    public int maxSkillPoints = 1;
+    public int maxHitPoints = 1;
+    
+    public s_passive characterPassive;
 
     public Sprite battleImage;
-
-    //Growth turns
-
-    public int healthGT = 1;
-    public int staminaGT = 1;
-    public int strengthGT = 1;
-    public int vitalityGT = 1;
-    public int dexterityGT = 1;
-    public int agilityGT = 1;
-    public int luckGT = 1;
-
-    //Health and Stamina will be determined by 
-    public int maxSkillPointsGMax = 1;
-    public int maxSkillPointsGMin = 1;
-
-    public int maxHitPointsGMax = 1;
-    public int maxHitPointsGMin = 1;
 
     public int turnIcons = 1;
     
     public List<s_move> moveLearn;
-    public float[] elementAffinities = new float[12] {
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1
-    };
+    public element_affinity elementAffinities;
+    public element_weaknesses elementWeaknesses;
     public Color characterColour = new Color(1, 0.95f, 0.75f);
     public Color characterColour2 = new Color(1, 0.95f, 0.75f);
-    public skill_affinity[] skillAffinities;
 
     public ai_page[] aiPages = new ai_page[1];
     public RuntimeAnimatorController anim;

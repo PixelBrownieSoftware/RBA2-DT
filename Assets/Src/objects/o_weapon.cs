@@ -14,4 +14,5 @@ public class o_weapon : s_move
 
     public WEAPON_TYPE weaponType;
 
+    public int skillPointIncrease, hitPointsIncrease, strength, vitality, dexterity, agility = 0;
 }

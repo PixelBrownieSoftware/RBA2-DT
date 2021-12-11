@@ -29,8 +29,6 @@ public class s_expMenu : s_menucontroller
         foreach (o_battleCharacter bc in s_battleEngine.GetInstance().playerCharacters)
         {
             EXPThings[i].gameObject.SetActive(true);
-            names[i].text = bc.name + " Level " + bc.level;
-            characterEXP[i].value = bc.experiencePoints / 100;
             i++;
         }
     }

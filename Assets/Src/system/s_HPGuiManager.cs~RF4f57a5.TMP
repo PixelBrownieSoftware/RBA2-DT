@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class s_HPGuiManager : MonoBehaviour
+{
+    public s_hpBoxGUI[] HP_GUIS;
+
+    public o_battleCharacter[] battleCharacters;
+
+    public void ClearGUIs() {
+        foreach (var guis in HP_GUIS)
+        {
+            guis.bc = null;
+        }
+    }
+    public void ChangeHPGUI()
+    {
+
+    }
+
+    public void ChangeHPGUI() {
+
+    }
+
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

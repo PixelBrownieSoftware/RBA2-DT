@@ -18,36 +18,18 @@ MonoBehaviour:
   agiReq: 0
   power: 0
   moveType: 2
-  comboType: 0
   moveTarg: 1
   element: 0
+  preAnimations: []
   animations: []
+  endAnimations: []
   statusInflictChance: []
   onParty: 0
   fixedValue: 0
   cost: 0
-  statusType: 0
+  statusType: 6
   strBuff: 0
   vitBuff: 0.2
   dexBuff: 0
   agiBuff: 0
-  Req1:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    element: 0
-    type: 0
-    move: {fileID: 0}
+  moveRequirements: []

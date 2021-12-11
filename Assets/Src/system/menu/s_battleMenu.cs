@@ -111,7 +111,7 @@ public class s_battleMenu : s_menucontroller
         Sprite draw = null;
         switch (img.moveButton.element)
         {
-            case ELEMENT.NORMAL:
+            case ELEMENT.STRIKE:
                 draw = strike_picture;
                 break;
             case ELEMENT.FIRE:
@@ -126,11 +126,8 @@ public class s_battleMenu : s_menucontroller
             case ELEMENT.ELECTRIC:
                 draw = electric_picture;
                 break;
-            case ELEMENT.FORCE:
-                draw = force_picture;
-                break;
-            case ELEMENT.NEUCLEAR:
-                draw = neuclear_picture;
+            case ELEMENT.PEIRCE:
+                draw = perice_picture;
                 break;
             case ELEMENT.WATER:
                 draw = water_picture;
@@ -235,7 +232,7 @@ public class s_battleMenu : s_menucontroller
                     Sprite draw = null;
                     switch (sb.weaponButton.element)
                     {
-                        case ELEMENT.NORMAL:
+                        case ELEMENT.STRIKE:
                             draw = strike_picture;
                             break;
                         case ELEMENT.FIRE:
@@ -250,8 +247,8 @@ public class s_battleMenu : s_menucontroller
                         case ELEMENT.ELECTRIC:
                             draw = electric_picture;
                             break;
-                        case ELEMENT.FORCE:
-                            draw = force_picture;
+                        case ELEMENT.PEIRCE:
+                            draw = perice_picture;
                             break;
                         case ELEMENT.EARTH:
                             draw = earth_picture;
@@ -298,7 +295,7 @@ public class s_battleMenu : s_menucontroller
                     Sprite draw = null;
                     switch (sb.weaponButton.element)
                     {
-                        case ELEMENT.NORMAL:
+                        case ELEMENT.STRIKE:
                             draw = strike_picture;
                             break;
                         case ELEMENT.FIRE:
@@ -313,8 +310,8 @@ public class s_battleMenu : s_menucontroller
                         case ELEMENT.ELECTRIC:
                             draw = electric_picture;
                             break;
-                        case ELEMENT.FORCE:
-                            draw = force_picture;
+                        case ELEMENT.PEIRCE:
+                            draw = perice_picture;
                             break;
                         case ELEMENT.EARTH:
                             draw = earth_picture;
@@ -354,7 +351,7 @@ public class s_battleMenu : s_menucontroller
                     Sprite draw = null;
                     switch (sb.moveButton.element)
                     {
-                        case ELEMENT.NORMAL:
+                        case ELEMENT.STRIKE:
                             draw = strike_picture;
                             break;
                         case ELEMENT.FIRE:
@@ -369,8 +366,8 @@ public class s_battleMenu : s_menucontroller
                         case ELEMENT.ELECTRIC:
                             draw = electric_picture;
                             break;
-                        case ELEMENT.FORCE:
-                            draw = force_picture;
+                        case ELEMENT.PEIRCE:
+                            draw = perice_picture;
                             break;
                         case ELEMENT.EARTH:
                             draw = earth_picture;
@@ -409,7 +406,7 @@ public class s_battleMenu : s_menucontroller
                     Sprite draw = null;
                     switch (sb.moveButton.element)
                     {
-                        case ELEMENT.NORMAL:
+                        case ELEMENT.STRIKE:
                             draw = strike_picture;
                             break;
                         case ELEMENT.FIRE:
@@ -424,8 +421,8 @@ public class s_battleMenu : s_menucontroller
                         case ELEMENT.ELECTRIC:
                             draw = electric_picture;
                             break;
-                        case ELEMENT.FORCE:
-                            draw = force_picture;
+                        case ELEMENT.PEIRCE:
+                            draw = perice_picture;
                             break;
                         case ELEMENT.EARTH:
                             draw = earth_picture;
@@ -545,7 +542,7 @@ public class s_battleMenu : s_menucontroller
                     Sprite draw = null;
                     switch (sb.moveButton.element)
                     {
-                        case ELEMENT.NORMAL:
+                        case ELEMENT.STRIKE:
                             draw = strike_picture;
                             break;
                         case ELEMENT.FIRE:
@@ -560,8 +557,8 @@ public class s_battleMenu : s_menucontroller
                         case ELEMENT.ELECTRIC:
                             draw = electric_picture;
                             break;
-                        case ELEMENT.FORCE:
-                            draw = force_picture;
+                        case ELEMENT.PEIRCE:
+                            draw = perice_picture;
                             break;
                         case ELEMENT.EARTH:
                             draw = earth_picture;
@@ -613,7 +610,8 @@ public class s_battleMenu : s_menucontroller
         vit.statNum = partyCharacter.vitality;
         dex.statNum = partyCharacter.dexterity;
         agi.statNum = partyCharacter.agility;
-
+        
+        /*
         str.requirementNum = mov.strReq;
         vit.requirementNum = mov.vitReq;
         dex.requirementNum = mov.dxReq;
@@ -638,6 +636,7 @@ public class s_battleMenu : s_menucontroller
             agi.gameObject.SetActive(true);
         else
             agi.gameObject.SetActive(false);
+        */
     }
 
     public void ChangeRequirements(s_passive mov)
@@ -647,6 +646,7 @@ public class s_battleMenu : s_menucontroller
         dex.statNum = partyCharacter.dexterity;
         agi.statNum = partyCharacter.agility;
 
+        /*
         str.requirementNum = mov.strReq;
         vit.requirementNum = mov.vitReq;
         dex.requirementNum = mov.dxReq;
@@ -671,6 +671,7 @@ public class s_battleMenu : s_menucontroller
             agi.gameObject.SetActive(true);
         else
             agi.gameObject.SetActive(false);
+        */
     }
 
     public override void ResetButton<T>(T b)

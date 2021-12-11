@@ -245,7 +245,7 @@ MonoBehaviour:
     condFlgNum: 0
     logicType: 6
     isDestroy: 0
-    script: {fileID: 11400000, guid: e7e57e2735b54364fac5ecab31cb6931, type: 2}
+    script: {fileID: 11400000, guid: 0e304999369ea3d40a06640da8ea4210, type: 2}
     linkedObjects: []
     checkFlag: 0
     checkSwitches: 0

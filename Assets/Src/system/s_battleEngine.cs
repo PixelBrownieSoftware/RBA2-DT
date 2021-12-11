@@ -128,7 +128,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public Sprite perice_picture;
     public Sprite hpGUI;
 
-    public s_hpBoxGUI[] HP_GUIS;
+    public s_HPGuiManager HPGUIMan;
     public Image[] PT_GUI;
     public s_hitObj[] damageObjects;
 
@@ -212,7 +212,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 i++;
             }
             */
-            skillMenu.SetActive(false);
+            //skillMenu.SetActive(false);
         }
 
         /*
@@ -234,6 +234,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
 
         //ffff
+        #region CLEAR GUI
+        HPGUIMan.ClearHPGui();
+        #endregion
+
         #region GROUP STUFF 
         {
             bg1.material = enemyGroup.material1;
@@ -266,6 +270,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 int charIndex = 0;
                 if (nonChangablePlayers)
                 {
+                    //HPGUIMan.set
                     for (int i = 0; i < enemyGroup.members_Player.Length; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
@@ -280,12 +285,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         //c.animHandler.
                         SetStatsPlayer(ref c, mem);
                         c.render.color = Color.white;
-                        c.inBattle = true;
                         //c.animHandler.runtimeAnimatorController.animationClips[0].wrapMode = WrapMode.Loop;
                         //c.PlayAnimation("idle");
-                        HP_GUIS[charIndex].bc = c;
+<<<<<<< HEAD
+                        HPGUIMan.SetPartyMember(charIndex, c);
                         charIndex++;
                         /*
+=======
+>>>>>>> parent of aa53cbbb (11/08/2021)
                         if (c != null && HP_GUIS.Length > charIndex)
                         {
                             if (c.inBattle)
@@ -294,7 +301,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 charIndex++;
                             }
                         }
-                        */
                     }
                 }
                 else
@@ -315,11 +321,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         //c.animHandler.runtimeAnimatorController.animationClips[0].wrapMode = WrapMode.Loop;
                         SetStatsPlayer(ref c, pbc);
                         //c.PlayAnimation("idle");
-                        if (c != null && HP_GUIS.Length > charIndex)
+                        if (c != null)
                         {
                             if (c.inBattle)
                             {
-                                HP_GUIS[charIndex].bc = c;
+                                HPGUIMan.SetPartyMember(charIndex,c);
                                 charIndex++;
                             }
                         }
@@ -360,17 +366,17 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             currentPartyCharactersQueue.Clear();
             currentPartyCharactersQueue = new Queue<o_battleCharacter>();
+            int i = 0;
             foreach (o_battleCharacter c in bcs)
             {
                 o_battleCharDataN bc = c.battleCharData;
 
                 if (c.health > 0 && c.inBattle)
                 {
-                    for (int i2 = 0; i2 < bc.turnIcons; i2++)
-                    {
-                        StartCoroutine(TurnIconFX(TURN_ICON_FX.APPEAR, fullTurn));
+                    for(int i2 =0; i2 < bc.turnIcons; i2++)
                         fullTurn++;
-                    }
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.APPEAR, i));
+                    i++;
                     StartCoroutine(PlayFadeCharacter(c, new Color(1, 1, 1, 0), Color.white));
                     yield return new WaitForSeconds(0.15f);
                     currentPartyCharactersQueue.Enqueue(c);
@@ -410,38 +416,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (mem.memberDat.defaultRangedWeapon != null)
             charObj.rangedWeapon = mem.memberDat.defaultRangedWeapon;
 
-        int tempHP = enem.maxHitPointsB;
-        int tempSP = enem.maxSkillPointsB;
-        int tempStr = enem.strengthB;
-        int tempVit = enem.vitalityB;
-        int tempDx = enem.dexterityB;
-        //int tempAg = enem.speedB;
-        //int tempGut = enem.gutsB;
-        int tempLuc = enem.luckB;
+        int tempHP = enem.maxHitPoints;
+        int tempSP = enem.maxSkillPoints;
 
-        for (int i = 1; i < tempLvl; i++)
-        {
-            if (i % enem.strengthGT == 0)
-                tempStr++;
-            if (i % enem.vitalityGT == 0)
-                tempVit++;
-            if (i % enem.dexterityGT == 0)
-                tempDx++;
-            if (i % enem.luckGT == 0)
-                tempLuc++;
-
-            tempHP += UnityEngine.Random.Range(enem.maxHitPointsGMin, enem.maxHitPointsGMax + 1);
-            tempSP += UnityEngine.Random.Range(enem.maxSkillPointsGMin, enem.maxSkillPointsGMax + 1);
-        }
-        //charObj.sprites[0] = enem.characterAnims[0];
-        //charObj.rend.sprite = enem.characterAnims[0];
         charObj.name = enem.name;
-        charObj.level = mem.level;
+<<<<<<< HEAD
+=======
+        charObj.level = enem.level;
+>>>>>>> parent of aa53cbbb (11/08/2021)
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
-        charObj.vitality = tempVit;
-        charObj.dexterity = tempDx;
-        charObj.strength = tempStr;
         charObj.battleCharData = enem;
         charObj.currentMoves = new List<s_move>();
         charObj.extraSkills = new List<s_move>();
@@ -462,7 +446,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         //charObj.speed = tempAg;
         //charObj.actionTypeCharts = enem.actionTypeCharts;
-        charObj.elementals = enem.elementAffinities;
+        charObj.elementals = enem.elementWeaknesses;
+        charObj.elementalAffinities = enem.elementAffinities;
         charObj.character_AI = new o_battleCharDataN.ai_page[enem.aiPages.Length];
         for (int i = 0; i < charObj.character_AI.Length; i++)
         {
@@ -526,28 +511,26 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         oppositionCharacters.Add(charObj);
     }
     
-
     public void SetStatsPlayer(ref o_battleCharacter charObj, o_battleCharPartyData enem)
     {
         int tempHP = enem.maxHealth;
         int tempSP = enem.maxStamina;
-        int tempStr = enem.characterDataSource.strengthB;
-        int tempVit = enem.characterDataSource.vitalityB;
-        int tempDx = enem.characterDataSource.dexterityB;
-        int tempLuc = enem.characterDataSource.luckB;
+        int tempStr = enem.strength;
+        int tempVit = enem.vitality;
+        int tempDx = enem.dexterity;
+        int tempAgi = enem.agility;
         
         charObj.name = enem.name;
-        charObj.level = enem.level;
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.vitality = tempVit;
         charObj.dexterity = tempDx;
         charObj.strength = tempStr;
+        charObj.agility = tempAgi;
         charObj.battleCharData = enem.characterDataSource;
         charObj.currentMoves = new List<s_move>();
         charObj.currentMoves = enem.currentMoves;
         charObj.extraSkills = enem.extraSkills;
-        Array.Copy(enem.elementAffinities, charObj.elementals, enem.elementAffinities.Length);
         playerCharacters.Add(charObj);
     }
 
@@ -566,38 +549,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (mem.memberDat.defaultRangedWeapon != null)
             charObj.rangedWeapon = mem.memberDat.defaultRangedWeapon;
 
-        int tempHP = enem.maxHitPointsB;
-        int tempSP = enem.maxSkillPointsB;
-        int tempStr = enem.strengthB;
-        int tempVit = enem.vitalityB;
-        int tempDx = enem.dexterityB;
-        //int tempAg = enem.speedB;
-        //int tempGut = enem.gutsB;
-        int tempLuc = enem.luckB;
-
-        for (int i = 1; i < tempLvl; i++)
-        {
-            if (i % enem.strengthGT == 0)
-                tempStr++;
-            if (i % enem.vitalityGT == 0)
-                tempVit++;
-            if (i % enem.dexterityGT == 0)
-                tempDx++;
-            if (i % enem.luckGT == 0)
-                tempLuc++;
-
-            tempHP += UnityEngine.Random.Range(enem.maxHitPointsGMin, enem.maxHitPointsGMax + 1);
-            tempSP += UnityEngine.Random.Range(enem.maxSkillPointsGMin, enem.maxSkillPointsGMax + 1);
-        }
-        //charObj.sprites[0] = enem.characterAnims[0];
-        //charObj.rend.sprite = enem.characterAnims[0];
+        int tempHP = enem.maxHitPoints;
+        int tempSP = enem.maxSkillPoints;
+        
         charObj.name = enem.name;
-        charObj.level = mem.level;
+<<<<<<< HEAD
+=======
+        charObj.level = enem.level;
+>>>>>>> parent of aa53cbbb (11/08/2021)
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
-        charObj.vitality = tempVit;
-        charObj.dexterity = tempDx;
-        charObj.strength = tempStr;
         charObj.battleCharData = enem;
         charObj.currentMoves = new List<s_move>();
         charObj.extraSkills = new List<s_move>();
@@ -620,7 +581,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         //charObj.speed = tempAg;
         //charObj.actionTypeCharts = enem.actionTypeCharts;
-        charObj.elementals = enem.elementAffinities;
+        //charObj.elementals = enem.elementAffinities;
         charObj.character_AI = new o_battleCharDataN.ai_page[enem.aiPages.Length];
         for (int i = 0; i < charObj.character_AI.Length; i++)
         {
@@ -696,9 +657,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         // DAMAGE_FLAGS.PASS
         to.inBattle = true;
-        HP_GUIS[bc.Count].bc = to;
-        HP_GUIS[bc.Count].SetMaterialDirty();
-        HP_GUIS[bc.Count].SetMaterial();
+        HPGUIMan.SetPartyMember(bc.Count, to);
         to.gameObject.SetActive(true);
         RearangeTurnOrder();
         yield return new WaitForSeconds(0.1f);
@@ -712,32 +671,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         if (bc.Count < 5)
         {
-           // HP_GUIS[bc.IndexOf(from)].bc = to;
+            // HP_GUIS[bc.IndexOf(from)].bc = to;
         }
-
-        if (to == null)
+        HPGUIMan.ChangePartyMemberGUI(ref to, ref from, playerCharacters);
+        if (to != null)
         {
-            foreach (s_hpBoxGUI c in HP_GUIS)
-            {
-                c.SetMaterialDirty();
-                c.bc = null;
-                c.SetMaterial();
-            }
-            from.inBattle = false;
-            bc = playerCharacters.FindAll(x => x.inBattle);
-            int ind = 0;
-            foreach (o_battleCharacter c in bc) {
-
-                HP_GUIS[ind].bc = c;
-                HP_GUIS[ind].SetMaterialDirty();
-                HP_GUIS[ind].SetMaterial();
-                ind++;
-            }
-        }
-        else
-        {
-            HP_GUIS[bc.IndexOf(from)].bc = to;
-            HP_GUIS[bc.IndexOf(from)].SetMaterialDirty();
             from.gameObject.SetActive(false);
             from.inBattle = false;
             to.transform.position = pos;
@@ -1094,7 +1032,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         break;
                 }
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
         }
         else
@@ -1603,11 +1541,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                                 case STATUS_EFFECT.STUN:
                                     //TODO: make it so that the character's turn is immediatley cancelled.
-                                    if (eff.duration % 2 == 0)
+                                    if (eff.duration % 2 == 1)
                                     {
                                         battleAction.user = currentCharacter;
                                         battleAction.move = nothingMove;
                                         battleAction.isCombo = false;
+                                        battleAction.combo.comboType = s_move.MOVE_QUANITY_TYPE.MONO_TECH;
                                         battleAction.target = currentCharacter;
                                         battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
                                         EndAction();
@@ -1712,7 +1651,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ELEMENT_TARG_FRAIL:
                             foreach (o_battleCharacter bc in targets)
                             {
-                                if (bc.elementals[(int)ai.move.element] > 1.999f) {
+                                if (bc.elementals[ai.move.element] == ELEMENT_WEAKNESS.FRAIL) {
                                     potentialTrg = bc;
                                     break;
                                 }
@@ -1722,7 +1661,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ELEMENT_TARG_STRONGEST:
                             foreach (o_battleCharacter bc in targets)
                             {
-                                float aff = bc.elementals[(int)ai.move.element];
+                                int aff = (int)bc.elementals[ai.move.element];
                                 if (aff > 1.999f)
                                 {
                                     potentialTrg = bc;
@@ -1993,6 +1932,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
         battleAction.move = currentCharacter.rangedWeapon;
         battleAction.isCombo = false;
+        battleAction.combo.comboType = s_move.MOVE_QUANITY_TYPE.MONO_TECH;
         battleEngine = BATTLE_ENGINE_STATE.TARGET;
         menuchoice = 0;
     }
@@ -2031,7 +1971,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             switch (move.element)
             {
-                case ELEMENT.FORCE:
+                case ELEMENT.STRIKE:
                 case ELEMENT.FIRE:
                     foreach (o_battleCharacter bc in GetTargets(true))
                     {
@@ -2095,52 +2035,21 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 basePow = user.dexterityNet;
                 break;
         }
-        switch (move.element) {
-            case ELEMENT.FORCE:
-                elementalPow = str / 1.3f;
-                break;
-            case ELEMENT.PEIRCE:
-                elementalPow = (str / 2.7f) + (dex / 2.3f);
-                break;
-            case ELEMENT.FIRE:
-                elementalPow = (vit / 2.5f) + (agi / 2.2f);
-                break;
-            case ELEMENT.WIND:
-                elementalPow = (agi / 1.5f);
-                break;
-            case ELEMENT.ICE:
-                elementalPow = (str / 1.7f);
-                break;
-            case ELEMENT.ELECTRIC:
-                elementalPow = (agi / 2.5f) + (dex / 2.7f);
-                break;
-            case ELEMENT.EARTH:
-                elementalPow = (str / 2.3f) + (vit / 2.2f);
-                break;
-            case ELEMENT.DARK:
-                elementalPow = (dex / 2.3f) + (str / 2.5f);
-                break;
-            case ELEMENT.PSYCHIC:
-                elementalPow = (dex / 1.6f);
-                break;
-            case ELEMENT.ALMIGHTY:
-                elementalPow = (dex / 2f)+ (str / 2f) + (vit / 2f) + (agi / 2f);
-                break;
-        }
+        ///Put power
         pow = basePow + elementalPow;
         return pow;
     }
 
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move)
     {
-        ELEMENT el = ELEMENT.NORMAL;
+        ELEMENT el = ELEMENT.NONE;
         el = move.element;
         int dmg = 0;
         if (!move.fixedValue)
         {
             if (move.moveType != s_move.MOVE_TYPE.STATUS)
             {
-                dmg = (int)(move.power * (GetElementStat(user, move) / (float)target.vitalityNet) * target.elementals[(int)el]);
+                dmg = move.power + user.elementalAffinities[move.element].Item1;// (int)(move.power * (GetElementStat(user, move) / (float)target.vitalityNet) * target.elementals[(int)el]);
             }
             else
             {
@@ -2289,13 +2198,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 {
                                     if (battleAction.target.health < dmg && bc.health > CalculateDamage(battleAction.user, bc, battleAction.move))
                                     {
-                                        if (bc.elementals[(int)battleAction.move.element] < 2)
+                                        if (bc.elementals[battleAction.move.element] == ELEMENT_WEAKNESS.FRAIL)
                                         {
+                                            /*
                                             if (minimum_res > bc.elementals[(int)battleAction.move.element])
                                             {
                                                 sacrifice = bc;
                                                 minimum_res = bc.elementals[(int)battleAction.move.element];
                                             }
+                                            */
                                         }
                                     }
                                 }
@@ -2332,72 +2243,77 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                             for (int i = 0; i < numOfTimes; i++)
                             {
-                                float fl = 0;
+                                float smirkChance = UnityEngine.Random.Range(0,1);
+                                ELEMENT_WEAKNESS fl = 0;
                                 if (battleAction.move.moveType == s_move.MOVE_TYPE.STATUS)
                                 {
-                                    fl = 1;
+                                    fl = ELEMENT_WEAKNESS.NONE;
                                 }
                                 else
                                 {
-                                    fl = targ.elementals[(int)battleAction.move.element];
+                                    fl = targ.elementals[battleAction.move.element];
                                 }
-                                if (fl < -2)
-                                {
-                                    damageFlag = DAMAGE_FLAGS.ABSORB;
-                                    if (finalDamageFlag <= damageFlag)
-                                    {
-                                        finalDamageFlag = damageFlag;
-                                    }
-                                }
-                                else if (fl < -1 && fl > -1.999f)
-                                {
-                                    damageFlag = DAMAGE_FLAGS.REFLECT;
-                                    if (finalDamageFlag <= damageFlag)
-                                    {
-                                        finalDamageFlag = damageFlag;
-                                    }
-                                }
-                                else if (fl == 0)
-                                {
-                                    damageFlag = DAMAGE_FLAGS.VOID;
-                                    if (finalDamageFlag <= damageFlag)
-                                    {
-                                        finalDamageFlag = damageFlag;
-                                    }
-                                }
-                                else if (fl > 0 && fl < 1.999f)
-                                {
-                                    damageFlag = DAMAGE_FLAGS.NONE;
-                                    if (finalDamageFlag == damageFlag)
-                                    {
-                                        finalDamageFlag = damageFlag;
-                                    }
-                                }
-                                else if (fl >= 2)
-                                {
-                                    if (targ.guardPoints == 0)
-                                    {
-                                        damageFlag = DAMAGE_FLAGS.FRAIL;
+                                switch (fl) {
+                                    case ELEMENT_WEAKNESS.ABSORB:
+                                        damageFlag = DAMAGE_FLAGS.ABSORB;
                                         if (finalDamageFlag <= damageFlag)
                                         {
-                                            finalDamageFlag = DAMAGE_FLAGS.FRAIL;
+                                            finalDamageFlag = damageFlag;
                                         }
-                                    }
-                                    else
-                                    {
+                                        if (smirkChance < 0.65f)
+                                        {
+
+                                        }
+                                        break;
+
+                                    case ELEMENT_WEAKNESS.REFLECT:
+                                        damageFlag = DAMAGE_FLAGS.REFLECT;
+                                        if (finalDamageFlag <= damageFlag)
+                                        {
+                                            finalDamageFlag = damageFlag;
+                                        }
+                                        break;
+
+                                    case ELEMENT_WEAKNESS.NULL:
+                                        damageFlag = DAMAGE_FLAGS.VOID;
+                                        if (finalDamageFlag <= damageFlag)
+                                        {
+                                            finalDamageFlag = damageFlag;
+                                        }
+                                        break;
+
+                                    case ELEMENT_WEAKNESS.NONE:
                                         damageFlag = DAMAGE_FLAGS.NONE;
-                                        if (finalDamageFlag <= damageFlag)
+                                        if (finalDamageFlag == damageFlag)
                                         {
-                                            finalDamageFlag = DAMAGE_FLAGS.NONE;
+                                            finalDamageFlag = damageFlag;
                                         }
-                                    }
+                                        break;
+
+                                    case ELEMENT_WEAKNESS.FRAIL:
+                                        if (targ.guardPoints == 0)
+                                        {
+                                            damageFlag = DAMAGE_FLAGS.FRAIL;
+                                            if (finalDamageFlag <= damageFlag)
+                                            {
+                                                finalDamageFlag = DAMAGE_FLAGS.FRAIL;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            damageFlag = DAMAGE_FLAGS.NONE;
+                                            if (finalDamageFlag <= damageFlag)
+                                            {
+                                                finalDamageFlag = DAMAGE_FLAGS.NONE;
+                                            }
+                                        }
+                                        break;
                                 }
                                 #region HIT FROZEN FOE
                                 if (targ.HasStatus(STATUS_EFFECT.FROZEN))
                                 {
                                     switch (battleAction.move.element) {
-                                        case ELEMENT.NORMAL:
-                                        case ELEMENT.FORCE:
+                                        case ELEMENT.STRIKE:
                                         case ELEMENT.PEIRCE:
                                             if (targ.guardPoints == 0)
                                                 damageFlag = DAMAGE_FLAGS.FRAIL;
@@ -2681,27 +2597,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         menuchoice = 0;
 
     }
-
-    public float TotalEXP(o_battleCharacter plC, bool allDefeated) {
-        float exp = 0;
-        foreach (o_battleCharacter c2 in oppositionCharacters)
-        {
-            if (c2.health > 0)
-                continue;
-            float mean =
-                ((float)c2.strength +
-                (float)c2.vitality +
-                (float)c2.dexterity +
-                (float)c2.agility) / 4;
-            float baseEXP = ((mean * 12) * c2.level / plC.level);
-            if (allDefeated)
-                exp += baseEXP + (baseEXP * 0.2f);
-            else
-                exp += baseEXP;
-        }
-        return exp;
-    } 
-
+    
     public IEnumerator ConcludeBattle()
     {
         //Fade
@@ -2719,6 +2615,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
 
+            /*
             foreach (o_battleCharacter c in playerCharacters)
             {
                 float exp = TotalEXP(c, allDefeated);
@@ -2744,6 +2641,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
             }
+            */
 
             List<string> extSkillLearn = new List<string>();
 
