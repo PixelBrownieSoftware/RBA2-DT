@@ -415,14 +415,55 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (mem.memberDat.defaultRangedWeapon != null)
             charObj.rangedWeapon = mem.memberDat.defaultRangedWeapon;
 
-        int tempHP = enem.maxHitPoints;
-        int tempSP = enem.maxSkillPoints;
+        int tempHP = enem.maxHitPointsB;
+        int tempSP = enem.maxSkillPointsB;
 
         charObj.name = enem.name;
         charObj.level = enem.level;
-        charObj.health = charObj.maxHealth = tempHP;
-        charObj.stamina = charObj.maxStamina = tempSP;
         charObj.battleCharData = enem;
+
+        {
+            int tempHPMin = enem.maxHitPointsB;
+            int tempSPMin = enem.maxSkillPointsB;
+            int tempHPMax = enem.maxHitPointsB;
+            int tempSPMax = enem.maxSkillPointsB;
+
+            int tempStr = enem.strengthB;
+            int tempVit = enem.vitalityB;
+            int tempDx = enem.dexterityB;
+            int tempLuc = enem.luckB;
+            int tempAgi = enem.agilityB;
+            int tempInt = enem.intelligenceB;
+
+            for (int i = 0; i < mem.level; i++)
+            {
+                tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
+                tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
+
+                if (i % enem.strengthGT == 0)
+                    tempStr++;
+                if (i % enem.vitalityGT == 0)
+                    tempVit++;
+                if (i % enem.dexterityGT == 0)
+                    tempDx++;
+                if (i % enem.luckGT == 0)
+                    tempLuc++;
+                if (i % enem.agilityGT == 0)
+                    tempAgi++;
+                if (i % enem.intelligenceGT == 0)
+                    tempInt++;
+            }
+
+            charObj.strength = tempStr;
+            charObj.vitality = tempVit;
+            charObj.dexterity = tempDx;
+            charObj.intelligence = tempAgi;
+            charObj.luck = tempLuc;
+            charObj.agility = tempAgi;
+
+            charObj.health = charObj.maxHealth = tempHP;
+            charObj.stamina = charObj.maxStamina = tempSP;
+        }
         charObj.currentMoves = new List<s_move>();
         charObj.extraSkills = new List<s_move>();
         foreach (s_move mv in enem.moveLearn) {
@@ -442,8 +483,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         //charObj.speed = tempAg;
         //charObj.actionTypeCharts = enem.actionTypeCharts;
-        charObj.elementals = enem.elementWeaknesses;
-        charObj.elementalAffinities = enem.elementAffinities;
+        charObj.elementals = enem.elementals;
+        //charObj.elementalAffinities = enem.elementAffinities;
+        /*
         charObj.character_AI = new o_battleCharDataN.ai_page[enem.aiPages.Length];
         for (int i = 0; i < charObj.character_AI.Length; i++)
         {
@@ -502,8 +544,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             charObj.character_AI[i].ai = new charAI[ai.Count];
             charObj.character_AI[i].ai = ai.ToArray();
-            charObj.inBattle = true;
         }
+        */
+        charObj.inBattle = true;
         oppositionCharacters.Add(charObj);
     }
     
@@ -545,8 +588,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (mem.memberDat.defaultRangedWeapon != null)
             charObj.rangedWeapon = mem.memberDat.defaultRangedWeapon;
 
-        int tempHP = enem.maxHitPoints;
-        int tempSP = enem.maxSkillPoints;
+        int tempHP = enem.maxHitPointsB;
+        int tempSP = enem.maxSkillPointsB;
         
         charObj.name = enem.name;
         charObj.level = enem.level;
@@ -1644,7 +1687,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ELEMENT_TARG_FRAIL:
                             foreach (o_battleCharacter bc in targets)
                             {
-                                if (bc.elementals[ai.move.element] == ELEMENT_WEAKNESS.FRAIL) {
+                                if (bc.elementals[ai.move.element] >= 2) {
                                     potentialTrg = bc;
                                     break;
                                 }
@@ -2042,7 +2085,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             if (move.moveType != s_move.MOVE_TYPE.STATUS)
             {
-                dmg = move.power + user.elementalAffinities[move.element].Item1;// (int)(move.power * (GetElementStat(user, move) / (float)target.vitalityNet) * target.elementals[(int)el]);
+                float multipler = 1f;
+                float elementals = user.elementals[el];
+                if (elementals < 0 && elementals > -1)
+                    multipler = (elementals * -1);
+                else if (elementals <= -1)
+                    multipler = ((elementals + 1) * -1);
+
+                dmg = (int)(move.power * (GetElementStat(user, move) / (float)target.vitalityNet) * multipler);
             }
             else
             {
@@ -2191,7 +2241,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 {
                                     if (battleAction.target.health < dmg && bc.health > CalculateDamage(battleAction.user, bc, battleAction.move))
                                     {
-                                        if (bc.elementals[battleAction.move.element] == ELEMENT_WEAKNESS.FRAIL)
+                                        if (bc.elementals[battleAction.move.element] >= 2)
                                         {
                                             /*
                                             if (minimum_res > bc.elementals[(int)battleAction.move.element])
@@ -2238,13 +2288,23 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             {
                                 float smirkChance = UnityEngine.Random.Range(0,1);
                                 ELEMENT_WEAKNESS fl = 0;
+                                float elementWeakness = targ.elementals[battleAction.move.element];
                                 if (battleAction.move.moveType == s_move.MOVE_TYPE.STATUS)
                                 {
                                     fl = ELEMENT_WEAKNESS.NONE;
                                 }
                                 else
                                 {
-                                    fl = targ.elementals[battleAction.move.element];
+                                    if (elementWeakness >= 2)
+                                        fl = ELEMENT_WEAKNESS.FRAIL;
+                                    else if (elementWeakness < 2 && elementWeakness > 0)
+                                        fl = ELEMENT_WEAKNESS.NONE;
+                                    else if (elementWeakness == 0)
+                                        fl = ELEMENT_WEAKNESS.NULL;
+                                    else if (elementWeakness < 0 && elementWeakness > -1)
+                                        fl = ELEMENT_WEAKNESS.REFLECT;
+                                    else if (elementWeakness <= -1)
+                                        fl = ELEMENT_WEAKNESS.ABSORB;
                                 }
                                 switch (fl) {
                                     case ELEMENT_WEAKNESS.ABSORB:

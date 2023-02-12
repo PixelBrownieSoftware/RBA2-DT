@@ -63,40 +63,33 @@ public class element_affinity
 [System.Serializable]
 public struct element_weaknesses
 {
-    public ELEMENT_WEAKNESS this[ELEMENT element] {
-        get {
-            switch (element) {
-                case ELEMENT.STRIKE:
-                    return strike;
-                case ELEMENT.PEIRCE:
-                    return peirce;
-                case ELEMENT.FIRE:
-                    return fire;
-                case ELEMENT.ICE:
-                    return ice;
-                case ELEMENT.WATER:
-                    return water;
-                case ELEMENT.ELECTRIC:
-                    return electric;
-
+    public float this[ELEMENT element]
+    {
+        get
+        {
+            if (weaknessChart != null) {
+                if (weaknessChart.Length > 0)
+                {
+                    foreach (var weak in weaknessChart)
+                    {
+                        if (weak.element == element)
+                            return weak.weakness;
+                    }
+                }
+                else
+                    return 1f;
             }
-            return none;
+            return 1f;
         }
     }
-    ELEMENT_WEAKNESS none;
-    public ELEMENT_WEAKNESS strike;
-    public ELEMENT_WEAKNESS peirce;
+    public weaknesses[] weaknessChart;
 
-    public ELEMENT_WEAKNESS fire;
-    public ELEMENT_WEAKNESS ice;
-    public ELEMENT_WEAKNESS water;
-    public ELEMENT_WEAKNESS electric;
-    public ELEMENT_WEAKNESS wind;
-    public ELEMENT_WEAKNESS earth;
-    public ELEMENT_WEAKNESS psychic;
-    public ELEMENT_WEAKNESS light;
-    public ELEMENT_WEAKNESS dark;
-    public ELEMENT_WEAKNESS bio;
+    [System.Serializable]
+    public struct weaknesses
+    {
+        public ELEMENT element;
+        public float weakness;
+    }
 }
 
 [CreateAssetMenu(fileName = "Elements", menuName = "Element holder")]

@@ -12,34 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Adelle
   m_EditorClassIdentifier: 
+  level: 1
   money: 0
-  maxSkillPoints: 1
-  maxHitPoints: 34
-  strength: 1
-  vitality: 1
-  dexterity: 1
-  agility: 1
+  maxSkillPointsB: 15
+  maxHitPointsB: 12
+  maxHitPointsGMin: 2
+  maxHitPointsGMax: 4
+  maxSkillPointsGMin: 3
+  maxSkillPointsGMax: 6
+  agilityB: 3
+  strengthB: 2
+  vitalityB: 3
+  luckB: 0
+  intelligenceB: 6
+  dexterityB: 4
+  agilityGT: 3
+  strengthGT: 5
+  vitalityGT: 4
+  luckGT: 4
+  intelligenceGT: 2
+  dexterityGT: 5
+  characterPassive: {fileID: 0}
   battleImage: {fileID: 4510202146524330274, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
   turnIcons: 1
   moveLearn:
   - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
   - {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
-  elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  characterColour: {r: 0.82977045, g: 0.31835172, b: 0.9245283, a: 1}
-  characterColour2: {r: 0.5330172, g: 0.14217694, b: 0.6698113, a: 1}
+  elementals:
+    weaknessChart:
+    - element: 6
+      weakness: 2.5
+  characterColour: {r: 0.9379185, g: 0.5990566, b: 1, a: 1}
+  characterColour2: {r: 0.6912669, g: 0.34825563, b: 0.8113208, a: 1}
   aiPages:
   - ai:
     - move: {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}

@@ -29,31 +29,27 @@ public class o_battleCharDataN : ScriptableObject
     public float money;
 
     /// Base stats the character starts with
-    public int maxSkillPoints = 1;
     public int maxSkillPointsB = 1;
-    public int maxHitPoints = 1;
     public int maxHitPointsB = 1;
 
-    public int agilityB;
-    public int strengthB;
-    public int vitalityB;
-    public int luckB;
-    public int intelligenceB;
-    public int dexterityB;
+    public int maxHitPointsGMin = 1;
+    public int maxHitPointsGMax = 1;
+    public int maxSkillPointsGMin = 1;
+    public int maxSkillPointsGMax = 1;
 
-    public float agilityGP;
-    public float strengthGP;
-    public float vitalityGP;
-    public float luckGP;
-    public float intelligenceGP;
-    public float dexterityGP;
+    public int agilityB = 1;
+    public int strengthB = 1;
+    public int vitalityB = 1;
+    public int luckB = 1;
+    public int intelligenceB = 1;
+    public int dexterityB = 1;
 
-    public int agility;
-    public int strength;
-    public int vitality;
-    public int luck;
-    public int intelligence;
-    public int dexterity;
+    public int agilityGT = 3;
+    public int strengthGT = 3;
+    public int vitalityGT = 3;
+    public int luckGT = 3;
+    public int intelligenceGT = 3;
+    public int dexterityGT = 3;
 
     public s_passive characterPassive;
 
@@ -62,8 +58,8 @@ public class o_battleCharDataN : ScriptableObject
     public int turnIcons = 1;
     
     public List<s_move> moveLearn;
-    public element_affinity elementAffinities;
-    public element_weaknesses elementWeaknesses;
+    //public element_affinity elementAffinities;
+    public element_weaknesses elementals;
     public Color characterColour = new Color(1, 0.95f, 0.75f);
     public Color characterColour2 = new Color(1, 0.95f, 0.75f);
 

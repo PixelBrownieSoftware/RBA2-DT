@@ -41,7 +41,7 @@ public class s_rpgEvents : s_triggerhandler
                     case "ADD_PARTY_MEMBER":
                         o_battleCharDataN bcd = current_ev.scrObj as o_battleCharDataN;
                         if (s_rpgGlobals.rpgGlSingleton.partyMembers.Find(x => x.name == bcd.name) == null)
-                            s_rpgGlobals.rpgGlSingleton.AddPartyMember(bcd);
+                            s_rpgGlobals.rpgGlSingleton.AddPartyMember(bcd, 1);
                         break;
 
                     case "INCREASE_ES_LIMIT":

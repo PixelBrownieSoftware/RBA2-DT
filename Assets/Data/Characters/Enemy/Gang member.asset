@@ -14,44 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 7
   money: 0.65
+  maxSkillPoints: 1
   maxSkillPointsB: 10
+  maxHitPoints: 26
   maxHitPointsB: 17
+  maxHitPointsGMin: 2
+  maxHitPointsGMax: 2
+  maxSkillPointsGMin: 2
+  maxSkillPointsGMax: 2
+  agilityB: 3
   strengthB: 4
   vitalityB: 2
-  dexterityB: 2
   luckB: 1
-  agilityB: 3
-  battleImage: {fileID: 0}
-  healthGT: 1
-  staminaGT: 1
+  intelligenceB: 1
+  dexterityB: 2
+  agilityGT: 2
   strengthGT: 2
   vitalityGT: 3
+  luckGT: 2
+  intelligenceGT: 3
   dexterityGT: 4
-  agilityGT: 2
-  luckGT: 1
-  maxSkillPointsGMax: 2
-  maxSkillPointsGMin: 2
-  maxHitPointsGMax: 2
-  maxHitPointsGMin: 2
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 0}
   turnIcons: 1
-  currentMoves: []
   moveLearn: []
-  elementAffinities:
-  - 1
-  - 0.5
-  - 1
-  - 1
-  - 2
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  elementals:
+    weaknessChart: []
   characterColour: {r: 0.8773585, g: 0.31038627, b: 0.37191817, a: 1}
   characterColour2: {r: 0.7169812, g: 0.23320846, b: 0.21306516, a: 1}
-  skillAffinities: []
   aiPages:
   - ai: []
   anim: {fileID: 9100000, guid: 6b114e4854f668b43b73d08b88c0d980, type: 2}

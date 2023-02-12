@@ -445,7 +445,7 @@ public class s_rpgGlobals : s_globals
         }
         partyMembers.Add(newCharacter);
     }
-    public void AddPartyMember(o_battleCharDataN data) {
+    public void AddPartyMember(o_battleCharDataN data, int level) {
 
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
@@ -460,14 +460,40 @@ public class s_rpgGlobals : s_globals
                 }
             }
             newCharacter.name = data.name;
-            int tempHP = data.maxHitPoints;
-            int tempSP = data.maxSkillPoints;
+            int tempHP = data.maxHitPointsB;
+            int tempSP = data.maxSkillPointsB;
 
-            int tempStr = 5;
-            int tempVit = 5;
-            int tempDx = 5;
-            int tempAgi = 5;
-            
+            int tempHPMin = data.maxHitPointsGMin;
+            int tempSPMin = data.maxSkillPointsGMin;
+            int tempHPMax = data.maxHitPointsGMax;
+            int tempSPMax = data.maxSkillPointsGMax;
+
+            int tempStr = data.strengthB;
+            int tempVit = data.vitalityB;
+            int tempDx = data.dexterityB;
+            int tempLuc = data.luckB;
+            int tempAgi = data.agilityB;
+            int tempInt = data.intelligenceB;
+
+            for (int i = 0; i < level; i++)
+            {
+                tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
+                tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
+
+                if (data.strengthGT % level == 0)
+                    tempStr++;
+                if (data.vitalityGT % level == 0)
+                    tempVit++;
+                if (data.dexterityGT % level == 0)
+                    tempDx++;
+                if (data.luckGT % level == 0)
+                    tempLuc++;
+                if (data.agilityGT % level == 0)
+                    tempAgi++;
+                if (data.intelligenceGT % level == 0)
+                    tempInt++;
+            }
+
             if (data.defaultRangedWeapon != null)
             {
                 AddWeapon(data.defaultRangedWeapon.name);
@@ -480,7 +506,7 @@ public class s_rpgGlobals : s_globals
             }
 
             //newCharacter.inBattle = true;
-            newCharacter.elementAffinities = data.elementAffinities;
+            //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
             
             foreach (s_move mov in data.moveLearn)
@@ -518,9 +544,9 @@ public class s_rpgGlobals : s_globals
             newCharacter.vitality = data.vitality;
             newCharacter.dexterity = data.dexterity;
 
+
             newCharacter.health = data.health;
             newCharacter.maxHealth = data.maxHealth;
-
             newCharacter.stamina = data.stamina;
             newCharacter.maxStamina = data.maxStamina;
 

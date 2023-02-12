@@ -14,31 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 40
   money: 0
+  maxSkillPoints: 18
   maxSkillPointsB: 36
+  maxHitPoints: 30
   maxHitPointsB: 58
+  maxHitPointsGMin: 5
+  maxHitPointsGMax: 8
+  maxSkillPointsGMin: 5
+  maxSkillPointsGMax: 6
+  agilityB: 2
   strengthB: 4
   vitalityB: 3
-  dexterityB: 4
   luckB: 7
-  agilityB: 2
-  battleImage: {fileID: 0}
-  healthGT: 3
-  staminaGT: 2
+  intelligenceB: 0
+  dexterityB: 4
+  agilityGT: 1
   strengthGT: 2
   vitalityGT: 3
-  dexterityGT: 3
-  agilityGT: 1
   luckGT: 1
-  maxSkillPointsGMax: 6
-  maxSkillPointsGMin: 5
-  maxHitPointsGMax: 8
-  maxHitPointsGMin: 5
+  intelligenceGT: 1
+  dexterityGT: 3
+  agility: 0
+  strength: 0
+  vitality: 0
+  luck: 0
+  intelligence: 0
+  dexterity: 0
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 0}
   turnIcons: 3
-  currentMoves:
-  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
-  - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
-  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
-  - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
   moveLearn:
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
   - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
@@ -47,24 +51,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 2
-  - 1
-  - 1
-  - 1
-  - 1
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    heal: 0
+    support: 0
+  elementWeaknesses:
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    bio: 0
   characterColour: {r: 0.66386706, g: 0.3066038, b: 1, a: 1}
   characterColour2: {r: 0.57617795, g: 0.107467055, b: 0.6509434, a: 1}
-  skillAffinities: []
   aiPages:
   - ai:
     - move: {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}

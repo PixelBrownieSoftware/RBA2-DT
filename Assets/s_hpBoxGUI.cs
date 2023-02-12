@@ -58,10 +58,7 @@ public class s_hpBoxGUI : MonoBehaviour
         } else
         {
             ob.SetActive(true);
-            HPPic.material = Instantiate(HPPic.material);
-            HPPic.material.SetColor("_Col2", bc.battleCharData.characterColour);
-            HPPic.material.SetColor("_Col1", bc.battleCharData.characterColour2);
-            _materialDirty = false;
+            HPPic.color = bc.battleCharData.characterColour;
             if (bc.battleCharData.battleImage != null)
             {
                 HPPic.sprite = bc.battleCharData.battleImage;
@@ -154,10 +151,6 @@ public class s_hpBoxGUI : MonoBehaviour
             
             #endregion
 
-            if (_materialDirty)
-            {
-                SetMaterial();
-            }
 
         }
         else {

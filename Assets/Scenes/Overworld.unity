@@ -26473,7 +26473,7 @@ PrefabInstance:
         type: 3}
       propertyPath: group
       value: 
-      objectReference: {fileID: 11400000, guid: a528ba627d5bd9443be5848ce0a22fb5,
+      objectReference: {fileID: 11400000, guid: 9ca5e764e2acf5346b5729b992619301,
         type: 2}
     - target: {fileID: 4906098191542862115, guid: 58ca8d2893f1cca41b16f6bf7395abe3,
         type: 3}
@@ -26504,7 +26504,7 @@ PrefabInstance:
         type: 3}
       propertyPath: groups.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: a528ba627d5bd9443be5848ce0a22fb5,
+      objectReference: {fileID: 11400000, guid: e0caefb6d9ebf2541946d60503ec966b,
         type: 2}
     - target: {fileID: 4906098191542862115, guid: 58ca8d2893f1cca41b16f6bf7395abe3,
         type: 3}

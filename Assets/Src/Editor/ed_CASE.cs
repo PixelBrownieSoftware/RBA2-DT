@@ -96,6 +96,13 @@ public class ed_CASE : Editor
     public STAT_DIST_AMOUNT hpDistG;
     public STAT_DIST_AMOUNT spDistG;
 
+    public STAT_DIST_AMOUNT strDist;
+    public STAT_DIST_AMOUNT vitDist;
+    public STAT_DIST_AMOUNT intDist;
+    public STAT_DIST_AMOUNT dexDist;
+    public STAT_DIST_AMOUNT agiDist;
+    public STAT_DIST_AMOUNT lucDist;
+
     private int statDist = 10;
     
     public List<charAI> characterAI = null;
@@ -104,7 +111,7 @@ public class ed_CASE : Editor
     int superTab = 0;
     int tabSkill = 0;
     int tabChar = 0;
-    int charAILeng = 0;
+    int levelChar = 0;
     int charAIPageNum = 0;
     s_move moveData = null;
     o_battleCharDataN charaData = null;
@@ -118,14 +125,6 @@ public class ed_CASE : Editor
     Vector2 scrollPos;
     public bool[] aiBoolList;
 
-
-    float[] randomNums = new float[50]{
-        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
-        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
-        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
-        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
-        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f
-    };
 
     public void OnEnable()
     {
@@ -218,6 +217,7 @@ public class ed_CASE : Editor
                 EditorGUILayout.LabelField(elName);
             }
         }
+        /*
         if (charaData.elementAffinities.CalculateTotal() >= statDist)
         {
             int prevStat = stat;
@@ -229,6 +229,7 @@ public class ed_CASE : Editor
         {
             stat = EditorGUILayout.IntSlider(stat, -15, 15);
         }
+        */
         EditorGUILayout.EndHorizontal();
     }
 
@@ -261,7 +262,7 @@ public class ed_CASE : Editor
             case 0:
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Name: " + charaData.name);
-                charaData.level = (int)EditorGUILayout.Slider(charaData.level, 1, 100);
+                levelChar = (int)EditorGUILayout.Slider(levelChar, 1, 100);
                 {
                     int tempHPMin = charaData.maxHitPointsB;
                     int tempSPMin = charaData.maxSkillPointsB;
@@ -275,29 +276,26 @@ public class ed_CASE : Editor
                     int tempAgi = charaData.agilityB;
                     int tempInt = charaData.intelligenceB;
 
-                    for (int i = 1; i < charaData.level; i++)
+                    for (int i = 1; i < levelChar; i++)
                     {
-                        float randomNum = randomNums[i];
-                        float total =
-                            charaData.agilityGP +
-                            charaData.luckGP +
-                            charaData.dexterityGP +
-                            charaData.vitalityGP +
-                            charaData.intelligenceGP +
-                            charaData.strengthGP;
-
-                        if (randomNum < (charaData.agilityGP / total))
+                        tempHPMax += charaData.maxHitPointsGMax;
+                        tempHPMin += charaData.maxHitPointsGMin;
+                        
+                        tempSPMax += charaData.maxSkillPointsGMax;
+                        tempSPMin += charaData.maxSkillPointsGMin;
+                        
+                        if (i % charaData.strengthGT == 0)
                             tempStr++;
-                        if (randomNum < (charaData.vitalityGP / total))
+                        if (i % charaData.vitalityGT == 0)
                             tempVit++;
-                        if (randomNum < (charaData.dexterityGP / total))
+                        if (i % charaData.dexterityGT == 0)
                             tempDx++;
-                        if (randomNum < (charaData.luckGP / total))
+                        if (i % charaData.luckGT == 0)
                             tempLuc++;
-                        if (randomNum < (charaData.intelligenceGP / total))
+                        if (i % charaData.agilityGT == 0)
+                            tempAgi++;
+                        if (i % charaData.intelligenceGT == 0)
                             tempInt++;
-                        if (randomNum < (charaData.strengthGP / total))
-                            tempStr++;
                     }
                     EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
                     EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
@@ -308,12 +306,12 @@ public class ed_CASE : Editor
                     EditorGUILayout.LabelField("Agility: " + tempAgi);
 
                 }
-                charaData.strengthGP = EditorGUILayout.Slider(charaData.strengthGP, 0.01f, 1f);
-                charaData.vitalityGP = EditorGUILayout.Slider(charaData.vitalityGP, 0.01f, 1f);
-                charaData.dexterityGP = EditorGUILayout.Slider(charaData.dexterityGP, 0.01f, 1f);
-                charaData.intelligenceGP = EditorGUILayout.Slider(charaData.intelligenceGP, 0.01f, 1f);
-                charaData.agilityGP = EditorGUILayout.Slider(charaData.agilityGP, 0.01f, 1f);
-                charaData.luckGP = EditorGUILayout.Slider(charaData.luckGP, 0.01f, 1f);
+                charaData.strengthGT = (int)EditorGUILayout.Slider("Strength: ",charaData.strengthGT, 1,6);
+                charaData.vitalityGT = (int)EditorGUILayout.Slider("Vitality: ", charaData.vitalityGT, 1, 6);
+                charaData.dexterityGT = (int)EditorGUILayout.Slider("Dexterity: ", charaData.dexterityGT, 1, 6);
+                charaData.intelligenceGT = (int)EditorGUILayout.Slider("Intelligence: ", charaData.intelligenceGT, 1, 6);
+                charaData.agilityGT = (int)EditorGUILayout.Slider("Agility: ", charaData.agilityGT, 1, 6);
+                charaData.luckGT = (int)EditorGUILayout.Slider("Luck: ", charaData.luckGT, 1, 6);
                 base.OnInspectorGUI();
                 break;
 
@@ -355,7 +353,6 @@ public class ed_CASE : Editor
 
                 if (GUILayout.Button("Generate Stat distribution"))
                 {
-                    /*
                     #region HP
                     switch (hpDist)
                     {
@@ -506,6 +503,8 @@ public class ed_CASE : Editor
                                 statG = Random.Range(vhighBoundG.x, vhighBoundG.y);
                                 break;
                         }
+                        charaData.vitalityB = statB;
+                        charaData.vitalityGT = statG;
                     }
                     #endregion
 
@@ -580,7 +579,6 @@ public class ed_CASE : Editor
                         charaData.agilityGT = statG;
                     }
                     #endregion
-                    */
                 }
 
                 EditorGUILayout.LabelField("Base stats");
@@ -605,16 +603,51 @@ public class ed_CASE : Editor
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Health: ");
-                charaData.maxHitPoints = EditorGUILayout.IntSlider(charaData.maxHitPoints, 1, 300);
+                charaData.maxHitPointsB = EditorGUILayout.IntSlider(charaData.maxHitPointsB, 1, 60);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Stamina: ");
-                charaData.maxSkillPoints = EditorGUILayout.IntSlider(charaData.maxSkillPoints, 1, 300);
+                charaData.maxSkillPointsB = EditorGUILayout.IntSlider(charaData.maxSkillPointsB, 1, 50);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Strength: ");
+                charaData.strengthB = EditorGUILayout.IntSlider(charaData.strengthB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Vitality: ");
+                charaData.vitalityB = EditorGUILayout.IntSlider(charaData.vitalityB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Intelligence: ");
+                charaData.intelligenceB = EditorGUILayout.IntSlider(charaData.intelligenceB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Dexterity: ");
+                charaData.dexterityB = EditorGUILayout.IntSlider(charaData.dexterityB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Agility: ");
+                charaData.agilityB = EditorGUILayout.IntSlider(charaData.agilityB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+                /*
                 EditorGUILayout.LabelField("Total stats " + charaData.elementAffinities.CalculateTotal() + "/ " + statDist);
                 
 
@@ -631,34 +664,8 @@ public class ed_CASE : Editor
                 ChangeStatElemenAffinities(ref charaData.elementAffinities.dark, "Dark");
                 ChangeStatElemenAffinities(ref charaData.elementAffinities.heal, "Healing");
                 ChangeStatElemenAffinities(ref charaData.elementAffinities.support, "Support");
+                */
                 /*
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Strength: ");
-                charaData.strength = EditorGUILayout.IntSlider(charaData.strength, 1, 10);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Vitality: ");
-                charaData.vitality = EditorGUILayout.IntSlider(charaData.vitality, 1, 10);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Dexterity: ");
-                charaData.dexterity = EditorGUILayout.IntSlider(charaData.dexterity, 1, 10);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Agility: ");
-                charaData.agility = EditorGUILayout.IntSlider(charaData.agility, 1, 10);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
                 */
                 break;
             #endregion
@@ -695,17 +702,6 @@ public class ed_CASE : Editor
             #endregion
 
             case 3:
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.strike, "Strike");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.peirce, "Peirce");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.fire, "Fire");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.ice, "Ice");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.water, "Water");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.electric, "Electric");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.wind, "Wind");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.earth, "Earth");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.psychic, "Psychic");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.dark, "Dark");
-                ChangeStatElementWeakness(ref charaData.elementWeaknesses.light, "Light");
 
                 EditorGUILayout.BeginHorizontal();
                 /*

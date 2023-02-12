@@ -14,22 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   money: 0
-  maxSkillPoints: 1
+  maxSkillPoints: 13
   maxSkillPointsB: 21
-  maxHitPoints: 1
+  maxHitPoints: 22
   maxHitPointsB: 25
+  maxHitPointsGMin: 1
+  maxHitPointsGMax: 1
+  maxSkillPointsGMin: 1
+  maxSkillPointsGMax: 1
   agilityB: 1
   strengthB: 5
   vitalityB: 4
   luckB: 0
   intelligenceB: 0
   dexterityB: 4
-  agilityGP: 0.481
-  strengthGP: 0.658
-  vitalityGP: 0.159
-  luckGP: 0.276
-  intelligenceGP: 0.389
-  dexterityGP: 0.234
+  agilityGT: 4
+  strengthGT: 2
+  vitalityGT: 3
+  luckGT: 4
+  intelligenceGT: 3
+  dexterityGT: 3
   agility: 0
   strength: 0
   vitality: 0
@@ -47,7 +51,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
   elementAffinities:
     strike: 0
-    peirce: 0
+    peirce: -2
     fire: 0
     ice: 0
     water: 2

@@ -301,11 +301,15 @@ public class o_battleCharacter : MonoBehaviour
     public int vitality;
     public int dexterity;
     public int agility;
+    public int intelligence;
+    public int luck;
 
     public int strengthBuff;
     public int vitalityBuff;
     public int dexterityBuff;
     public int agilityBuff;
+    public int intelligenceBuff;
+    public int luckBuff;
 
     public List<s_move> currentMoves;
     public List<s_move> extraSkills;
@@ -316,7 +320,7 @@ public class o_battleCharacter : MonoBehaviour
 
     public o_battleCharDataN battleCharData;
     public element_weaknesses elementals;
-    public element_affinity elementalAffinities;
+    //public element_affinity elementalAffinities;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
     public Rigidbody2D rbody2d;
