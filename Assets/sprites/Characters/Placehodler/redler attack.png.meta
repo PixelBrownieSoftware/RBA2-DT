@@ -156,6 +156,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -165,8 +166,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -769,6 +770,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      redler attack_44: 2959882172376283501
+      redler attack_39: 6664267443538343630
+      redler attack_29: 7647218764891313038
+      redler attack_43: 1869876006144744371
+      redler attack_51: -3982289513912336406
+      redler attack_32: -3596597076025178036
+      redler attack_41: 3885294391858033531
+      redler attack_38: 2833063154156203261
+      redler attack_42: -3225389939771778042
+      redler attack_50: 307273195039588822
+      redler attack_52: 8275429588791446845
+      redler attack_35: -47607284047865
+      redler attack_45: -6924743799992065989
+      redler attack_30: -1005998238751304495
+      redler attack_34: 4622090710322805676
+      redler attack_33: 4969762054864015933
+      redler attack_31: -1533555821805724631
+      redler attack_37: 166188064717754504
+      redler attack_40: 5579023707735853333
+      redler attack_48: 5301010385448374838
+      redler attack_28: 4625467207238948897
+      redler attack_36: 3225603765505001158
+      redler attack_46: -7989924347419652244
+      redler attack_47: 6288129848038127883
+      redler attack_49: -4193383874821094963
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

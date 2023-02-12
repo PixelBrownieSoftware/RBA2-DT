@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/*
 [CreateAssetMenu(menuName = "System/Asset Channel")]
 public class CH_Asset : SO_ChannelDefaut
 {
@@ -13,3 +14,4 @@ public class CH_Asset : SO_ChannelDefaut
             OnMoveFunctionEvent.Invoke(_asset);
     }
 }
+*/

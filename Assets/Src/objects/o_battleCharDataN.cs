@@ -19,22 +19,42 @@ public class o_battleCharDataN : ScriptableObject
         public charAI[] ai;
     }
 
-<<<<<<< HEAD
-=======
     [System.Serializable]
     public struct skill_affinity {
         public ELEMENT el;
         public int points;
     }
 
-    public int level;
->>>>>>> parent of aa53cbbb (11/08/2021)
+    public int level = 1;
     public float money;
 
     /// Base stats the character starts with
     public int maxSkillPoints = 1;
+    public int maxSkillPointsB = 1;
     public int maxHitPoints = 1;
-    
+    public int maxHitPointsB = 1;
+
+    public int agilityB;
+    public int strengthB;
+    public int vitalityB;
+    public int luckB;
+    public int intelligenceB;
+    public int dexterityB;
+
+    public float agilityGP;
+    public float strengthGP;
+    public float vitalityGP;
+    public float luckGP;
+    public float intelligenceGP;
+    public float dexterityGP;
+
+    public int agility;
+    public int strength;
+    public int vitality;
+    public int luck;
+    public int intelligence;
+    public int dexterity;
+
     public s_passive characterPassive;
 
     public Sprite battleImage;

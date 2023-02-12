@@ -60,6 +60,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -69,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -379,6 +380,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      buckler_16: -7449438325222211076
+      buckler_13: -7472008993158981664
+      buckler_19: -7457307061242214692
+      buckler_20: -357588557440415292
+      buckler_11: 6015964150292818132
+      buckler_12: -7176836495309867081
+      buckler_14: -5967314459803660613
+      buckler_21: 8990818611442162350
+      buckler_18: -7421226001898930277
+      buckler_10: -4889101359443690372
+      buckler_15: 5235747701458172822
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

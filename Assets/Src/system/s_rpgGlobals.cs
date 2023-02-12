@@ -333,7 +333,6 @@ public class s_rpgGlobals : s_globals
 
     public void SwitchToOverworld(bool isFlee)
     {
-<<<<<<< HEAD
         if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo == "")
         {
             s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
@@ -341,14 +340,12 @@ public class s_rpgGlobals : s_globals
         if (!isFlee)
             if (locationObjectName != null)
                 locationObjectName.isDone = true;
-=======
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
-        rpgScene.SetActive(false);
-        rpgSceneGUI.SetActive(false);
-        overWorld.SetActive(true);
+        //rpgScene.SetActive(false);
+        //rpgSceneGUI.SetActive(false);
+        //overWorld.SetActive(true);
         if(!isFlee)
             locationObjectName.isDone = true;
->>>>>>> parent of aa53cbbb (11/08/2021)
         player.gameObject.SetActive(true);
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);

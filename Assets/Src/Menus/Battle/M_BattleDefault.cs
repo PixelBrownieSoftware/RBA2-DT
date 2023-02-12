@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class M_BattleDefault : S_MenuSystem
 {
+    /*
     public R_Character currentCharacter;
     public B_BattleMove attackButton;
     public B_String skillButton;
@@ -31,5 +32,5 @@ public class M_BattleDefault : S_MenuSystem
             itemButton.gameObject.SetActive(true);
         }
     }
-
+    */
 }

@@ -57,6 +57,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -66,8 +67,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -364,6 +365,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      looney_5: -5061340308049821251
+      looney_7: 6593491602620826530
+      looney_6: 3085270498764889230
+      looney_0: 382702493636618622
+      looney_4: 4236520558413808642
+      looney_2: 2389079265036071640
+      looney_1: -8298064334751071291
+      looney_3: -6923143044614227753
+      looney_8: -8536940170474089145
+      looney_9: 5870923330363606143
+      looney_10: -6668000712444064539
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

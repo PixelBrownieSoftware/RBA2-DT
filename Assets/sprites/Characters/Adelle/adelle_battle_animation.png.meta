@@ -81,6 +81,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -90,8 +91,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -556,6 +557,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      adelle_battle_animation_0: 6117234002989987638
+      adelle_battle_animation_2: 8434387151331358290
+      adelle_battle_animation_21: 2786070167893240766
+      adelle_battle_animation_6: 1606982010986043884
+      adelle_battle_animation_23: 1055803639871391102
+      adelle_battle_animation_26: 3516294631282387496
+      adelle_battle_animation_7: 1736292122000569446
+      adelle_battle_animation_3: -1436502307870037360
+      adelle_battle_animation_12: -7241406297415363556
+      adelle_battle_animation_30: -75801314935319676
+      adelle_battle_animation_28: 4725511616560941271
+      adelle_battle_animation_9: 7214579003842210186
+      adelle_battle_animation_25: 6349829770578953501
+      adelle_battle_animation_5: -7215516283833811747
+      adelle_battle_animation_1: -5099731821783700165
+      adelle_battle_animation_10: -4345389467414477428
+      adelle_battle_animation_14: -4174418615895264802
+      adelle_battle_animation_8: -2091303095018413160
+      adelle_battle_animation_33: 5948458897477597868
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

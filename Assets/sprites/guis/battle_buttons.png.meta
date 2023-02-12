@@ -84,6 +84,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -93,8 +94,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -580,6 +581,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      phys_sword_battle_button: 7726307686770892935
+      item_battle_button: 2194243981559744025
+      battle_buttons_14: 1552037155882741995
+      flee_battle_button: 7204013016340129671
+      multi_skill_battle_button: -2856088140430223287
+      battle_buttons_2: 7215416296811143041
+      battle_buttons_18: -2235409122627435333
+      rng_staff_battle_button: 1845301571344876508
+      battle_buttons_19: 7806564859005627585
+      battle_buttons_15: 2184580000823560330
+      analyze_battle_button: 5694292653966732678
+      equip_battle_button: -7590348227643010548
+      battle_buttons_17: -4779749797459435935
+      skill_battle_button: 5937797199647109957
+      pass_battle_button: -5245320120822873226
+      guard_battle_button: -5427630353729409296
+      party_battle_button: -928066109432893357
+      battle_buttons_16: 2167812500151584235
+      rng_gun_battle_button: -4131630366209690075
+      phys_fist_battle_button: -5211383164606290648
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

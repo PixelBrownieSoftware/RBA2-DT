@@ -84,6 +84,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -93,8 +94,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -592,6 +593,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      greendori_37: 5492185463596122794
+      greendori_39: -5419035036303300881
+      greendori_35: -2100209067975234992
+      greendori_4: -8119129697666142159
+      greendori_40: -8169230019734063049
+      greendori_38: 5409019164725929604
+      greendori_2: 1206975453344547848
+      greendori_43: 6616625368363058505
+      greendori_0: 547399124627345785
+      greendori_7: -8246721073104230457
+      greendori_6: 2480784084020273638
+      greendori_32: 2877708892135432920
+      greendori_44: -4840123087444619940
+      greendori_42: 2541308281376890809
+      greendori_31: -6974848381011618722
+      greendori_5: -1559382118451046499
+      greendori_41: -4089597266262776594
+      greendori_1: 3520306811054075458
+      greendori_33: -2913259354600211606
+      greendori_3: -7959361115989138316
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

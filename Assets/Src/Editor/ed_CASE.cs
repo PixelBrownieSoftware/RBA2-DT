@@ -118,6 +118,15 @@ public class ed_CASE : Editor
     Vector2 scrollPos;
     public bool[] aiBoolList;
 
+
+    float[] randomNums = new float[50]{
+        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
+        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
+        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
+        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f,
+        0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,0.99f
+    };
+
     public void OnEnable()
     {
         charaData = (o_battleCharDataN)target;
@@ -252,50 +261,59 @@ public class ed_CASE : Editor
             case 0:
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Name: " + charaData.name);
-<<<<<<< HEAD
-=======
                 charaData.level = (int)EditorGUILayout.Slider(charaData.level, 1, 100);
                 {
                     int tempHPMin = charaData.maxHitPointsB;
                     int tempSPMin = charaData.maxSkillPointsB;
                     int tempHPMax = charaData.maxHitPointsB;
                     int tempSPMax = charaData.maxSkillPointsB;
+
                     int tempStr = charaData.strengthB;
                     int tempVit = charaData.vitalityB;
                     int tempDx = charaData.dexterityB;
                     int tempLuc = charaData.luckB;
+                    int tempAgi = charaData.agilityB;
+                    int tempInt = charaData.intelligenceB;
 
                     for (int i = 1; i < charaData.level; i++)
                     {
-                        if (i % charaData.strengthGT == 0)
+                        float randomNum = randomNums[i];
+                        float total =
+                            charaData.agilityGP +
+                            charaData.luckGP +
+                            charaData.dexterityGP +
+                            charaData.vitalityGP +
+                            charaData.intelligenceGP +
+                            charaData.strengthGP;
+
+                        if (randomNum < (charaData.agilityGP / total))
                             tempStr++;
-                        if (i % charaData.vitalityGT == 0)
+                        if (randomNum < (charaData.vitalityGP / total))
                             tempVit++;
-                        if (i % charaData.dexterityGT == 0)
+                        if (randomNum < (charaData.dexterityGP / total))
                             tempDx++;
-                        if (i % charaData.luckGT == 0)
+                        if (randomNum < (charaData.luckGP / total))
                             tempLuc++;
->>>>>>> parent of aa53cbbb (11/08/2021)
+                        if (randomNum < (charaData.intelligenceGP / total))
+                            tempInt++;
+                        if (randomNum < (charaData.strengthGP / total))
+                            tempStr++;
+                    }
+                    EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
+                    EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
 
-                int tempHPMin = charaData.maxHitPoints;
-                int tempSPMin = charaData.maxSkillPoints;
-                int tempHPMax = charaData.maxHitPoints;
-                int tempSPMax = charaData.maxSkillPoints;
-                /*
-                int tempStr = charaData.strength;
-                int tempVit = charaData.vitality;
-                int tempDx = charaData.dexterity;
-                int tempAgi = charaData.agility;
-                */
+                    EditorGUILayout.LabelField("Strength: " + tempStr);
+                    EditorGUILayout.LabelField("Vitality: " + tempVit);
+                    EditorGUILayout.LabelField("Dexterity: " + tempDx);
+                    EditorGUILayout.LabelField("Agility: " + tempAgi);
 
-                EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
-                EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
-                /*
-                EditorGUILayout.LabelField("Strength: " + tempStr);
-                EditorGUILayout.LabelField("Vitality: " + tempVit);
-                EditorGUILayout.LabelField("Dexterity: " + tempDx);
-                EditorGUILayout.LabelField("Agility: " + tempAgi);
-                */
+                }
+                charaData.strengthGP = EditorGUILayout.Slider(charaData.strengthGP, 0.01f, 1f);
+                charaData.vitalityGP = EditorGUILayout.Slider(charaData.vitalityGP, 0.01f, 1f);
+                charaData.dexterityGP = EditorGUILayout.Slider(charaData.dexterityGP, 0.01f, 1f);
+                charaData.intelligenceGP = EditorGUILayout.Slider(charaData.intelligenceGP, 0.01f, 1f);
+                charaData.agilityGP = EditorGUILayout.Slider(charaData.agilityGP, 0.01f, 1f);
+                charaData.luckGP = EditorGUILayout.Slider(charaData.luckGP, 0.01f, 1f);
                 base.OnInspectorGUI();
                 break;
 

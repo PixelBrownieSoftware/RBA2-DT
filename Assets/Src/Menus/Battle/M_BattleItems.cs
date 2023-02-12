@@ -18,7 +18,7 @@ public class M_BattleItems : S_MenuSystem
         onButtonClickEvents.OnMoveFunctionEvent -= UseItem;
     }
 
-    public void UseItem(O_Move mov) {
+    public void UseItem(s_move mov) {
         moveList.RemoveMove(mov);
     }
 

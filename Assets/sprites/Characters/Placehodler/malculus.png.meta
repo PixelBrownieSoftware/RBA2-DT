@@ -30,6 +30,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -39,8 +40,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -484,6 +485,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      malculus_35: -3875582032820029665
+      malculus_26: -4743954380732413879
+      malculus_28: 253975040272679189
+      malculus_19: -2557424127253923722
+      malculus_25: 6142326835018570900
+      malculus_29: -7888986550763844163
+      malculus_34: -8504276496376559871
+      malculus_11: 1620332982668996323
+      malculus_12: -7001008824170455245
+      malculus_8: 2689256570523816831
+      malculus_30: -7051261981413982441
+      malculus_18: -3990425371367573722
+      malculus_27: -2393230914641447379
+      malculus_10: 469530206726778877
+      malculus_33: 2170951971722422837
+      malculus_31: 5735895015815435394
+      malculus_32: 4443729934437308733
+      malculus_9: -6423573071885960704
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

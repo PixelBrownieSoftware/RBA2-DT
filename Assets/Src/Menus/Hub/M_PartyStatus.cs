@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class M_PartyStatus : S_MenuSystem
 {
+    /*
     public R_CharacterList players;
     public R_Character selectedCharacter;
     public CH_BattleCharacter selected;
@@ -49,4 +50,5 @@ public class M_PartyStatus : S_MenuSystem
         selectedCharacter.SetCharacter(bc);
         changeMenu.RaiseEvent(menuToGoTo);
     }
+    */
 }

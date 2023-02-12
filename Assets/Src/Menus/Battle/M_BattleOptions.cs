@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class M_BattleOptions : S_MenuSystem
 {
+    /*
     public R_Character currentCharacter;
     public B_BattleMove[] buttons;
     public R_MoveList items;
@@ -74,5 +75,5 @@ public class M_BattleOptions : S_MenuSystem
                 break;
         }
     }
-
+    */
 }

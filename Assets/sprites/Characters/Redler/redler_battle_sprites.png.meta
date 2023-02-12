@@ -78,6 +78,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -87,8 +88,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -532,6 +533,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      redler_battle_sprites_1: 7724248293481007793
+      redler_battle_sprites_3: -7727392226469089568
+      redler_battle_sprites_0: 2256471256328960009
+      redler_battle_sprites_15: 6359463684169322220
+      redler_battle_sprites_7: 1585242059435584447
+      redler_battle_sprites_14: 7574633586475412729
+      redler_battle_sprites_5: 2371612938721040085
+      redler_battle_sprites_9: 4475801740015904015
+      redler_battle_sprites_11: 4944495087838196312
+      redler_battle_sprites_16: 3380517281710998712
+      redler_battle_sprites_2: 4759239689162159606
+      redler_battle_sprites_17: -1072756313481542681
+      redler_battle_sprites_12: -7278414314720599111
+      redler_battle_sprites_10: -1482898762603609382
+      redler_battle_sprites_8: -8827597228360464463
+      redler_battle_sprites_6: 1948409925728738834
+      redler_battle_sprites_13: 3396334290007140133
+      redler_battle_sprites_4: -1085553651711207845
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

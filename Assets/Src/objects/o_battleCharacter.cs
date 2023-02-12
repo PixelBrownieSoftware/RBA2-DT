@@ -293,6 +293,7 @@ public class s_statusEff
 
 public class o_battleCharacter : MonoBehaviour
 {
+    public int level;
     public int maxHealth, health;
     public int maxStamina, stamina;
 

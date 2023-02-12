@@ -12,53 +12,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Redler
   m_EditorClassIdentifier: 
-  level: 40
+  level: 1
   money: 0
+  maxSkillPoints: 1
   maxSkillPointsB: 21
+  maxHitPoints: 1
   maxHitPointsB: 25
+  agilityB: 1
   strengthB: 5
   vitalityB: 4
+  luckB: 0
+  intelligenceB: 0
   dexterityB: 4
-  agilityB: 1
+  agilityGP: 0.481
+  strengthGP: 0.658
+  vitalityGP: 0.159
+  luckGP: 0.276
+  intelligenceGP: 0.389
+  dexterityGP: 0.234
+  agility: 0
+  strength: 0
+  vitality: 0
+  luck: 0
+  intelligence: 0
+  dexterity: 0
+  characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
-  healthGT: 2
-  staminaGT: 3
-  strengthGT: 3
-  vitalityGT: 3
-  dexterityGT: 3
-  agilityGT: 1
-  maxSkillPointsGMax: 3
-  maxSkillPointsGMin: 2
-  maxHitPointsGMax: 4
-  maxHitPointsGMin: 3
   turnIcons: 1
-  currentMoves:
-  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
-  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
-  - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
   moveLearn:
   - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
   - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
   elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 0.45
-  - 2
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 2
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    heal: 0
+    support: 0
+  elementWeaknesses:
+    strike: 0
+    peirce: 0
+    fire: 0
+    ice: 0
+    water: 0
+    electric: 0
+    wind: 0
+    earth: 0
+    psychic: 0
+    light: 0
+    dark: 0
+    bio: 0
   characterColour: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
   characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
-  skillAffinities: []
   aiPages:
   - ai: []
   anim: {fileID: 9100000, guid: 40ef012e39931da4496866c815e0d64b, type: 2}

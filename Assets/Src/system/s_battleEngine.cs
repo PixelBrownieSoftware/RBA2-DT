@@ -287,12 +287,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         c.render.color = Color.white;
                         //c.animHandler.runtimeAnimatorController.animationClips[0].wrapMode = WrapMode.Loop;
                         //c.PlayAnimation("idle");
-<<<<<<< HEAD
                         HPGUIMan.SetPartyMember(charIndex, c);
                         charIndex++;
                         /*
-=======
->>>>>>> parent of aa53cbbb (11/08/2021)
                         if (c != null && HP_GUIS.Length > charIndex)
                         {
                             if (c.inBattle)
@@ -301,6 +298,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 charIndex++;
                             }
                         }
+
+                        */
                     }
                 }
                 else
@@ -420,10 +419,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         int tempSP = enem.maxSkillPoints;
 
         charObj.name = enem.name;
-<<<<<<< HEAD
-=======
         charObj.level = enem.level;
->>>>>>> parent of aa53cbbb (11/08/2021)
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.battleCharData = enem;
@@ -553,10 +549,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         int tempSP = enem.maxSkillPoints;
         
         charObj.name = enem.name;
-<<<<<<< HEAD
-=======
         charObj.level = enem.level;
->>>>>>> parent of aa53cbbb (11/08/2021)
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.battleCharData = enem;

@@ -83,13 +83,13 @@ public class M_Results : S_MenuSystem
             resultTxt += str + "\n";
         }
         expList.RaiseEvent(resultTxt);
-        */
 
         foreach (var chTarg in enemyParty.characterListRef)
         {
             chTarg.WipeClean();
         }
         enemyParty.Clear();
+        */
     }
 
     private void BackToHub() {

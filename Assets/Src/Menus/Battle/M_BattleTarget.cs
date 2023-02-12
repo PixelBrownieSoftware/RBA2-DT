@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class M_BattleTarget : S_MenuSystem
 {
+    /*
     public R_CharacterList targets;
     public B_BattleTarget[] buttons;
 
@@ -29,5 +30,5 @@ public class M_BattleTarget : S_MenuSystem
             button.SetTargetButton(targets.characterListRef[i]);
         }
     }
-
+    */
 }

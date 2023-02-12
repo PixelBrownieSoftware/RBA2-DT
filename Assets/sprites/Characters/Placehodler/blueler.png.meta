@@ -135,6 +135,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -144,8 +145,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -475,6 +476,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      blueler_33: 1863684419323795816
+      blueler_0: 6990903321844928530
+      blueler_35: 266909781996565395
+      blueler_31: -722869501848636247
+      blueler_32: -3227558725568014671
+      blueler_8: -1841241103143163004
+      blueler_29: -6430866644776815577
+      blueler_24: 4860117964833225345
+      blueler_30: 1662106299488330381
+      blueler_7: -8631757200825723880
+      blueler_9: -2045564330454506790
+      blueler_25: 1202840773131047077
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
