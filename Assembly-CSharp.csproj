@@ -75,6 +75,7 @@
     <Compile Include="Assets\Src\Buttons\B_BattleMove.cs" />
     <Compile Include="Assets\Src\system\s_rpgGlobals.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyOverworldMenu.cs" />
+    <Compile Include="Assets\Src\CH_BattleChar.cs" />
     <Compile Include="Assets\Src\Menus\R_TextArray.cs" />
     <Compile Include="Assets\Src\system\menu\s_modeButton.cs" />
     <Compile Include="Assets\Src\objects\s_consumable.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Src\system\misc\s_buttonList.cs" />
     <Compile Include="Assets\Src\ChannelListeners\CHL_ChangeText.cs" />
     <Compile Include="Assets\Src\system\s_rpganim.cs" />
+    <Compile Include="Assets\Src\system\misc\G_PressTurnIcons.cs" />
     <Compile Include="Assets\Src\system\menu\s_rpgbutton.cs" />
     <Compile Include="Assets\Src\system\misc\s_elementalWeaknessGUI.cs" />
     <Compile Include="Assets\Src\system\s_rpgEvents.cs" />

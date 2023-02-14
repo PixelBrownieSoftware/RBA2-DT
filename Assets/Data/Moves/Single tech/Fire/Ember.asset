@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Ember
   m_EditorClassIdentifier: 
-  strReq: 0
-  dxReq: 3
-  vitReq: 0
+  strReq: 2
+  dxReq: 0
+  vitReq: 3
   agiReq: 0
+  intReq: 4
+  lucReq: 0
   power: 4
   moveType: 1
   moveTarg: 0

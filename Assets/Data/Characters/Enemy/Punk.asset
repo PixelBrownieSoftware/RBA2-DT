@@ -15,44 +15,32 @@ MonoBehaviour:
   level: 1
   money: 0.45
   maxSkillPointsB: 7
-  maxHitPointsB: 15
+  maxHitPointsB: 18
+  maxHitPointsGMin: 3
+  maxHitPointsGMax: 6
+  maxSkillPointsGMin: 4
+  maxSkillPointsGMax: 5
+  agilityB: 1
   strengthB: 3
   vitalityB: 2
-  dexterityB: 2
   luckB: 4
-  agilityB: 1
-  battleImage: {fileID: 0}
-  healthGT: 1
-  staminaGT: 1
+  intelligenceB: 1
+  dexterityB: 2
+  agilityGT: 1
   strengthGT: 2
   vitalityGT: 3
-  dexterityGT: 2
-  agilityGT: 1
   luckGT: 2
-  maxSkillPointsGMax: 5
-  maxSkillPointsGMin: 4
-  maxHitPointsGMax: 6
-  maxHitPointsGMin: 3
+  intelligenceGT: 3
+  dexterityGT: 2
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 0}
   turnIcons: 1
-  currentMoves: []
   moveLearn:
   - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
-  elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 2
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  elementals:
+    weaknessChart: []
   characterColour: {r: 0.61166894, g: 0.735849, b: 0.12148449, a: 1}
   characterColour2: {r: 0.41119078, g: 0.6037736, b: 0.17942329, a: 1}
-  skillAffinities: []
   aiPages:
   - ai:
     - move: {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}

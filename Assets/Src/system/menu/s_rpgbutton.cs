@@ -35,8 +35,11 @@ public class s_rpgbutton : s_button
             case "fight":
                 backButton.buttonType = "BattleMenu";
                 s_battleEngine.engineSingleton.SelectSkillOption();
+                s_battleEngine.engineSingleton.SetTargets(false);
+                /*
                 s_menuhandler.GetInstance().GetMenu<s_targetMenu>
                 ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
+                */
                 if (s_battleEngine.engineSingleton.currentCharacter.physWeapon != null)
                 {
                     s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov
@@ -55,8 +58,11 @@ public class s_rpgbutton : s_button
             case "fight2":
                 backButton.buttonType = "BattleMenu";
                 s_battleEngine.engineSingleton.SelectSkillRangedOption();
+                s_battleEngine.engineSingleton.SetTargets(false);
+                /*
                 s_menuhandler.GetInstance().GetMenu<s_targetMenu>
                 ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
+                */
                 s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov
                     = s_battleEngine.engineSingleton.currentCharacter.rangedWeapon;
 
@@ -131,12 +137,13 @@ public class s_rpgbutton : s_button
                 s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
-                s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);
+                s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.9f);
                 s_soundmanager.GetInstance().PlaySound("selectOption");
                 break;
 
             case "back":
-                StartCoroutine(s_camera.cam.MoveCamera(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f));
+                s_camera.cam.cameraMode = s_camera.CAMERA_MODE.LERPING;
+                StartCoroutine(s_camera.cam.MoveCamera(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.9f));
                 s_soundmanager.GetInstance().PlaySound("back");
                 base.OnButtonClicked();
                 break;

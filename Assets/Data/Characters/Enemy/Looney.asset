@@ -14,32 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   money: 0.2
-  maxSkillPoints: 14
-  maxSkillPointsB: 1
-  maxHitPoints: 26
-  maxHitPointsB: 1
+  maxSkillPointsB: 6
+  maxHitPointsB: 13
   maxHitPointsGMin: 1
   maxHitPointsGMax: 1
   maxSkillPointsGMin: 1
   maxSkillPointsGMax: 1
-  agilityB: 1
-  strengthB: 1
-  vitalityB: 1
+  agilityB: 4
+  strengthB: 3
+  vitalityB: 3
   luckB: 1
   intelligenceB: 1
-  dexterityB: 1
-  agilityGT: 1
-  strengthGT: 1
-  vitalityGT: 1
-  luckGT: 1
-  intelligenceGT: 1
-  dexterityGT: 1
-  agility: 0
-  strength: 0
-  vitality: 0
-  luck: 0
-  intelligence: 0
-  dexterity: 0
+  dexterityB: 2
+  agilityGT: 3
+  strengthGT: 4
+  vitalityGT: 3
+  luckGT: 5
+  intelligenceGT: 4
+  dexterityGT: 5
   characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
   turnIcons: 1

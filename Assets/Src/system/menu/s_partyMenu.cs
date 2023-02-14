@@ -20,6 +20,7 @@ public class s_partyMenu : s_menucontroller
         
         for (int i = 0; i < bc.Count; i++)
         {
+            break;
             o_battleCharacter b = bc[i];
             switch (partyMenuType)
             {
@@ -36,7 +37,7 @@ public class s_partyMenu : s_menucontroller
                     break;
             }
 
-            GetButton<s_targetButton>(i).battleCharButton = b;
+            //GetButton<s_targetButton>(i).battleCharButton = b;
             if (s_battleEngine.engineSingleton.currentCharacter == b)
                 GetButton<s_targetButton>(i).txt.text = "Withdraw";
             else

@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 39
   money: 0
-  maxSkillPoints: 22
-  maxSkillPointsB: 26
-  maxHitPoints: 15
+  maxSkillPointsB: 20
   maxHitPointsB: 19
   maxHitPointsGMin: 2
   maxHitPointsGMax: 3
-  maxSkillPointsGMin: 3
+  maxSkillPointsGMin: 4
   maxSkillPointsGMax: 5
   agilityB: 1
   strengthB: 2
@@ -29,17 +27,11 @@ MonoBehaviour:
   intelligenceB: 6
   dexterityB: 2
   agilityGT: 4
-  strengthGT: 6
+  strengthGT: 5
   vitalityGT: 4
   luckGT: 4
   intelligenceGT: 2
   dexterityGT: 5
-  agility: 0
-  strength: 0
-  vitality: 0
-  luck: 0
-  intelligence: 0
-  dexterity: 0
   characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
@@ -49,33 +41,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
   - {fileID: 11400000, guid: c56eb97e398912640b97b41642878e38, type: 2}
-  elementAffinities:
-    strike: 0
-    peirce: 0
-    fire: 0
-    ice: 0
-    water: 0
-    electric: 0
-    wind: 0
-    earth: 0
-    psychic: 0
-    light: 0
-    dark: 0
-    heal: 0
-    support: 0
-  elementWeaknesses:
-    strike: 0
-    peirce: 0
-    fire: 0
-    ice: 0
-    water: 0
-    electric: 0
-    wind: 0
-    earth: 0
-    psychic: 0
-    light: 0
-    dark: 0
-    bio: 0
+  elementals:
+    weaknessChart: []
   characterColour: {r: 0.32392004, g: 1, b: 0.11792451, a: 1}
   characterColour2: {r: 0.31382358, g: 0.6603774, b: 0.25854397, a: 1}
   aiPages:

@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Registers/Character list")]
 public class R_CharacterList : R_Default
 {
-    /*
-    public List<O_BattleCharacter> characterListRef = new List<O_BattleCharacter>();
+
+    public List<CH_BattleChar> characterListRef = new List<CH_BattleChar>();
     [SerializeField]
-    private List<O_BattleCharacter> characterListRefBase = new List<O_BattleCharacter>();
+    private List<CH_BattleChar> characterListRefBase = new List<CH_BattleChar>();
 
     private void OnEnable()
     {
@@ -21,34 +21,22 @@ public class R_CharacterList : R_Default
     public void Clear() {
         characterListRef.Clear();
     }
-    public bool ListContains(R_Character targ)
-    {
-        return characterListRef.Contains(targ.characterRef);
-    }
-    public bool ListContains(O_BattleCharacter targ)
+    public bool ListContains(CH_BattleChar targ)
     {
         return characterListRef.Contains(targ);
     }
 
-    public void Remove(R_Character targ) {
-        characterListRef.Remove(targ.characterRef);
-    }
-    public void Remove(O_BattleCharacter targ)
+    public void Remove(CH_BattleChar targ)
     {
         characterListRef.Remove(targ);
     }
-    public void Add(R_Character targ)
-    {
-        characterListRef.Add(targ.characterRef);
-    }
-    public void Add(O_BattleCharacter targ)
+    public void Add(CH_BattleChar targ)
     {
         characterListRef.Add(targ);
     }
 
-    public O_BattleCharacter GetChracter(int index)
+    public CH_BattleChar GetChracter(int index)
     {
         return characterListRef[index];
     }
-    */
 }

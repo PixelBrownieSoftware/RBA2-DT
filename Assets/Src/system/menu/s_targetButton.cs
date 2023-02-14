@@ -7,7 +7,7 @@ using MagnumFoundation2.System.Core;
 
 public class s_targetButton : s_button
 {
-    public o_battleCharacter battleCharButton;
+    public CH_BattleChar battleCharButton;
     public o_battleCharDataN battleCharButton2;
     public enum TARGET_TYPE {
         BATTLE,
@@ -75,7 +75,7 @@ public class s_targetButton : s_button
                 {
                     s_battleEngine.engineSingleton.battleAction.user = s_battleEngine.engineSingleton.currentCharacter;
                     s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
-                    s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.ChangePartyMember(s_battleEngine.engineSingleton.currentCharacter, battleCharButton));
+                    //s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.ChangePartyMember(s_battleEngine.engineSingleton.currentCharacter, battleCharButton));
                     s_soundmanager.GetInstance().PlaySound("selectOption");
                     s_battleEngine.engineSingleton.EndAction();
                     s_menuhandler.GetInstance().SwitchMenu("EMPTY");
@@ -89,7 +89,7 @@ public class s_targetButton : s_button
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
                 s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);
                 s_soundmanager.GetInstance().PlaySound("selectOption");
-                s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.AddPartymemberToBattle(battleCharButton));
+                //s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.AddPartymemberToBattle(battleCharButton));
                 break;
 
             case TARGET_TYPE.BATTLE:

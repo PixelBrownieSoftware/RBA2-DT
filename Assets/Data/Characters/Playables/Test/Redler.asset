@@ -14,32 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   money: 0
-  maxSkillPoints: 13
   maxSkillPointsB: 21
-  maxHitPoints: 22
   maxHitPointsB: 25
-  maxHitPointsGMin: 1
-  maxHitPointsGMax: 1
-  maxSkillPointsGMin: 1
-  maxSkillPointsGMax: 1
+  maxHitPointsGMin: 3
+  maxHitPointsGMax: 6
+  maxSkillPointsGMin: 2
+  maxSkillPointsGMax: 4
   agilityB: 1
   strengthB: 5
   vitalityB: 4
-  luckB: 0
-  intelligenceB: 0
+  luckB: 1
+  intelligenceB: 1
   dexterityB: 4
-  agilityGT: 4
+  agilityGT: 3
   strengthGT: 2
   vitalityGT: 3
   luckGT: 4
-  intelligenceGT: 3
+  intelligenceGT: 2
   dexterityGT: 3
-  agility: 0
-  strength: 0
-  vitality: 0
-  luck: 0
-  intelligence: 0
-  dexterity: 0
   characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
@@ -49,33 +41,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
-  elementAffinities:
-    strike: 0
-    peirce: -2
-    fire: 0
-    ice: 0
-    water: 2
-    electric: 0
-    wind: 0
-    earth: 0
-    psychic: 0
-    light: 0
-    dark: 0
-    heal: 0
-    support: 0
-  elementWeaknesses:
-    strike: 0
-    peirce: 0
-    fire: 0
-    ice: 0
-    water: 0
-    electric: 0
-    wind: 0
-    earth: 0
-    psychic: 0
-    light: 0
-    dark: 0
-    bio: 0
+  elementals:
+    weaknessChart: []
   characterColour: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
   characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
   aiPages:

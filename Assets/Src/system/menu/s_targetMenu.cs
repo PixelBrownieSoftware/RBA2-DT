@@ -16,7 +16,9 @@ public class s_targetMenu : s_menucontroller
     public s_move mov;
 
     public List<o_battleCharDataN> battleChr;
-    public List<o_battleCharacter> bcs = new List<o_battleCharacter>();
+    public R_CharacterList battleCharacters;
+    public R_CharacterList players;
+    public R_Character currentCharacter;
 
     public override void OnOpen()
     {
@@ -31,9 +33,9 @@ public class s_targetMenu : s_menucontroller
                     default:
                         {
                             List<Vector2> allPositions = new List<Vector2>();
-                            foreach (var v in bcs)
+                            foreach (var v in battleCharacters.characterListRef)
                             {
-                                allPositions.Add(v.transform.position);
+                                allPositions.Add(v.position);
                             }
                             StartCoroutine(s_camera.cam.MoveCamera(s_camera.cam.GetCentroid(allPositions), 0.9f));
                         }
@@ -50,16 +52,17 @@ public class s_targetMenu : s_menucontroller
 
                         tg = GetButton<s_targetButton>(0);
 
-                        tg.battleCharButton = s_battleEngine.GetInstance().currentCharacter;
+                        tg.battleCharButton = currentCharacter.characterRef;
                         tg.txt.text = tg.battleCharButton.name;
                         break;
 
                     case s_move.MOVE_TARGET.SINGLE:
-                        for (int i = 0; i < bcs.Count; i++)
+                        for (int i = 0; i < battleCharacters.characterListRef.Count; i++)
                         {
+                            CH_BattleChar battleChar = battleCharacters.GetChracter(i);
                             tg = GetButton<s_targetButton>(i);
-
-                            bool plContain = s_battleEngine.GetInstance().playerCharacters.Contains(bcs[i]);
+                            //bool plContain = s_battleEngine.GetInstance().playerCharacters.Contains(bcs.GetChracter(i));
+                            bool plContain = players.characterListRef.Contains(battleChar);
                             bool isStatus = mov.moveType == s_move.MOVE_TYPE.STATUS;
 
                             if (plContain) {
@@ -71,8 +74,8 @@ public class s_targetMenu : s_menucontroller
                                 tg.isCure = false;
                             }
 
-                            tg.battleCharButton = bcs[i];
-                            tg.txt.text = bcs[i].name;
+                            tg.battleCharButton = battleChar;
+                            tg.txt.text = battleChar.cName;
                             tg.gameObject.SetActive(true);
                         }
                         break;

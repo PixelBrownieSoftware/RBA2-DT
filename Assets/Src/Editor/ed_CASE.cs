@@ -300,10 +300,15 @@ public class ed_CASE : Editor
                     EditorGUILayout.LabelField("Health (HP): " + tempHPMin + " - " + tempHPMax);
                     EditorGUILayout.LabelField("Stamina (SP): " + tempSPMin + " - " + tempSPMax);
 
+                    EditorGUILayout.Space();
+
                     EditorGUILayout.LabelField("Strength: " + tempStr);
                     EditorGUILayout.LabelField("Vitality: " + tempVit);
                     EditorGUILayout.LabelField("Dexterity: " + tempDx);
                     EditorGUILayout.LabelField("Agility: " + tempAgi);
+                    EditorGUILayout.LabelField("Intelligence: " + tempInt);
+                    EditorGUILayout.LabelField("Luck: " + tempLuc);
+                    EditorGUILayout.Space();
 
                 }
                 charaData.strengthGT = (int)EditorGUILayout.Slider("Strength: ",charaData.strengthGT, 1,6);
@@ -312,7 +317,7 @@ public class ed_CASE : Editor
                 charaData.intelligenceGT = (int)EditorGUILayout.Slider("Intelligence: ", charaData.intelligenceGT, 1, 6);
                 charaData.agilityGT = (int)EditorGUILayout.Slider("Agility: ", charaData.agilityGT, 1, 6);
                 charaData.luckGT = (int)EditorGUILayout.Slider("Luck: ", charaData.luckGT, 1, 6);
-                base.OnInspectorGUI();
+                EditorGUILayout.Space();
                 break;
 
             #region Stats

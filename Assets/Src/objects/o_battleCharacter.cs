@@ -4,6 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class O_BattleCharacterStats
+{
+    public int level;
+    public int maxHealth, health;
+    public int maxStamina, stamina;
+
+    public int strength;
+    public int vitality;
+    public int dexterity;
+    public int agility;
+    public int intelligence;
+    public int luck;
+
+    public int strengthBuff;
+    public int vitalityBuff;
+    public int dexterityBuff;
+    public int agilityBuff;
+    public int intelligenceBuff;
+    public int luckBuff;
+    public CH_BattleChar referencePoint;
+
+    public List<s_move> currentMoves;
+    public List<s_move> extraSkills;
+    public List<s_passive> extraPassives;
+
+    public o_battleCharDataN battleCharData;
+    public element_weaknesses elementals;
+    public List<s_statusEff> statusEffects = new List<s_statusEff>();
+
+    public o_weapon physWeapon;
+    public o_weapon rangedWeapon;
+}
+
 public enum ELEMENT_WEAKNESS {
     NONE,
     FRAIL,
@@ -310,6 +343,7 @@ public class o_battleCharacter : MonoBehaviour
     public int agilityBuff;
     public int intelligenceBuff;
     public int luckBuff;
+    public CH_BattleChar referencePoint;
 
     public List<s_move> currentMoves;
     public List<s_move> extraSkills;
@@ -393,6 +427,12 @@ public class o_battleCharacter : MonoBehaviour
     private void Update()
     {
         shadow.enabled = inBattle;
+
+        if (referencePoint != null)
+        {
+            referencePoint.position = transform.position;
+            referencePoint.SetStats(this);
+        }
 
         #region STATUS EFFECTS
         List<string> statusEffs = new List<string>();

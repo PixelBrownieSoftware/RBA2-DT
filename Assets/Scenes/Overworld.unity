@@ -366,6 +366,37 @@ Transform:
   m_Father: {fileID: 1762453672}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &205461769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 205461770}
+  m_Layer: 0
+  m_Name: HubManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &205461770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205461769}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &248004804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26473,7 +26504,7 @@ PrefabInstance:
         type: 3}
       propertyPath: group
       value: 
-      objectReference: {fileID: 11400000, guid: 9ca5e764e2acf5346b5729b992619301,
+      objectReference: {fileID: 11400000, guid: a528ba627d5bd9443be5848ce0a22fb5,
         type: 2}
     - target: {fileID: 4906098191542862115, guid: 58ca8d2893f1cca41b16f6bf7395abe3,
         type: 3}

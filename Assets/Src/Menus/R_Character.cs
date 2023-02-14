@@ -5,10 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Registers/Character")]
 public class R_Character : R_Default
 {
-    /*
-    public O_BattleCharacter characterRef;
-    public void SetCharacter(O_BattleCharacter targ) {
+    public CH_BattleChar characterRef;
+    public void SetCharacter(CH_BattleChar targ) {
         characterRef = targ;
     }
-    */
 }
