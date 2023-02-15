@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Greenler
+  m_EditorClassIdentifier: 
+  money: 0
+  maxSkillPointsB: 14
+  maxHitPointsB: 20
+  maxHitPointsGMin: 3
+  maxHitPointsGMax: 5
+  maxSkillPointsGMin: 2
+  maxSkillPointsGMax: 4
+  agilityB: 4
+  strengthB: 2
+  vitalityB: 4
+  luckB: 1
+  intelligenceB: 2
+  dexterityB: 5
+  agilityGT: 1
+  strengthGT: 4
+  vitalityGT: 4
+  luckGT: 2
+  intelligenceGT: 3
+  dexterityGT: 2
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 0}
+  turnIcons: 1
+  moveLearn:
+  - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
+  - {fileID: 11400000, guid: 1fe56e80ca2511140a41c545acb77e4a, type: 2}
+  - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  elementals:
+    weaknessChart:
+    - element: 6
+      weakness: 0
+  characterColour: {r: 0.6004797, g: 0.8584906, b: 0.23082057, a: 1}
+  characterColour2: {r: 0.492124, g: 0.7169812, b: 0.2807049, a: 1}
+  aiPages:
+  - ai: []
+  anim: {fileID: 9100000, guid: 6e4f5c3b37e811a4cbb99c6584a31fdb, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 11400000, guid: 2ba2c0f1e7f3c7e41aaf04cd39ba911f,
+    type: 2}
+  persistence: 0
+  equip_fist: 0
+  equip_gun: 1
+  equip_sword: 0
+  equip_staff: 0

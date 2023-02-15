@@ -214,6 +214,19 @@ public class s_rpgGlobals : s_globals
     public int extraPassiveSkillAmount = 4;
     public Sprite BGBattle;
 
+    public CH_Func gotoBattleChannel;
+    public R_EnemyGroup enemyGroupSelect;
+
+    private void OnEnable()
+    {
+        gotoBattleChannel.OnFunctionEvent += SwitchToBattle;
+    }
+
+    private void OnDisable()
+    {
+        gotoBattleChannel.OnFunctionEvent -= SwitchToBattle;
+    }
+
     private new void Update()
     {
         base.Update();
@@ -382,6 +395,10 @@ public class s_rpgGlobals : s_globals
     public IEnumerator SwitchToBattle(s_enemyGroup gr, o_locationOverworld lc) {
         locationObjectName = lc;
         yield return SwitchToBattle(gr);
+    }
+
+    public void SwitchToBattle() {
+        StartCoroutine(SwitchToBattle(enemyGroupSelect.enemyGroup));
     }
 
     public void SetActivePartyMember(o_battleCharPartyData bc) {

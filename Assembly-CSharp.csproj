@@ -153,6 +153,11 @@
     <Compile Include="Assets\Src\objects\s_move.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
+    <Compile Include="Assets\M_Hub.cs" />
+    <Compile Include="Assets\Src\S_MenuManager.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_HubBattleSelect.cs" />
+    <Compile Include="Assets\Src\Menus\R_EnemyGroup.cs" />
+    <Compile Include="Assets\Src\Menus\R_EnemyGroupList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

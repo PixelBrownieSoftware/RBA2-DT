@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Name: VsGreenler
+  m_EditorClassIdentifier: 
+  fleeable: 0
+  fixedPlayers: 1
+  sceneToGoTo: 
+  members:
+  - memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
+    levType: 1
+    level: 15
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  members_Player:
+  - memberDat: {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
+    levType: 1
+    level: 10
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
+    levType: 1
+    level: 10
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
+    levType: 1
+    level: 10
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}
