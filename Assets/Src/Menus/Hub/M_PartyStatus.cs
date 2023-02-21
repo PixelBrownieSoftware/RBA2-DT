@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class M_PartyStatus : S_MenuSystem
 {
-    /*
-    public R_CharacterList players;
-    public R_Character selectedCharacter;
-    public CH_BattleCharacter selected;
+    public R_BattleCharacterList players;
+    public R_BattleCharacter selectedCharacter;
+    public CH_Int selected;
     public CH_Text changeMenu;
-    public B_BattleTarget[] buttons;
+    public B_Int[] buttons;
     public string menuToGoTo;
 
     private void OnEnable()
@@ -38,17 +37,17 @@ public class M_PartyStatus : S_MenuSystem
             b.gameObject.SetActive(false);
         }
         base.StartMenu();
-        for (int i = 0; i < players.characterListRef.Count; i++)
+        for (int i = 0; i < players.battleCharList.Count; i++)
         {
             var button = buttons[i];
             button.gameObject.SetActive(true);
-            button.SetTargetButton(players.GetChracter(i));
+            button.SetIntButton(i);
+            button.SetButonText(players.GetIndex(i).name);
         }
     }
 
-    public void SelectCharacter(O_BattleCharacter bc) {
-        selectedCharacter.SetCharacter(bc);
+    public void SelectCharacter(int bcID) {
+        selectedCharacter.SetCharacter(players.GetIndex(bcID));
         changeMenu.RaiseEvent(menuToGoTo);
     }
-    */
 }

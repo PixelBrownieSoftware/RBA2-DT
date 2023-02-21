@@ -10,6 +10,11 @@ using UnityEngine.UI;
 /*
 public class M_CharacterStatus : S_MenuSystem
 {
+}
+*/
+
+public class M_CharacterStatus : S_MenuSystem
+{
     public s_guiList str;
     public s_guiList dx;
     public s_guiList vit;
@@ -25,22 +30,18 @@ public class M_CharacterStatus : S_MenuSystem
     public Text vitShadTXT;
     public Text agiShadTXT;
 
-    public o_battleCharPartyData characterData;
+    o_battleCharPartyData currentBattleCharacterData;
+    public R_BattleCharacter characterData;
     public Text health;
     public Text stamina;
     public Text nameCharacter;
     bool isDirty = true;
     public List<s_elementalWeaknessGUI> affs = new List<s_elementalWeaknessGUI>();
 
-    public void SetCharacter(ref o_battleCharPartyData ch)
+    public override void StartMenu()
     {
-        isDirty = true;
-        characterData = ch;
-    }
-
-    public override void OnOpen()
-    {
-        base.OnOpen(); ResetButton();
+        base.StartMenu();
+        currentBattleCharacterData = characterData.battleCharacter;
     }
 
     private void Update()
@@ -49,19 +50,20 @@ public class M_CharacterStatus : S_MenuSystem
         {
             if (isDirty)
             {
-                health.text = "" + characterData.maxHealth;
-                stamina.text = "" + characterData.maxStamina;
-                nameCharacter.text = characterData.name;
-                str.amount = characterData.strength;
-                dx.amount = characterData.dexterity;
-                agi.amount = characterData.agility;
-                vit.amount = characterData.vitality;
+                health.text = "" + currentBattleCharacterData.maxHealth;
+                stamina.text = "" + currentBattleCharacterData.maxStamina;
+                nameCharacter.text = currentBattleCharacterData.name;
+                str.amount = currentBattleCharacterData.strength;
+                dx.amount = currentBattleCharacterData.dexterity;
+                agi.amount = currentBattleCharacterData.agility;
+                vit.amount = currentBattleCharacterData.vitality;
 
-                strTXT.text = strShadTXT.text = "" + characterData.strength;
-                vitTXT.text = vitShadTXT.text = "" + characterData.vitality;
-                dxTXT.text = dxShadTXT.text = "" + characterData.dexterity;
-                agiTXT.text = agiShadTXT.text = "" + characterData.agility;
+                strTXT.text = strShadTXT.text = "" + currentBattleCharacterData.strength;
+                vitTXT.text = vitShadTXT.text = "" + currentBattleCharacterData.vitality;
+                dxTXT.text = dxShadTXT.text = "" + currentBattleCharacterData.dexterity;
+                agiTXT.text = agiShadTXT.text = "" + currentBattleCharacterData.agility;
 
+                /*
                 //strike_aff.text = characterData.wea
                 affs.ForEach(x => x.SetToDat(characterData));
                 {
@@ -74,6 +76,7 @@ public class M_CharacterStatus : S_MenuSystem
                     }
                 }
                 isDirty = false;
+                */
             }
         }
     }
@@ -82,10 +85,7 @@ public class M_CharacterStatus : S_MenuSystem
     {
         b.txt.text = mov[i].name;
     }
-}
-
-public class M_CharacterStatus : S_MenuSystem
-{
+    /*
     public R_Character selectedCharacter;
     public R_CharacterList players;
     public R_CharacterList selectedCharacters;
@@ -166,5 +166,5 @@ public class M_CharacterStatus : S_MenuSystem
         selectedCharacter.SetCharacter(bc);
         changeMenu.RaiseEvent("PartyMenu");
     }
+    */
 }
-*/

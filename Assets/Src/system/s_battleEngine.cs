@@ -177,6 +177,33 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public SpriteRenderer bg1;
     public SpriteRenderer bg2;
     public SpriteRenderer mainBG;
+    List<List<Vector2>> battlePositionsPlayer = new List<List<Vector2>> { 
+        new List<Vector2>(){
+            new Vector2(240, 295) 
+        },
+        new List<Vector2>(){
+            new Vector2(245, 335),
+            new Vector2(255, 255)
+        },
+        new List<Vector2>(){
+            new Vector2(248, 365),
+            new Vector2(255, 245),
+            new Vector2(125, 300)
+        },
+        new List<Vector2>(){
+            new Vector2(250, 358),
+            new Vector2(250, 322),
+            new Vector2(245, 285),
+            new Vector2(250, 245)
+        },
+        new List<Vector2>(){
+            new Vector2(250, 358),
+            new Vector2(247, 302),
+            new Vector2(200, 330),
+            new Vector2(250, 245),
+            new Vector2(200, 270)
+        }
+    };
     #endregion
 
     public o_battleCharacter ReferenceToCharacter(CH_BattleChar refer) {
@@ -237,6 +264,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             nonChangablePlayers = enemyGroup.fixedPlayers;
 
             oppositionCharacters = new List<o_battleCharacter>();
+
+
             for (int i = 0; i < enemyGroup.members.Length; i++)
             {
                 o_battleCharacter c = enemySlots[i];
@@ -257,12 +286,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 int charIndex = 0;
                 if (nonChangablePlayers)
                 {
+                    List<Vector2> plPos = battlePositionsPlayer[enemyGroup.members_Player.Length];
                     //HPGUIMan.set
                     for (int i = 0; i < enemyGroup.members_Player.Length; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
                         s_enemyGroup.s_groupMember mem = enemyGroup.members_Player[i];
                         o_battleCharDataN bc = mem.memberDat;
+                        c.transform.position = plPos[i];
                         if (bc.defaultPhysWeapon != null)
                             c.physWeapon = bc.defaultPhysWeapon;
                         if (bc.defaultRangedWeapon != null)
@@ -278,12 +309,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 else
                 {
+                    List<Vector2> plPos = battlePositionsPlayer[s_rpgGlobals.rpgGlSingleton.partyMembers.Count];
                     for (int i = 0; i < s_rpgGlobals.rpgGlSingleton.partyMembers.Count; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
                         c.render.color = Color.clear;
                         o_battleCharPartyData pbc = s_rpgGlobals.rpgGlSingleton.partyMembers[i];
                         o_battleCharDataN bc = pbc.characterDataSource;
+                        c.transform.position = plPos[i];
                         if (pbc.currentPhysWeapon != null)
                             c.physWeapon = pbc.currentPhysWeapon;
                         if (pbc.currentRangeWeapon != null)

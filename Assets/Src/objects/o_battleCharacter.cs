@@ -235,6 +235,8 @@ public class o_battleCharPartyData
     public int vitality;
     public int dexterity;
     public int agility;
+    public int intelligence;
+    public int luck;
 
     public int knowledgePoints;
     public bool inBattle;

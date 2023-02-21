@@ -9,6 +9,7 @@ public class CH_BattleChar : ScriptableObject
     public string cName;
     public int health, maxHealth, stamina, maxStamina;
     public Vector2 position;
+    public o_battleCharPartyData characterData;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
     public bool HasStatus(STATUS_EFFECT statEff)
