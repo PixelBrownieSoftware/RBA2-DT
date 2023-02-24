@@ -69,6 +69,8 @@
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
     <Compile Include="Assets\Src\system\static\s_element.cs" />
+    <Compile Include="Assets\Src\system\S_Bootstrapper.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_Gacha.cs" />
     <Compile Include="Assets\Src\system\misc\s_menuButton.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_EventListener.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetMenu.cs" />
@@ -77,6 +79,8 @@
     <Compile Include="Assets\Src\system\menu\s_partyOverworldMenu.cs" />
     <Compile Include="Assets\Src\CH_BattleChar.cs" />
     <Compile Include="Assets\Src\Menus\R_TextArray.cs" />
+    <Compile Include="Assets\Src\Menus\R_BattleCharacter.cs" />
+    <Compile Include="Assets\Src\Menus\R_CharacterSetterList.cs" />
     <Compile Include="Assets\Src\system\menu\s_modeButton.cs" />
     <Compile Include="Assets\Src\objects\s_consumable.cs" />
     <Compile Include="Assets\Src\system\misc\s_statReq.cs" />
@@ -94,11 +98,13 @@
     <Compile Include="Assets\Src\Channels\CH_BattleCharacter.cs" />
     <Compile Include="Assets\Src\Buttons\B_BattleTarget.cs" />
     <Compile Include="Assets\Src\Menus\R_EnemyGroupList.cs" />
+    <Compile Include="Assets\Src\Menus\R_BattleCharacterList.cs" />
     <Compile Include="Assets\Src\system\menu\s_buttonItem.cs" />
     <Compile Include="Assets\Src\system\menu\s_guiList.cs" />
     <Compile Include="Assets\Src\objects\o_locSpr.cs" />
     <Compile Include="Assets\Src\objects\s_enemyGroup.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelect.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_GachaGen.cs" />
     <Compile Include="Assets\Src\system\menu\s_overworldPlayerTargetMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_Move.cs" />
     <Compile Include="Assets\Src\Menus\R_Text.cs" />
@@ -127,6 +133,7 @@
     <Compile Include="Assets\Src\system\menu\s_itemMenu.cs" />
     <Compile Include="Assets\Src\Channels\CH_Int.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleTarget.cs" />
+    <Compile Include="Assets\Src\Channels\CH_BCData.cs" />
     <Compile Include="Assets\Src\objects\o_weapon.cs" />
     <Compile Include="Assets\Src\system\misc\s_buttonList.cs" />
     <Compile Include="Assets\Src\ChannelListeners\CHL_ChangeText.cs" />
@@ -158,9 +165,8 @@
     <Compile Include="Assets\Src\objects\s_move.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\R_BattleCharacterList.cs" />
-    <Compile Include="Assets\Src\Menus\R_BattleCharacter.cs" />
-    <Compile Include="Assets\Src\Channels\CH_BCData.cs" />
+    <Compile Include="Assets\Src\Menus\R_Items.cs" />
+    <Compile Include="Assets\Src\Menus\R_CharacterUnlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

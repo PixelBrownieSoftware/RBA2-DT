@@ -19802,6 +19802,8 @@ MonoBehaviour:
     vitality: 0
     dexterity: 0
     agility: 0
+    intelligence: 0
+    luck: 0
     knowledgePoints: 0
     inBattle: 0
     isActive: 1
@@ -19829,6 +19831,7 @@ MonoBehaviour:
     currentRangeWeapon: {fileID: 0}
     consumable: {fileID: 0}
     durationConsumable: 0
+  partyMembers: {fileID: 0}
   prices: []
   menType: 0
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -22703,6 +22706,7 @@ MonoBehaviour:
   battleEngine: 0
   battleDecisionMenu: 0
   isPlayerTurn: 1
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
   enemySlots:
   - {fileID: 1326761735}
   - {fileID: 1821048435}

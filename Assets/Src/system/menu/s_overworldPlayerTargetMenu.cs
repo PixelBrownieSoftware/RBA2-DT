@@ -6,11 +6,12 @@ public class s_overworldPlayerTargetMenu : s_menucontroller
 {
     public s_enemyGroup group;
     public o_battleCharDataN playerToPick;
+    public R_BattleCharacterList partyMembers;
 
     public override void OnOpen()
     {
         ResetButton();
-        List<o_battleCharPartyData> bc = s_rpgGlobals.rpgGlSingleton.partyMembers;
+        List<o_battleCharPartyData> bc = partyMembers.battleCharList;
         int i = 0;
         foreach (o_battleCharPartyData a in bc) {
             GetButton<s_partyMemberButton>(i).battleCharacter = a;

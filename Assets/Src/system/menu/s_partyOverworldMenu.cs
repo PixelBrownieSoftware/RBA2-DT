@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class s_partyOverworldMenu : s_menucontroller
 {
-    public List<o_battleCharPartyData> partyMembers = new List<o_battleCharPartyData>();
     public PARTY_MENU_TYPE ptMode;
     public enum PARTY_MENU_TYPE {
         STATUS,
@@ -14,16 +13,16 @@ public class s_partyOverworldMenu : s_menucontroller
         WEAPONS,
         PASSIVES
     }
+    public R_BattleCharacterList partyMembers;
 
     public override void OnOpen()
     {
         base.OnOpen();
         ResetButton();
-        partyMembers = s_rpgGlobals.rpgGlSingleton.partyMembers;
 
-        for (int i = 0; i < partyMembers.Count; i++) {
+        for (int i = 0; i < partyMembers.battleCharList.Count; i++) {
             s_partyMemberButton pm = GetButton<s_partyMemberButton>(i);
-            pm.battleCharacter = partyMembers[i];
+            pm.battleCharacter = partyMembers.GetIndex(i);
             pm.txt.text = pm.battleCharacter.name;
             switch (ptMode) {
                 case PARTY_MENU_TYPE.REARANGE:

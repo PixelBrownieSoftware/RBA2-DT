@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using MagnumFoundation2.Objects;
+using TMPro;
 
 public class s_hitObj : o_generic
 {
-    public TextMesh text;
-    public TextMesh textBK;
+    public TextMeshProUGUI text;
     public Animator anim;
-    public MeshRenderer rendTXT;
-    public MeshRenderer rendTXTBk;
+    public Image hitObj;
 
     public Sprite enemy_spr;
     public Sprite player_spr;
@@ -21,88 +21,72 @@ public class s_hitObj : o_generic
     public void MarkDone()
     {
         text.text = "";
-        textBK.text = "";
         anim.Play("");
     }
 
-    private new void Start()
-    {
-        rendTXT = text.GetComponent<MeshRenderer>();
-        rendTXTBk = textBK.GetComponent<MeshRenderer>();
-    }
     public void PlayAnim(float dmg, string damageType, Color colour)
     {
         rendererObj.color = colour;
         
         switch (damageType) {
             case "heal_hp":
-                rendererObj.sprite = healSprite;
+                hitObj.sprite = healSprite;
                 text.text = "" + dmg;
-                textBK.text = "" + dmg;
                 anim.Play("HealOBJ");
                 break;
 
             case "buffDex":
-                rendererObj.sprite = buffUp;
+                hitObj.sprite = buffUp;
                 anim.Play("buff_effect");
                 break;
 
             case "buffAgi":
-                rendererObj.sprite = buffUp;
+                hitObj.sprite = buffUp;
                 anim.Play("buff_effect");
                 break;
 
             case "buffStr":
-                rendererObj.sprite = buffUp;
+                hitObj.sprite = buffUp;
                 anim.Play("buff_effect");
                 break;
 
             case "buffVit":
-                rendererObj.sprite = buffUp;
+                hitObj.sprite = buffUp;
                 anim.Play("buff_effect");
                 break;
 
             case "block":
-                rendererObj.sprite = blockSprite;
+                hitObj.sprite = blockSprite;
                 anim.Play("block_press_turn");
                 break;
         }
-        print(rendererObj.sprite);
-
-        rendTXT.sortingOrder = 11;
-        rendTXTBk.sortingOrder = 10;
+        print(hitObj.sprite);
 
         switch (damageType)
         {
             case "heal_sp":
             case "heal_hp":
                 text.text = "" + dmg;
-                textBK.text = "" + dmg;
                 break;
 
             case "buffDex":
                 text.text = "Dex +" + dmg;
-                textBK.text = "Dex +" + dmg;
                 break;
 
             case "buffAgi":
                 text.text = "Agi +" + dmg;
-                textBK.text = "Agi +" + dmg;
                 break;
 
             case "buffStr":
                 text.text = "Str +" + dmg;
-                textBK.text = "Str +" + dmg;
                 break;
 
             case "buffVit":
                 text.text = "Vit +" + dmg;
-                textBK.text = "Vit +" + dmg;
                 break;
 
             default:
                 text.text = "";
-                textBK.text = "";
                 break;
         }
     }
@@ -111,18 +95,17 @@ public class s_hitObj : o_generic
     {
         if (enemy)
         {
-            rendererObj.color = Color.white;
-            anim.Play("HitOBJ_enem");
+            hitObj.color = Color.white;
+            hitObj.sprite = enemy_spr;
+            anim.Play("HitOBJ");
         }
         else
         {
-            rendererObj.color = colour;
+            hitObj.color = colour;
+            hitObj.sprite = player_spr;
             anim.Play("HitOBJ");
         }
 
-        rendTXT.sortingOrder = 11;
-        rendTXTBk.sortingOrder = 10;
         text.text = "" + dmg;
-        textBK.text = "" + dmg;
     }
 }

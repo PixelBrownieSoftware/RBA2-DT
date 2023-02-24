@@ -188,8 +188,9 @@ public class s_RPGSave : dat_save {
 public class s_rpgGlobals : s_globals
 {
     public static s_rpgGlobals rpgGlSingleton;
-    public List<o_battleCharDataN> allCharactersData;
-    public List<o_battleCharPartyData> partyMembers;
+    public R_CharacterSetterList allCharactersData;
+    public R_CharacterSetterList partyMembersStart;
+    public R_BattleCharacterList partyMembers;
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
     public List<string> weapons = new List<string>();
     public List<s_move> itemDatabase = new List<s_move>();
@@ -206,7 +207,6 @@ public class s_rpgGlobals : s_globals
     public static float money;
     public Text moneyTxt;
 
-    public o_battleCharDataN[] partyMemberBaseData;
     public s_move[] comboMoveData;
     public s_passive[] passiveMoveData;
     public s_menuButton[] buttonObjects;
@@ -246,21 +246,26 @@ public class s_rpgGlobals : s_globals
 
     public override void SaveData()
     {
-        FileStream fs = new FileStream(saveDataName, FileMode.Create);
-        BinaryFormatter bin = new BinaryFormatter();
-        //s_mapManager lev = GameObject.Find("General").GetComponent<s_mapManager>();
+        try
+        {
+            FileStream fs = new FileStream(saveDataName, FileMode.Create);
+            BinaryFormatter bin = new BinaryFormatter();
 
-        s_RPGSave sav = new s_RPGSave(partyMembers, extraSkills, shopItems, inventory ,weapons, money);
+            s_RPGSave sav = new s_RPGSave(partyMembers.battleCharList, extraSkills, shopItems, inventory, weapons, money);
 
-        //sav.currentmap = SceneManager.GetActiveScene().name;
+            List<Tuple<string, float>> dvF = new List<Tuple<string, float>>();
+            List<Tuple<string, int>> dvI = new List<Tuple<string, int>>();
 
-        List<Tuple<string, float>> dvF = new List<Tuple<string, float>>();
-        List<Tuple<string, int>> dvI = new List<Tuple<string, int>>();
-        sav.location = new s_save_vector(player.transform.position.x, player.transform.position.y);
-        sav.gbflg = new dat_globalflags(GlobalFlags);
-        sav.currentmap = currentMapName;
-        print(objectStates.Count);
-        sav.trigStates = objectStates;
+            sav.gbflg = new dat_globalflags(GlobalFlags);
+            sav.currentmap = currentMapName;
+            print(objectStates.Count);
+            sav.trigStates = objectStates;
+            bin.Serialize(fs, sav);
+            fs.Close();
+
+        } catch (Exception e) {
+            print(e);
+        }
 
         /*s
         new dat_globalflags(GlobalFlags), (int)player.health, (int)player.maxHealth, lev.mapDat.name,  
@@ -269,13 +274,13 @@ public class s_rpgGlobals : s_globals
             sav.currentmap = fixedSaveAreaName;
         */
 
-        bin.Serialize(fs, sav);
-        fs.Close();
     }
 
     public override void StartStuff()
     {
         base.StartStuff();
+
+
         if (s_mainmenu.isload)
         {
             s_RPGSave sav = (s_RPGSave)s_mainmenu.save;
@@ -294,7 +299,7 @@ public class s_rpgGlobals : s_globals
                     s_move mov = moveDatabase.Find(x => x.name == it.name);
                     extraSkills.Add(mov);
                     if (it.character != "") {
-                        o_battleCharPartyData pc = partyMembers.Find(x => it.character == x.name);
+                        o_battleCharPartyData pc = partyMembers.Get(it.character);
                         pc.extraSkills.Add(mov);
                     }
                 }
@@ -317,9 +322,10 @@ public class s_rpgGlobals : s_globals
         else{
             AddItem("Medicine", 5);
             AddItem("Energy drink", 5);
-            //AddPartyMember(partyMemberBaseData[0], 1);
-            //AddPartyMember(partyMemberBaseData[1], 1);
-            //AddPartyMember(partyMemberBaseData[2], 1);
+            foreach (var ind in partyMembersStart.characterSetters)
+            {
+                AddPartyMember(ind, 1);
+            }
         }
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
     }
@@ -334,6 +340,13 @@ public class s_rpgGlobals : s_globals
             //AddPartyMember(partyMemberBaseData[4], 55);
             //AddPartyMember(partyMemberBaseData[5], 45);
             //AddPartyMember(partyMemberBaseData[6], 35);
+            AddItem("Medicine", 5);
+            AddItem("Energy drink", 5);
+            foreach (var ind in partyMembersStart.characterSetters)
+            {
+                AddPartyMember(ind, 1);
+            }
+            print("This is cool");
         } else {
             Destroy(gameObject);
         }
@@ -357,9 +370,12 @@ public class s_rpgGlobals : s_globals
         //rpgScene.SetActive(false);
         //rpgSceneGUI.SetActive(false);
         //overWorld.SetActive(true);
+        /*
         if(!isFlee)
             locationObjectName.isDone = true;
+        
         player.gameObject.SetActive(true);
+        */
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);
         s_camera.cam.cameraMode = s_camera.CAMERA_MODE.CHARACTER_FOCUS;
@@ -384,8 +400,7 @@ public class s_rpgGlobals : s_globals
     {
         StartCoroutine(s_triggerhandler.GetInstance().Fade(Color.black, 0.25f));
         yield return StartCoroutine(s_camera.GetInstance().ZoomCamera(20, 0.6f));
-        yield return SceneManager.UnloadSceneAsync("Overworld", UnloadSceneOptions.None);
-        player.gameObject.SetActive(false);
+        //yield return SceneManager.UnloadSceneAsync("Overworld", UnloadSceneOptions.None);
         yield return SceneManager.LoadSceneAsync("battle_scene", LoadSceneMode.Additive);
         s_battleEngine.engineSingleton.enemyGroup = gr;
         s_battleEngine.engineSingleton.isEnabled = true;
@@ -403,12 +418,12 @@ public class s_rpgGlobals : s_globals
 
     public void SetActivePartyMember(o_battleCharPartyData bc) {
         if (bc.inBattle) {
-            if (partyMembers.FindAll(x => x.inBattle).Count > 1)
+            if (partyMembers.GetActiveCount() > 1)
                 bc.inBattle = false;
         }
         else
         {
-            if (partyMembers.FindAll(x => x.inBattle).Count < 5)
+            if (partyMembers.GetActiveCount() < 5)
             {
                 bc.inBattle = true;
             }
@@ -426,7 +441,7 @@ public class s_rpgGlobals : s_globals
             int tempVit = data.vitality;
             int tempDx = data.dexterity;
             int tempAgi = data.agility;
-            foreach (var pd in partyMemberBaseData) {
+            foreach (var pd in allCharactersData.characterSetters) {
 
                 if (pd.name == data.characterDataSource)
                 {
@@ -467,8 +482,7 @@ public class s_rpgGlobals : s_globals
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
             {
-                List<o_battleCharPartyData> bcDat = partyMembers.FindAll(x => x.inBattle == true);
-                if (bcDat.Count < 5)
+                if (partyMembers.GetActiveCount() < 5)
                 {
                     newCharacter.inBattle = true;
                 }
@@ -553,7 +567,7 @@ public class s_rpgGlobals : s_globals
     }
     public void SetPartyMemberStats(o_battleCharacter data)
     {
-        o_battleCharPartyData newCharacter = partyMembers.Find(x => data.name == x.name);
+        o_battleCharPartyData newCharacter = partyMembers.Get(data.name);
         {
             newCharacter.name = data.name;
 
@@ -879,33 +893,39 @@ public class s_rpgGlobals : s_globals
 
         foreach (s_move m in allMoveData)
         {
-            foreach (var cmbo in m.moveRequirements)
+            if (m.moveRequirements != null)
             {
-                switch (cmbo.comboType)
+                if (m.moveRequirements.Length > 0)
                 {
-                    case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
-                        List<s_move> mo = FindComboMoveReqList(cmbo.Req1, PriUser);
-                        if (mo != null)
+                    foreach (var cmbo in m.moveRequirements)
+                    {
+                        switch (cmbo.comboType)
                         {
-                            foreach (s_move mov in mo)
-                            {
-                                foreach (o_battleCharacter bc in members)
+                            case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
+                                List<s_move> mo = FindComboMoveReqList(cmbo.Req1, PriUser);
+                                if (mo != null)
                                 {
-                                    if (bc == PriUser)
-                                        continue;
-                                    s_move mo2 = FindComboMoveReq(cmbo.Req2, bc);
-                                    if (mo2 == null)
-                                        continue;
-                                    s_moveComb cmb = new s_moveComb(PriUser, bc, mov, mo2);
-                                    //print(
-                                    //    cmb.user1.name + " (" + cmb.user1Move.name + ") " +
-                                    //    cmb.user2.name + " (" + cmb.user2Move.name + ") ");
-                                    Tuple<s_moveComb, s_move> moveThing = new Tuple<s_moveComb, s_move>(cmb, m);
-                                    movs.Add(moveThing);
+                                    foreach (s_move mov in mo)
+                                    {
+                                        foreach (o_battleCharacter bc in members)
+                                        {
+                                            if (bc == PriUser)
+                                                continue;
+                                            s_move mo2 = FindComboMoveReq(cmbo.Req2, bc);
+                                            if (mo2 == null)
+                                                continue;
+                                            s_moveComb cmb = new s_moveComb(PriUser, bc, mov, mo2);
+                                            //print(
+                                            //    cmb.user1.name + " (" + cmb.user1Move.name + ") " +
+                                            //    cmb.user2.name + " (" + cmb.user2Move.name + ") ");
+                                            Tuple<s_moveComb, s_move> moveThing = new Tuple<s_moveComb, s_move>(cmb, m);
+                                            movs.Add(moveThing);
+                                        }
+                                    }
                                 }
-                            }
+                                break;
                         }
-                        break;
+                    }
                 }
             }
 

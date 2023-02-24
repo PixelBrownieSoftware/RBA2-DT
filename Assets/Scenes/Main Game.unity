@@ -1328,18 +1328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &30031195 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2843391842603954661, guid: 0baea49d33992af4c800e131ddce8c1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 631672524}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &30354430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2877,7 +2865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &71623696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2935,7 +2923,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71623695}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!1 &73184346
 GameObject:
   m_ObjectHideFlags: 0
@@ -3535,8 +3523,9 @@ MonoBehaviour:
   GlobalFlagCache: []
   allScenes: []
   objectStates: []
-  allCharactersData: []
-  partyMembers: []
+  allCharactersData: {fileID: 11400000, guid: f0e7fce64af33924480c1df7bf40380b, type: 2}
+  partyMembersStart: {fileID: 11400000, guid: 779f56c64c552254abfa715fd20705fb, type: 2}
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
   weapons: []
   itemDatabase:
   - {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}
@@ -3595,14 +3584,6 @@ MonoBehaviour:
   extraPassives: []
   locationObjectName: {fileID: 0}
   moneyTxt: {fileID: 1609439065}
-  partyMemberBaseData:
-  - {fileID: 11400000, guid: b4879d456125ba64aacd8355126e379b, type: 2}
-  - {fileID: 11400000, guid: b1e664686a7ed1f4294d3fa9e62fad7a, type: 2}
-  - {fileID: 11400000, guid: 6450f15744802fd47b16b554552f4a36, type: 2}
-  - {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
-  - {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
-  - {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
-  - {fileID: 11400000, guid: 5399aed7d56626e4a8a534cc3b3e7327, type: 2}
   comboMoveData:
   - {fileID: 11400000, guid: bb10943dabf05fa42b8143f39a7d9080, type: 2}
   - {fileID: 11400000, guid: 646f0af1a61e4c44eaa7dcc8a9be0605, type: 2}
@@ -3651,6 +3632,7 @@ Transform:
   - {fileID: 2144061027}
   - {fileID: 819627862}
   - {fileID: 1443022655}
+  - {fileID: 1947841876}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3808,18 +3790,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154805224}
   m_CullTransparentMesh: 1
---- !u!114 &165516992 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2843391842603954661, guid: 0baea49d33992af4c800e131ddce8c1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1833074891}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &166372287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11609,6 +11579,8 @@ MonoBehaviour:
     vitality: 0
     dexterity: 0
     agility: 0
+    intelligence: 0
+    luck: 0
     knowledgePoints: 0
     inBattle: 0
     isActive: 1
@@ -11636,6 +11608,7 @@ MonoBehaviour:
     currentRangeWeapon: {fileID: 0}
     consumable: {fileID: 0}
     durationConsumable: 0
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
   prices: []
   menType: 1
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -13942,7 +13915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15676,6 +15649,7 @@ MonoBehaviour:
   - {fileID: 1628169975}
   group: {fileID: 0}
   playerToPick: {fileID: 0}
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
 --- !u!222 &665106466
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19453,18 +19427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8e15170639b524986a9f7431ffb12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &786276141 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2843391842603954661, guid: 0baea49d33992af4c800e131ddce8c1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1849029226749259390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &798556504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22273,7 +22235,6 @@ RectTransform:
   - {fileID: 598929704}
   - {fileID: 647806137}
   - {fileID: 734128705}
-  - {fileID: 1947841876}
   m_Father: {fileID: 134986292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31009,10 +30970,10 @@ MonoBehaviour:
   dxTXT: {fileID: 1845999814}
   vitTXT: {fileID: 880868024}
   agiTXT: {fileID: 2060614209}
-  strShadTXT: {fileID: 786276141}
-  dxShadTXT: {fileID: 165516992}
-  vitShadTXT: {fileID: 1649602260}
-  agiShadTXT: {fileID: 30031195}
+  strShadTXT: {fileID: 0}
+  dxShadTXT: {fileID: 0}
+  vitShadTXT: {fileID: 0}
+  agiShadTXT: {fileID: 0}
   characterData:
     name: 
     maxHealth: 0
@@ -31023,6 +30984,8 @@ MonoBehaviour:
     vitality: 0
     dexterity: 0
     agility: 0
+    intelligence: 0
+    luck: 0
     knowledgePoints: 0
     inBattle: 0
     isActive: 1
@@ -33880,7 +33843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1497679494
 Transform:
   m_ObjectHideFlags: 0
@@ -36903,18 +36866,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6c417b80bc5e354fb50ac166c776b0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1649602260 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2843391842603954661, guid: 0baea49d33992af4c800e131ddce8c1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 778890327}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1653852567 stripped
@@ -41406,6 +41357,8 @@ MonoBehaviour:
     vitality: 0
     dexterity: 0
     agility: 0
+    intelligence: 0
+    luck: 0
     knowledgePoints: 0
     inBattle: 0
     isActive: 1
@@ -41433,6 +41386,7 @@ MonoBehaviour:
     currentRangeWeapon: {fileID: 0}
     consumable: {fileID: 0}
     durationConsumable: 0
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
   prices: []
   menType: 0
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -45509,6 +45463,7 @@ MonoBehaviour:
   keyWord: 
   customEvAndFunction: []
   scriptCaller: {fileID: 0}
+  partyMembers: {fileID: 0}
 --- !u!1001 &1940710308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45823,13 +45778,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947841875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 640, y: 360, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 929851390}
-  m_RootOrder: 4
+  m_Father: {fileID: 134986292}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1947841877
 MonoBehaviour:
@@ -50856,8 +50811,8 @@ MonoBehaviour:
   - {fileID: 1411735013}
   - {fileID: 577960744}
   - {fileID: 875368680}
-  partyMembers: []
   ptMode: 0
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
 --- !u!114 &2115771011 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6512046874429274656, guid: 4428ffbd46cd01e4b8220760c528b983,

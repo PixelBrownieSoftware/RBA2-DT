@@ -13,6 +13,7 @@ public class s_battleMenu : s_menucontroller
     public List<s_consumable> consumables = new List<s_consumable>();
     public Text moveDescription;
     public o_battleCharPartyData partyCharacter;
+    public R_BattleCharacterList partyMembers;
 
     public float[] prices;
 
@@ -69,7 +70,7 @@ public class s_battleMenu : s_menucontroller
                 break;
 
             default:
-                foreach (o_battleCharPartyData bc in s_rpgGlobals.rpgGlSingleton.partyMembers)
+                foreach (o_battleCharPartyData bc in partyMembers.battleCharList)
                 {
                     if (bc == partyCharacter)
                         continue;
@@ -94,7 +95,7 @@ public class s_battleMenu : s_menucontroller
                 break;
 
             default:
-                foreach (o_battleCharPartyData bc in s_rpgGlobals.rpgGlSingleton.partyMembers)
+                foreach (o_battleCharPartyData bc in partyMembers.battleCharList)
                 {
                     if (bc == partyCharacter)
                         continue;
@@ -527,7 +528,7 @@ public class s_battleMenu : s_menucontroller
                 rpgSkills = s_rpgGlobals.rpgGlSingleton.extraSkills;
                 for (int i = 0; i < rpgSkills.Count; i++)
                 {
-                    if (s_rpgGlobals.rpgGlSingleton.partyMembers.Find(
+                    if (partyMembers.battleCharList.Find(
                         x => (x.extraSkills.Contains(rpgSkills[i]) && x != partyCharacter)
                         || x.currentMoves.Contains(rpgSkills[i])) != null)
                     {
@@ -585,7 +586,7 @@ public class s_battleMenu : s_menucontroller
                 passiveSkills = s_rpgGlobals.rpgGlSingleton.extraPassives;
                 for (int i = 0; i < passiveSkills.Count; i++)
                 {
-                    if (s_rpgGlobals.rpgGlSingleton.partyMembers.Find(
+                    if (partyMembers.battleCharList.Find(
                         x => (x.passives.Contains(passiveSkills[i]) && x != partyCharacter)) != null)
                     {
                         continue;

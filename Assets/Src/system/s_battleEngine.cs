@@ -70,6 +70,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     int battleActionNum;
 
     public static s_battleEngine engineSingleton;
+    public R_BattleCharacterList partyMembers;
 
     #region variables
     public o_battleCharacter[] enemySlots;
@@ -186,15 +187,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             new Vector2(255, 255)
         },
         new List<Vector2>(){
-            new Vector2(248, 365),
-            new Vector2(255, 245),
-            new Vector2(125, 300)
+            new Vector2(325, 290),
+            new Vector2(275, 355),
+            new Vector2(255, 255)
         },
         new List<Vector2>(){
-            new Vector2(250, 358),
+            new Vector2(250, 378),
             new Vector2(250, 322),
-            new Vector2(245, 285),
-            new Vector2(250, 245)
+            new Vector2(245, 265),
+            new Vector2(250, 215)
         },
         new List<Vector2>(){
             new Vector2(250, 358),
@@ -265,29 +266,31 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             oppositionCharacters = new List<o_battleCharacter>();
 
-
-            for (int i = 0; i < enemyGroup.members.Length; i++)
             {
-                o_battleCharacter c = enemySlots[i];
-                s_enemyGroup.s_groupMember mem = enemyGroup.members[i];
-                o_battleCharDataN bc = mem.memberDat;
-                if (bc.defaultPhysWeapon != null)
-                    c.physWeapon = bc.defaultPhysWeapon;
-                if (bc.defaultRangedWeapon != null)
-                    c.rangedWeapon = bc.defaultRangedWeapon;
-                c.animHandler.runtimeAnimatorController = bc.anim;
-                c.animHandler.Play("idle");
-                allCharacterReferences.Add(c.referencePoint);
-                SetStatsOpponent(ref c, mem);
-                c.render.color = Color.white;
+                List<Vector2> enPos = battlePositionsPlayer[enemyGroup.members.Length - 1];
+                for (int i = 0; i < enemyGroup.members.Length; i++)
+                {
+                    o_battleCharacter c = enemySlots[i];
+                    s_enemyGroup.s_groupMember mem = enemyGroup.members[i];
+                    o_battleCharDataN bc = mem.memberDat;
+                    if (bc.defaultPhysWeapon != null)
+                        c.physWeapon = bc.defaultPhysWeapon;
+                    if (bc.defaultRangedWeapon != null)
+                        c.rangedWeapon = bc.defaultRangedWeapon;
+                    c.transform.position = new Vector2((enPos[i].x * -1) + 800f, enPos[i].y);
+                    c.animHandler.runtimeAnimatorController = bc.anim;
+                    c.animHandler.Play("idle");
+                    allCharacterReferences.Add(c.referencePoint);
+                    SetStatsOpponent(ref c, mem);
+                    c.render.color = Color.white;
+                }
             }
             playerCharacters = new List<o_battleCharacter>();
             {
                 int charIndex = 0;
                 if (nonChangablePlayers)
                 {
-                    List<Vector2> plPos = battlePositionsPlayer[enemyGroup.members_Player.Length];
-                    //HPGUIMan.set
+                    List<Vector2> plPos = battlePositionsPlayer[enemyGroup.members_Player.Length - 1];
                     for (int i = 0; i < enemyGroup.members_Player.Length; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
@@ -309,12 +312,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 else
                 {
-                    List<Vector2> plPos = battlePositionsPlayer[s_rpgGlobals.rpgGlSingleton.partyMembers.Count];
-                    for (int i = 0; i < s_rpgGlobals.rpgGlSingleton.partyMembers.Count; i++)
+                    List<Vector2> plPos = battlePositionsPlayer[partyMembers.battleCharList.Count - 1];
+                    for (int i = 0; i < partyMembers.battleCharList.Count; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
                         c.render.color = Color.clear;
-                        o_battleCharPartyData pbc = s_rpgGlobals.rpgGlSingleton.partyMembers[i];
+                        o_battleCharPartyData pbc = partyMembers.GetIndex(i);
                         o_battleCharDataN bc = pbc.characterDataSource;
                         c.transform.position = plPos[i];
                         if (pbc.currentPhysWeapon != null)
@@ -1319,6 +1322,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     break;
 
                 case STATUS_EFFECT.BURN:
+                    yield return StartCoroutine(s_camera.GetInstance().MoveCamera(currentCharacter.referencePoint.position, 0.6f));
                     if (enemiesReference.ListContains(currentCharacter.referencePoint))
                     {
                         s_soundmanager.GetInstance().PlaySound("hurt_burn");
@@ -1328,7 +1332,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         s_soundmanager.GetInstance().PlaySound("pl_dmg");
                     }
                     //We'll have some stat calculations as if this status effect is damage, there would be some kind of formula.
-                    StartCoroutine(DamageAnimation(eff.damage, currentCharacter));
+                    StartCoroutine(DamageAnimation(
+                        5
+                        //eff.damage
+                        , currentCharacter));
                     eff.duration--;
                     break;
             }

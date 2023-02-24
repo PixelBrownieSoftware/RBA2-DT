@@ -13,6 +13,8 @@ public class S_MenuManager : MonoBehaviour
     private CH_Func backMenuFucntion;
     private S_MenuSystem m_currentMenu;
 
+    public string defaultMenu;
+
     private Stack<S_MenuSystem> menuHistory = new Stack<S_MenuSystem>();
 
     private void OnEnable()
@@ -32,6 +34,7 @@ public class S_MenuManager : MonoBehaviour
         _menus = transform.GetComponentsInChildren<S_MenuSystem>();
         foreach (var m in _menus)
             m.gameObject.SetActive(false);
+        SwitchMenu(defaultMenu);
     }
 
     public void BackFunction() {
@@ -52,6 +55,8 @@ public class S_MenuManager : MonoBehaviour
 
     public void SwitchMenu(string menuName)
     {
+        if (menuName == "")
+            menuName = "EMPTY";
         for (int i =0; i < _menus.Length; i++) {
             var m = _menus[i];
             if (m.name == menuName)

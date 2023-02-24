@@ -38,13 +38,6 @@ MonoBehaviour:
     extraSkills: []
     passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
-    levType: 1
-    level: 10
-    maxLevel: 0
-    extraSkills: []
-    passives: []
-    weaponSelections: []
   events: []
   bg1: {fileID: 0}
   bg2: {fileID: 0}

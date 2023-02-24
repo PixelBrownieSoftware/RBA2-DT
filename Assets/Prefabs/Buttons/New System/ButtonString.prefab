@@ -117,6 +117,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 643378440365393880}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: B_String, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742010876242080681, guid: eecd18e74655e744985f6d8f2c1f9a5d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8357456130107099730, guid: eecd18e74655e744985f6d8f2c1f9a5d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eecd18e74655e744985f6d8f2c1f9a5d, type: 3}
@@ -153,6 +188,7 @@ MonoBehaviour:
   text: {fileID: 7719430240814535939}
   image: {fileID: 5637580576820675062}
   stringClickEvent: {fileID: 0}
+  stringTxt: 
 --- !u!114 &7719430240814535939 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 221183329591617375, guid: eecd18e74655e744985f6d8f2c1f9a5d,

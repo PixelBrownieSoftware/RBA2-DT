@@ -7,6 +7,8 @@ using MagnumFoundation2.Objects;
 
 public class s_rpgEvents : s_triggerhandler
 {
+    public R_BattleCharacterList partyMembers;
+
     public override IEnumerator EventPlay(ev_details current_ev)
     {
         switch ((EVENT_TYPES)current_ev.eventType)
@@ -40,7 +42,7 @@ public class s_rpgEvents : s_triggerhandler
 
                     case "ADD_PARTY_MEMBER":
                         o_battleCharDataN bcd = current_ev.scrObj as o_battleCharDataN;
-                        if (s_rpgGlobals.rpgGlSingleton.partyMembers.Find(x => x.name == bcd.name) == null)
+                        if (partyMembers.Get(bcd.name) == null)
                             s_rpgGlobals.rpgGlSingleton.AddPartyMember(bcd, 1);
                         break;
 

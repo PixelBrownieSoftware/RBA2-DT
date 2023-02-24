@@ -11,7 +11,8 @@ public class s_mainBattleMenu : s_menucontroller
     public Sprite swordIcon;
     public Sprite gunIcon;
     public Sprite staffIcon;
-    
+    public R_Items inventory;
+
     public override void OnOpen()
     {
         base.OnOpen();
