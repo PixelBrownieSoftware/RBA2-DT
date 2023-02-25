@@ -13813,7 +13813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &598929704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44846,6 +44846,7 @@ MonoBehaviour:
     type: 3}
   staffIcon: {fileID: 1845301571344876508, guid: 7fbed4d531b1c6c48904f3a04a444c5d,
     type: 3}
+  inventory: {fileID: 0}
 --- !u!1 &1923838647
 GameObject:
   m_ObjectHideFlags: 0

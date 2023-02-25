@@ -58,10 +58,10 @@ public class M_CharacterStatus : S_MenuSystem
                 agi.amount = currentBattleCharacterData.agility;
                 vit.amount = currentBattleCharacterData.vitality;
 
-                strTXT.text = strShadTXT.text = "" + currentBattleCharacterData.strength;
-                vitTXT.text = vitShadTXT.text = "" + currentBattleCharacterData.vitality;
-                dxTXT.text = dxShadTXT.text = "" + currentBattleCharacterData.dexterity;
-                agiTXT.text = agiShadTXT.text = "" + currentBattleCharacterData.agility;
+                strTXT.text = "" + currentBattleCharacterData.strength;
+                vitTXT.text = "" + currentBattleCharacterData.vitality;
+                dxTXT.text = "" + currentBattleCharacterData.dexterity;
+                agiTXT.text = "" + currentBattleCharacterData.agility;
 
                 /*
                 //strike_aff.text = characterData.wea

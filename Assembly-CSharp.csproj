@@ -107,6 +107,7 @@
     <Compile Include="Assets\Src\Menus\Hub\M_GachaGen.cs" />
     <Compile Include="Assets\Src\system\menu\s_overworldPlayerTargetMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_Move.cs" />
+    <Compile Include="Assets\Src\Menus\S_RPGGlobals.cs" />
     <Compile Include="Assets\Src\Menus\R_Text.cs" />
     <Compile Include="Assets\Src\Channels\CH_SoundPitch.cs" />
     <Compile Include="Assets\Src\objects\s_ability.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Assets\Src\objects\c_player.cs" />
     <Compile Include="Assets\Src\objects\s_passive.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_BooleanListener.cs" />
+    <Compile Include="Assets\Src\Menus\R_CharacterUnlock.cs" />
     <Compile Include="Assets\Src\Channels\CH_Boolean.cs" />
     <Compile Include="Assets\Src\Menus\R_Character.cs" />
     <Compile Include="Assets\Src\Channels\CH_Text.cs" />
@@ -159,14 +161,14 @@
     <Compile Include="Assets\Src\S_MenuManager.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_IntegerListener.cs" />
     <Compile Include="Assets\Src\Buttons\B_Function.cs" />
+    <Compile Include="Assets\Src\Menus\R_Items.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleDefault.cs" />
     <Compile Include="Assets\Src\objects\o_battleCharDataN.cs" />
     <Compile Include="Assets\Src\Channels\CH_MapTransfer.cs" />
     <Compile Include="Assets\Src\objects\s_move.cs" />
+    <Compile Include="Assets\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\R_Items.cs" />
-    <Compile Include="Assets\Src\Menus\R_CharacterUnlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

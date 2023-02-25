@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Redler
   m_EditorClassIdentifier: 
-  level: 1
   money: 0
   maxSkillPointsB: 21
   maxHitPointsB: 25

@@ -15,6 +15,4 @@ MonoBehaviour:
   description: 
   _isReset: 0
   characterSetters:
-  - {fileID: 11400000, guid: b4879d456125ba64aacd8355126e379b, type: 2}
-  - {fileID: 11400000, guid: 6450f15744802fd47b16b554552f4a36, type: 2}
-  - {fileID: 11400000, guid: b1e664686a7ed1f4294d3fa9e62fad7a, type: 2}
+  - {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}

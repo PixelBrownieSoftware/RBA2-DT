@@ -1383,7 +1383,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     #endregion
 
-    #region Turn Stuff
+    #region Press Turn Stuff
     public void HitWeakness()
     {
         if (halfTurn >= netTurn)

@@ -19,8 +19,12 @@ public class R_MoveList : R_Default
     public void RemoveMove(s_move targ) { 
         moveListRef.Remove(targ);
     }
+    public s_move GetMove(string index)
+    {
+        return moveListRef.Find(x => x.name == index);
+    }
 
-    public s_move GetChracter(int index)
+    public s_move GetMove(int index)
     {
         return moveListRef[index];
     }

@@ -35,9 +35,10 @@ MonoBehaviour:
   battleImage: {fileID: 0}
   turnIcons: 1
   moveLearn:
-  - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
   - {fileID: 11400000, guid: 1fe56e80ca2511140a41c545acb77e4a, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+  - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
   elementals:
     weaknessChart:
     - element: 6
@@ -45,7 +46,51 @@ MonoBehaviour:
   characterColour: {r: 0.6004797, g: 0.8584906, b: 0.23082057, a: 1}
   characterColour2: {r: 0.492124, g: 0.7169812, b: 0.2807049, a: 1}
   aiPages:
-  - ai: []
+  - ai:
+    - move: {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 1fe56e80ca2511140a41c545acb77e4a, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 19
+      element: 0
+      healthPercentage: 0.5
+      name: 
+      onParty: 1
+      isImportant: 1
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0.5
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
   anim: {fileID: 9100000, guid: 6e4f5c3b37e811a4cbb99c6584a31fdb, type: 2}
   items: []
   defaultPhysWeapon: {fileID: 0}

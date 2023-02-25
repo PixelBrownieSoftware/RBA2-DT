@@ -25,6 +25,7 @@ public struct GR_Item
 
 public class M_Gacha : S_MenuSystem
 {
+    public S_RPGGlobals RPGGlobal;
     public R_Int tokens;
     public R_Items inventory;
     public R_BattleCharacterList players;
@@ -122,7 +123,6 @@ public class M_Gacha : S_MenuSystem
 
     public IEnumerator GachaRoll(int rolls)
     {
-        yield return new WaitForSeconds(0.3f);
         /*
         ranks[selectedRank];
         O_BattleCharacter addChara()
@@ -138,24 +138,19 @@ public class M_Gacha : S_MenuSystem
             print(bc.charaName + " has joined!");
             return bc;
         }
-
-        List<O_BattleCharacter> bcs = new List<O_BattleCharacter>();
-        Dictionary<O_Move, int> items = new Dictionary<O_Move, int>();
-        List<O_Asset> assets = new List<O_Asset>();
+        */
+        o_battleCharDataN bc = null;
+        List<o_battleCharDataN> bcs = new List<o_battleCharDataN>();
+        Dictionary<s_move, int> items = new Dictionary<s_move, int>();
 
         for (int i = 0; i < rolls; i++)
         {
             totalRolls.integer++;
-            O_Move item = null;
-            O_Asset asset = null;
-            O_BattleCharacter bc = null;
+            s_move item = null;
 
             if (totalRolls.integer % pity == 0)
             {
-                if (players.characterListRef.Count < playerSlots.characterListRef.Count)
-                    bc = addChara();
-                else
-                    item = rare.PickRandom();
+               // players.Add();
             }
             else
             {
@@ -172,61 +167,26 @@ public class M_Gacha : S_MenuSystem
                 {
                     item = rare.PickRandom();
                 }
-                else if (percentage < GetDropPercentage(commonAssetDropChance))
-                {
-                    asset = commonAssets.PickRandom();
-                }
-                else if (percentage < GetDropPercentage(uncommonAssetDropChance))
-                {
-                    asset = uncommonAssets.PickRandom();
-                }
-                else if (percentage < GetDropPercentage(rareItemAssetChance))
-                {
-                    asset = rareAssets.PickRandom();
-                }
-                else if (percentage < GetDropPercentage(characterChance))
-                {
-                    if (players.characterListRef.Count < playerSlots.characterListRef.Count)
-                        bc = addChara();
-                    else
-                        item = rare.PickRandom();
-                }
                 else
                 {
-                    asset = commonAssets.PickRandom();
+                    item = common.PickRandom();
                 }
 
             }
             if (bc != null)
             {
-                players.Add(bc);
+                if (RPGGlobal.ContainsPartyMember(bc))
+                {
+                    RPGGlobal.AddPartyMember(bc, 1);
+                }
                 bcs.Add(bc);
             }
             if (item != null)
             {
-                inventory.moveListRef.Add(item);
-                if (items.ContainsKey(item))
-                {
-                    items[item]++;
-                }
-                else
-                {
-                    items.Add(item, 1);
-                }
-            }
-            if (asset != null)
-            {
-                asset.amount++;
-                assets.Add(asset);
+                items.Add(item, 1);
+                inventory.AddItem(item);
             }
         }
-        string assetText = "";
-        gachaText.text = assetText;
-        foreach (var a in assets)
-        {
-            assetText += a.name + "\n";
-        }
-        gachaText.text += assetText;
         string itemText = "";
         foreach (var i in items)
         {
@@ -236,11 +196,13 @@ public class M_Gacha : S_MenuSystem
         string characterText = "";
         foreach (var ch in bcs)
         {
-            characterText += ch.charaName + " was recruited into the party." + "\n";
+            if (!RPGGlobal.ContainsPartyMember(ch))
+                characterText += ch.name + " was recruited into the party." + "\n";
+            else
+                characterText += ch.name + " got stronger..." + "\n";
         }
         gachaText.text += characterText;
         gachaResMenu.SetActive(true);
         yield return new WaitForSeconds(0.3f);
-        */
     }
 }
