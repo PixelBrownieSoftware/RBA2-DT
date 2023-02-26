@@ -3614,6 +3614,7 @@ MonoBehaviour:
   extraPassiveSkillAmount: 4
   BGBattle: {fileID: 0}
   gotoBattleChannel: {fileID: 11400000, guid: 135e94053f442da439e6b90fb9a84e86, type: 2}
+  changeMenu: {fileID: 11400000, guid: a858318d54f8fbb4aaca029f553861cc, type: 2}
   enemyGroupSelect: {fileID: 11400000, guid: ac48cee5557201f40b5f54b78202661e, type: 2}
 --- !u!4 &134986292
 Transform:

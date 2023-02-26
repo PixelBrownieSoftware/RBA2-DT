@@ -32,6 +32,7 @@ public class M_HubBattleSelect : S_MenuSystem
     public override void StartMenu()
     {
         page = 0;
+        backButton.gameObject.SetActive(false);
         base.StartMenu();
         ShowButtons();
     }

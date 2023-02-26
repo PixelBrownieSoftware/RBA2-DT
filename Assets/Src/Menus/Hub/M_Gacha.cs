@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public struct GachaRanks {
@@ -32,8 +33,10 @@ public class M_Gacha : S_MenuSystem
     public R_CharacterUnlock defeatedCharacters;
     public R_Int totalRolls;
     public CH_Func backToGachaMenu;
-    public CH_Int rollFunc;
+    public CH_Func rollFunc;
+    public CH_Int selectRank;
     public GachaRanks[] ranks;
+    public GachaRanks currentRank;
 
     public GameObject[] buttons;
     public B_Function back;
@@ -55,6 +58,9 @@ public class M_Gacha : S_MenuSystem
     private const float rareItemAssetChance = 0.18f;
     private const float characterChance = 0.15f;
     public R_Float tokenCost;
+    public B_Function rollButton;
+
+    public Slider tokenSlider;
 
     int selectedRank = 0;
 
@@ -74,12 +80,14 @@ public class M_Gacha : S_MenuSystem
 
     private void OnEnable()
     {
+        selectRank.OnFunctionEvent += SelectRank;
         backToGachaMenu.OnFunctionEvent += BackToMenu;
         rollFunc.OnFunctionEvent += Roll;
     }
 
     private void OnDisable()
     {
+        selectRank.OnFunctionEvent -= SelectRank;
         backToGachaMenu.OnFunctionEvent -= BackToMenu;
         rollFunc.OnFunctionEvent -= Roll;
     }
@@ -95,25 +103,35 @@ public class M_Gacha : S_MenuSystem
 
     public override void StartMenu()
     {
+        currentRank = ranks[0];
         base.StartMenu();
         gachaResMenu.SetActive(false);
     }
 
-    public void Roll(int num)
+    public void SelectRank(int i) {
+        currentRank = ranks[i];
+    }
+
+    public void Roll()
     {
-        bool canDoToken = tokens.integer >= num;
+        bool canDoToken = tokens.integer >= tokenSlider.value;
         if (canDoToken)
         {
-            tokens.integer -= num;
+            tokens.integer -= (int)tokenSlider.value;
         }
         else
         {
             return;
         }
         ToggleButtons(false);
-        StartCoroutine(GachaRoll(num));
+        StartCoroutine(GachaRoll((int)tokenSlider.value));
     }
 
+    private void Update()
+    {
+        tokenSlider.maxValue = tokens.integer;
+        rollButton.SetButonText(tokenSlider.value + " tokens.");
+    }
 
     public void BackToMenu()
     {
@@ -142,7 +160,7 @@ public class M_Gacha : S_MenuSystem
         o_battleCharDataN bc = null;
         List<o_battleCharDataN> bcs = new List<o_battleCharDataN>();
         Dictionary<s_move, int> items = new Dictionary<s_move, int>();
-
+        gachaText.text = "";
         for (int i = 0; i < rolls; i++)
         {
             totalRolls.integer++;
@@ -150,28 +168,31 @@ public class M_Gacha : S_MenuSystem
 
             if (totalRolls.integer % pity == 0)
             {
-               // players.Add();
+                if (players.Get(currentRank.characters[0].character.name) == null)
+                    RPGGlobal.AddPartyMember(currentRank.characters[0].character, 1);
             }
             else
             {
                 float percentage = Random.Range(0f, 1f);
-                if (percentage < GetDropPercentage(commonItemDropChance))
-                {
-                    item = common.PickRandom();
+                List<GR_Item> itemsRarity = new List<GR_Item>();
+                foreach (var ob in currentRank.items) {
+                    if (percentage < ob.rarity) {
+                        itemsRarity.Add(ob);
+                    }
                 }
-                else if (percentage < GetDropPercentage(uncommonItemDropChance))
-                {
-                    item = uncommon.PickRandom();
-                }
-                else if (percentage < GetDropPercentage(rareItemDropChance))
-                {
-                    item = rare.PickRandom();
-                }
+                if (itemsRarity.Count > 0)
+                    item = itemsRarity[Random.Range(0, itemsRarity.Count)].item;
                 else
                 {
-                    item = common.PickRandom();
+                    List<GR_Item> itemForce = currentRank.items.ToList<GR_Item>();
+                    float max = 0;
+                    foreach (var itemPick in itemForce) {
+                        if (itemPick.rarity > max) {
+                            max = itemPick.rarity;
+                            item = itemPick.item;
+                        }
+                    }
                 }
-
             }
             if (bc != null)
             {
@@ -183,14 +204,17 @@ public class M_Gacha : S_MenuSystem
             }
             if (item != null)
             {
-                items.Add(item, 1);
-                inventory.AddItem(item);
+                if(!items.ContainsKey(item))
+                    items.Add(item, 1);
+                else
+                    items[item]++;
             }
         }
         string itemText = "";
         foreach (var i in items)
         {
             itemText += i.Key.name + " x " + i.Value + "\n";
+            inventory.AddItem(i.Key);
         }
         gachaText.text += itemText;
         string characterText = "";

@@ -215,6 +215,7 @@ public class s_rpgGlobals : s_globals
     public Sprite BGBattle;
 
     public CH_Func gotoBattleChannel;
+    public CH_Text changeMenu;
     public R_EnemyGroup enemyGroupSelect;
 
     private void OnEnable()
@@ -359,6 +360,7 @@ public class s_rpgGlobals : s_globals
 
     public void SwitchToOverworld(bool isFlee)
     {
+        SceneManager.UnloadSceneAsync("battle_scene");
         if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo == "")
         {
             s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
@@ -366,7 +368,7 @@ public class s_rpgGlobals : s_globals
         if (!isFlee)
             if (locationObjectName != null)
                 locationObjectName.isDone = true;
-        s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
+        s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         //rpgScene.SetActive(false);
         //rpgSceneGUI.SetActive(false);
         //overWorld.SetActive(true);
@@ -374,7 +376,6 @@ public class s_rpgGlobals : s_globals
         if(!isFlee)
             locationObjectName.isDone = true;
         
-        player.gameObject.SetActive(true);
         */
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);
@@ -382,8 +383,13 @@ public class s_rpgGlobals : s_globals
         if (locationObjectName != null)
             AddTriggerState(new triggerState(locationObjectName.name, "Overworld", true));
         SaveData();
+
+        SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
+        changeMenu.RaiseEvent("Hub");
+        /*
         if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo != "")
             SceneManager.LoadScene(s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo);
+        */
     }
     public override void ClearAllThings()
     {

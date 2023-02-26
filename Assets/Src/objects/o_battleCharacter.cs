@@ -345,6 +345,7 @@ public class o_battleCharacter : MonoBehaviour
     public int agilityBuff;
     public int intelligenceBuff;
     public int luckBuff;
+    public float experiencePoints;
     public CH_BattleChar referencePoint;
 
     public List<s_move> currentMoves;

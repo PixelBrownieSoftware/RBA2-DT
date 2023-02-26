@@ -26,7 +26,7 @@ public class s_hitObj : o_generic
 
     public void PlayAnim(float dmg, string damageType, Color colour)
     {
-        rendererObj.color = colour;
+        //rendererObj.color = colour;
         
         switch (damageType) {
             case "heal_hp":
@@ -56,8 +56,13 @@ public class s_hitObj : o_generic
                 break;
 
             case "block":
-                hitObj.sprite = blockSprite;
+                //hitObj.sprite = blockSprite;
                 anim.Play("block_press_turn");
+                break;
+
+            case "miss_attack":
+                //hitObj.sprite = blockSprite;
+                anim.Play("miss_attack");
                 break;
         }
         print(hitObj.sprite);

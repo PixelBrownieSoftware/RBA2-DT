@@ -118,6 +118,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public s_move passMove;
     public s_move nothingMove;
     public bool nonChangablePlayers = false;
+
+    public CH_Text changeMenu;
     #endregion
 
     #region graphics
@@ -937,6 +939,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
     }
 
+    public List<o_battleCharacter> AllTargetsLiving(bool self)
+    {
+        List<o_battleCharacter> bcs = AllTargets(self);
+        return bcs.FindAll(x => x.health > 0);
+    }
+
     public List<o_battleCharacter> AllTargets(bool self) {
         List<o_battleCharacter> bcs = new List<o_battleCharacter>();
         if (isPlayerTurn)
@@ -966,6 +974,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public IEnumerator DisplayMoveName(string moveName)
     {
+        displayMoveName.img.gameObject.SetActive(true);
+        displayMoveName.buttonText.gameObject.SetActive(true);
+
         displayMoveName.buttonText.text = moveName;
         float t = 0;
         float spd = 4.75f;
@@ -985,6 +996,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             t += Time.deltaTime * spd;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        displayMoveName.img.gameObject.SetActive(false);
+        displayMoveName.buttonText.gameObject.SetActive(false);
     }
     public IEnumerator ExcecuteMove()
     {
@@ -1194,9 +1207,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 int rand = UnityEngine.Random.Range(2, 5);
                                 for (int i = 0; i < rand; i++)
                                 {
-                                    yield return StartCoroutine(PlayAttackAnimation(animations,
-                                        bcs[UnityEngine.Random.Range(0, bcs.Count)],
-                                        battleAction.user));
+                                    bcs = AllTargetsLiving(battleAction.move.onParty);
+                                    if (bcs.Count == 0)
+                                        break;
+                                    o_battleCharacter bc = bcs[UnityEngine.Random.Range(0, bcs.Count)];
+                                    yield return StartCoroutine(PlayAttackAnimation(animations, bc, battleAction.user));
                                 }
                             }
                             break;
@@ -1666,6 +1681,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 battleDecisionMenu = BATTLE_MENU_CHOICES.MENU;
                 battleEngine = BATTLE_ENGINE_STATE.DECISION;
                 break;
+                /*
             //CheckComboRequirementsParty(s_battleEngine.engineSingleton.playerCharacters)
             case BATTLE_ENGINE_STATE.DECISION:
 
@@ -1714,28 +1730,87 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         break;
                 }
                 break;
-
-            case BATTLE_ENGINE_STATE.TARGET:
-                /*
-                
                 */
-                break;
-
-            case BATTLE_ENGINE_STATE.PROCESS_ACTION:
-
-                break;
 
             case BATTLE_ENGINE_STATE.END:
                 StartCoroutine(NextTeamTurn());
                 break;
         }
     }
+    /*
+    public enum MENU_CONTROLL_TYPE
+    {
+        LINEAR_UP_DOWN,
+        LINEAR_LEFT_RIGHT,
+        MULTI_DIRECTIONAL
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <param name="mc"></param>
+    /// <param name="limiterMulti">Only use this if the menu control type is Multi-Directional</param>
+    public void MenuControl(int limit, MENU_CONTROLL_TYPE mc, Vector2 limiterMulti)
+    {
+        switch (mc)
+        {
+            case MENU_CONTROLL_TYPE.LINEAR_LEFT_RIGHT:
+
+                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
+                {
+                    menuchoice--;
+                }
+                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
+                {
+                    menuchoice++;
+                }
+                break;
+
+            case MENU_CONTROLL_TYPE.LINEAR_UP_DOWN:
+
+                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
+                {
+                    menuchoice--;
+                }
+                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
+                {
+                    menuchoice++;
+                }
+                break;
+
+            case MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL:
+
+                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
+                {
+                    menuchoice--;
+                }
+                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
+                {
+                    menuchoice++;
+                }
+                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
+                {
+                    menuchoice += (int)limiterMulti.y;
+                }
+                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
+                {
+                    menuchoice -= (int)limiterMulti.y;
+                }
+                break;
+        }
+        if (menuchoice < 0)
+            menuchoice = (limit - 1);
+        if (menuchoice > (limit - 1))
+            menuchoice = 0;
+
+    }
+    */
     public List<CH_BattleChar> GetTargets(bool onParty)
     {
         List<CH_BattleChar> targs = new List<CH_BattleChar>();
         if (!onParty)
         {
-            MenuControl(oppositionCharacters.Count, MENU_CONTROLL_TYPE.LINEAR_UP_DOWN, new Vector2(0, 0));
+            //MenuControl(oppositionCharacters.Count, MENU_CONTROLL_TYPE.LINEAR_UP_DOWN, new Vector2(0, 0));
             for (int i = 0; i < oppositionCharacters.Count; i++)
             {
                 if (oppositionCharacters[i].health > 0)
@@ -1761,7 +1836,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (!onParty)
         {
             //targetObj.SetActive(true);
-            MenuControl(oppositionCharacters.Count, MENU_CONTROLL_TYPE.LINEAR_UP_DOWN, new Vector2(0, 0));
+            //MenuControl(oppositionCharacters.Count, MENU_CONTROLL_TYPE.LINEAR_UP_DOWN, new Vector2(0, 0));
             for (int i = 0; i < oppositionCharacters.Count; i++)
             {
                 if (oppositionCharacters[i].health > 0)
@@ -1972,11 +2047,21 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     
     public void DamageEffect(int dmg, o_battleCharacter target ,Vector2 characterPos, DAMAGE_FLAGS fl) {
 
-        target.health -= dmg;
-        if (target.guardPoints > 0)
-            target.guardPoints--;
-        target.health = Mathf.Clamp(target.health, -target.maxHealth, target.maxHealth);
 
+        switch (fl)
+        {
+            default:
+
+                target.health -= dmg;
+                if (target.guardPoints > 0)
+                    target.guardPoints--;
+                break;
+
+            case DAMAGE_FLAGS.MISS:
+            case DAMAGE_FLAGS.VOID:
+                break;
+        }
+        target.health = Mathf.Clamp(target.health, -target.maxHealth, target.maxHealth);
         switch (fl)
         {
             case DAMAGE_FLAGS.FRAIL:
@@ -1995,6 +2080,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             case DAMAGE_FLAGS.VOID:
                 SpawnDamageObject(0, characterPos, Color.white, "block");
+                break;
+            case DAMAGE_FLAGS.MISS:
+                SpawnDamageObject(0, characterPos, Color.white, "miss_attack");
                 break;
         }
 
@@ -2173,6 +2261,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                     else if (elementWeakness <= -1)
                                         fl = ELEMENT_WEAKNESS.ABSORB;
                                 }
+
+
                                 switch (fl) {
                                     case ELEMENT_WEAKNESS.ABSORB:
                                         damageFlag = DAMAGE_FLAGS.ABSORB;
@@ -2235,105 +2325,121 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                     switch (battleAction.move.element) {
                                         case ELEMENT.STRIKE:
                                         case ELEMENT.PEIRCE:
-                                            if (targ.guardPoints == 0)
-                                                damageFlag = DAMAGE_FLAGS.FRAIL;
-                                            else
+                                            targ.guardPoints = 0;
+                                            damageFlag = DAMAGE_FLAGS.FRAIL;
+                                            break;
+                                    }
+                                }
+
+                                #endregion
+                            }
+                        }
+                        #region AGILITY DODGE CHECK
+
+                        int userAgil = battleAction.user.agiNet;
+                        int targAgil = targ.agiNet;
+                        int totalAgil = userAgil + targAgil;
+
+                        float dodgeChance = (float)(userAgil / totalAgil);
+                        float dodge = UnityEngine.Random.Range(0f, 1f);
+                        print("user: " + userAgil + " targ: " + targAgil + " dodge: " + dodgeChance + " total: " + totalAgil);
+                        if (dodge < dodgeChance)
+                        {
+                            damageFlag = DAMAGE_FLAGS.MISS;
+                            finalDamageFlag = DAMAGE_FLAGS.MISS;
+                            dmg = 0;
+                        }
+
+                        #endregion
+                        DamageEffect(dmg, targ, characterPos, damageFlag);
+                        if (damageFlag != DAMAGE_FLAGS.MISS)
+                        {
+                            if (battleAction.move.statusInflictChance != null)
+                            {
+                                foreach (s_move.statusInflict statusChance in battleAction.move.statusInflictChance)
+                                {
+                                    float ch = UnityEngine.Random.Range(0, 1);
+                                    if (ch <= statusChance.status_inflict_chance)
+                                    {
+                                        battleAction.target.SetStatus(new s_statusEff(
+                                            statusChance.status_effect,
+                                            statusChance.duration,
+                                            statusChance.damage));
+                                    }
+                                }
+                            }
+                            #region ELEMENT STATUS
+                            {
+                                float status_inflict_chance = 0;
+                                s_statusEff eff = new s_statusEff();
+                                float ch = UnityEngine.Random.Range(0f, 1f);
+                                switch (battleAction.move.element)
+                                {
+                                    case ELEMENT.ELECTRIC:
+                                        status_inflict_chance = 0.45f;
+                                        eff.duration = 4;
+                                        eff.status = STATUS_EFFECT.STUN;
+                                        break;
+
+                                    case ELEMENT.ICE:
+                                        status_inflict_chance = 0.35f;
+                                        eff.duration = 0;
+                                        eff.status = STATUS_EFFECT.FROZEN;
+                                        break;
+
+                                    case ELEMENT.PSYCHIC:
+                                        status_inflict_chance = 0.5f;
+                                        eff.duration = 3;
+                                        eff.status = STATUS_EFFECT.CONFUSED;
+                                        break;
+
+                                    case ELEMENT.FIRE:
+                                        status_inflict_chance = 0.15f;
+                                        eff.duration = 3;
+                                        eff.damage = Mathf.FloorToInt(CalculateDamage(battleAction.user, targ, battleAction.move) * 0.15f);
+                                        eff.status = STATUS_EFFECT.BURN;
+                                        break;
+                                }
+
+                                if (!battleAction.cureStatus)
+                                {
+                                    switch (battleAction.move.element)
+                                    {
+                                        case ELEMENT.ELECTRIC:
+                                        case ELEMENT.ICE:
+                                        case ELEMENT.PSYCHIC:
+                                        case ELEMENT.FIRE:
+                                            if (ch < status_inflict_chance)
                                             {
-                                                targ.guardPoints = 0;
-                                                damageFlag = DAMAGE_FLAGS.NONE;
+                                                targ.SetStatus(eff);
                                             }
                                             break;
                                     }
                                 }
-                                #endregion
-                            }
-                        }
-                        DamageEffect(dmg, targ, characterPos, damageFlag);
-                        if (battleAction.move.statusInflictChance != null)
-                        {
-                            foreach (s_move.statusInflict statusChance in battleAction.move.statusInflictChance)
-                            {
-                                float ch = UnityEngine.Random.Range(0, 1);
-                                if (ch <= statusChance.status_inflict_chance)
-                                {
-                                    battleAction.target.SetStatus(new s_statusEff(
-                                        statusChance.status_effect,
-                                        statusChance.duration,
-                                        statusChance.damage));
-                                }
-                            }
-                        }
-                        #region ELEMENT STATUS
-                        {
-                            float status_inflict_chance = 0;
-                            s_statusEff eff = new s_statusEff();
-                            float ch = UnityEngine.Random.Range(0f, 1f);
-                            switch (battleAction.move.element)
-                            {
-                                case ELEMENT.ELECTRIC:
-                                    status_inflict_chance = 0.45f;
-                                    eff.duration = 4;
-                                    eff.status = STATUS_EFFECT.STUN;
-                                    break;
-
-                                case ELEMENT.ICE:
-                                    status_inflict_chance = 0.35f;
-                                    eff.duration = 0;
-                                    eff.status = STATUS_EFFECT.FROZEN;
-                                    break;
-
-                                case ELEMENT.PSYCHIC:
-                                    status_inflict_chance = 0.5f;
-                                    eff.duration = 3;
-                                    eff.status = STATUS_EFFECT.CONFUSED;
-                                    break;
-
-                                case ELEMENT.FIRE:
-                                    status_inflict_chance = 0.15f;
-                                    eff.duration = 3;
-                                    eff.damage = Mathf.FloorToInt(CalculateDamage(battleAction.user, targ, battleAction.move) * 0.15f);
-                                    eff.status = STATUS_EFFECT.BURN;
-                                    break;
-                            }
-
-                            if (!battleAction.cureStatus)
-                            {
                                 switch (battleAction.move.element)
                                 {
-                                    case ELEMENT.ELECTRIC:
+                                    case ELEMENT.WATER:
                                     case ELEMENT.ICE:
-                                    case ELEMENT.PSYCHIC:
+                                        targ.RemoveStatus(STATUS_EFFECT.BURN);
+                                        break;
                                     case ELEMENT.FIRE:
-                                        if (ch < status_inflict_chance)
-                                        {
-                                            targ.SetStatus(eff);
-                                        }
+                                        targ.RemoveStatus(STATUS_EFFECT.FROZEN);
                                         break;
                                 }
                             }
-                            switch (battleAction.move.element)
-                            {
-                                case ELEMENT.WATER:
-                                case ELEMENT.ICE:
-                                    targ.RemoveStatus(STATUS_EFFECT.BURN);
-                                    break;
-                                case ELEMENT.FIRE:
-                                    targ.RemoveStatus(STATUS_EFFECT.FROZEN);
-                                    break;
-                            }
-                        }
-                        #endregion
+                            #endregion
 
-                        for (int i = 0; i < 2; i++)
-                        {
-                            targ.transform.position = characterPos + new Vector2(15, 0);
-                            yield return new WaitForSeconds(0.02f);
-                            targ.transform.position = characterPos;
-                            yield return new WaitForSeconds(0.02f);
-                            targ.transform.position = characterPos + new Vector2(-15, 0);
-                            yield return new WaitForSeconds(0.02f);
-                            targ.transform.position = characterPos;
-                            yield return new WaitForSeconds(0.02f);
+                            for (int i = 0; i < 2; i++)
+                            {
+                                targ.transform.position = characterPos + new Vector2(15, 0);
+                                yield return new WaitForSeconds(0.02f);
+                                targ.transform.position = characterPos;
+                                yield return new WaitForSeconds(0.02f);
+                                targ.transform.position = characterPos + new Vector2(-15, 0);
+                                yield return new WaitForSeconds(0.02f);
+                                targ.transform.position = characterPos;
+                                yield return new WaitForSeconds(0.02f);
+                            }
                         }
 
                         #region CHECK FOR COUNTER
@@ -2443,6 +2549,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         yield return new WaitForSeconds(0.18f);
         if (targ.health <= 0)
         {
+            targ.statusEffects.Clear();
             if (oppositionCharacters.Contains(targ))
             {
                 s_soundmanager.GetInstance().PlaySound("enemy_defeat");
@@ -2452,70 +2559,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
         }
-    }
-    public enum MENU_CONTROLL_TYPE {
-        LINEAR_UP_DOWN,
-        LINEAR_LEFT_RIGHT,
-        MULTI_DIRECTIONAL
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="limit"></param>
-    /// <param name="mc"></param>
-    /// <param name="limiterMulti">Only use this if the menu control type is Multi-Directional</param>
-    public void MenuControl(int limit, MENU_CONTROLL_TYPE mc, Vector2 limiterMulti)
-    {
-        switch (mc) {
-            case MENU_CONTROLL_TYPE.LINEAR_LEFT_RIGHT:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
-                {
-                    menuchoice++;
-                }
-                break;
-
-            case MENU_CONTROLL_TYPE.LINEAR_UP_DOWN:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
-                {
-                    menuchoice++;
-                }
-                break;
-
-            case MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
-                {
-                    menuchoice++;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
-                {
-                    menuchoice += (int)limiterMulti.y;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
-                {
-                    menuchoice -= (int)limiterMulti.y;
-                }
-                break;
-        }
-        if (menuchoice < 0)
-            menuchoice = (limit - 1);
-        if(menuchoice > (limit - 1))
-        menuchoice = 0;
-
     }
     
     public IEnumerator ConcludeBattle()
@@ -2535,10 +2578,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
 
-            /*
             foreach (o_battleCharacter c in playerCharacters)
             {
-                float exp = TotalEXP(c, allDefeated);
+                float exp = 40;//TotalEXP(c, allDefeated);
                 //we add the exp and make it so that it checks for a level up
                 for (float i = 0; i < exp; i++)
                 {
@@ -2554,14 +2596,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             c.dexterity++;
                         c.level++;
                         c.experiencePoints = 0;
-                        exp = TotalEXP(c, allDefeated);
+                        //exp = TotalEXP(c, allDefeated);
                         c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
                         c.maxStamina += UnityEngine.Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1);
                     }
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
             }
-            */
 
             List<string> extSkillLearn = new List<string>();
 

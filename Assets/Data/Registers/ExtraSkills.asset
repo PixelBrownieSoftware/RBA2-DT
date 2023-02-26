@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   _isReset: 0
-  moveListRef: []
+  moveListRef:
+  - {fileID: 11400000, guid: bb10943dabf05fa42b8143f39a7d9080, type: 2}
+  - {fileID: 11400000, guid: 7d93ac692514f384f82c62bb6f2365d6, type: 2}
