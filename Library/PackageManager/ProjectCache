@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638117521658261920
-    m_Hash: 709303689
+      ticks: 638131401903332728
+    m_Hash: 2051768023
   m_LockFileStatus:
     m_FilePath: C:/Users/Shadow/Documents/GitHub/RBA2-DT/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638117521658351967
-    m_Hash: 1462822998
+      ticks: 638131401903347758
+    m_Hash: 3156858798
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -316,6 +316,8 @@ m_ResolvedPackages:
     - 1.20.5
     - 1.21.1
     - 1.21.2
+    - 1.21.3
+    - 1.21.8
     compatible:
     - 1.19.19
     - 1.20.0
@@ -323,6 +325,8 @@ m_ResolvedPackages:
     - 1.20.5
     - 1.21.1
     - 1.21.2
+    - 1.21.3
+    - 1.21.8
     verified: 1.19.19
   dependencies:
   - name: com.unity.scriptablebuildpipeline
@@ -459,6 +463,7 @@ m_ResolvedPackages:
     - 2.0.0-preview.21
     - 2.0.0-preview.22
     - 2.0.0
+    - 2.0.1
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
@@ -477,6 +482,7 @@ m_ResolvedPackages:
     - 2.0.0-preview.21
     - 2.0.0-preview.22
     - 2.0.0
+    - 2.0.1
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
@@ -1170,6 +1176,7 @@ m_ResolvedPackages:
     - 1.3.0
     - 1.3.1
     - 1.3.2
+    - 1.3.3
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -1180,6 +1187,7 @@ m_ResolvedPackages:
     - 1.3.0
     - 1.3.1
     - 1.3.2
+    - 1.3.3
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -1346,6 +1354,7 @@ m_ResolvedPackages:
     - 3.2.0-pre.3
     - 3.2.0-pre.4
     - 4.0.0-pre.1
+    - 4.0.0-pre.2
     compatible:
     - 3.0.6
     - 3.2.0-pre.1
@@ -1483,7 +1492,9 @@ m_ResolvedPackages:
     - 1.7.0
     - 1.7.1
     - 1.7.2
+    - 1.7.3
     - 1.8.0
+    - 1.8.1
     compatible:
     - 1.6.4
     - 1.7.0-pre.1
@@ -1491,7 +1502,9 @@ m_ResolvedPackages:
     - 1.7.0
     - 1.7.1
     - 1.7.2
+    - 1.7.3
     - 1.8.0
+    - 1.8.1
     verified: 1.6.4
   dependencies:
   - name: com.unity.modules.director
@@ -3985,11 +3998,15 @@ m_ResolvedPackages:
     - 1.20.2
     - 1.21.0
     - 1.21.1
+    - 1.21.2
+    - 1.21.3
     compatible:
     - 1.20.1
     - 1.20.2
     - 1.21.0
     - 1.21.1
+    - 1.21.2
+    - 1.21.3
     verified: 1.20.2
   dependencies: []
   resolvedDependencies: []

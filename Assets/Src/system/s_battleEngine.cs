@@ -2341,7 +2341,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         int targAgil = targ.agiNet;
                         int totalAgil = userAgil + targAgil;
 
-                        float dodgeChance = (float)(userAgil / totalAgil);
+                        float dodgeChance = ((float)userAgil / (float)totalAgil);
                         float dodge = UnityEngine.Random.Range(0f, 1f);
                         print("user: " + userAgil + " targ: " + targAgil + " dodge: " + dodgeChance + " total: " + totalAgil);
                         if (dodge < dodgeChance)

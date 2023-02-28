@@ -1,5 +1,7 @@
 Library/
+Library/ArtifactDB
 save.mf2
 Logs/
-Library/PlayerDataCache
-Library\PlayerDataCache\
+Library/PlayerDataCache/
+Library/Artifacts/
+Library/Bee/
