@@ -71,6 +71,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public static s_battleEngine engineSingleton;
     public R_BattleCharacterList partyMembers;
+    public R_Int tokens;
 
     #region variables
     public o_battleCharacter[] enemySlots;
@@ -2610,7 +2611,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             {
                 if (en.health > 0)
                     continue;
-                s_rpgGlobals.money += en.battleCharData.money;
+                //s_rpgGlobals.money += en.battleCharData.money;
+                tokens.integer += UnityEngine.Random.Range(0,4);
                 foreach (s_move mv in en.currentMoves)
                 {
                     if (!s_rpgGlobals.rpgGlSingleton.extraSkills.Contains(mv))
@@ -2652,14 +2654,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public IEnumerator GameOver()
     {
-        currentPartyCharactersQueue.Clear();
         yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
         isPlayerTurn = true;
        // players.Clear();
         isEnabled = false;
-        s_rpgGlobals.rpgGlSingleton.ClearAllThings();
+        //s_rpgGlobals.rpgGlSingleton.ClearAllThings();
         //Destroy(rpg_globals.gl.player.gameObject);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        currentPartyCharactersQueue.Clear();
+        battleEngine = BATTLE_ENGINE_STATE.NONE;
+        s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
 
     public IEnumerator NextTeamTurn()

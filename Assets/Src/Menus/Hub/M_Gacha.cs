@@ -158,7 +158,7 @@ public class M_Gacha : S_MenuSystem
         }
         */
         o_battleCharDataN bc = null;
-        List<o_battleCharDataN> bcs = new List<o_battleCharDataN>();
+        Dictionary<o_battleCharDataN, int> bcs = new Dictionary<o_battleCharDataN, int>();
         Dictionary<s_move, int> items = new Dictionary<s_move, int>();
         gachaText.text = "";
         for (int i = 0; i < rolls; i++)
@@ -168,8 +168,34 @@ public class M_Gacha : S_MenuSystem
 
             if (totalRolls.integer % pity == 0)
             {
-                if (players.Get(currentRank.characters[0].character.name) == null)
-                    RPGGlobal.AddPartyMember(currentRank.characters[0].character, 1);
+                float percentage = Random.Range(0f, 1f);
+                List<GR_Char> characterRarity = new List<GR_Char>();
+                foreach (var ob in currentRank.characters)
+                {
+                    if (percentage < ob.rarity)
+                    {
+                        characterRarity.Add(ob);
+                    }
+                }
+                if (characterRarity.Count > 0)
+                {
+                    bc = characterRarity[Random.Range(0, characterRarity.Count)].character;
+                }
+                else
+                {
+                    List<GR_Char> characterForce = currentRank.characters.ToList<GR_Char>();
+                    float max = 0;
+                    foreach (var charPick in characterForce) {
+                        if (charPick.rarity > max) {
+                            max = charPick.rarity;
+                            bc = charPick.character;
+                        }
+                    }
+                }
+                if (!bcs.ContainsKey(bc))
+                    bcs.Add(bc, 1);
+                else
+                    bcs[bc]++;
             }
             else
             {
@@ -194,14 +220,6 @@ public class M_Gacha : S_MenuSystem
                     }
                 }
             }
-            if (bc != null)
-            {
-                if (RPGGlobal.ContainsPartyMember(bc))
-                {
-                    RPGGlobal.AddPartyMember(bc, 1);
-                }
-                bcs.Add(bc);
-            }
             if (item != null)
             {
                 if(!items.ContainsKey(item))
@@ -218,12 +236,23 @@ public class M_Gacha : S_MenuSystem
         }
         gachaText.text += itemText;
         string characterText = "";
+
         foreach (var ch in bcs)
         {
-            if (!RPGGlobal.ContainsPartyMember(ch))
-                characterText += ch.name + " was recruited into the party." + "\n";
+            if (!RPGGlobal.ContainsPartyMember(ch.Key))
+            {
+                RPGGlobal.AddPartyMember(ch.Key, 1);
+                if (ch.Value > 1)
+                {
+                    characterText += ch.Key.name + " was recruited into the party with some boosts." + "\n";
+                }
+                else
+                {
+                    characterText += ch.Key.name + " was recruited into the party." + "\n";
+                }
+            }
             else
-                characterText += ch.name + " got stronger..." + "\n";
+                characterText += ch.Key.name + " got stronger..." + "\n";
         }
         gachaText.text += characterText;
         gachaResMenu.SetActive(true);

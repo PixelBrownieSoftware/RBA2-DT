@@ -191,6 +191,7 @@ public class s_rpgGlobals : s_globals
     public R_CharacterSetterList allCharactersData;
     public R_CharacterSetterList partyMembersStart;
     public R_BattleCharacterList partyMembers;
+    public R_Int tokens;
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
     public List<string> weapons = new List<string>();
     public List<s_move> itemDatabase = new List<s_move>();
@@ -242,7 +243,7 @@ public class s_rpgGlobals : s_globals
             }
             */
         }
-        moneyTxt.text = "£" + money;
+        moneyTxt.text = tokens.integer + " tokens.";
     }
 
     public override void SaveData()

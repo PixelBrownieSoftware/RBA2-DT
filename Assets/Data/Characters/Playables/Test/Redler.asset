@@ -41,7 +41,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
   elementals:
-    weaknessChart: []
+    weaknessChart:
+    - element: 3
+      weakness: 0.5
+    - element: 4
+      weakness: 2
   characterColour: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
   characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
   aiPages:

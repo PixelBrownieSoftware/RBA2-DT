@@ -3526,6 +3526,7 @@ MonoBehaviour:
   allCharactersData: {fileID: 11400000, guid: f0e7fce64af33924480c1df7bf40380b, type: 2}
   partyMembersStart: {fileID: 11400000, guid: 779f56c64c552254abfa715fd20705fb, type: 2}
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
+  tokens: {fileID: 11400000, guid: ebb0d1ef5a876284b9cda951ff2856e2, type: 2}
   weapons: []
   itemDatabase:
   - {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}

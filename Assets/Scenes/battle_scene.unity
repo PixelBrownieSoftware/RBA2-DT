@@ -12624,6 +12624,7 @@ MonoBehaviour:
     type: 3}
   staffIcon: {fileID: 1845301571344876508, guid: 7fbed4d531b1c6c48904f3a04a444c5d,
     type: 3}
+  inventory: {fileID: 0}
 --- !u!114 &1037461668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22707,6 +22708,7 @@ MonoBehaviour:
   battleDecisionMenu: 0
   isPlayerTurn: 1
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
+  tokens: {fileID: 11400000, guid: ebb0d1ef5a876284b9cda951ff2856e2, type: 2}
   enemySlots:
   - {fileID: 1326761735}
   - {fileID: 1821048435}
@@ -22757,6 +22759,7 @@ MonoBehaviour:
   passMove: {fileID: 11400000, guid: 39ed5711de49e3a47925739bf6a68dd1, type: 2}
   nothingMove: {fileID: 11400000, guid: e6714d584708f474f9720cc1c24eaeba, type: 2}
   nonChangablePlayers: 0
+  changeMenu: {fileID: 0}
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
     type: 3}
   water_picture: {fileID: -3293433503042108997, guid: d3e9e7359b6915748ae623ff276e8a49,

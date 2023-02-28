@@ -48612,6 +48612,9 @@ MonoBehaviour:
     characters:
     - character: {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
       defeatReq: 0
+      rarity: 0.35
+    - character: {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
+      defeatReq: 0
       rarity: 0.45
     items:
     - item: {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}

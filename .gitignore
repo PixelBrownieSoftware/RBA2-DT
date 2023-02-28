@@ -1,4 +1,5 @@
-
-Library/PackageCache/com.unity.burst@1.6.5/.Runtime/hostlin/lld
-Library/PackageCache/com.unity.burst@1.6.5/.Runtime/hostmac/lld
-Library/ArtifactDB
+Library/
+save.mf2
+Logs/
+Library/PlayerDataCache
+Library\PlayerDataCache\

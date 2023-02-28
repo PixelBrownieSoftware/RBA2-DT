@@ -12,52 +12,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Trunko
   m_EditorClassIdentifier: 
-  level: 9
-  experience: 0
+  money: 0
   maxSkillPointsB: 11
   maxHitPointsB: 17
+  maxHitPointsGMin: 1
+  maxHitPointsGMax: 2
+  maxSkillPointsGMin: 3
+  maxSkillPointsGMax: 3
+  agilityB: 1
   strengthB: 2
   vitalityB: 3
-  dexterityB: 3
   luckB: 1
-  agilityB: 1
-  expB: 1
-  battleImage: {fileID: 0}
-  healthGT: 1
-  staminaGT: 1
+  intelligenceB: 1
+  dexterityB: 3
+  agilityGT: 3
   strengthGT: 4
   vitalityGT: 3
-  dexterityGT: 2
-  agilityGT: 3
   luckGT: 1
-  maxSkillPointsGMax: 3
-  maxSkillPointsGMin: 3
-  maxHitPointsGMax: 2
-  maxHitPointsGMin: 1
-  currentMoves: []
-  moveLearn: []
-  elementAffinities:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  intelligenceGT: 3
+  dexterityGT: 2
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 0}
+  turnIcons: 1
+  moveLearn:
+  - {fileID: 11400000, guid: bb10943dabf05fa42b8143f39a7d9080, type: 2}
+  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+  - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  - {fileID: 11400000, guid: f2e619f5244c4ed4a846c71f177b0c4c, type: 2}
+  - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
+  elementals:
+    weaknessChart:
+    - element: 10
+      weakness: 2
   characterColour: {r: 1, g: 0.95, b: 0.75, a: 1}
   characterColour2: {r: 1, g: 0.95, b: 0.75, a: 1}
-  skillAffinities: []
   aiPages:
-  - ai: []
-  idleAnim: {fileID: 0}
-  attackAnim: {fileID: 0}
-  hurtAnim: {fileID: 0}
-  castAnim: {fileID: 0}
-  customAnims: []
-  anim: {fileID: 0}
+  - ai:
+    - move: {fileID: 11400000, guid: bb10943dabf05fa42b8143f39a7d9080, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 19
+      element: 0
+      healthPercentage: 0.5
+      name: 
+      onParty: 1
+      isImportant: 1
+      number1: 0
+      number2: 0
+  anim: {fileID: 9100000, guid: 5aef83e9d7b213e489bc029ea5e6ff5f, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 11400000, guid: 86f30a5e774c70c46994f13384f016a4,
+    type: 2}
   persistence: 0
+  equip_fist: 1
+  equip_gun: 1
+  equip_sword: 1
+  equip_staff: 1
