@@ -114,6 +114,7 @@ public class S_RPGGlobals : ScriptableObject
                     tempAgi++;
                 if (data.intelligenceGT % level == 0)
                     tempInt++;
+                newCharacter.level++;
             }
 
             if (data.defaultRangedWeapon != null)
@@ -135,15 +136,13 @@ public class S_RPGGlobals : ScriptableObject
             {
                 if (mov == null)
                     continue;
-                /*
                 if (mov.strReq <= tempStr
                     && mov.dxReq <= tempDx
                     && mov.vitReq <= tempVit
                     && mov.agiReq <= tempAgi)
                 {
+                    newCharacter.currentMoves.Add(mov);
                 }
-                */
-                newCharacter.currentMoves.Add(mov);
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;

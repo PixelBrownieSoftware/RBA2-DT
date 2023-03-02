@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  power: 1
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
+  power: 5
   moveType: 0
   moveTarg: 0
   element: 1

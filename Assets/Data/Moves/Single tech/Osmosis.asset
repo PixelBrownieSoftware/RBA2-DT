@@ -16,17 +16,19 @@ MonoBehaviour:
   dxReq: 0
   vitReq: 0
   agiReq: 0
+  intReq: 7
+  lucReq: 0
   power: 8
   moveType: 1
   moveTarg: 0
-  element: 8
+  element: 9
   preAnimations: []
   animations: []
   endAnimations: []
   statusInflictChance: []
   onParty: 0
   fixedValue: 0
-  cost: 4
+  cost: 5
   statusType: 0
   strBuff: 0
   vitBuff: 0

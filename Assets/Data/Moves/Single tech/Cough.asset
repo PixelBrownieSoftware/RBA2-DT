@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Cough
   m_EditorClassIdentifier: 
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 9
   moveType: 2
-  comboType: 0
   moveTarg: 0
-  element: 8
+  element: 9
+  preAnimations: []
   animations: []
+  endAnimations: []
   statusInflictChance:
   - status_effect: 0
     status_inflict_chance: 1
@@ -25,29 +32,10 @@ MonoBehaviour:
     damage: 3
   onParty: 0
   fixedValue: 0
-  isHeal: 0
-  cureStatus: 0
-  Req1:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  strReq: 0
-  dxReq: 0
-  vitReq: 0
-  agiReq: 0
+  cost: 0
+  statusType: 0
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  moveRequirements: []

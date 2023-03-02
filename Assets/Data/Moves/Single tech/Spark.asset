@@ -18,7 +18,7 @@ MonoBehaviour:
   agiReq: 2
   intReq: 0
   lucReq: 0
-  power: 18
+  power: 7
   moveType: 1
   moveTarg: 0
   element: 6
@@ -32,7 +32,7 @@ MonoBehaviour:
     damage: 0
   onParty: 0
   fixedValue: 0
-  cost: 0
+  cost: 5
   statusType: 0
   strBuff: 0
   vitBuff: 0

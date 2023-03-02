@@ -230,6 +230,7 @@ public class o_battleCharPartyData
     public string name;
     public int maxHealth, health;
     public int maxStamina, stamina;
+    public int level = 1;
 
     public int strength;
     public int vitality;

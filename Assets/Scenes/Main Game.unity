@@ -36139,6 +36139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuType: ExperienceMenu
   buttons: []
+  playersReference: {fileID: 11400000, guid: 9e406a5f6517d26449ac54609f882275, type: 2}
+  enemiesReference: {fileID: 11400000, guid: 74c7dfbbe71f7544ca5c3823a44bd5d6, type: 2}
   EXPThings:
   - {fileID: 996303012}
   - {fileID: 680207686}

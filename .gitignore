@@ -5,3 +5,6 @@ Logs/
 Library/PlayerDataCache/
 Library/Artifacts/
 Library/Bee/
+Library/ArtifactDB-lock
+Library/ArtifactDB
+Library/ArtifactDB

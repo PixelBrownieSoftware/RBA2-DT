@@ -102,7 +102,7 @@ public class s_hitObj : o_generic
         {
             hitObj.color = Color.white;
             hitObj.sprite = enemy_spr;
-            anim.Play("HitOBJ");
+            anim.Play("HitOBJ_enem");
         }
         else
         {

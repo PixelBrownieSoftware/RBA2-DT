@@ -247,6 +247,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         halfTurn = 0;
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         allCharacterReferences.Clear();
+        playersReference.Clear();
+        enemiesReference.Clear();
         SceneManager.UnloadSceneAsync("Overworld");
 
         //ffff
@@ -517,6 +519,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         int tempAgi = enem.agility;
         
         charObj.name = enem.name;
+        charObj.level = enem.level;
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.vitality = tempVit;
@@ -612,13 +615,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (battleAction.move.onParty)
         {
             targ.health += dmg;
-            targ.health = Mathf.Clamp(targ.health, -targ.maxHealth, targ.maxHealth);
+            targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
 
         }
         else
         {
             targ.health -= dmg;
-            targ.health = Mathf.Clamp(targ.health, -targ.maxHealth, targ.maxHealth);
+            targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
 
             Vector2 characterPos = targ.transform.position;
             if (oppositionCharacters.Contains(targ))
@@ -1253,6 +1256,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             NextTurn();
                             yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                             break;
+                        case DAMAGE_FLAGS.MISS:
                         case DAMAGE_FLAGS.VOID:
                             NextTurn();
                             yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
@@ -1291,6 +1295,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             case s_battleAction.MOVE_TYPE.GUARD:
                 battleAction.user.guardPoints++;
+                int spRestTurn = Mathf.CeilToInt((float)battleAction.user.maxStamina * UnityEngine.Random.Range(0.05f, 0.12f));
+                battleAction.user.stamina += spRestTurn;
+                battleAction.user.stamina = Mathf.Clamp(battleAction.user.stamina, 0, battleAction.user.maxStamina);
                 NextTurn();
                 yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                 break;
@@ -1419,6 +1426,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             halfTurn--;
         else
             fullTurn--;
+        if (fullTurn < 0)
+            fullTurn = 0;
     }
 
     public void PassTurn()
@@ -1528,6 +1537,20 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     o_battleCharacter potentialTrg = null;
                     s_move move = ai.move;
+                    switch (move.moveType) {
+                        case s_move.MOVE_TYPE.PHYSICAL:
+                            if (battleAction.user.health <= move.cost) {
+                                continue;
+                            }
+                            break;
+                        case s_move.MOVE_TYPE.SPECIAL:
+                        case s_move.MOVE_TYPE.STATUS:
+                            if (battleAction.user.stamina < move.cost)
+                            {
+                                continue;
+                            }
+                            break;
+                    }
                     if (!currentCharacter.extraSkills.Contains(move) && !currentCharacter.currentMoves.Contains(move)) {
                         continue;
                     }
@@ -1653,6 +1676,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         targets = playerCharacters.FindAll(x => x.inBattle == true && x.health > 0);
                     battleAction.target = targets[UnityEngine.Random.Range(0, targets.Count)];
                 }
+                battleAction.isCombo = battleAction.combo.comboType != s_move.MOVE_QUANITY_TYPE.MONO_TECH;
                 battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
                 battleAction.combo.comboType = s_move.MOVE_QUANITY_TYPE.MONO_TECH;
                 battleEngine = BATTLE_ENGINE_STATE.PROCESS_ACTION;
@@ -2062,7 +2086,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case DAMAGE_FLAGS.VOID:
                 break;
         }
-        target.health = Mathf.Clamp(target.health, -target.maxHealth, target.maxHealth);
+        target.health = Mathf.Clamp(target.health, 0, target.maxHealth);
         switch (fl)
         {
             case DAMAGE_FLAGS.FRAIL:
@@ -2337,14 +2361,17 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         #region AGILITY DODGE CHECK
 
-                        int userAgil = battleAction.user.agiNet;
-                        int targAgil = targ.agiNet;
+                        int userAgil = (int)((float)battleAction.user.agiNet * 1.85f);
+                        int targAgil = (int)((float)targ.agiNet * 0.65f);
                         int totalAgil = userAgil + targAgil;
 
-                        float dodgeChance = ((float)userAgil / (float)totalAgil);
-                        float dodge = UnityEngine.Random.Range(0f, 1f);
-                        print("user: " + userAgil + " targ: " + targAgil + " dodge: " + dodgeChance + " total: " + totalAgil);
-                        if (dodge < dodgeChance)
+                        float attackConnectChance = ((float)userAgil / (float)totalAgil);
+                        attackConnectChance = Mathf.Clamp(attackConnectChance, 0, 0.95f);
+                        float attackConnect = UnityEngine.Random.Range(0f, 1f);
+
+                        print("user: " + userAgil + " targ: " + targAgil + " dodge: " + attackConnectChance + " total: " + totalAgil);
+                        print("targ: " + targ.agiNet + " targ (rigged): " + targAgil);
+                        if (attackConnect > attackConnectChance)
                         {
                             damageFlag = DAMAGE_FLAGS.MISS;
                             finalDamageFlag = DAMAGE_FLAGS.MISS;
@@ -2443,6 +2470,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             }
                         }
 
+                        targ.transform.position = characterPos + new Vector2(30, 0);
+                        yield return new WaitForSeconds(0.02f);
+                        targ.transform.position = characterPos;
+                        yield return new WaitForSeconds(0.02f);
+
                         #region CHECK FOR COUNTER
                         {
                             if (targ.extraPassives.Find
@@ -2479,7 +2511,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_move.STATUS_TYPE.HEAL_HEALTH:
                                 battleAction.target.health += dmg;
                                 battleAction.target.health = Mathf.Clamp(battleAction.target.health,
-                                    -battleAction.target.maxHealth, battleAction.target.maxHealth);
+                                    0, battleAction.target.maxHealth);
                                 SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
                                 break;
 
@@ -2507,8 +2539,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 targ.dexterityBuff += battleAction.move.dexBuff;
                                 targ.agilityBuff += battleAction.move.agiBuff;
                                 targ.health += dmg;
-                                targ.health = Mathf.Clamp(targ.health,
-                                    -targ.maxHealth, targ.maxHealth);
+                                targ.health = Mathf.Clamp(targ.health,0, targ.maxHealth);
                                 SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
                                 break;
 
@@ -2581,12 +2612,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             foreach (o_battleCharacter c in playerCharacters)
             {
-                float exp = 40;//TotalEXP(c, allDefeated);
+                float exp = TotalEXP(c);
+                int initailTotal = (int)(exp * 100);
+                print(initailTotal);
+
                 //we add the exp and make it so that it checks for a level up
-                for (float i = 0; i < exp; i++)
+                for (int i = 0; i < initailTotal; i++)
                 {
-                    c.experiencePoints += 1;
-                    if (c.experiencePoints >= 100)
+                    c.experiencePoints += 0.01f;
+                    print(c.experiencePoints);
+                    if (c.experiencePoints >= 1f)
                     {
                         o_battleCharDataN chdat = c.battleCharData;
                         if (i % chdat.strengthGT == 0)
@@ -2597,11 +2632,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             c.dexterity++;
                         c.level++;
                         c.experiencePoints = 0;
-                        //exp = TotalEXP(c, allDefeated);
+                        exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
                         c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
                         c.maxStamina += UnityEngine.Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1);
                     }
-                    yield return new WaitForSeconds(Time.deltaTime);
+                    //yield return new WaitForSeconds(Time.deltaTime);
                 }
             }
 
@@ -2652,6 +2687,18 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
+
+    public float TotalEXP(o_battleCharacter recipent) {
+        List<o_battleCharacter> opponents = oppositionCharacters.FindAll(x => x.health <= 0);
+        float expTotal = 0f;
+        foreach (var bc in opponents) {
+            float amount = ((float)bc.level / (float)recipent.level) * 0.5f;
+            expTotal += amount;
+            print("EXP: " + amount);
+        }
+        return expTotal;
+    }
+
     public IEnumerator GameOver()
     {
         yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
@@ -2694,6 +2741,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             {
                 if (c.health > 0 && c.inBattle == true)
                 {
+                    int spRestTurn = Mathf.CeilToInt((float)c.maxStamina * UnityEngine.Random.Range(0.02f, 0.06f));
+                    print(spRestTurn);
+                    c.stamina += spRestTurn;
+                    c.stamina = Mathf.Clamp(c.maxStamina, 0 , c.stamina);
                     c.RemoveStatus(STATUS_EFFECT.FROZEN);
                     for (int i2 = 0; i2 < c.battleCharData.turnIcons; i2++)
                     {
@@ -2839,7 +2890,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     IEnumerator TurnIconFX(TURN_ICON_FX fx, int i) {
         float t = 0;
-        float speed = 2.85f;
+        float speed = 3.25f;
         switch (fx) {
             case TURN_ICON_FX.APPEAR:
                 while (PT_GUI[i].color != Color.white)
@@ -2851,9 +2902,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
 
             case TURN_ICON_FX.HIT:
-                if (PT_GUI.Length > i) {
-
-                }
                 while (PT_GUI[i].color != Color.magenta)
                 {
                     PT_GUI[i].color = Color.Lerp(Color.white, Color.magenta, t);

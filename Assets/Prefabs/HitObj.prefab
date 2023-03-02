@@ -114,7 +114,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 2
@@ -240,8 +240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8117506818868297461, guid: ee47516c69c530c4b85097a95195ae8d,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -407,7 +406,7 @@ MonoBehaviour:
   gravity: 0
   rbody2d: {fileID: 0}
   rendererObj: {fileID: 0}
-  animHand: {fileID: 0}
+  animHand: {fileID: 8777529028878976355}
   useCondition: 0
   disspearOnConditionTrue: 0
   logicType: 0

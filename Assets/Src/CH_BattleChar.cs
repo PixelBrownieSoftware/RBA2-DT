@@ -8,6 +8,8 @@ public class CH_BattleChar : ScriptableObject
 {
     public string cName;
     public int health, maxHealth, stamina, maxStamina;
+    public float exp;
+    public int level;
     public Vector2 position;
     public o_battleCharPartyData characterData;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
@@ -28,5 +30,7 @@ public class CH_BattleChar : ScriptableObject
         maxHealth = bc.maxHealth;
         stamina = bc.stamina;
         maxStamina = bc.maxStamina;
+        exp = bc.experiencePoints;
+        level = bc.level;
     }
 }

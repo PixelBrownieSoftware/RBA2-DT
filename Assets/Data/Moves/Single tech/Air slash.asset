@@ -16,11 +16,12 @@ MonoBehaviour:
   dxReq: 0
   vitReq: 0
   agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 0
   moveType: 0
-  comboType: 0
   moveTarg: 0
-  element: 7
+  element: 8
   preAnimations: []
   animations: []
   endAnimations: []
@@ -33,28 +34,4 @@ MonoBehaviour:
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
-  Req1:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
+  moveRequirements: []
