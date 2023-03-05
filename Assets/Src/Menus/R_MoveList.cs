@@ -11,6 +11,10 @@ public class R_MoveList : R_Default
         return moveListRef[Random.Range(0, moveListRef.Count)];
     }
 
+    public void AddMove(s_move mov) {
+        moveListRef.Add(mov);
+    }
+
     public bool ListContains(s_move targ)
     {
         return moveListRef.Contains(targ);

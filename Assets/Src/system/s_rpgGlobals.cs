@@ -119,7 +119,7 @@ public class s_RPGSave : dat_save {
 
     public s_RPGSave(
         List<o_battleCharPartyData> partyMembers,
-        List<s_move> extraMoves,
+        R_MoveList extraMoves,
         List<s_shopItem> shopItems,
         Dictionary<string, int> inventoryItems,
         List<string> weapons,
@@ -153,7 +153,7 @@ public class s_RPGSave : dat_save {
         }
 
         List<sav_skill> exMoves = new List<sav_skill>();
-        foreach (var exMV in extraMoves)
+        foreach (var exMV in extraMoves.moveListRef)
         {
             o_battleCharPartyData dat = partyMembers.Find(x => x.extraSkills.Contains(exMV));
             if (dat != null)
@@ -200,7 +200,7 @@ public class s_rpgGlobals : s_globals
 
     public List<s_shopItem> shopItems = new List<s_shopItem>();
 
-    public List<s_move> extraSkills = new List<s_move>();
+    public R_MoveList extraSkills;
     public List<s_passive> extraPassives = new List<s_passive>();
 
     //So we can set it's object state once a level has been completed
@@ -299,7 +299,7 @@ public class s_rpgGlobals : s_globals
                 foreach (var it in sav.extraSkills)
                 {
                     s_move mov = moveDatabase.Find(x => x.name == it.name);
-                    extraSkills.Add(mov);
+                    extraSkills.AddMove(mov);
                     if (it.character != "") {
                         o_battleCharPartyData pc = partyMembers.Get(it.character);
                         pc.extraSkills.Add(mov);
@@ -355,8 +355,8 @@ public class s_rpgGlobals : s_globals
     }
 
     public void AddExtraSkill(s_move mov) {
-        if (!extraSkills.Contains(mov))
-            extraSkills.Add(mov);
+        if (!extraSkills.ListContains(mov))
+            extraSkills.AddMove(mov);
     }
 
     public void SwitchToOverworld(bool isFlee)
@@ -625,9 +625,7 @@ public class s_rpgGlobals : s_globals
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_SP:
                 {
-                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS &&
-                (x.statusType == s_move.STATUS_TYPE.HEAL_STAMINA
-                || x.statusType == s_move.STATUS_TYPE.HEAL_SP_BUFF));
+                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healStamina);
 
                     if (mv != null)
                     {
@@ -638,9 +636,7 @@ public class s_rpgGlobals : s_globals
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_HP:
                 {
-                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS &&
-                (x.statusType == s_move.STATUS_TYPE.HEAL_HEALTH
-                || x.statusType == s_move.STATUS_TYPE.HEAL_HP_BUFF));
+                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healHealth);
 
                     if (mv != null)
                     {
@@ -680,23 +676,15 @@ public class s_rpgGlobals : s_globals
                     return pc.rangedWeapon;
                 break;
             case s_move.moveRequirement.MOVE_REQ_TYPE.BUFF:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.statusType == s_move.STATUS_TYPE.BUFF);
+                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.canBuff);
             case s_move.moveRequirement.MOVE_REQ_TYPE.DEBUFF:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.statusType == s_move.STATUS_TYPE.DEBUFF);
+                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.canDebuff);
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_ANY:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && 
-                (x.statusType == s_move.STATUS_TYPE.HEAL_HEALTH
-                || x.statusType == s_move.STATUS_TYPE.HEAL_HP_BUFF
-                || x.statusType == s_move.STATUS_TYPE.HEAL_STAMINA
-                || x.statusType == s_move.STATUS_TYPE.HEAL_SP_BUFF));
+                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && (x.healHealth ||x.healStamina));
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_HP:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS &&
-                (x.statusType == s_move.STATUS_TYPE.HEAL_HEALTH
-                || x.statusType == s_move.STATUS_TYPE.HEAL_HP_BUFF));
+                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healHealth);
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_SP:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS &&
-                (x.statusType == s_move.STATUS_TYPE.HEAL_STAMINA
-                || x.statusType == s_move.STATUS_TYPE.HEAL_SP_BUFF));
+                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healStamina);
         }
         return null;
     }

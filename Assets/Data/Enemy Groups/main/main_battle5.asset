@@ -13,23 +13,33 @@ MonoBehaviour:
   m_Name: main_battle5
   m_EditorClassIdentifier: 
   fleeable: 1
+  fixedPlayers: 0
   sceneToGoTo: 
   members:
-  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+  - memberDat: {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
+    levType: 1
+    level: 10
+    maxLevel: 10
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 19dad9fb1049e6a4c99c875e85dad2e2, type: 2}
+    levType: 0
+    level: 5
+    maxLevel: 6
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 19dad9fb1049e6a4c99c875e85dad2e2, type: 2}
     levType: 0
     level: 6
-    maxLevel: 0
+    maxLevel: 6
     extraSkills: []
+    passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
-    levType: 0
-    level: 6
-    maxLevel: 0
-    extraSkills: []
-    weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
-    levType: 0
-    level: 6
-    maxLevel: 0
-    extraSkills: []
-    weaponSelections: []
+  members_Player: []
+  events: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

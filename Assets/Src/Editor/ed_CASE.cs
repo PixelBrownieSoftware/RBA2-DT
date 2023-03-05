@@ -146,14 +146,12 @@ public class ed_CASE : Editor
                     break;
 
                 case s_move.MOVE_TYPE.STATUS:
-                    switch (mov.statusType) {
-                        case s_move.STATUS_TYPE.HEAL_HEALTH:
-                        case s_move.STATUS_TYPE.HEAL_STAMINA:
-                            lists[i].isImportant = true;
-                            lists[i].onParty = true;
-                            lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
-                            lists[i].healthPercentage = 0.5f;
-                            break;
+                    if (mov.healHealth || mov.healStamina)
+                    {
+                        lists[i].isImportant = true;
+                        lists[i].onParty = true;
+                        lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
+                        lists[i].healthPercentage = 0.5f;
                     }
                     break;
             }

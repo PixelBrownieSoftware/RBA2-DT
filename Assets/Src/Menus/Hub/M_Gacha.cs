@@ -244,6 +244,10 @@ public class M_Gacha : S_MenuSystem
                 RPGGlobal.AddPartyMember(ch.Key, 1);
                 if (ch.Value > 1)
                 {
+                    for (int i = 0; i < ch.Value; i++)
+                    {
+                        RPGGlobal.AddExpToPartyMember(ch.Key, 0.25f);
+                    }
                     characterText += ch.Key.name + " was recruited into the party with some boosts." + "\n";
                 }
                 else
@@ -252,7 +256,12 @@ public class M_Gacha : S_MenuSystem
                 }
             }
             else
+            {
+                for (int i = 0; i < ch.Value; i ++) {
+                    RPGGlobal.AddExpToPartyMember(ch.Key, 0.25f);
+                }
                 characterText += ch.Key.name + " got stronger..." + "\n";
+            }
         }
         gachaText.text += characterText;
         gachaResMenu.SetActive(true);

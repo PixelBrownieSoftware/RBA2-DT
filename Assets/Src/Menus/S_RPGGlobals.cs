@@ -136,10 +136,7 @@ public class S_RPGGlobals : ScriptableObject
             {
                 if (mov == null)
                     continue;
-                if (mov.strReq <= tempStr
-                    && mov.dxReq <= tempDx
-                    && mov.vitReq <= tempVit
-                    && mov.agiReq <= tempAgi)
+                if (mov.MeetsRequirements(newCharacter))
                 {
                     newCharacter.currentMoves.Add(mov);
                 }
@@ -174,6 +171,60 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.currentMoves = data.currentMoves;
         }
     }
+
+    public o_battleCharPartyData GetPartyData(o_battleCharDataN chara) {
+        return partyMembers.battleCharList.Find(x => chara == x.characterDataSource);
+    }
+
+    public void AddExpToPartyMember(o_battleCharDataN chara, float expPts) {
+
+        int initailTotal = (int)(expPts * 100);
+        Debug.Log(initailTotal);
+        o_battleCharPartyData ch = GetPartyData(chara);
+        
+        if (ch.level == 50) {
+            return;
+        }
+
+        //we add the exp and make it so that it checks for a level up
+        for (int i = 0; i < initailTotal; i++)
+        {
+            ch.experiencePoints += 0.01f;
+            if (ch.experiencePoints >= 1f)
+            {
+                o_battleCharDataN chdat = ch.characterDataSource;
+                if (i % chdat.strengthGT == 0)
+                    ch.strength++;
+                if (i % chdat.vitalityGT == 0)
+                    ch.vitality++;
+                if (i % chdat.dexterityGT == 0)
+                    ch.dexterity++;
+                if (i % chdat.intelligenceGT == 0)
+                    ch.intelligence++;
+                if (i % chdat.agilityGT == 0)
+                    ch.agility++;
+                if (i % chdat.luckGT == 0)
+                    ch.luck++;
+                ch.level++;
+                ch.experiencePoints = 0;
+                expPts = expPts * (float)((float)i / (float)initailTotal);
+                ch.maxHealth += Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
+                ch.maxStamina +=Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1); 
+                List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(ch));
+                if (mv2Learn != null)
+                {
+                    ch.currentMoves.AddRange(mv2Learn);
+                }
+                if (ch.level == 50)
+                {
+                    ch.experiencePoints = 0;
+                    return;
+                }
+            }
+            //yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+
     public List<o_weapon> GetWeapons()
     {
         List<o_weapon> weaps = new List<o_weapon>();

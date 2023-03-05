@@ -37,6 +37,7 @@ public class s_move : s_ability
         public int lowerPowerReq;
         public int upperPowerReq = -1;  // 0 > means that there is no upper bound
     }
+
     [System.Serializable]
     public struct statusInflict
     {
@@ -60,6 +61,8 @@ public class s_move : s_ability
         SELF
     }
     public int power;
+    public bool healHealth = false;
+    public bool healStamina = false;
     public MOVE_TYPE moveType;
     public MOVE_TARGET moveTarg;
     public ELEMENT element;
@@ -71,23 +74,38 @@ public class s_move : s_ability
     public bool fixedValue = false;
     public int cost = 0;
 
-    public enum STATUS_TYPE {
-        NONE = 0,
-        HEAL_HEALTH,
-        HEAL_STAMINA,
-        CURE,
-        CUSTOM,
-        BUFF,
-        DEBUFF,
-        HEAL_HP_BUFF,
-        HEAL_SP_BUFF,
-    }
-    public STATUS_TYPE statusType;
-
     public int strBuff;
     public int vitBuff;
     public int dexBuff;
     public int agiBuff;
+    public int intBuff;
+    public int lucBuff;
+
+    public bool canBuff
+    {
+        get {
+            return
+                strBuff > 0 ||
+                vitBuff > 0 ||
+                dexBuff > 0 ||
+                agiBuff > 0 ||
+                intBuff > 0 ||
+                lucBuff > 0;
+        }
+    }
+    public bool canDebuff
+    {
+        get
+        {
+            return
+                strBuff < 0 ||
+                vitBuff < 0 ||
+                dexBuff < 0 ||
+                agiBuff < 0 ||
+                intBuff < 0 ||
+                lucBuff < 0;
+        }
+    }
 
     public moveRquirementList[] moveRequirements;
 

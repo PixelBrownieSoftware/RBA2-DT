@@ -1,11 +1,11 @@
 sceneSetups:
 - path: Assets/Scenes/Overworld.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0
-- path: Assets/Scenes/battle_scene.unity
   isLoaded: 0
   isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/battle_scene.unity
+  isLoaded: 1
+  isActive: 1
   isSubScene: 0
 - path: Assets/Scenes/Main Game.unity
   isLoaded: 0

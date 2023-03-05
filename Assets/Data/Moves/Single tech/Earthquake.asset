@@ -12,49 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Earthquake
   m_EditorClassIdentifier: 
-  strReq: 0
+  strReq: 13
   dxReq: 0
-  vitReq: 0
+  vitReq: 8
   agiReq: 0
-  power: 0
+  intReq: 0
+  lucReq: 0
+  power: 26
+  healHealth: 0
+  healStamina: 0
   moveType: 0
-  comboType: 0
   moveTarg: 1
-  element: 6
+  element: 7
   preAnimations: []
-  animations: []
+  animations:
+  - name: 
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
   onParty: 0
   fixedValue: 0
-  cost: 0
-  statusType: 0
+  cost: 38
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
-  Req1:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
+  intBuff: 0
+  lucBuff: 0
+  moveRequirements: []

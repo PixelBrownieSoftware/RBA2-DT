@@ -89,6 +89,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public o_battleCharacter currentCharacter;
     public R_Character currentCharacterRef;
+    public R_MoveList extraSkills;
     public s_battleAction battleAction;
     
     public int roundNum;
@@ -201,8 +202,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             new Vector2(250, 215)
         },
         new List<Vector2>(){
-            new Vector2(250, 358),
             new Vector2(247, 302),
+            new Vector2(250, 358),
             new Vector2(200, 330),
             new Vector2(250, 245),
             new Vector2(200, 270)
@@ -1248,24 +1249,35 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         break;
                 }
 
-                for (int i = 0; i < numOfTimes; i++)
+                switch (finalDamageFlag)
                 {
-                    switch (finalDamageFlag)
-                    {
-                        case DAMAGE_FLAGS.NONE:
+                    case DAMAGE_FLAGS.NONE:
+                        for (int i = 0; i < numOfTimes; i++)
+                        {
                             NextTurn();
                             yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                            break;
-                        case DAMAGE_FLAGS.MISS:
-                        case DAMAGE_FLAGS.VOID:
+                        }
+                        break;
+                    case DAMAGE_FLAGS.MISS:
+                    case DAMAGE_FLAGS.VOID:
+                        for (int i = 0; i < numOfTimes; i++)
+                        {
+                            if (netTurn == 0)
+                                break;
                             NextTurn();
                             yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                        }
+                        if (netTurn > 0)
+                        {
                             NextTurn();
                             yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                            break;
-                        case DAMAGE_FLAGS.PASS:
-                        case DAMAGE_FLAGS.FRAIL:
+                        }
+                        break;
+                    case DAMAGE_FLAGS.PASS:
+                    case DAMAGE_FLAGS.FRAIL:
 
+                        for (int i = 0; i < numOfTimes; i++)
+                        {
                             //If there are no full turn icons start taking away instead of turning full icons into half
                             if (fullTurn > 0)
                             {
@@ -1278,16 +1290,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 HitWeakness();
                                 yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                             }
-                            break;
-                        case DAMAGE_FLAGS.REFLECT:
-                        case DAMAGE_FLAGS.ABSORB:
-                            fullTurn = 0;
-                            halfTurn = 0;
-                            break;
-                    }
-                    if (netTurn == 0)
+                        }
+                        break;
+                    case DAMAGE_FLAGS.REFLECT:
+                    case DAMAGE_FLAGS.ABSORB:
+                        fullTurn = 0;
+                        halfTurn = 0;
                         break;
                 }
+                if (netTurn == 0)
+                    break;
                 #endregion
 
                 yield return new WaitForSeconds(0.3f);
@@ -1706,130 +1718,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 battleDecisionMenu = BATTLE_MENU_CHOICES.MENU;
                 battleEngine = BATTLE_ENGINE_STATE.DECISION;
                 break;
-                /*
-            //CheckComboRequirementsParty(s_battleEngine.engineSingleton.playerCharacters)
-            case BATTLE_ENGINE_STATE.DECISION:
-
-                //This is where you decide your actions
-                switch (battleDecisionMenu)
-                {
-                    case BATTLE_MENU_CHOICES.SKILLS:
-
-                        skillMenu.SetActive(true);
-                        MenuControl(currentCharacter.currentMoves.Count, MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL, new Vector2(2, 5));
-                        if (Input.GetKeyDown(s_globals.GetKeyPref("select")))
-                        {
-                            battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
-                            battleAction.move = currentCharacter.currentMoves[menuchoice];
-                            skillMenu.SetActive(false);
-                            battleEngine = BATTLE_ENGINE_STATE.TARGET;
-                            menuchoice = 0;
-                        }
-                        if (Input.GetKeyDown(s_globals.GetKeyPref("back")))
-                        {
-                            skillMenu.SetActive(false);
-                            battleDecisionMenu = BATTLE_MENU_CHOICES.MENU;
-                            battleEngine = BATTLE_ENGINE_STATE.DECISION;
-                            menuchoice = 0;
-                        }
-                        break;
-
-                    case BATTLE_MENU_CHOICES.ITEMS:
-
-                        skillMenu.SetActive(true);
-                        MenuControl(s_rpgGlobals.rpgGlSingleton.GetItems().Count, MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL, new Vector2(2, 5));
-                        if (Input.GetKeyDown(s_globals.GetKeyPref("select")))
-                        {
-                            battleAction.move = s_rpgGlobals.rpgGlSingleton.GetItems()[menuchoice];
-                            battleAction.type = s_battleAction.MOVE_TYPE.ITEM;
-                            battleEngine = BATTLE_ENGINE_STATE.TARGET;
-                            menuchoice = 0;
-                        }
-                        if (Input.GetKeyDown(s_globals.GetKeyPref("back")))
-                        {
-                            skillMenu.SetActive(false);
-                            battleDecisionMenu = BATTLE_MENU_CHOICES.MENU;
-                            battleEngine = BATTLE_ENGINE_STATE.DECISION;
-                            menuchoice = 0;
-                        }
-                        break;
-                }
-                break;
-                */
 
             case BATTLE_ENGINE_STATE.END:
                 StartCoroutine(NextTeamTurn());
                 break;
         }
     }
-    /*
-    public enum MENU_CONTROLL_TYPE
-    {
-        LINEAR_UP_DOWN,
-        LINEAR_LEFT_RIGHT,
-        MULTI_DIRECTIONAL
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="limit"></param>
-    /// <param name="mc"></param>
-    /// <param name="limiterMulti">Only use this if the menu control type is Multi-Directional</param>
-    public void MenuControl(int limit, MENU_CONTROLL_TYPE mc, Vector2 limiterMulti)
-    {
-        switch (mc)
-        {
-            case MENU_CONTROLL_TYPE.LINEAR_LEFT_RIGHT:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
-                {
-                    menuchoice++;
-                }
-                break;
-
-            case MENU_CONTROLL_TYPE.LINEAR_UP_DOWN:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
-                {
-                    menuchoice++;
-                }
-                break;
-
-            case MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL:
-
-                if (Input.GetKeyDown(s_globals.GetKeyPref("up")))
-                {
-                    menuchoice--;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("down")))
-                {
-                    menuchoice++;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("left")))
-                {
-                    menuchoice += (int)limiterMulti.y;
-                }
-                if (Input.GetKeyDown(s_globals.GetKeyPref("right")))
-                {
-                    menuchoice -= (int)limiterMulti.y;
-                }
-                break;
-        }
-        if (menuchoice < 0)
-            menuchoice = (limit - 1);
-        if (menuchoice > (limit - 1))
-            menuchoice = 0;
-
-    }
-    */
     public List<CH_BattleChar> GetTargets(bool onParty)
     {
         List<CH_BattleChar> targs = new List<CH_BattleChar>();
@@ -2071,8 +1965,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     
     public void DamageEffect(int dmg, o_battleCharacter target ,Vector2 characterPos, DAMAGE_FLAGS fl) {
-
-
         switch (fl)
         {
             default:
@@ -2266,7 +2158,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                             for (int i = 0; i < numOfTimes; i++)
                             {
-                                float smirkChance = UnityEngine.Random.Range(0,1);
+                                float smirkChance = UnityEngine.Random.Range(0, 1);
                                 ELEMENT_WEAKNESS fl = 0;
                                 float elementWeakness = targ.elementals[battleAction.move.element];
                                 if (battleAction.move.moveType == s_move.MOVE_TYPE.STATUS)
@@ -2361,8 +2253,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         #region AGILITY DODGE CHECK
 
-                        int userAgil = (int)((float)battleAction.user.agiNet * 1.85f);
-                        int targAgil = (int)((float)targ.agiNet * 0.65f);
+                        int userAgil = battleAction.user.agiNet + 2;
+                        int targAgil = targ.agiNet -1;
+                        targAgil = Mathf.Clamp(targAgil, 1, int.MaxValue);
                         int totalAgil = userAgil + targAgil;
 
                         float attackConnectChance = ((float)userAgil / (float)totalAgil);
@@ -2506,69 +2399,50 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                     #region STATUS
                     case s_move.MOVE_TYPE.STATUS:
-                        switch (battleAction.move.statusType)
+                        s_move mov = battleAction.move;
+                        if (mov.healHealth)
                         {
-                            case s_move.STATUS_TYPE.HEAL_HEALTH:
-                                battleAction.target.health += dmg;
-                                battleAction.target.health = Mathf.Clamp(battleAction.target.health,
-                                    0, battleAction.target.maxHealth);
-                                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
-                                break;
-
-                            case s_move.STATUS_TYPE.HEAL_STAMINA:
-                                targ.stamina += dmg;
-                                targ.stamina = Mathf.Clamp(targ.stamina,
-                                    0, targ.maxStamina);
-                                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
-                                break;
-
-                            case s_move.STATUS_TYPE.HEAL_SP_BUFF:
-                                targ.vitalityBuff += battleAction.move.vitBuff;
-                                targ.strengthBuff += battleAction.move.strBuff;
-                                targ.dexterityBuff += battleAction.move.dexBuff;
-                                targ.agilityBuff += battleAction.move.agiBuff;
-                                targ.stamina += dmg;
-                                targ.stamina = Mathf.Clamp(targ.stamina,
-                                    0, targ.maxStamina);
-                                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
-                                break;
-
-                            case s_move.STATUS_TYPE.HEAL_HP_BUFF:
-                                targ.vitalityBuff += battleAction.move.vitBuff;
-                                targ.strengthBuff += battleAction.move.strBuff;
-                                targ.dexterityBuff += battleAction.move.dexBuff;
-                                targ.agilityBuff += battleAction.move.agiBuff;
-                                targ.health += dmg;
-                                targ.health = Mathf.Clamp(targ.health,0, targ.maxHealth);
-                                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
-                                break;
-
-                            case s_move.STATUS_TYPE.BUFF:
-                                targ.vitalityBuff += battleAction.move.vitBuff;
-                                if (targ.vitalityBuff > 0)
-                                {
-                                    SpawnDamageObject(targ.vitalityBuff, characterPos, Color.blue, "buffVit");
-                                    yield return new WaitForSeconds(0.05f);
-                                }
-                                targ.strengthBuff += battleAction.move.strBuff;
-                                if (targ.strengthBuff > 0)
-                                {
-                                    SpawnDamageObject(targ.strengthBuff, characterPos, Color.red, "buffStr");
-                                    yield return new WaitForSeconds(0.05f);
-                                }
-                                targ.dexterityBuff += battleAction.move.dexBuff;
-                                if (targ.dexterityBuff > 0)
-                                {
-                                    SpawnDamageObject(targ.dexterityBuff, characterPos, Color.magenta, "buffDex");
-                                    yield return new WaitForSeconds(0.05f);
-                                }
-                                targ.agilityBuff += battleAction.move.agiBuff;
-                                if (targ.agilityBuff > 0)
-                                {
-                                    SpawnDamageObject(targ.agilityBuff, characterPos, Color.yellow, "buffAgi");
-                                    yield return new WaitForSeconds(0.05f);
-                                }
-                                break;
+                            battleAction.target.health += dmg;
+                            battleAction.target.health = Mathf.Clamp(battleAction.target.health,
+                                0, battleAction.target.maxHealth);
+                            SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                        }
+                        if (mov.healStamina) {
+                            targ.stamina += dmg;
+                            targ.stamina = Mathf.Clamp(targ.stamina,
+                                0, targ.maxStamina);
+                            SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
+                        }
+                        if (battleAction.move.intBuff != 0)
+                        {
+                            targ.intelligenceBuff += battleAction.move.intBuff;
+                            /*
+                            if (targ.intelligenceBuff > 0)
+                            {
+                                SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
+                                yield return new WaitForSeconds(0.05f);
+                            }
+                            */
+                        }
+                        if (battleAction.move.lucBuff != 0)
+                        {
+                            targ.luckBuff += battleAction.move.lucBuff;
+                        }
+                        if (battleAction.move.vitBuff != 0)
+                        {
+                            targ.vitalityBuff += battleAction.move.vitBuff;
+                        }
+                        if (battleAction.move.strBuff != 0)
+                        {
+                            targ.strengthBuff += battleAction.move.strBuff;
+                        }
+                        if (battleAction.move.dexBuff != 0)
+                        {
+                            targ.dexterityBuff += battleAction.move.dexBuff;
+                        }
+                        if (battleAction.move.agiBuff != 0)
+                        {
+                            targ.agilityBuff += battleAction.move.agiBuff;
                         }
                         break;
                         #endregion
@@ -2630,11 +2504,21 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             c.vitality++;
                         if (i % chdat.dexterityGT == 0)
                             c.dexterity++;
+                        if (i % chdat.intelligenceGT == 0)
+                            c.intelligence++;
+                        if (i % chdat.agilityGT == 0)
+                            c.agility++;
+                        if (i % chdat.luckGT == 0)
+                            c.luck++;
                         c.level++;
                         c.experiencePoints = 0;
                         exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
                         c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
                         c.maxStamina += UnityEngine.Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1);
+                        List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c));
+                        if (mv2Learn != null) {
+                            c.currentMoves.AddRange(mv2Learn);
+                        }
                     }
                     //yield return new WaitForSeconds(Time.deltaTime);
                 }
@@ -2650,10 +2534,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 tokens.integer += UnityEngine.Random.Range(0,4);
                 foreach (s_move mv in en.currentMoves)
                 {
-                    if (!s_rpgGlobals.rpgGlSingleton.extraSkills.Contains(mv))
+                    if (!extraSkills.ListContains(mv))
                     {
                         print("Added skill");
-                        s_rpgGlobals.rpgGlSingleton.extraSkills.Add(mv);
+                        extraSkills.AddMove(mv);
                         extSkillLearn.Add(mv.name);
                     }
                 }
@@ -2661,10 +2545,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     foreach (s_move mv in en.extraSkills)
                     {
-                        if (!s_rpgGlobals.rpgGlSingleton.extraSkills.Contains(mv))
+                        if (!extraSkills.ListContains(mv))
                         {
                             print("Added skill");
-                            s_rpgGlobals.rpgGlSingleton.extraSkills.Add(mv);
+                            extraSkills.AddMove(mv);
                             extSkillLearn.Add(mv.name);
                         }
                     }
@@ -2760,8 +2644,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         else
         {
-            //NextTurn();
-            //print(netTurn);
             currentPartyCharactersQueue.Dequeue();
             currentPartyCharactersQueue.Enqueue(battleAction.user);
             
@@ -2785,15 +2667,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                             switch (be.battleCond)
                             {
-                                /*
-                                case s_battleEvents.B_COND.HEALTH:
-                                    if (opposition.Find(x => x.name == be.name).hitPoints == be.int0)
-                                    {
-                                        conditionFufilled = true;
-                                    }
-                                    break;
-                                    */
-
                                 case s_battleEvent.B_COND.TURNS_ELAPSED:
                                     if (roundNum == be.int0)
                                     {
@@ -2819,14 +2692,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             {
                                 switch (be.battleCond)
                                 {
-                                    /*
-                                    case s_battleEvents.B_COND.HEALTH:
-                                        if (opposition.Find(x => x.name == be.name).hitPoints == be.int0)
-                                        {
-                                            conditionFufilled = true;
-                                        }
-                                        break;
-                                        */
                                     case s_battleEvent.B_COND.TURNS_ELAPSED:
                                         if (roundNum >= be.int0)
                                         {
@@ -2857,32 +2722,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     #endregion
 
     #region DRAW STUFF
-    public void DrawButtonIcon(ref Vector2 pos, int i, string buttonName, UnityEngine.Texture2D tex)
-    {
-        if(tex != null)
-            GUI.DrawTexture(new Rect(pos, new Vector2(30, 30)), tex);
-        //pos += new Vector2(0, -20);
-        if (menuchoice == i)
-            GUI.color = Color.red;
-        else
-            GUI.color = Color.white;
-
-        GUI.Label(new Rect(pos + new Vector2(30, 0), new Vector2(130, 30)), buttonName);
-        pos.y += 40;
-    }
-
-    public void DrawButtonTarget(ref Vector2 pos, int i, o_battleCharacter bc)
-    {
-        pos += new Vector2(0, -20);
-        if (menuchoice == i)
-            GUI.color = Color.red;
-        else
-            GUI.color = Color.white;
-
-        GUI.Label(new Rect(pos + new Vector2(30, 0), new Vector2(130, 30)), bc.name);
-        pos.y += 40;
-    }
-    
     enum TURN_ICON_FX {
         APPEAR,
         FADE,
@@ -2921,523 +2760,3 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     #endregion
 }
-/*
-public void DisplayAttackComboButtonsGUI() {
-    Vector2 pos = new Vector2(20, 20);
-    ClearSkillMenuButtons();
-    if (currentCharacter.currentMoves != null)
-    {
-        List<Tuple<s_moveComb, s_move>> listMoves = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter2(currentCharacter,playerCharacters);
-        for (int i = 0; i < listMoves.Count; i++)
-        {
-            s_move m = listMoves[i].Item2;
-            Sprite draw = null;
-            switch (m.element)
-            {
-                case ELEMENT.NORMAL:
-                    draw = strike_picture;
-                    break;
-                case ELEMENT.FIRE:
-                    draw = fire_picture;
-                    break;
-                case ELEMENT.ICE:
-                    draw = ice_picture;
-                    break;
-                case ELEMENT.BIO:
-                    draw = water_picture;
-                    break;
-                case ELEMENT.ELECTRIC:
-                    draw = electric_picture;
-                    break;
-                case ELEMENT.FORCE:
-                    draw = force_picture;
-                    break;
-                case ELEMENT.EARTH:
-                    draw = earth_picture;
-                    break;
-                case ELEMENT.CURSE:
-                    draw = dark_picture;
-                    break;
-                case ELEMENT.LIGHT:
-                    draw = light_picture;
-                    break;
-                case ELEMENT.PSYCHIC:
-                    draw = psychic_picture;
-                    break;
-                case ELEMENT.WIND:
-                    draw = wind_picture;
-                    break;
-            }
-            DrawButtonIcon(ref pos, i, m.name, draw);
-        }
-    }
-}
-public void DisplayItemButtonsGUI()
-{
-    Vector2 pos = new Vector2(20, 20);
-
-    if (s_rpgGlobals.rpgGlSingleton.GetItems() != null)
-    {
-
-        for (int i = 0; i < s_rpgGlobals.rpgGlSingleton.GetItems().Count; i++)
-        {
-             o_RPGitem it = s_rpgGlobals.rpgGlSingleton.GetItems()[i];
-            s_move m = it.move;
-            Sprite draw = null;
-            switch (m.element)
-            {
-                case ELEMENT.NORMAL:
-                    draw = strike_picture;
-                    break;
-                case ELEMENT.FIRE:
-                    draw = fire_picture;
-                    break;
-                case ELEMENT.ICE:
-                    draw = ice_picture;
-                    break;
-                case ELEMENT.BIO:
-                    draw = water_picture;
-                    break;
-                case ELEMENT.ELECTRIC:
-                    draw = electric_picture;
-                    break;
-                case ELEMENT.FORCE:
-                    draw = force_picture;
-                    break;
-                case ELEMENT.EARTH:
-                    draw = earth_picture;
-                    break;
-                case ELEMENT.CURSE:
-                    draw = dark_picture;
-                    break;
-                case ELEMENT.LIGHT:
-                    draw = light_picture;
-                    break;
-                case ELEMENT.PSYCHIC:
-                    draw = psychic_picture;
-                    break;
-                case ELEMENT.WIND:
-                    draw = wind_picture;
-                    break;
-            }
-            DrawButtonIcon(ref pos, i, it.name, draw);
-        }
-    }
-}
-public void DrawHP(o_battleCharacter bc, int i)
-{
-    HP_GUIS[i].enabled = true;
-    HP_GUIS[i].HPboxColour.color = bc.battleCharData.characterColour;
-    HP_GUIS[i].hpText.text = bc.name + "\nHP: " + bc.health + "\nSP: " + bc.stamina;
-}
-*/
-/*
-public void DisplayTargetButtonsGUI()
-{
-    Vector2 pos = new Vector2(20, 20);
-    bool onParty = false;
-    if (battleAction.type == s_battleAction.MOVE_TYPE.ITEM) {
-        onParty = battleAction.item.move.onParty;
-    }
-    else if(battleAction.type == s_battleAction.MOVE_TYPE.MOVE) {
-        onParty = battleAction.move.onParty;
-    }
-    if (onParty) {
-        for (int i = 0; i < playerCharacters.Count; i++) { DrawButtonTarget(ref pos, i, playerCharacters[i]); }
-    } else {
-        for (int i = 0; i < oppositionCharacters.Count; i++) { DrawButtonTarget(ref pos, i, oppositionCharacters[i]); }
-    }
-}
-*/
-/*
-public void FightMenuIcons(List<string> buttonList, string curOpt)
-{
-fightButton.gameObject.SetActive(false);
-skillButton.gameObject.SetActive(false);
-comboButton.gameObject.SetActive(false);
-itemButton.gameObject.SetActive(false);
-partyButton.gameObject.SetActive(false);
-guardButton.gameObject.SetActive(false);
-fleeButton.gameObject.SetActive(false);
-passButton.gameObject.SetActive(false);
-
-
-for (int i = 0; i < buttonList.Count; i++) {
-    //pos += new Vector2(0, -20);
-    Image sel = null;
-    switch (buttonList[i])
-    {
-        case "guard":
-            guardButton.gameObject.SetActive(true);
-            break;
-        case "fight":
-            fightButton.gameObject.SetActive(true);
-            break;
-        case "pass":
-            passButton.gameObject.SetActive(true);
-            break;
-        case "combo":
-            comboButton.gameObject.SetActive(true);
-            break;
-        case "skills":
-            skillButton.gameObject.SetActive(true);
-            break;
-        case "items":
-            itemButton.gameObject.SetActive(true);
-            break;
-        case "party":
-            partyButton.gameObject.SetActive(true);
-            break;
-    }
-    switch (curOpt)
-    {
-        case "fight":
-            sel = fightButton;
-            break;
-        case "skills":
-            sel = skillButton;
-            break;
-        case "combo":
-            sel = comboButton;
-            break;
-        case "guard":
-            sel = guardButton;
-            break;
-        case "pass":
-            sel = passButton;
-            break;
-        case "party":
-            sel = partyButton;
-            break;
-        case "items":
-            sel = itemButton;
-            break;
-    }
-    if (sel != null)
-    {
-        buttonSelector.rectTransform.position = sel.rectTransform.position;
-        //sel.color = Color.magenta;
-    }
-}
-}
-*/
-/*
-public void ClearSkillMenuButtons()
-{
-    for (int i = 0; i < skillButtons.Length; i++) {
-
-        skillButtons[i].img.sprite = null;
-        skillButtons[i].img.color = Color.clear;
-        skillButtons[i].buttonText.text = "";
-    }
-}
-*/
-/*
-public void DrawButtonIcon(ref Vector2 pos, int i, string buttonName, Sprite tex)
-{
-if (i > skillButtons.Length-1)
-    return;
-skillButtons[i].img.sprite = tex;
-//pos += new Vector2(0, -20);
-if (menuchoice == i)
-    skillButtons[i].img.color = Color.red;
-else
-    skillButtons[i].img.color = Color.white;
-skillButtons[i].buttonText.text = buttonName;
-}
-*/
-/*
-                    case BATTLE_MENU_CHOICES.MENU:
-                        //fightMenu.SetActive(true);
-                        List<string> options = new List<string>();
-
-                        options.Add("fight");
-                        if (currentCharacter.currentMoves.Count > 0)
-                            options.Add("skills");
-                        if (s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter(currentCharacter, playerCharacters).Count > 0)
-                            options.Add("combo");
-                        options.Add("guard");
-                        options.Add("items");
-                        options.Add("party");
-                        options.Add("pass");
-                        options.Add("run");
-                        MenuControl(options.Count, MENU_CONTROLL_TYPE.LINEAR_LEFT_RIGHT, new Vector2(0, 0));
-
-                        FightMenuIcons(options, options[menuchoice]);
-
-                        if (Input.GetKeyDown(s_globals.GetKeyPref("select")))
-                        {
-                            switch (options[menuchoice]) {
-                                case "fight":
-                                    fightMenu.SetActive(false);
-                                    battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
-                                    battleAction.move = defaultAttack;
-                                    battleEngine = BATTLE_ENGINE_STATE.TARGET;
-                                    break;
-
-                                case "skills":
-                                    fightMenu.SetActive(false);
-                                    battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
-                                    //s_menuhandler.GetInstance().SwitchMenu("BattleSkillMenu");
-                                    battleDecisionMenu = BATTLE_MENU_CHOICES.SKILLS;
-                                    break;
-
-                                case "items":
-                                    fightMenu.SetActive(false);
-                                    battleDecisionMenu = BATTLE_MENU_CHOICES.ITEMS;
-                                    break;
-
-                                case "combo":
-                                    fightMenu.SetActive(false);
-                                    battleDecisionMenu = BATTLE_MENU_CHOICES.COMBO;
-                                    break;
-
-                                case "pass":
-                                    fightMenu.SetActive(false);
-                                    battleAction.type = s_battleAction.MOVE_TYPE.PASS;
-                                    battleEngine = BATTLE_ENGINE_STATE.PROCESS_ACTION;
-                                    StartCoroutine(PlayAttackAnimation());
-                                    break;
-
-                            }
-                            menuchoice = 0;
-                        }
-                        break;
-
-                    case BATTLE_MENU_CHOICES.COMBO:
-                    skillMenu.SetActive(true);
-                    List<Tuple<s_moveComb, s_move>> combos = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter2(currentCharacter, playerCharacters);
-                    MenuControl(combos.Count, MENU_CONTROLL_TYPE.MULTI_DIRECTIONAL, new Vector2(2, 7));
-                    if (Input.GetKeyDown(s_globals.GetKeyPref("select")))
-                    {
-                        battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
-                        battleAction.move = combos[menuchoice].Item2;
-                        skillMenu.SetActive(false);
-                        HP_GUIS[playerCharacters.IndexOf(combos[menuchoice].Item1.user1)].ChangeComboImage(combos[menuchoice].Item1.user1Move);
-                        HP_GUIS[playerCharacters.IndexOf(combos[menuchoice].Item1.user2)].ChangeComboImage(combos[menuchoice].Item1.user2Move);
-                        battleEngine = BATTLE_ENGINE_STATE.TARGET;
-                        menuchoice = 0;
-                    }
-                    if (Input.GetKeyDown(s_globals.GetKeyPref("back")))
-                    {
-                        skillMenu.SetActive(false);
-                        battleDecisionMenu = BATTLE_MENU_CHOICES.MENU;
-                        battleEngine = BATTLE_ENGINE_STATE.DECISION;
-                        menuchoice = 0;
-                    }
-                    comboGUI.enabled = true;
-                    */
-/*
-comboGUIText.text = listOfMoves[menuchoice].Item1.user1.name + " Move: " + listOfMoves[menuchoice].Item1.user1Move.name
-+ "\n"+listOfMoves[menuchoice].Item1.user2.name + " Move: " + listOfMoves[menuchoice].Item1.user2Move.name;
-break;
-*/
-/*
-public void DisplayAttackButtonsGUI() {
-    Vector2 pos = new Vector2(20, 20);
-    if (currentCharacter.currentMoves != null)
-    {
-        for (int i = 0; i < currentCharacter.currentMoves.Count; i++)
-        {
-            s_move m = currentCharacter.currentMoves[i];
-            Sprite draw = null;
-            switch (m.element)
-            {
-                case ELEMENT.NORMAL:
-                    draw = strike_picture;
-                    break;
-                case ELEMENT.FIRE:
-                    draw = fire_picture;
-                    break;
-                case ELEMENT.ICE:
-                    draw = ice_picture;
-                    break;
-                case ELEMENT.BIO:
-                    draw = water_picture;
-                    break;
-                case ELEMENT.ELECTRIC:
-                    draw = electric_picture;
-                    break;
-                case ELEMENT.FORCE:
-                    draw = force_picture;
-                    break;
-                case ELEMENT.EARTH:
-                    draw = earth_picture;
-                    break;
-                case ELEMENT.CURSE:
-                    draw = dark_picture;
-                    break;
-                case ELEMENT.LIGHT:
-                    draw = light_picture;
-                    break;
-                case ELEMENT.PSYCHIC:
-                    draw = psychic_picture;
-                    break;
-                case ELEMENT.WIND:
-                    draw = wind_picture;
-                    break;
-            }
-            DrawButtonIcon(ref pos, i, m.name, draw);
-        }
-    }
-}
-*/
-/*
-private void OnGUI()
-{
-    {
-        Vector2 pos = new Vector2(20, 400);
-        int i = 0;
-        foreach (o_battleCharacter bc in playerCharacters)
-        {
-            //DrawHP(bc, i);
-            i++;
-        }
-    }
-
-    if (isPlayerTurn) {
-        switch (battleEngine) {
-            case BATTLE_ENGINE_STATE.DECISION:
-                switch (battleDecisionMenu)
-                {
-                    case BATTLE_MENU_CHOICES.MENU:
-
-                        Vector2 pos = new Vector2(20, 20);
-                        break;
-
-                    case BATTLE_MENU_CHOICES.SKILLS:
-                        DisplayAttackButtonsGUI();
-                        break;
-
-                    case BATTLE_MENU_CHOICES.COMBO:
-                        //DisplayAttackComboButtonsGUI();
-                        break;
-
-                    case BATTLE_MENU_CHOICES.ITEMS:
-                        //DisplayItemButtonsGUI();
-                        break;
-                }
-                break;
-
-            case BATTLE_ENGINE_STATE.TARGET:
-                //DisplayTargetButtonsGUI();
-                break;
-
-        }
-    }
-}
-*/
-/*
-switch (battleAction.target.elementals[(int)el].flag)
-{
-    case s_affinity.DAMAGE_FLAGS.FRAIL:
-    case s_affinity.DAMAGE_FLAGS.NONE:
-        battleAction.target.health -= dmg;
-        break;
-    case s_affinity.DAMAGE_FLAGS.REFLECT:
-        //Recalculate user attack against user defence or something.
-        switch (battleAction.move.moveType)
-        {
-            case s_move.MOVE_TYPE.PHYSICAL:
-                dmg = (int)(battleAction.move.power * (battleAction.user.strength / battleAction.user.vitality)
-                    * battleAction.target.elementals[(int)battleAction.move.element].affinity);
-                break;
-            case s_move.MOVE_TYPE.SPECIAL:
-                dmg = (int)(battleAction.move.power * (battleAction.user.dexterity / battleAction.user.vitality)
-                    * battleAction.target.elementals[(int)battleAction.move.element].affinity);
-                break;
-        }
-        battleAction.user.health -= dmg;
-        break;
-    case s_affinity.DAMAGE_FLAGS.VOID:
-        dmg = 0;
-        break;
-    case s_affinity.DAMAGE_FLAGS.ABSORB:
-        battleAction.target.health += dmg;
-        break;
-}
-*/
-/*
-TODO: 
-Like Digital Devil Saga, depending on how many people were involved in a combo
-the amount of press turns may increase or decresase
- */
-/*
-if (!flagSet)
-{
-   int numOfTimes = 1;
-   switch (battleAction.move.comboType)
-   {
-       case s_move.MOVE_QUANITY_TYPE.MONO_TECH:
-           numOfTimes = 1;
-           break;
-       case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
-           numOfTimes = 2;
-           break;
-       case s_move.MOVE_QUANITY_TYPE.TRIPLE_TECH:
-           numOfTimes = 3;
-           break;
-       case s_move.MOVE_QUANITY_TYPE.QUAD_TECH:
-           numOfTimes = 4;
-           break;
-       case s_move.MOVE_QUANITY_TYPE.PENTA_TECH:
-           numOfTimes = 5;
-           break;
-   }
-
-   for (int i = 0; i < numOfTimes; i++)
-   {
-
-       damageFlag = battleAction.target.elementals[(int)el].flag;
-       switch (battleAction.target.elementals[(int)el].flag)
-       {
-           case s_affinity.DAMAGE_FLAGS.NONE:
-               NextTurn();
-               yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-               break;
-           case s_affinity.DAMAGE_FLAGS.VOID:
-               NextTurn();
-               yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-               NextTurn();
-               yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-               break;
-           case s_affinity.DAMAGE_FLAGS.FRAIL:
-
-               //If there are no full turn icons start taking away instead of turning full icons into half
-               if (fullTurn > 0)
-               {
-                   HitWeakness();
-                   yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
-               }
-               else
-               {
-                   HitWeakness();
-                   yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-               }
-               break;
-           case s_affinity.DAMAGE_FLAGS.PASS:
-
-               //If there are no full turn icons start taking away instead of turning full icons into half
-               if (fullTurn > 0)
-               {
-                   PassTurn();
-                   yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
-               }
-               else
-               {
-                   PassTurn();
-                   yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-               }
-               break;
-           case s_affinity.DAMAGE_FLAGS.REFLECT:
-           case s_affinity.DAMAGE_FLAGS.ABSORB:
-               fullTurn = 0;
-               halfTurn = 0;
-               break;
-       }
-       flagSet = true;
-       if (netTurn == 0)
-           break;
-   }
-}
-*/

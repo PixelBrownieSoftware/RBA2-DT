@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: op_FG_2_1
   m_EditorClassIdentifier: 
   fleeable: 1
+  fixedPlayers: 0
   sceneToGoTo: 
   members:
-  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+  - memberDat: {fileID: 11400000, guid: 19dad9fb1049e6a4c99c875e85dad2e2, type: 2}
     levType: 0
     level: 4
     maxLevel: 7
@@ -37,3 +38,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
     passives: []
     weaponSelections: []
+  members_Player: []
+  events: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

@@ -151,21 +151,17 @@ public class s_battleMenu : s_menucontroller
         }
         if (img.moveButton.moveType == s_move.MOVE_TYPE.STATUS)
         {
-            switch (img.moveButton.statusType)
+            if (img.moveButton.healStamina)
             {
-                default:
-                    draw = support_picture;
-                    break;
-
-                case s_move.STATUS_TYPE.HEAL_HEALTH:
-                case s_move.STATUS_TYPE.HEAL_HP_BUFF:
-                    draw = heal_HP_picture;
-                    break;
-
-                case s_move.STATUS_TYPE.HEAL_STAMINA:
-                case s_move.STATUS_TYPE.HEAL_SP_BUFF:
-                    draw = heal_SP_picture;
-                    break;
+                draw = heal_SP_picture;
+            }
+            if (img.moveButton.healHealth)
+            {
+                draw = heal_HP_picture;
+            }
+            if (img.moveButton.canBuff)
+            {
+                draw = support_picture;
             }
         }
         img.element.color = Color.white;
@@ -459,6 +455,7 @@ public class s_battleMenu : s_menucontroller
                     sb.txt.text = rpgSkills[i].name;
                     sb.isComb = true;
                     int cost = 0;
+                    bool satisifedCondition = false;
                     switch (sb.moveButton.moveType)
                     {
                         case s_move.MOVE_TYPE.PHYSICAL:
@@ -471,7 +468,18 @@ public class s_battleMenu : s_menucontroller
                         case s_move.MOVE_TYPE.SPECIAL:
                         case s_move.MOVE_TYPE.STATUS:
                             cost = sb.moveButton.cost;
-                            if (s_battleEngine.engineSingleton.currentCharacter.stamina >= cost)
+                            switch (sb.moveCombination.comboType) {
+                                case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
+                                    satisifedCondition = sb.moveCombination.user1.stamina >= cost && 
+                                        sb.moveCombination.user2.stamina >= cost;
+                                    break;
+                                case s_move.MOVE_QUANITY_TYPE.TRIPLE_TECH:
+                                    satisifedCondition = sb.moveCombination.user1.stamina >= cost &&
+                                        sb.moveCombination.user2.stamina >= cost &&
+                                        sb.moveCombination.user3.stamina >= cost;
+                                    break;
+                            }
+                            if (satisifedCondition)
                             {
                                 sb.isUsable = true;
                             }
@@ -525,7 +533,7 @@ public class s_battleMenu : s_menucontroller
                 break;
 
             case MENU_TYPE.EXTRA_SKILL:
-                rpgSkills = s_rpgGlobals.rpgGlSingleton.extraSkills;
+                rpgSkills = s_rpgGlobals.rpgGlSingleton.extraSkills.moveListRef;
                 for (int i = 0; i < rpgSkills.Count; i++)
                 {
                     if (partyMembers.battleCharList.Find(

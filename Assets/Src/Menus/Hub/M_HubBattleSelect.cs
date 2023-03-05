@@ -55,7 +55,7 @@ public class M_HubBattleSelect : S_MenuSystem
             buttons[i].gameObject.SetActive(false);
         for (int i = 0; i < buttons.Length; i++) {
             int index = i + pageShift;
-            if (index > groupList.groupList.Count) {
+            if (index >= groupList.groupList.Count) {
                 break;
             }
                 buttons[i].gameObject.SetActive(true);

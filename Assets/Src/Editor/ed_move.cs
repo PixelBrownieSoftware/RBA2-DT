@@ -9,6 +9,8 @@ public class ed_move : Editor
 {
     int tab = 0;
     s_move data;
+    const int requirmentMax = 20;
+    const int buffMax = 5;
 
     public void DrawReqGUITool(ref s_move.moveRequirement req)
     {
@@ -131,37 +133,153 @@ public class ed_move : Editor
                     GUI.color = Color.white;
                     EditorGUILayout.Space();
                     EditorGUILayout.EndHorizontal();
-                    foreach (var cmb in data.moveRequirements)
+                    if (data.moveRequirements != null)
                     {
-                        switch (cmb.comboType)
+                        foreach (var cmb in data.moveRequirements)
                         {
-                            case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
-                                DrawReqGUI(cmb.Req1);
-                                DrawReqGUI(cmb.Req2);
-                                break;
+                            switch (cmb.comboType)
+                            {
+                                case s_move.MOVE_QUANITY_TYPE.DUAL_TECH:
+                                    DrawReqGUI(cmb.Req1);
+                                    DrawReqGUI(cmb.Req2);
+                                    break;
 
-                            case s_move.MOVE_QUANITY_TYPE.TRIPLE_TECH:
-                                DrawReqGUI(cmb.Req1);
-                                DrawReqGUI(cmb.Req2);
-                                DrawReqGUI(cmb.Req3);
-                                break;
+                                case s_move.MOVE_QUANITY_TYPE.TRIPLE_TECH:
+                                    DrawReqGUI(cmb.Req1);
+                                    DrawReqGUI(cmb.Req2);
+                                    DrawReqGUI(cmb.Req3);
+                                    break;
 
-                            case s_move.MOVE_QUANITY_TYPE.QUAD_TECH:
-                                DrawReqGUI(cmb.Req1);
-                                DrawReqGUI(cmb.Req2);
-                                DrawReqGUI(cmb.Req3);
-                                DrawReqGUI(cmb.Req4);
-                                break;
+                                case s_move.MOVE_QUANITY_TYPE.QUAD_TECH:
+                                    DrawReqGUI(cmb.Req1);
+                                    DrawReqGUI(cmb.Req2);
+                                    DrawReqGUI(cmb.Req3);
+                                    DrawReqGUI(cmb.Req4);
+                                    break;
 
-                            case s_move.MOVE_QUANITY_TYPE.PENTA_TECH:
-                                DrawReqGUI(cmb.Req1);
-                                DrawReqGUI(cmb.Req2);
-                                DrawReqGUI(cmb.Req3);
-                                DrawReqGUI(cmb.Req4);
-                                DrawReqGUI(cmb.Req5);
-                                break;
+                                case s_move.MOVE_QUANITY_TYPE.PENTA_TECH:
+                                    DrawReqGUI(cmb.Req1);
+                                    DrawReqGUI(cmb.Req2);
+                                    DrawReqGUI(cmb.Req3);
+                                    DrawReqGUI(cmb.Req4);
+                                    DrawReqGUI(cmb.Req5);
+                                    break;
+                            }
                         }
                     }
+                    break;
+
+                case 1:
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Power:");
+                    data.power = EditorGUILayout.IntField(data.power);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Cost:");
+                    data.cost = EditorGUILayout.IntField(data.cost);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Element:");
+                    data.element = (ELEMENT)EditorGUILayout.EnumPopup(data.element);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Type:");
+                    data.moveType = (s_move.MOVE_TYPE)EditorGUILayout.EnumPopup(data.moveType);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();
+                    switch (data.moveType) {
+                        case s_move.MOVE_TYPE.STATUS:
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Heal health?");
+                            data.healHealth = EditorGUILayout.Toggle(data.healHealth);
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Heal stamina?");
+                            data.healStamina = EditorGUILayout.Toggle(data.healStamina);
+                            EditorGUILayout.Space();
+                            EditorGUILayout.EndHorizontal();
+                            break;
+                    }
+                    EditorGUILayout.LabelField("Status stuff:");
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Strength:");
+                    data.strBuff = EditorGUILayout.IntSlider(data.strBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Dexterity:");
+                    data.dexBuff = EditorGUILayout.IntSlider(data.dexBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Vitality:");
+                    data.vitBuff = EditorGUILayout.IntSlider(data.vitBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Agility:");
+                    data.agiBuff = EditorGUILayout.IntSlider(data.agiBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Luck:");
+                    data.lucBuff = EditorGUILayout.IntSlider(data.lucBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Intelligence:");
+                    data.intBuff = EditorGUILayout.IntSlider(data.intBuff, -buffMax, buffMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Element:");
+                    data.element = (ELEMENT)EditorGUILayout.EnumPopup(data.element);
+                    EditorGUILayout.EndHorizontal();
+
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Strength requirment:");
+                    data.strReq = EditorGUILayout.IntSlider(data.strReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Vitality requirment:");
+                    data.vitReq = EditorGUILayout.IntSlider(data.vitReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Dexterity requirment:");
+                    data.dxReq = EditorGUILayout.IntSlider(data.dxReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Agility requirment:");
+                    data.agiReq = EditorGUILayout.IntSlider(data.agiReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Intelligence requirment:");
+                    data.intReq = EditorGUILayout.IntSlider(data.intReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Luck requirment:");
+                    data.lucReq = EditorGUILayout.IntSlider(data.lucReq, 0, requirmentMax);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
                     break;
 
                 case 3:

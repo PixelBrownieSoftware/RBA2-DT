@@ -1,6 +1,9 @@
 Library/
+/Library/
 Library/ArtifactDB
+/Library/ArtifactDB
 save.mf2
+/Logs/
 Logs/
 Library/PlayerDataCache/
 Library/Artifacts/
@@ -9,3 +12,5 @@ Library/ArtifactDB-lock
 Library/ArtifactDB
 Library/ArtifactDB
 .vs/RBA2-DT/v16/.suo
+/Temp/
+Temp/

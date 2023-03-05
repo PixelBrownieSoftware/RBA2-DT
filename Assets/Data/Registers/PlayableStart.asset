@@ -16,3 +16,4 @@ MonoBehaviour:
   _isReset: 0
   characterSetters:
   - {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
+  - {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}

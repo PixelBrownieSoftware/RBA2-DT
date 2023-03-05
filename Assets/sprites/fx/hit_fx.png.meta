@@ -110,10 +110,10 @@ TextureImporter:
       name: hit_playable
       rect:
         serializedVersion: 2
-        x: 46
-        y: 108
-        width: 45
-        height: 37
+        x: 100
+        y: 109
+        width: 31
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,9 +132,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 113
+        y: 111
         width: 41
-        height: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
