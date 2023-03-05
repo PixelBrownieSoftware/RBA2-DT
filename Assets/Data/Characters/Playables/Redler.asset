@@ -42,10 +42,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
   elementals:
     weaknessChart:
-    - element: 3
-      weakness: 0.5
     - element: 4
       weakness: 2
+    - element: 3
+      weakness: 0.5
   characterColour: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
   characterColour2: {r: 0.745283, g: 0.18632075, b: 0.29677883, a: 1}
   aiPages:

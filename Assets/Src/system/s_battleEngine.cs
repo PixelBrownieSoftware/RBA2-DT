@@ -283,7 +283,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         c.physWeapon = bc.defaultPhysWeapon;
                     if (bc.defaultRangedWeapon != null)
                         c.rangedWeapon = bc.defaultRangedWeapon;
-                    c.transform.position = new Vector2((enPos[i].x * -1) + 800f, enPos[i].y);
+                    c.transform.position = new Vector2((enPos[i].x * -1) + 725f, enPos[i].y);
                     c.animHandler.runtimeAnimatorController = bc.anim;
                     c.animHandler.Play("idle");
                     allCharacterReferences.Add(c.referencePoint);

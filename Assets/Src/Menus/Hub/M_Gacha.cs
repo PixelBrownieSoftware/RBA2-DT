@@ -229,10 +229,13 @@ public class M_Gacha : S_MenuSystem
             }
         }
         string itemText = "";
-        foreach (var i in items)
+        foreach (var it in items)
         {
-            itemText += i.Key.name + " x " + i.Value + "\n";
-            inventory.AddItem(i.Key);
+            itemText += it.Key.name + " x " + it.Value + "\n";
+            for (int i = 0; i < it.Value; i++)
+            {
+                inventory.AddItem(it.Key);
+            }
         }
         gachaText.text += itemText;
         string characterText = "";

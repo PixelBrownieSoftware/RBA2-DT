@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class M_BattleOptions : S_MenuSystem
 {
-    /*
     public R_Character currentCharacter;
-    public B_BattleMove[] buttons;
-    public R_MoveList items;
+    public B_Int[] buttons;
+    public R_Items items;
     public R_Boolean isItem;
     public enum B_OPTIONS_TYPE { 
         MOVES,
@@ -30,16 +29,19 @@ public class M_BattleOptions : S_MenuSystem
             b.gameObject.SetActive(false);
         }
         base.StartMenu();
+        List<s_move> moves = null;
 
         switch (options) {
             case B_OPTIONS_TYPE.MOVES:
-                isItem.boolean = false;
-                if (currentCharacter.characterRef.moves.Count > 0)
+                isItem.boolean = false; 
+                moves = currentCharacter.characterRef.characterData.AllSkills;
+                if (moves.Count > 0)
                 {
-                    for (int i = 0; i < currentCharacter.characterRef.moves.Count; i++)
+                    for (int i = 0; i < moves.Count; i++)
                     {
                         var button = buttons[i];
-                        button.SetBattleButton(currentCharacter.characterRef.moves[i]);
+                        button.SetButonText(moves[i].name);
+                        button.SetIntButton(i);
                         button.gameObject.SetActive(true);
                     }
                 }
@@ -47,26 +49,13 @@ public class M_BattleOptions : S_MenuSystem
 
             case B_OPTIONS_TYPE.ITEMS:
                 isItem.boolean = true;
-                if (items.moveListRef.Count > 0)
+                if (items.inventory.Count > 0)
                 {
-                    Dictionary<O_Move, int> itemsList = new Dictionary<O_Move, int>();
-                    for (int i = 0; i < items.moveListRef.Count; i++)
-                    {
-                        var item = items.moveListRef[i];
-                        if (itemsList.ContainsKey(item))
-                        {
-                            itemsList[item]++;
-                        }
-                        else
-                        {
-                            itemsList.Add(item, 1);
-                        }
-                    }
                     int ind = 0;
-                    foreach (var item in itemsList) {
+                    foreach (var item in items.inventory) {
 
                         var button = buttons[ind];
-                        button.SetBattleButton(item.Key);
+                        button.SetIntButton(ind);
                         button.SetButonText(item.Key.name + " x " + item.Value);
                         button.gameObject.SetActive(true);
                         ind++;
@@ -75,5 +64,4 @@ public class M_BattleOptions : S_MenuSystem
                 break;
         }
     }
-    */
 }

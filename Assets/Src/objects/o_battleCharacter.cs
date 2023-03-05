@@ -253,6 +253,15 @@ public class o_battleCharPartyData
     public o_weapon currentRangeWeapon;
     public s_consumable consumable;
     public int durationConsumable;
+
+    public List<s_move> AllSkills {
+        get {
+            List<s_move> skills = new List<s_move>();
+            skills.AddRange(currentMoves);
+            skills.AddRange(extraSkills);
+            return skills;
+        }
+    }
 }
 //[System.Serializable]
 
@@ -378,7 +387,6 @@ public class o_battleCharacter : MonoBehaviour
     public Animator animHandler;
 
     #region STATUS GUI STUFF
-    public Canvas statusEffectsGUI;
     public Image[] statusEffectIcon;
 
     public GameObject strengthBuffIcon;
@@ -393,8 +401,6 @@ public class o_battleCharacter : MonoBehaviour
     public Sprite confuseIcon;
     public Sprite burnIcon;
     public Sprite frozenIcon;
-
-    public bool isEnemy = false;
     #endregion
 
     public int strengthNet {
@@ -428,21 +434,12 @@ public class o_battleCharacter : MonoBehaviour
 
     public void Awake()
     {
-        
         render = GetComponent<SpriteRenderer>();
            animations = GetComponent<s_rpganim>();
         rbody2d = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
-        if (isEnemy)
-        {
-            statusEffectsGUI.transform.rotation = Quaternion.Euler(0, -180, 0);
-        }
-        else
-        {
-            statusEffectsGUI.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
         if(health > 0)
             shadow.enabled = true;
         else

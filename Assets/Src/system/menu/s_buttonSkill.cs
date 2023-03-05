@@ -12,6 +12,7 @@ public class s_buttonSkill : s_button
     public s_passive passiveButton;
     public o_weapon weaponButton;
     public s_consumable consumable;
+    public R_Items inventory;
     public Image element; 
     public Image buttonImg; 
     public enum SKILL_TYPE {
@@ -308,8 +309,9 @@ public class s_buttonSkill : s_button
                 if (isUsable)
                 {
                     s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov = moveButton;
-                    if (typeOfButton == SKILL_TYPE.ITEM_BATTLE) {
-                        s_rpgGlobals.rpgGlSingleton.UseItem(moveButton.name);
+                    if (typeOfButton == SKILL_TYPE.ITEM_BATTLE)
+                    {
+                        inventory.RemoveItem(moveButton);
                     }
                     if (isComb)
                     {

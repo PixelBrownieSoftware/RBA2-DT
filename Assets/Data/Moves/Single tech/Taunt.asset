@@ -16,20 +16,42 @@ MonoBehaviour:
   dxReq: 0
   vitReq: 0
   agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 0
+  healHealth: 0
+  healStamina: 0
   moveType: 2
   moveTarg: 1
   element: 0
   preAnimations: []
-  animations: []
+  animations:
+  - name: 
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
   onParty: 0
   fixedValue: 0
-  cost: 0
-  statusType: 6
-  strBuff: 0
-  vitBuff: 0.2
+  cost: 5
+  strBuff: 1
+  vitBuff: -2
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
   moveRequirements: []

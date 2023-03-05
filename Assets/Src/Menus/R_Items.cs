@@ -6,6 +6,10 @@ using UnityEngine;
 public class R_Items : R_Default
 {
     public Dictionary<s_move, int> inventory = new Dictionary<s_move, int>();
+    private void OnDisable()
+    {
+        inventory.Clear();
+    }
 
     public void AddItem(s_move item) {
         if (inventory.ContainsKey(item))
