@@ -46,9 +46,11 @@ public class s_enemyGroup : ScriptableObject
     }
     public bool fleeable = true;
     public bool fixedPlayers = false;
+    public bool guestInvolved = false;
     public string sceneToGoTo;
     public s_groupMember[] members;
     public s_groupMember[] members_Player;
+    public s_groupMember member_Guest;
     public s_battleEvent[] events;
 
     public Sprite bg1;

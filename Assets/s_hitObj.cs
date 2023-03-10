@@ -108,7 +108,10 @@ public class s_hitObj : o_generic
         {
             hitObj.color = colour;
             hitObj.sprite = player_spr;
-            anim.Play("HitOBJ");
+            if (colour == Color.clear)
+                anim.Play("HitOBJ_guest");
+            else
+                anim.Play("HitOBJ");
         }
 
         text.text = "" + dmg;
