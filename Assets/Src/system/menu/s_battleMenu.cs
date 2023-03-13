@@ -333,10 +333,10 @@ public class s_battleMenu : s_menucontroller
                 break;
 
             case MENU_TYPE.ITEMS:
-                rpgSkills = s_rpgGlobals.rpgGlSingleton.GetItems();
+                rpgSkills = inventory.GetItems();
                 for (int i = 0; i < rpgSkills.Count; i++)
                 {
-                    if (s_rpgGlobals.rpgGlSingleton.GetItem(rpgSkills[i].name).Item2 == 0)
+                    if (inventory.GetItem(rpgSkills[i]).Item2 == 0)
                         continue;
                     s_buttonSkill sb = GetButton<s_buttonSkill>(i);
                     sb.BMenu = this;
@@ -344,7 +344,7 @@ public class s_battleMenu : s_menucontroller
                     sb.moveButton = rpgSkills[i];
                     sb.txt.text = rpgSkills[i].name;
                     sb.isUsable = true;
-                    sb.SetCost(s_rpgGlobals.rpgGlSingleton.GetItem(rpgSkills[i].name).Item2);
+                    sb.SetCost(inventory.GetItem(rpgSkills[i]).Item2);
                     sb.typeOfButton = s_buttonSkill.SKILL_TYPE.ITEM;
                     Sprite draw = null;
                     switch (sb.moveButton.element)
@@ -391,7 +391,7 @@ public class s_battleMenu : s_menucontroller
             case MENU_TYPE.ITEMS_BATTLE:
                 {
                     int i = 0;
-                    rpgSkills = s_rpgGlobals.rpgGlSingleton.GetItems();
+                    rpgSkills = inventory.GetItems();
                     foreach (var it in inventory.inventory)
                     {
                         if (it.Value == 0)

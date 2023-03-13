@@ -97,7 +97,7 @@ public class S_RPGGlobals : ScriptableObject
             int tempAgi = data.agilityB;
             int tempInt = data.intelligenceB;
 
-            for (int i = 0; i < level; i++)
+            for (int i = 1; i < level; i++)
             {
                 tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
                 tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
@@ -132,14 +132,10 @@ public class S_RPGGlobals : ScriptableObject
             //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
 
-            foreach (s_move mov in data.moveLearn)
+            List<s_move> mv2Learn = data.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (mv2Learn != null)
             {
-                if (mov == null)
-                    continue;
-                if (mov.MeetsRequirements(newCharacter))
-                {
-                    newCharacter.currentMoves.Add(mov);
-                }
+                newCharacter.currentMoves.AddRange(mv2Learn);
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class s_itemMenu : s_menucontroller
 {
-    
+    /*
     public override void OnOpen()
     {
         base.OnOpen();
@@ -18,4 +18,5 @@ public class s_itemMenu : s_menucontroller
             bI.txt.text = rpgItems[i].name;
         }
     }
+    */
 }

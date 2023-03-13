@@ -188,11 +188,12 @@ public class s_RPGSave : dat_save {
 public class s_rpgGlobals : s_globals
 {
     public static s_rpgGlobals rpgGlSingleton;
+    public S_RPGGlobals rpgManager;
     public R_CharacterSetterList allCharactersData;
     public R_CharacterSetterList partyMembersStart;
     public R_BattleCharacterList partyMembers;
-    public R_Int tokens;
-    public Dictionary<string, int> inventory = new Dictionary<string, int>();
+    public R_Float money;
+    public R_Items inventory;
     public List<string> weapons = new List<string>();
     public List<s_move> itemDatabase = new List<s_move>();
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
@@ -205,7 +206,6 @@ public class s_rpgGlobals : s_globals
 
     //So we can set it's object state once a level has been completed
     public o_locationOverworld locationObjectName;
-    public static float money;
     public Text moneyTxt;
 
     public s_move[] comboMoveData;
@@ -243,7 +243,7 @@ public class s_rpgGlobals : s_globals
             }
             */
         }
-        moneyTxt.text = tokens.integer + " tokens.";
+        moneyTxt.text = "£" + money._float;
     }
 
     public override void SaveData()
@@ -253,8 +253,8 @@ public class s_rpgGlobals : s_globals
             FileStream fs = new FileStream(saveDataName, FileMode.Create);
             BinaryFormatter bin = new BinaryFormatter();
 
-            s_RPGSave sav = new s_RPGSave(partyMembers.battleCharList, extraSkills, shopItems, inventory, weapons, money);
-
+            s_RPGSave sav = new s_RPGSave(partyMembers.battleCharList, extraSkills, shopItems, null, weapons, money._float);
+            // inventory.inventory
             List<Tuple<string, float>> dvF = new List<Tuple<string, float>>();
             List<Tuple<string, int>> dvI = new List<Tuple<string, int>>();
 
@@ -289,11 +289,11 @@ public class s_rpgGlobals : s_globals
             weapons.AddRange(sav.weapons);
             foreach (var s in sav.party_members)
             {
-                AddPartyMember(s);
+                //AddPartyMember(s);
             }
             player.transform.position = new Vector3(sav.location.x, sav.location.y);
             extraSkillAmount = sav.extraSkillAmount;
-            money = sav.money;
+            money._float = sav.money;
             if (sav.extraSkills != null)
             {
                 foreach (var it in sav.extraSkills)
@@ -317,16 +317,14 @@ public class s_rpgGlobals : s_globals
             {
                 foreach (var it in sav.inventory)
                 {
-                    AddItem(it.name, it.amount);
+                    //AddItem(it.name, it.amount);
                 }
             }
         }
         else{
-            AddItem("Medicine", 5);
-            AddItem("Energy drink", 5);
             foreach (var ind in partyMembersStart.characterSetters)
             {
-                AddPartyMember(ind, 1);
+                rpgManager.AddPartyMember(ind, 1);
             }
         }
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
@@ -342,11 +340,11 @@ public class s_rpgGlobals : s_globals
             //AddPartyMember(partyMemberBaseData[4], 55);
             //AddPartyMember(partyMemberBaseData[5], 45);
             //AddPartyMember(partyMemberBaseData[6], 35);
-            AddItem("Medicine", 5);
-            AddItem("Energy drink", 5);
+            //AddItem("Medicine", 5);
+            //AddItem("Energy drink", 5);
             foreach (var ind in partyMembersStart.characterSetters)
             {
-                AddPartyMember(ind, 1);
+                rpgManager.AddPartyMember(ind, 1);
             }
             print("This is cool");
         } else {
@@ -437,6 +435,7 @@ public class s_rpgGlobals : s_globals
         }
     }
 
+    /*
     public void AddPartyMember(s_RPGSave.sav_party data)
     {
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
@@ -484,6 +483,9 @@ public class s_rpgGlobals : s_globals
         }
         partyMembers.Add(newCharacter);
     }
+    */
+
+    /*
     public void AddPartyMember(o_battleCharDataN data, int level) {
 
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
@@ -551,14 +553,6 @@ public class s_rpgGlobals : s_globals
             {
                 if (mov == null)
                     continue;
-                /*
-                if (mov.strReq <= tempStr
-                    && mov.dxReq <= tempDx
-                    && mov.vitReq <= tempVit
-                    && mov.agiReq <= tempAgi)
-                {
-                }
-                */
                     newCharacter.currentMoves.Add(mov);
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
@@ -572,6 +566,8 @@ public class s_rpgGlobals : s_globals
         newCharacter.characterDataSource = data;
         partyMembers.Add(newCharacter);
     }
+    */
+    /*
     public void SetPartyMemberStats(o_battleCharacter data)
     {
         o_battleCharPartyData newCharacter = partyMembers.Get(data.name);
@@ -588,9 +584,10 @@ public class s_rpgGlobals : s_globals
             newCharacter.stamina = data.stamina;
             newCharacter.maxStamina = data.maxStamina;
 
-            newCharacter.currentMoves = data.currentMoves;
+            newCharacter.currentMoves.AddRange(data.currentMoves.FindAll(x => !newCharacter.currentMoves.Contains(x)));
         }
     }
+    */
     List<s_move> FindComboMoveReqList(s_move.moveRequirement req, o_battleCharacter pc)
     {
         List<s_move> mov = new List<s_move>();
@@ -926,48 +923,6 @@ public class s_rpgGlobals : s_globals
 
         }
         return movs;
-    }
-
-    public void AddItem(string itemName, int amount)
-    {
-        if (inventory.ContainsKey(itemName))
-        {
-            inventory[itemName]+= amount;
-        }
-        else
-        {
-            inventory.Add(itemName, amount);
-        }
-    }
-    public void AddItem(string itemName)
-    {
-        if (inventory.ContainsKey(itemName))
-        {
-            inventory[itemName]++;
-        }
-        else {
-            inventory.Add(itemName, 1);
-        }
-    }
-    public Tuple<s_move, int> GetItem(string itemName)
-    {
-        if (!inventory.ContainsKey(itemName)) {
-            return null;
-        }
-        return new Tuple<s_move, int>(itemDatabase.Find(x => x.name == itemName), inventory[itemName]);
-    }
-    public void UseItem(string itemName)
-    {
-        inventory[itemName]--;
-    }
-    public List<s_move> GetItems() {
-        List<s_move> rpgItems = new List<s_move>();
-        foreach (KeyValuePair<string, int> val in inventory) {
-            if (val.Value == 0)
-                continue;
-            rpgItems.Add(GetItem(val.Key).Item1);
-        }
-        return rpgItems;
     }
 
     public List<o_weapon> GetWeapons()

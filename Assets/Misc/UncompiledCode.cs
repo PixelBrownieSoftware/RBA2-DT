@@ -1,4 +1,50 @@
-﻿//04/03/2022
+﻿//12/03/2023
+
+/*
+public void AddItem(string itemName, int amount)
+{
+    if (inventory.ContainsKey(itemName))
+    {
+        inventory[itemName]+= amount;
+    }
+    else
+    {
+        inventory.Add(itemName, amount);
+    }
+}
+public void AddItem(string itemName)
+{
+    if (inventory.ContainsKey(itemName))
+    {
+        inventory[itemName]++;
+    }
+    else {
+        inventory.Add(itemName, 1);
+    }
+}
+public Tuple<s_move, int> GetItem(string itemName)
+{
+    if (!inventory.ContainsKey(itemName)) {
+        return null;
+    }
+    return new Tuple<s_move, int>(itemDatabase.Find(x => x.name == itemName), inventory[itemName]);
+}
+public void UseItem(string itemName)
+{
+    inventory[itemName]--;
+}
+public List<s_move> GetItems() {
+    List<s_move> rpgItems = new List<s_move>();
+    foreach (KeyValuePair<string, int> val in inventory) {
+        if (val.Value == 0)
+            continue;
+        rpgItems.Add(GetItem(val.Key).Item1);
+    }
+    return rpgItems;
+}
+*/
+
+//04/03/2023
 
 /*
 //CheckComboRequirementsParty(s_battleEngine.engineSingleton.playerCharacters)

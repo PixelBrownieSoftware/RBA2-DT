@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fleeable: 1
   fixedPlayers: 0
-  guestInvolved: 1
+  guestInvolved: 0
+  perishIfDone: 0
   sceneToGoTo: 
   members:
   - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
-    levType: 0
+    levType: 1
     level: 1
-    maxLevel: 5
+    maxLevel: 0
     extraSkills: []
     passives: []
     weaponSelections: []
   members_Player: []
   member_Guest:
-    memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
+    memberDat: {fileID: 0}
     levType: 1
     level: 3
     maxLevel: 3
@@ -34,6 +35,15 @@ MonoBehaviour:
     passives: []
     weaponSelections: []
   events: []
+  branches:
+  - {fileID: 11400000, guid: 50616b7cc3af31643a05b0a563dfb4ba, type: 2}
+  - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}
+  - {fileID: 11400000, guid: 82ee284ea79be4d48bf57eeb80c8795a, type: 2}
+  shopItems:
+  - item: {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}
+    price: 0.5
+  - item: {fileID: 11400000, guid: 660b9a13fd74b9d4597f1860ee651262, type: 2}
+    price: 1.75
   bg1: {fileID: 0}
   bg2: {fileID: 0}
   material1: {fileID: 0}

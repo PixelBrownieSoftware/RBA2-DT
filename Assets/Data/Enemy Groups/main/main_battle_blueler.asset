@@ -41,6 +41,8 @@ MonoBehaviour:
     passives: []
     weaponSelections: []
   events: []
+  branches:
+  - {fileID: 11400000, guid: bf9967c61284e9c499eb2edd7f5b9453, type: 2}
   bg1: {fileID: 0}
   bg2: {fileID: 0}
   material1: {fileID: 0}

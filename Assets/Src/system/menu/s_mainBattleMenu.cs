@@ -75,7 +75,7 @@ public class s_mainBattleMenu : s_menucontroller
         } 
         GetButton<s_button>(4);
 
-        if (s_rpgGlobals.rpgGlSingleton.inventory.Count > 0)
+        if (inventory.inventory.Count > 0)
             GetButton<s_button>(5);
 
         GetButton<s_button>(6);

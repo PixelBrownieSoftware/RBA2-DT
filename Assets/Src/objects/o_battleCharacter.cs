@@ -429,6 +429,20 @@ public class o_battleCharacter : MonoBehaviour
             return agility + (int)((float)agilityBuff * 2.5f);
         }
     }
+    public int intelligenceNet
+    {
+        get
+        {
+            return intelligence + (int)((float)intelligenceBuff * 2.5f);
+        }
+    }
+    public int luckNet
+    {
+        get
+        {
+            return luck + (int)((float)luckBuff * 2.5f);
+        }
+    }
 
     public int guardPoints = 0;
 

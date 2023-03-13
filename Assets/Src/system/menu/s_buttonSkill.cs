@@ -69,6 +69,7 @@ public class s_buttonSkill : s_button
     {
         switch (typeOfButton)
         {
+            /*
             case SKILL_TYPE.SHOP:
                 if (cost > s_rpgGlobals.money)
                 {
@@ -92,6 +93,7 @@ public class s_buttonSkill : s_button
                 }
                 costTxt.text = cost + "";
                 break;
+                */
 
             case SKILL_TYPE.WEAPON_EQUIP:
 
@@ -294,14 +296,15 @@ public class s_buttonSkill : s_button
     protected override void OnButtonClicked()
     {
         switch (typeOfButton) {
-
+            /*
             case SKILL_TYPE.SHOP:
                 if (cost <= s_rpgGlobals.money)
                 {
                     s_rpgGlobals.money -= cost;
-                    s_rpgGlobals.rpgGlSingleton.AddItem(moveButton.name, 1);
+                    inventory.AddItem(moveButton);
                 }
                 break;
+                */
 
             case SKILL_TYPE.ITEM_BATTLE:
             case SKILL_TYPE.BATTLE:

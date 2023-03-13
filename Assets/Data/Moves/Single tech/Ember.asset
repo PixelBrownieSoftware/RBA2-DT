@@ -18,7 +18,9 @@ MonoBehaviour:
   agiReq: 0
   intReq: 4
   lucReq: 0
-  power: 4
+  power: 7
+  healHealth: 0
+  healStamina: 0
   moveType: 1
   moveTarg: 0
   element: 3
@@ -114,9 +116,10 @@ MonoBehaviour:
   onParty: 0
   fixedValue: 0
   cost: 3
-  statusType: 0
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
   moveRequirements: []

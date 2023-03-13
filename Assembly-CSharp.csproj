@@ -176,6 +176,8 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
+    <Compile Include="Assets\Src\Menus\R_ShopItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
