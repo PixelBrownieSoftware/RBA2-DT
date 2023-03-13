@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Anne
+  m_EditorClassIdentifier: 
+  money: 0
+  maxSkillPointsB: 10
+  maxHitPointsB: 18
+  maxHitPointsGMin: 3
+  maxHitPointsGMax: 5
+  maxSkillPointsGMin: 3
+  maxSkillPointsGMax: 5
+  agilityB: 4
+  strengthB: 2
+  vitalityB: 3
+  luckB: 1
+  intelligenceB: 5
+  dexterityB: 5
+  agilityGT: 3
+  strengthGT: 3
+  vitalityGT: 3
+  luckGT: 3
+  intelligenceGT: 3
+  dexterityGT: 3
+  characterPassive: {fileID: 0}
+  battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  turnIcons: 1
+  moveLearn:
+  - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+  - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  - {fileID: 11400000, guid: f2e619f5244c4ed4a846c71f177b0c4c, type: 2}
+  - {fileID: 11400000, guid: 1fe56e80ca2511140a41c545acb77e4a, type: 2}
+  - {fileID: 11400000, guid: 2889445efa3b4c349b7ffa3ec707b319, type: 2}
+  - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
+  - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
+  elementals:
+    weaknessChart: []
+  characterColour: {r: 0.85310155, g: 0.5518868, b: 1, a: 1}
+  characterColour2: {r: 0.8040012, g: 0.34242615, b: 0.8962264, a: 1}
+  aiPages:
+  - ai:
+    - move: {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 19
+      element: 0
+      healthPercentage: 0.5
+      name: 
+      onParty: 1
+      isImportant: 1
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: f2e619f5244c4ed4a846c71f177b0c4c, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: 0
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+  anim: {fileID: 9100000, guid: cbb4da77196c51742ad00cece7bae808, type: 2}
+  items: []
+  defaultPhysWeapon: {fileID: 0}
+  defaultRangedWeapon: {fileID: 11400000, guid: 0c4c4113fb7fffa4287f61140b69c237,
+    type: 2}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 1
+  equip_sword: 1
+  equip_staff: 1

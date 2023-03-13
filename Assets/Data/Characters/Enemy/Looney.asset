@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Looney
   m_EditorClassIdentifier: 
-  level: 1
   money: 0.2
   maxSkillPointsB: 6
   maxHitPointsB: 13
@@ -20,16 +19,16 @@ MonoBehaviour:
   maxHitPointsGMax: 1
   maxSkillPointsGMin: 1
   maxSkillPointsGMax: 1
-  agilityB: 4
+  agilityB: 2
   strengthB: 3
-  vitalityB: 3
-  luckB: 1
+  vitalityB: 4
+  luckB: 2
   intelligenceB: 1
   dexterityB: 2
-  agilityGT: 3
-  strengthGT: 4
+  agilityGT: 5
+  strengthGT: 3
   vitalityGT: 3
-  luckGT: 5
+  luckGT: 2
   intelligenceGT: 4
   dexterityGT: 5
   characterPassive: {fileID: 0}
@@ -39,7 +38,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd6f1c0bc01235046909664e132e2dce, type: 2}
   elementals:
     weaknessChart:
-    - element: 1
+    - element: 2
       weakness: 2
   characterColour: {r: 0.9622642, g: 0.937638, b: 0.48567107, a: 1}
   characterColour2: {r: 0.8773585, g: 0.77332914, b: 0.33521718, a: 1}

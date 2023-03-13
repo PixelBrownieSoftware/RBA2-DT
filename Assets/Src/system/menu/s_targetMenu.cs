@@ -20,6 +20,48 @@ public class s_targetMenu : s_menucontroller
     public R_CharacterList players;
     public R_Character currentCharacter;
 
+    Vector2 getCentroid() {
+
+        List<Vector2> allPositions = new List<Vector2>();
+        foreach (var v in battleCharacters.characterListRef)
+        {
+            allPositions.Add(v.position);
+        }
+        return s_camera.cam.GetCentroid(allPositions);
+    }
+
+    private void Update()
+    {
+        s_targetButton tg = null;
+        switch (skillType)
+        {
+            case SKILL_TYPE.BATTLE:
+
+                switch (mov.moveTarg) {
+                    case s_move.MOVE_TARGET.SINGLE:
+                        for (int i = 0; i < battleCharacters.characterListRef.Count; i++)
+                        {
+                            CH_BattleChar battleChar = battleCharacters.GetChracter(i);
+                            tg = GetButton<s_targetButton>(i);
+                            tg.transform.position = Camera.main.WorldToScreenPoint(battleChar.position + new Vector2(0, 30));
+                        }
+                        break;
+
+                    case s_move.MOVE_TARGET.RANDOM:
+                        tg = GetButton<s_targetButton>(0);
+                        tg.transform.position = Camera.main.WorldToScreenPoint(getCentroid());
+                        break;
+
+                    case s_move.MOVE_TARGET.ALL:
+                        tg = GetButton<s_targetButton>(0);
+                        tg.transform.position = Camera.main.WorldToScreenPoint(getCentroid());
+                        break;
+                }
+                break;
+        }
+
+    }
+
     public override void OnOpen()
     {
         ResetButton();
@@ -32,12 +74,7 @@ public class s_targetMenu : s_menucontroller
                 {
                     default:
                         {
-                            List<Vector2> allPositions = new List<Vector2>();
-                            foreach (var v in battleCharacters.characterListRef)
-                            {
-                                allPositions.Add(v.position);
-                            }
-                            StartCoroutine(s_camera.cam.MoveCamera(s_camera.cam.GetCentroid(allPositions), 0.9f));
+                            StartCoroutine(s_camera.cam.MoveCamera(getCentroid(), 0.9f));
                         }
                         break;
 

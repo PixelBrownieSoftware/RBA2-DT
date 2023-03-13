@@ -239,7 +239,7 @@ public class o_battleCharPartyData
     public int intelligence;
     public int luck;
 
-    public int knowledgePoints;
+    public float experiencePoints;
     public bool inBattle;
     public bool isActive = true;
 
@@ -253,6 +253,15 @@ public class o_battleCharPartyData
     public o_weapon currentRangeWeapon;
     public s_consumable consumable;
     public int durationConsumable;
+
+    public List<s_move> AllSkills {
+        get {
+            List<s_move> skills = new List<s_move>();
+            skills.AddRange(currentMoves);
+            skills.AddRange(extraSkills);
+            return skills;
+        }
+    }
 }
 //[System.Serializable]
 
@@ -378,19 +387,20 @@ public class o_battleCharacter : MonoBehaviour
     public Animator animHandler;
 
     #region STATUS GUI STUFF
-    public Image statusEffectSpeech;
-    public Image statusEffectIcon;
+    public Image[] statusEffectIcon;
+
+    public GameObject strengthBuffIcon;
+    public GameObject dexterityBuffIcon;
+    public GameObject agilityBuffIcon;
+    public GameObject vitalityBuffIcon;
+    public GameObject intelligenceBuffIcon;
+    public GameObject luckBuffIcon;
 
     public Sprite poisionIcon;
     public Sprite stunIcon;
     public Sprite confuseIcon;
     public Sprite burnIcon;
     public Sprite frozenIcon;
-
-    float statusTimer = 0f;
-    const float statusFlipTimer = 0.5f;
-    int statusFlipIndex = 0;
-    int prevStatusFlipCount = 0;
     #endregion
 
     public int strengthNet {
@@ -419,6 +429,20 @@ public class o_battleCharacter : MonoBehaviour
             return agility + (int)((float)agilityBuff * 2.5f);
         }
     }
+    public int intelligenceNet
+    {
+        get
+        {
+            return intelligence + (int)((float)intelligenceBuff * 2.5f);
+        }
+    }
+    public int luckNet
+    {
+        get
+        {
+            return luck + (int)((float)luckBuff * 2.5f);
+        }
+    }
 
     public int guardPoints = 0;
 
@@ -430,7 +454,10 @@ public class o_battleCharacter : MonoBehaviour
     }
     private void Update()
     {
-        shadow.enabled = inBattle;
+        if(health > 0)
+            shadow.enabled = true;
+        else
+            shadow.enabled = false;
 
         if (referencePoint != null)
         {
@@ -467,54 +494,66 @@ public class o_battleCharacter : MonoBehaviour
                     break;
             }
         }
-        if (statusEffs.Count > 0)
+        for (int i = 0; i < statusEffectIcon.Length; i++)
         {
-            if (prevStatusFlipCount != statusEffs.Count)
+            if (statusEffs.Count <= i)
             {
-                statusFlipIndex = 0;
+                statusEffectIcon[i].enabled = false;
+                statusEffectIcon[i].color = Color.clear;
+                continue;
             }
-            if (statusTimer > 0)
-            {
-                statusTimer -= Time.deltaTime;
-            }
-            else
-            {
-                statusTimer = statusFlipTimer;
-                if (statusFlipIndex < statusEffs.Count - 1)
-                    statusFlipIndex++;
-                else
-                    statusFlipIndex = 0;
-            }
-            switch (statusEffs[statusFlipIndex])
+            switch (statusEffs[i])
             {
                 case "smk":
-                    statusEffectIcon.sprite = poisionIcon;
+                    statusEffectIcon[i].sprite = poisionIcon;
                     break;
                 case "psn":
-                    statusEffectIcon.sprite = poisionIcon;
+                    statusEffectIcon[i].sprite = poisionIcon;
                     break;
                 case "stn":
-                    statusEffectIcon.sprite = stunIcon;
+                    statusEffectIcon[i].sprite = stunIcon;
                     break;
                 case "con":
-                    statusEffectIcon.sprite = confuseIcon;
+                    statusEffectIcon[i].sprite = confuseIcon;
                     break;
                 case "brn":
-                    statusEffectIcon.sprite = burnIcon;
+                    statusEffectIcon[i].sprite = burnIcon;
                     break;
                 case "frz":
-                    statusEffectIcon.sprite = frozenIcon;
+                    statusEffectIcon[i].sprite = frozenIcon;
                     break;
             }
-            statusEffectSpeech.enabled = true;
-            statusEffectIcon.color = Color.white;
-        }
-        else
-        {
-            statusEffectSpeech.enabled = false;
-            statusEffectIcon.color = Color.clear;
+            statusEffectIcon[i].enabled = true;
+            statusEffectIcon[i].color = Color.white;
         }
 
+        #endregion
+
+        #region BUFF VISUALS
+        if (agilityBuff != 0)
+            agilityBuffIcon.SetActive(true);
+        else
+            agilityBuffIcon.SetActive(false);
+        if (strengthBuff != 0)
+            strengthBuffIcon.SetActive(true);
+        else
+            strengthBuffIcon.SetActive(false);
+        if (intelligenceBuff != 0)
+            intelligenceBuffIcon.SetActive(true);
+        else
+            intelligenceBuffIcon.SetActive(false);
+        if (vitalityBuff != 0)
+            vitalityBuffIcon.SetActive(true);
+        else
+            vitalityBuffIcon.SetActive(false);
+        if (dexterityBuff != 0)
+            dexterityBuffIcon.SetActive(true);
+        else
+            dexterityBuffIcon.SetActive(false);
+        if (luckBuff != 0)
+            luckBuffIcon.SetActive(true);
+        else
+            luckBuffIcon.SetActive(false);
         #endregion
     }
     public void SetStatsToPartyData(o_battleCharPartyData dat)
@@ -582,7 +621,7 @@ public class o_battleCharacter : MonoBehaviour
     public s_move GetRandomMove {
         get {
             List<s_move> allMoves = new List<s_move>();
-            allMoves.AddRange(extraSkills);
+            allMoves.AddRange(currentMoves);
             allMoves.AddRange(extraSkills);
             return allMoves[Random.Range(0, allMoves.Count)];
         }

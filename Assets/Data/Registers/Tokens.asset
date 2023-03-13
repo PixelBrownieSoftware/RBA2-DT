@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   _isReset: 0
-  integer: 682
+  integer: 99999
   defaultInteger: 0

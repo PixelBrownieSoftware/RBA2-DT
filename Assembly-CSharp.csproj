@@ -56,15 +56,19 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\O_GameObjectAttacher.cs" />
     <Compile Include="Assets\Src\objects\o_locationOverworld.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_Results.cs" />
+    <Compile Include="Assets\Misc\UncompiledCode.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetButton.cs" />
     <Compile Include="Assets\Src\system\misc\s_barGui.cs" />
     <Compile Include="Assets\s_hitObj.cs" />
+    <Compile Include="Assets\Src\Menus\Battle\M_BattleMainMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_BooleanObjectListener.cs" />
     <Compile Include="Assets\Src\system\menu\s_buttonSkill.cs" />
     <Compile Include="Assets\Src\system\s_overworldObj.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_PartyStatus.cs" />
+    <Compile Include="Assets\G_Buff.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_SpriteListener.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="Assets\Src\system\S_Bootstrapper.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_Gacha.cs" />
     <Compile Include="Assets\Src\system\misc\s_menuButton.cs" />
+    <Compile Include="Assets\Src\Menus\S_AnalyseMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_EventListener.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetMenu.cs" />
     <Compile Include="Assets\Src\Buttons\B_BattleMove.cs" />
@@ -103,6 +108,7 @@
     <Compile Include="Assets\Src\system\menu\s_guiList.cs" />
     <Compile Include="Assets\Src\objects\o_locSpr.cs" />
     <Compile Include="Assets\Src\objects\s_enemyGroup.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_OverworldSkills.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelect.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_GachaGen.cs" />
     <Compile Include="Assets\Src\system\menu\s_overworldPlayerTargetMenu.cs" />
@@ -143,13 +149,14 @@
     <Compile Include="Assets\Src\system\menu\s_rpgbutton.cs" />
     <Compile Include="Assets\Src\system\misc\s_elementalWeaknessGUI.cs" />
     <Compile Include="Assets\Src\system\s_rpgEvents.cs" />
-    <Compile Include="Assets\M_Hub.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_Hub.cs" />
     <Compile Include="Assets\Src\Menus\R_Float.cs" />
     <Compile Include="Assets\Src\Buttons\B_Int.cs" />
     <Compile Include="Assets\Src\Menus\R_Boolean.cs" />
     <Compile Include="Assets\Src\system\s_HPGuiManager.cs" />
     <Compile Include="Assets\Src\objects\c_player.cs" />
     <Compile Include="Assets\Src\objects\s_passive.cs" />
+    <Compile Include="Assets\Src\Menus\S_ExperienceMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_BooleanListener.cs" />
     <Compile Include="Assets\Src\Menus\R_CharacterUnlock.cs" />
     <Compile Include="Assets\Src\Channels\CH_Boolean.cs" />
@@ -166,10 +173,11 @@
     <Compile Include="Assets\Src\objects\o_battleCharDataN.cs" />
     <Compile Include="Assets\Src\Channels\CH_MapTransfer.cs" />
     <Compile Include="Assets\Src\objects\s_move.cs" />
-    <Compile Include="Assets\M_ExtraSkills.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\S_ExperienceMenu.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
+    <Compile Include="Assets\Src\Menus\R_ShopItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

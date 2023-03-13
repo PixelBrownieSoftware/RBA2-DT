@@ -12,6 +12,7 @@ public class s_hitObj : o_generic
     public Image hitObj;
 
     public Sprite enemy_spr;
+    public Sprite luck_spr;
     public Sprite player_spr;
     public Sprite healSprite;
     public Sprite blockSprite;
@@ -56,12 +57,10 @@ public class s_hitObj : o_generic
                 break;
 
             case "block":
-                //hitObj.sprite = blockSprite;
                 anim.Play("block_press_turn");
                 break;
 
             case "miss_attack":
-                //hitObj.sprite = blockSprite;
                 anim.Play("miss_attack");
                 break;
         }
@@ -90,25 +89,51 @@ public class s_hitObj : o_generic
                 text.text = "Vit +" + dmg;
                 break;
 
+            case "block":
+                text.text = "VOID!";
+                break;
+
+            case "miss_attack":
+                text.text = "MISS...";
+                break;
+
             default:
                 text.text = "";
                 break;
         }
     }
 
-    public void PlayAnim(int dmg, bool enemy, Color colour)
+    public void PlayAnim(int dmg, bool enemy, Color colour, string dmgType)
     {
+        hitObj.color = colour;
         if (enemy)
         {
-            hitObj.color = Color.white;
-            hitObj.sprite = enemy_spr;
-            anim.Play("HitOBJ_enem");
+            switch (dmgType)
+            {
+                default:
+                    hitObj.sprite = enemy_spr;
+                    anim.Play("HitOBJ_enem");
+                    break;
+                case "lucky":
+                    anim.Play("HitOBJ_lucky");
+                    break;
+            }
         }
         else
         {
-            hitObj.color = colour;
-            hitObj.sprite = player_spr;
-            anim.Play("HitOBJ");
+            switch (dmgType)
+            {
+                default:
+                    hitObj.sprite = player_spr;
+                    if (colour == Color.clear)
+                        anim.Play("HitOBJ_guest");
+                    else
+                        anim.Play("HitOBJ");
+                    break;
+                case "lucky":
+                    anim.Play("HitOBJ_lucky");
+                    break;
+            }
         }
 
         text.text = "" + dmg;

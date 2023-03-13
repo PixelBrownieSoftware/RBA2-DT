@@ -3523,10 +3523,12 @@ MonoBehaviour:
   GlobalFlagCache: []
   allScenes: []
   objectStates: []
+  rpgManager: {fileID: 11400000, guid: a60afbfc70f8dd94baec1f20e3492674, type: 2}
   allCharactersData: {fileID: 11400000, guid: f0e7fce64af33924480c1df7bf40380b, type: 2}
   partyMembersStart: {fileID: 11400000, guid: 779f56c64c552254abfa715fd20705fb, type: 2}
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
-  tokens: {fileID: 11400000, guid: ebb0d1ef5a876284b9cda951ff2856e2, type: 2}
+  money: {fileID: 11400000, guid: 8c0dcce795c6329458ff12ad2c08b843, type: 2}
+  inventory: {fileID: 11400000, guid: 3dd2ca028c2506941831047c7411831a, type: 2}
   weapons: []
   itemDatabase:
   - {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}
@@ -3581,7 +3583,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
   - {fileID: 11400000, guid: 6396ccac0594c604280cf62b30bf44ac, type: 2}
   shopItems: []
-  extraSkills: []
+  extraSkills: {fileID: 11400000, guid: 75514ab29a365f64890e564b7f360da8, type: 2}
   extraPassives: []
   locationObjectName: {fileID: 0}
   moneyTxt: {fileID: 1609439065}
@@ -11577,13 +11579,14 @@ MonoBehaviour:
     health: 0
     maxStamina: 0
     stamina: 0
+    level: 1
     strength: 0
     vitality: 0
     dexterity: 0
     agility: 0
     intelligence: 0
     luck: 0
-    knowledgePoints: 0
+    experiencePoints: 0
     inBattle: 0
     isActive: 1
     characterDataSource: {fileID: 0}
@@ -11611,6 +11614,7 @@ MonoBehaviour:
     consumable: {fileID: 0}
     durationConsumable: 0
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
+  inventory: {fileID: 0}
   prices: []
   menType: 1
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -22660,6 +22664,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8da974c1a62f62a4383a59f995be9d7d, type: 3}
   - {fileID: 8300000, guid: a86f92b87ac6b314ab05bfe3ffc319f2, type: 3}
   - {fileID: 8300000, guid: 368542c61616be547be9a3e4be168200, type: 3}
+  - {fileID: 8300000, guid: 018a9d069a92a5345b44df137ccc5459, type: 3}
+  - {fileID: 8300000, guid: 2cc6585670aba3640ba721dbf0e091ec, type: 3}
   soundVolume: 1
 --- !u!82 &948263038
 AudioSource:
@@ -30982,13 +30988,14 @@ MonoBehaviour:
     health: 0
     maxStamina: 0
     stamina: 0
+    level: 1
     strength: 0
     vitality: 0
     dexterity: 0
     agility: 0
     intelligence: 0
     luck: 0
-    knowledgePoints: 0
+    experiencePoints: 0
     inBattle: 0
     isActive: 1
     characterDataSource: {fileID: 0}
@@ -41357,13 +41364,14 @@ MonoBehaviour:
     health: 0
     maxStamina: 0
     stamina: 0
+    level: 1
     strength: 0
     vitality: 0
     dexterity: 0
     agility: 0
     intelligence: 0
     luck: 0
-    knowledgePoints: 0
+    experiencePoints: 0
     inBattle: 0
     isActive: 1
     characterDataSource: {fileID: 0}
@@ -41391,6 +41399,7 @@ MonoBehaviour:
     consumable: {fileID: 0}
     durationConsumable: 0
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
+  inventory: {fileID: 11400000, guid: 3dd2ca028c2506941831047c7411831a, type: 2}
   prices: []
   menType: 0
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -44850,7 +44859,7 @@ MonoBehaviour:
     type: 3}
   staffIcon: {fileID: 1845301571344876508, guid: 7fbed4d531b1c6c48904f3a04a444c5d,
     type: 3}
-  inventory: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 3dd2ca028c2506941831047c7411831a, type: 2}
 --- !u!1 &1923838647
 GameObject:
   m_ObjectHideFlags: 0

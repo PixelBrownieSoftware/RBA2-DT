@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Name: genocide_route
+  m_EditorClassIdentifier: 
+  fleeable: 1
+  fixedPlayers: 1
+  guestInvolved: 0
+  sceneToGoTo: 
+  members:
+  - memberDat: {fileID: 11400000, guid: c82757927a3a1d84baf441d3c9f31984, type: 2}
+    levType: 1
+    level: 1
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  members_Player:
+  - memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
+    levType: 1
+    level: 100
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  member_Guest:
+    memberDat: {fileID: 0}
+    levType: 0
+    level: 0
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  branches: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

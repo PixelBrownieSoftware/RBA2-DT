@@ -146,14 +146,12 @@ public class ed_CASE : Editor
                     break;
 
                 case s_move.MOVE_TYPE.STATUS:
-                    switch (mov.statusType) {
-                        case s_move.STATUS_TYPE.HEAL_HEALTH:
-                        case s_move.STATUS_TYPE.HEAL_STAMINA:
-                            lists[i].isImportant = true;
-                            lists[i].onParty = true;
-                            lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
-                            lists[i].healthPercentage = 0.5f;
-                            break;
+                    if (mov.healHealth || mov.healStamina)
+                    {
+                        lists[i].isImportant = true;
+                        lists[i].onParty = true;
+                        lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
+                        lists[i].healthPercentage = 0.5f;
                     }
                     break;
             }
@@ -262,7 +260,7 @@ public class ed_CASE : Editor
             case 0:
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Name: " + charaData.name);
-                levelChar = (int)EditorGUILayout.Slider(levelChar, 1, 100);
+                levelChar = (int)EditorGUILayout.Slider(levelChar, 1, 50);
                 {
                     int tempHPMin = charaData.maxHitPointsB;
                     int tempSPMin = charaData.maxSkillPointsB;
@@ -318,6 +316,7 @@ public class ed_CASE : Editor
                 charaData.agilityGT = (int)EditorGUILayout.Slider("Agility: ", charaData.agilityGT, 1, 6);
                 charaData.luckGT = (int)EditorGUILayout.Slider("Luck: ", charaData.luckGT, 1, 6);
                 EditorGUILayout.Space();
+                charaData.turnIcons = (int)EditorGUILayout.Slider("Turn icons: ", charaData.turnIcons, 1, 4);
                 break;
 
             #region Stats
@@ -619,20 +618,20 @@ public class ed_CASE : Editor
 
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Strength: ");
+                EditorGUILayout.LabelField("Base Strength: ");
                 charaData.strengthB = EditorGUILayout.IntSlider(charaData.strengthB, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Vitality: ");
+                EditorGUILayout.LabelField("Base Vitality: ");
                 charaData.vitalityB = EditorGUILayout.IntSlider(charaData.vitalityB, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Intelligence: ");
+                EditorGUILayout.LabelField("Base Intelligence: ");
                 charaData.intelligenceB = EditorGUILayout.IntSlider(charaData.intelligenceB, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
@@ -640,15 +639,21 @@ public class ed_CASE : Editor
 
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Dexterity: ");
+                EditorGUILayout.LabelField("Base Dexterity: ");
                 charaData.dexterityB = EditorGUILayout.IntSlider(charaData.dexterityB, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Agility: ");
+                EditorGUILayout.LabelField("Base Agility: ");
                 charaData.agilityB = EditorGUILayout.IntSlider(charaData.agilityB, 1, 10);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Base Luck: ");
+                charaData.luckB = EditorGUILayout.IntSlider(charaData.luckB, 1, 10);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();

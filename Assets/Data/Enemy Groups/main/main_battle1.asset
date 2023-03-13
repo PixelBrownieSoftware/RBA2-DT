@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: main_battle1
   m_EditorClassIdentifier: 
   fleeable: 0
+  fixedPlayers: 0
+  guestInvolved: 0
   sceneToGoTo: 
   members:
   - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
@@ -36,3 +38,19 @@ MonoBehaviour:
     extraSkills: []
     passives: []
     weaponSelections: []
+  members_Player: []
+  member_Guest:
+    memberDat: {fileID: 0}
+    levType: 0
+    level: 0
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  branches:
+  - {fileID: 11400000, guid: c18f28a0bdc2eaa4c8b901ec7f062436, type: 2}
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

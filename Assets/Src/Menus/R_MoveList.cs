@@ -7,8 +7,20 @@ public class R_MoveList : R_Default
 {
     public List<s_move> moveListRef = new List<s_move>();
 
-    public s_move PickRandom() { 
+    public s_move PickRandom() {
         return moveListRef[Random.Range(0, moveListRef.Count)];
+    }
+
+    public void Clear() {
+        moveListRef.Clear();
+    }
+
+    public void AddMoves(List<s_move> moves) {
+        moveListRef.AddRange(moves);
+    }
+
+    public void AddMove(s_move mov) {
+        moveListRef.Add(mov);
     }
 
     public bool ListContains(s_move targ)

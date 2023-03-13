@@ -12,6 +12,7 @@ public class s_buttonSkill : s_button
     public s_passive passiveButton;
     public o_weapon weaponButton;
     public s_consumable consumable;
+    public R_Items inventory;
     public Image element; 
     public Image buttonImg; 
     public enum SKILL_TYPE {
@@ -68,6 +69,7 @@ public class s_buttonSkill : s_button
     {
         switch (typeOfButton)
         {
+            /*
             case SKILL_TYPE.SHOP:
                 if (cost > s_rpgGlobals.money)
                 {
@@ -91,6 +93,7 @@ public class s_buttonSkill : s_button
                 }
                 costTxt.text = cost + "";
                 break;
+                */
 
             case SKILL_TYPE.WEAPON_EQUIP:
 
@@ -293,14 +296,15 @@ public class s_buttonSkill : s_button
     protected override void OnButtonClicked()
     {
         switch (typeOfButton) {
-
+            /*
             case SKILL_TYPE.SHOP:
                 if (cost <= s_rpgGlobals.money)
                 {
                     s_rpgGlobals.money -= cost;
-                    s_rpgGlobals.rpgGlSingleton.AddItem(moveButton.name, 1);
+                    inventory.AddItem(moveButton);
                 }
                 break;
+                */
 
             case SKILL_TYPE.ITEM_BATTLE:
             case SKILL_TYPE.BATTLE:
@@ -308,8 +312,9 @@ public class s_buttonSkill : s_button
                 if (isUsable)
                 {
                     s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov = moveButton;
-                    if (typeOfButton == SKILL_TYPE.ITEM_BATTLE) {
-                        s_rpgGlobals.rpgGlSingleton.UseItem(moveButton.name);
+                    if (typeOfButton == SKILL_TYPE.ITEM_BATTLE)
+                    {
+                        inventory.RemoveItem(moveButton);
                     }
                     if (isComb)
                     {

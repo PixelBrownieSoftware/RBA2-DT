@@ -110,10 +110,10 @@ TextureImporter:
       name: hit_playable
       rect:
         serializedVersion: 2
-        x: 46
-        y: 108
-        width: 45
-        height: 37
+        x: 100
+        y: 109
+        width: 31
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,9 +132,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 113
+        y: 111
         width: 41
-        height: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,6 +211,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: hit_fx_lucky
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1
+        width: 73
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0454cd86ddae0684a9fc7caa4958b027
+      internalID: 239242131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -225,6 +246,7 @@ TextureImporter:
       hit_fx_2: -3190439811001017227
       hit_fx_4: 6371986797759846868
       hit_fx_3: 1410876229519445437
+      hit_fx_lucky: 239242131
       hit_playable: -8172329236872036288
       hit_enemy: 8117506818868297461
   spritePackingTag: 

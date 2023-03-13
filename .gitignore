@@ -1,6 +1,9 @@
 Library/
+/Library/
 Library/ArtifactDB
+/Library/ArtifactDB
 save.mf2
+/Logs/
 Logs/
 Library/PlayerDataCache/
 Library/Artifacts/
@@ -37,3 +40,6 @@ Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Samples~/URPPac
 Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Samples~/URPPackageSamples/RendererFeatures/OcclusionEffect/OcclusionEffect/OcclusionEffectSettings.lighting
 Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Samples~/URPPackageSamples/RendererFeatures/OcclusionEffect/OcclusionEffect/OcclusionEffectSettings.lighting.meta
 Library/PackageCache/com.unity.render-pipelines.universal@12.1.7/Samples~/URPPackageSamples/RendererFeatures/OcclusionEffect/OcclusionEffect/ReflectionProbe-0.exr.meta
+.vs/RBA2-DT/v16/.suo
+/Temp/
+Temp/

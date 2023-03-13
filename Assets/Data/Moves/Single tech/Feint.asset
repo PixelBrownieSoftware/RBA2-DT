@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
+  m_Name: Feint
+  m_EditorClassIdentifier: 
+  strReq: 2
+  dxReq: 3
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
+  power: 0
+  healHealth: 0
+  healStamina: 0
+  moveType: 2
+  moveTarg: 0
+  element: 0
+  preAnimations: []
+  animations:
+  - name: 
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  endAnimations: []
+  statusInflictChance: []
+  onParty: 0
+  fixedValue: 0
+  cost: 4
+  strBuff: -1
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  moveRequirements: []

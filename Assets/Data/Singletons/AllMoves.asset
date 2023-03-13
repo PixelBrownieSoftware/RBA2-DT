@@ -17,6 +17,7 @@ MonoBehaviour:
   moveListRef:
   - {fileID: 11400000, guid: 2889445efa3b4c349b7ffa3ec707b319, type: 2}
   - {fileID: 11400000, guid: 6d994a0b751054040b878402a079be16, type: 2}
+  - {fileID: 11400000, guid: 1fe56e80ca2511140a41c545acb77e4a, type: 2}
   - {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
   - {fileID: 11400000, guid: d8b0b8285f53d3843bbc1941ff02ef5b, type: 2}
   - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
@@ -32,6 +33,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
   - {fileID: 11400000, guid: c4a175da79a75ea4e9894dbe2a07c077, type: 2}
   - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
+  - {fileID: 11400000, guid: d7c4230ccfc7dd848bbe374733895772, type: 2}
   - {fileID: 11400000, guid: 2bf2acb03897af742b81467e86722885, type: 2}
   - {fileID: 11400000, guid: 898866e1ffec0b24a80ad7c3149a05e4, type: 2}
   - {fileID: 11400000, guid: d68b3ef7e12649a4d9fc0456e115e5a7, type: 2}
