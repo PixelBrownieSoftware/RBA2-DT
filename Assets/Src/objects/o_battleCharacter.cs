@@ -361,7 +361,7 @@ public class o_battleCharacter : MonoBehaviour
     public List<s_move> currentMoves;
     public List<s_move> extraSkills;
     public List<s_passive> extraPassives;
-    public o_battleCharDataN.ai_page[] character_AI;
+    public o_battleCharDataN.ai_page character_AI;
     public int characterPage;
     public s_rpganim animations;
 
@@ -375,9 +375,7 @@ public class o_battleCharacter : MonoBehaviour
     public SpriteRenderer render;
     public SpriteRenderer shadow;
 
-    //When this is on, a character will not be permenantley removed from battle
-    //All playables and bosses have this flag on
-    public bool persistence = false;
+    public bool persistence = true;
     public bool inBattle;
 
     public o_weapon physWeapon;
@@ -445,6 +443,17 @@ public class o_battleCharacter : MonoBehaviour
     }
 
     public int guardPoints = 0;
+
+    public List<s_move> GetAllMoves
+    {
+        get
+        {
+            List<s_move> moves = new List<s_move>();
+            moves.AddRange(currentMoves);
+            moves.AddRange(extraSkills);
+            return moves;
+        }
+    }
 
     public void Awake()
     {

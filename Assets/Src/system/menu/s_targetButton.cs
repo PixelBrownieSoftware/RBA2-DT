@@ -64,7 +64,6 @@ public class s_targetButton : s_button
                 if (battleCharButton == s_battleEngine.engineSingleton.currentCharacter)
                 {
                     s_battleEngine.engineSingleton.battleAction.user = s_battleEngine.engineSingleton.currentCharacter;
-                    s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
                     s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.ChangePartyMember(s_battleEngine.engineSingleton.currentCharacter, null));
                     s_soundmanager.GetInstance().PlaySound("selectOption");
                     s_battleEngine.engineSingleton.EndAction();
@@ -74,7 +73,6 @@ public class s_targetButton : s_button
                 else
                 {
                     s_battleEngine.engineSingleton.battleAction.user = s_battleEngine.engineSingleton.currentCharacter;
-                    s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
                     //s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.ChangePartyMember(s_battleEngine.engineSingleton.currentCharacter, battleCharButton));
                     s_soundmanager.GetInstance().PlaySound("selectOption");
                     s_battleEngine.engineSingleton.EndAction();
@@ -84,7 +82,6 @@ public class s_targetButton : s_button
                 break;
 
             case TARGET_TYPE.DEPLOY:
-                s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
                 s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);

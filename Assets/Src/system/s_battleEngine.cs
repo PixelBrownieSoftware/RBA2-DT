@@ -37,8 +37,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             MOVE,
             ITEM,
-            GUARD,
-            PASS
+            GUARD
         };
         public MOVE_TYPE type;
         public o_battleCharacter user;
@@ -201,7 +200,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             new Vector2(240, 295) 
         },
         new List<Vector2>(){
-            new Vector2(245, 335),
+            new Vector2(245, 290),
             new Vector2(255, 255)
         },
         new List<Vector2>(){
@@ -287,12 +286,23 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             oppositionCharacters = new List<o_battleCharacter>();
 
             {
-                List<Vector2> enPos = battlePositionsPlayer[enemyGroup.members.Length - 1];
+                List<Vector2> enPos = new List<Vector2>();
+                if (enemyGroup.members_pre_summon.Length > 0)
+                {
+                    int leng = (enemyGroup.members.Length) + (enemyGroup.members_pre_summon.Length);
+                    print("length: " + leng);
+                    enPos.AddRange(battlePositionsPlayer[leng - 1]);
+                }
+                else
+                {
+                    enPos.AddRange(battlePositionsPlayer[enemyGroup.members.Length - 1]);
+                }
                 for (int i = 0; i < enemyGroup.members.Length; i++)
                 {
                     o_battleCharacter c = enemySlots[i];
                     s_enemyGroup.s_groupMember mem = enemyGroup.members[i];
                     o_battleCharDataN bc = mem.memberDat;
+                    c.persistence = true;
                     if (bc.defaultPhysWeapon != null)
                         c.physWeapon = bc.defaultPhysWeapon;
                     if (bc.defaultRangedWeapon != null)
@@ -303,6 +313,25 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     allCharacterReferences.Add(c.referencePoint);
                     SetStatsOpponent(ref c, mem);
                     c.render.color = Color.white;
+                }
+                if (enemyGroup.members_pre_summon.Length > 0)
+                {
+                    for (int i = 0; i < enemyGroup.members_pre_summon.Length; i++)
+                    {
+                        s_enemyGroup.s_groupMember mem = enemyGroup.members_pre_summon[i];
+                        o_battleCharacter c = AddSummonable(mem);
+                        o_battleCharDataN bc = mem.memberDat;
+                        c.persistence = false;
+                        if (bc.defaultPhysWeapon != null)
+                            c.physWeapon = bc.defaultPhysWeapon;
+                        if (bc.defaultRangedWeapon != null)
+                            c.rangedWeapon = bc.defaultRangedWeapon;
+                        c.animHandler.runtimeAnimatorController = bc.anim;
+                        c.animHandler.Play("idle");
+                        allCharacterReferences.Add(c.referencePoint);
+                        c.render.color = Color.white;
+                        ReshuffleOpponentPositions();
+                    }
                 }
             }
             playerCharacters = new List<o_battleCharacter>();
@@ -448,7 +477,84 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
     }
 
+    public o_battleCharacter AddSummonableRand()
+    {
+        s_enemyGroup.s_groupMember mem = enemyGroup.members_summonable[UnityEngine.Random.Range(0, enemyGroup.members_summonable.Length)];
+        o_battleCharacter c = AddSummonable(mem);
+        return c;
+    }
+    public o_battleCharacter AddSummonable(s_enemyGroup.s_groupMember mem)
+    {
+        int allyCount = oppositionCharacters.Count;
+        o_battleCharacter c = enemySlots[allyCount];
+        o_battleCharDataN bc = mem.memberDat;
+        if (bc.defaultPhysWeapon != null)
+            c.physWeapon = bc.defaultPhysWeapon;
+        if (bc.defaultRangedWeapon != null)
+            c.rangedWeapon = bc.defaultRangedWeapon;
+        c.animHandler.runtimeAnimatorController = bc.anim;
+        c.animHandler.Play("idle");
+        c.persistence = false;
+        allCharacterReferences.Add(c.referencePoint);
+        SetStatsOpponent(ref c, mem);
+        ReshuffleOpponentPositions();
+        c.render.color = Color.white;
+        currentPartyCharactersQueue.Enqueue(c);
+        return c;
+    }
+
+    public void ReshuffleOpponentPositions()
+    {
+        int allyCount = oppositionCharacters.Count;
+        List<Vector2> enPos = battlePositionsPlayer[allyCount - 1];
+        for (int i = 0; i < oppositionCharacters.Count; i++)
+        {
+            oppositionCharacters[i].transform.position = new Vector2((enPos[i].x * -1) + 725f, enPos[i].y);
+        }
+    }
+
     #region Set stats
+
+    public charAI[] GetAIList(List<s_move> moves)
+    {
+        charAI[] lists = new charAI[moves.Count];
+        for (int i = 0; i < moves.Count; i++)
+        {
+            s_move mov = moves[i];
+            lists[i] = new charAI();
+            lists[i].move = mov;
+            switch (mov.moveType)
+            {
+                case s_move.MOVE_TYPE.SPECIAL:
+                case s_move.MOVE_TYPE.PHYSICAL:
+                    lists[i].conditions = charAI.CONDITIONS.ALWAYS;
+                    break;
+
+                case s_move.MOVE_TYPE.STATUS:
+                    switch (mov.customFunc)
+                    {
+                        default:
+                            if (mov.healHealth || mov.healStamina)
+                            {
+                                lists[i].isImportant = true;
+                                lists[i].onParty = true;
+                                lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
+                                lists[i].healthPercentage = 0.5f;
+                            }
+                            break;
+
+                        case "callAlly":
+                        case "callAllies":
+                            lists[i].onParty = true;
+                            lists[i].conditions = charAI.CONDITIONS.ALWAYS;
+                            break;
+                    }
+                    break;
+            }
+        }
+        return lists;
+    }
+
     public void SetStatsNonChangable(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem) {
         int tempLvl = 1;
 
@@ -485,10 +591,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             for (int i = 1; i < tempLvl; i++)
             {
-                print("Level "  + i + " name: " + enem.name);
+                //print("Level "  + i + " name: " + enem.name);
                 tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
                 tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
-                print("HP " + tempHP + " name: " + enem.name);
+                //print("HP " + tempHP + " name: " + enem.name);
 
                 if (i % enem.strengthGT == 0)
                     tempStr++;
@@ -533,6 +639,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
             }
         }
+        List<s_move> totalMoves = new List<s_move>();
+        totalMoves.AddRange(charObj.currentMoves);
+        totalMoves.AddRange(charObj.extraSkills);
+
+        charObj.character_AI.ai = GetAIList(totalMoves);
         charObj.elementals = enem.elementals;
         charObj.inBattle = true;
     }
@@ -889,10 +1000,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 break;
 
                             case s_actionAnim.MOTION.TO_TARGET:
+                                /*
                                 if (an.teleport)
                                     s_camera.GetInstance().TeleportCamera(targ.transform.position);
                                 else
                                     StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom, targ.transform.position, 0.9f));
+                                */
                                 break;
 
                             case s_actionAnim.MOTION.SELF:
@@ -1205,42 +1318,26 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case s_battleAction.MOVE_TYPE.GUARD:
                 yield return StartCoroutine(DisplayMoveName("Guard"));
                 break;
-
-            case s_battleAction.MOVE_TYPE.PASS:
-                yield return StartCoroutine(DisplayMoveName("Pass"));
-                break;
         }
         #endregion
         
-        switch (battleAction.type) {
-            case s_battleAction.MOVE_TYPE.PASS:
-
-                //If there are no full turn icons start taking away instead of turning full icons into half
-                if (fullTurn > 0)
-                {
-                    s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
-                    HitWeakness();
-                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
-                }
-                else
-                {
-                    HitWeakness();
-                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                }
-                /*
-                //If there are no full turn icons start taking away instead of turning full icons into half
-                if (halfTurn > 0)
-                {
-                    PassTurn();
-                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                }
-                else
-                {
-                    PassTurn();
-                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
-                }
-                */
-                break;
+        if (!battleAction.move.consumeTurn)
+        {
+            finalDamageFlag = DAMAGE_FLAGS.PASS;
+            //If there are no full turn icons start taking away instead of turning full icons into half
+            /*
+            if (fullTurn > 0)
+            {
+                s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
+                HitWeakness();
+                yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
+            }
+            else
+            {
+                HitWeakness();
+                yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+            }
+            */
         }
         
         #region PRE ANIM
@@ -1337,7 +1434,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             for (int i = 0; i < numOfTimes; i++)
                             {
                                 NextTurn();
-                                yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                             }
                             break;
                         case DAMAGE_FLAGS.MISS:
@@ -1347,18 +1444,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 if (netTurn == 0)
                                     break;
                                 NextTurn();
-                                yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                             }
                             if (netTurn > 0)
                             {
                                 NextTurn();
-                                yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                             }
                             break;
                         case DAMAGE_FLAGS.PASS:
                         case DAMAGE_FLAGS.FRAIL:
                         case DAMAGE_FLAGS.LUCKY:
                         case DAMAGE_FLAGS.CRITICAL:
+                            if (fullTurn > 0)
+                            {
+                                s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
+                            }
                             for (int i = 0; i < numOfTimes; i++)
                             {
                                 //If there are no full turn icons start taking away instead of turning full icons into half
@@ -1366,12 +1467,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 {
                                     s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
                                     HitWeakness();
-                                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
+                                    StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
                                 }
                                 else
                                 {
                                     HitWeakness();
-                                    yield return StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
                                 }
                             }
                             break;
@@ -1455,8 +1556,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     }
                     //We'll have some stat calculations as if this status effect is damage, there would be some kind of formula.
                     StartCoroutine(DamageAnimation(
-                        5
-                        //eff.damage
+                        eff.damage
                         , currentCharacter, ""));
                     eff.duration--;
                     break;
@@ -1529,18 +1629,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             fullTurn = 0;
     }
 
-    public void PassTurn()
-    {
-        if (halfTurn > 0)
-        {
-            halfTurn--;
-        }
-        else
-        {
-            halfTurn++;
-            fullTurn--;
-        }
-    }
     #endregion
 
     #region Battle system core
@@ -1553,7 +1641,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     currentCharacter = currentPartyCharactersQueue.Peek();
                     if (currentCharacter.health <= 0 || !currentCharacter.inBattle) {
                         currentPartyCharactersQueue.Dequeue();
-                        currentPartyCharactersQueue.Enqueue(currentCharacter);
+                        if(currentCharacter.persistence)
+                            currentPartyCharactersQueue.Enqueue(currentCharacter);
                         return;
                     }
                     battleAction.user = currentCharacter;
@@ -1651,19 +1740,30 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                 List<s_move> alwaysMoves = new List<s_move>();
 
-                foreach (charAI ai in  currentCharacter.battleCharData.aiPages
-                    [currentCharacter.characterPage].ai)
+                foreach (charAI ai in  currentCharacter.character_AI.ai)
                 {
                     o_battleCharacter potentialTrg = null;
                     s_move move = ai.move;
-                    switch (move.moveType) {
+                    switch (move.moveType)
+                    {
                         case s_move.MOVE_TYPE.PHYSICAL:
-                            if (battleAction.user.health <= move.cost) {
+                            if (battleAction.user.health <= move.cost)
+                            {
                                 continue;
                             }
                             break;
                         case s_move.MOVE_TYPE.SPECIAL:
                         case s_move.MOVE_TYPE.STATUS:
+                            switch (move.customFunc)
+                            {
+                                case "callAlly":
+                                case "callAllies":
+                                    if (oppositionCharacters.Count >= 4)
+                                    {
+                                        continue;
+                                    }
+                                    break;
+                            }
                             if (battleAction.user.stamina < move.cost)
                             {
                                 continue;
@@ -1702,6 +1802,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ALWAYS:
                             potentialTrg = targets[UnityEngine.Random.Range(0, targets.Count - 1)];
                             alwaysMoves.Add(move);
+                            print(move.name);
                             break;
 
                         case charAI.CONDITIONS.TARGET_PARTY_HP_HIGHER:
@@ -2030,17 +2131,36 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         float basePow = 0;
         float elementalPow = 0;
 
+
         int str = user.strengthNet;
         int vit = user.vitalityNet;
         int dex = user.dexterityNet;
         int agi = user.agiNet;
+        int luc = user.agiNet;
+        int intel = user.agiNet;
+
+
+        switch (move.element)
+        {
+            case ELEMENT.FIRE:
+                elementalPow = str / 2;
+                break;
+
+            case ELEMENT.WIND:
+                elementalPow = agi / 2;
+                break;
+
+            case ELEMENT.ELECTRIC:
+                elementalPow = dex / 1.5f;
+                break;
+        }
 
         switch (move.moveType) {
             case s_move.MOVE_TYPE.PHYSICAL:
-                basePow = user.strengthNet;
+                basePow = str;
                 break;
             case s_move.MOVE_TYPE.SPECIAL:
-                basePow = user.dexterityNet;
+                basePow = intel;
                 break;
         }
         ///Put power
@@ -2166,6 +2286,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             case s_battleAction.MOVE_TYPE.MOVE:
 
+                List<float> modifier = new List<float>();
                 if (battleAction.isCombo)
                 {
                     int leng = 0;
@@ -2386,12 +2507,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 #region HIT FROZEN FOE
                                 if (targ.HasStatus(STATUS_EFFECT.FROZEN))
                                 {
-                                    switch (battleAction.move.element)
+                                    switch (finalDamageFlag)
                                     {
-                                        case ELEMENT.STRIKE:
-                                        case ELEMENT.PEIRCE:
-                                            targ.guardPoints = 0;
-                                            damageFlag = DAMAGE_FLAGS.FRAIL;
+                                        case DAMAGE_FLAGS.NONE:
+                                        case DAMAGE_FLAGS.FRAIL:
+                                            switch (battleAction.move.element)
+                                            {
+                                                case ELEMENT.STRIKE:
+                                                case ELEMENT.PEIRCE:
+                                                    targ.guardPoints = 0;
+                                                    modifier.Add(0.5f);
+                                                    damageFlag = DAMAGE_FLAGS.CRITICAL;
+                                                    break;
+                                            }
                                             break;
                                     }
                                 }
@@ -2401,6 +2529,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 {
                                     case DAMAGE_FLAGS.NONE:
                                     case DAMAGE_FLAGS.FRAIL:
+                                    case DAMAGE_FLAGS.CRITICAL:
                                         #region LUCK CHECK
                                         {
                                             int userLuc = battleAction.user.agiNet + 2;
@@ -2416,9 +2545,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                             {
                                                 damageFlag = DAMAGE_FLAGS.LUCKY;
                                                 finalDamageFlag = DAMAGE_FLAGS.LUCKY;
-                                                List<float> modifier = new List<float>();
                                                 modifier.Add(0.65f);
-                                                dmg = CalculateDamage(targ, battleAction.user, defaultAttack, modifier);
                                             }
                                         }
                                         #endregion
@@ -2426,6 +2553,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 }
                             }
                         }
+                        dmg = CalculateDamage(targ, battleAction.user, battleAction.move, modifier);
                         #region AGILITY DODGE CHECK
                         {
                             int userAgil = battleAction.user.agiNet + 2;
@@ -2544,7 +2672,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             yield return new WaitForSeconds(0.02f);
                         }
 
-
                         #region CHECK FOR COUNTER
                         {
                             if (targ.extraPassives.Find
@@ -2590,36 +2717,52 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 0, targ.maxStamina);
                             SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
                         }
-                        if (battleAction.move.intBuff != 0)
+                        List<o_battleCharacter> targs = new List<o_battleCharacter>();
+                        switch (mov.customFunc) {
+                            case "callAlly":
+                                targs.Add(AddSummonableRand());
+                                break;
+                            case "callAllies":
+                                targs.Add(AddSummonableRand());
+                                targs.Add(AddSummonableRand());
+                                break;
+                            default:
+                                targs.Add(targ);
+                                break;
+                        }
+                        foreach (var ch in targs)
                         {
-                            targ.intelligenceBuff += battleAction.move.intBuff;
-                            /*
-                            if (targ.intelligenceBuff > 0)
+                            if (battleAction.move.intBuff != 0)
                             {
-                                SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
-                                yield return new WaitForSeconds(0.05f);
+                                ch.intelligenceBuff += battleAction.move.intBuff;
+                                /*
+                                if (targ.intelligenceBuff > 0)
+                                {
+                                    SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
+                                    yield return new WaitForSeconds(0.05f);
+                                }
+                                */
                             }
-                            */
-                        }
-                        if (battleAction.move.lucBuff != 0)
-                        {
-                            targ.luckBuff += battleAction.move.lucBuff;
-                        }
-                        if (battleAction.move.vitBuff != 0)
-                        {
-                            targ.vitalityBuff += battleAction.move.vitBuff;
-                        }
-                        if (battleAction.move.strBuff != 0)
-                        {
-                            targ.strengthBuff += battleAction.move.strBuff;
-                        }
-                        if (battleAction.move.dexBuff != 0)
-                        {
-                            targ.dexterityBuff += battleAction.move.dexBuff;
-                        }
-                        if (battleAction.move.agiBuff != 0)
-                        {
-                            targ.agilityBuff += battleAction.move.agiBuff;
+                            if (battleAction.move.lucBuff != 0)
+                            {
+                                ch.luckBuff += battleAction.move.lucBuff;
+                            }
+                            if (battleAction.move.vitBuff != 0)
+                            {
+                                ch.vitalityBuff += battleAction.move.vitBuff;
+                            }
+                            if (battleAction.move.strBuff != 0)
+                            {
+                                ch.strengthBuff += battleAction.move.strBuff;
+                            }
+                            if (battleAction.move.dexBuff != 0)
+                            {
+                                ch.dexterityBuff += battleAction.move.dexBuff;
+                            }
+                            if (battleAction.move.agiBuff != 0)
+                            {
+                                ch.agilityBuff += battleAction.move.agiBuff;
+                            }
                         }
                         break;
                         #endregion
@@ -2640,7 +2783,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             else {
                 s_soundmanager.GetInstance().PlaySound("player_defeat");
             }
-            StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
+            yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
+            if (oppositionCharacters.Contains(targ) && !targ.persistence) {
+                enemiesReference.Remove(targ.referencePoint);
+                oppositionCharacters.Remove(targ);
+                ReshuffleOpponentPositions();
+            }
         }
     }
     
@@ -2694,7 +2842,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
                         c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
                         c.maxStamina += UnityEngine.Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1);
-                        List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c));
+                        List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c) && !c.currentMoves.Contains(x));
                         if (mv2Learn != null) {
                             c.currentMoves.AddRange(mv2Learn);
                         }
@@ -2765,6 +2913,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 if (c == guest)
                     continue;
                 rpgManager.SetPartyMemberStats(c);
+            }
+            if (enemyGroup.unlockCharacters.Length > 0)
+            {
+                foreach (o_battleCharDataN c in enemyGroup.unlockCharacters)
+                {
+                    rpgManager.AddPartyMember(c, rpgManager.MeanLevel);
+                }
             }
         }
         s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);

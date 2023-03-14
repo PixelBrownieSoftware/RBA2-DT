@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
+  m_Name: greenler_battle
+  m_EditorClassIdentifier: 
+  fleeable: 0
+  fixedPlayers: 0
+  guestInvolved: 1
+  perishIfDone: 0
+  sceneToGoTo: 
+  members:
+  - memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
+    levType: 1
+    level: 20
+    maxLevel: 0
+    extraSkills:
+    - {fileID: 11400000, guid: 96a687a29d591eb45bafddfbaa2271c1, type: 2}
+    passives: []
+    weaponSelections: []
+  members_summonable:
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+    levType: 0
+    level: 2
+    maxLevel: 5
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  - memberDat: {fileID: 11400000, guid: 96ed822c9b2791140ac520b584458c08, type: 2}
+    levType: 0
+    level: 2
+    maxLevel: 5
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  members_pre_summon: []
+  members_Player: []
+  member_Guest:
+    memberDat: {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
+    levType: 1
+    level: 15
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  unlockCharacters:
+  - {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
+  branches: []
+  shopItems: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

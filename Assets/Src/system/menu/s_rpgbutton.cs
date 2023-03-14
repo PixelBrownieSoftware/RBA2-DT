@@ -11,6 +11,7 @@ public class s_rpgbutton : s_button
 {
     public s_button backButton;
     public string buttonT;
+    public s_move passAction;
 
     public override void OnStart()
     {
@@ -134,7 +135,8 @@ public class s_rpgbutton : s_button
                 break;
 
             case "pass":
-                s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.PASS;
+                s_battleEngine.engineSingleton.battleAction.move = passAction;
+                s_battleEngine.engineSingleton.battleAction.target = s_battleEngine.engineSingleton.battleAction.user;
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
                 s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.9f);

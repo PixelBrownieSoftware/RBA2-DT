@@ -34,7 +34,9 @@ MonoBehaviour:
   characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
   turnIcons: 1
-  moveLearn: []
+  moveLearn:
+  - {fileID: 11400000, guid: 96a687a29d591eb45bafddfbaa2271c1, type: 2}
+  - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
   elementals:
     weaknessChart: []
   characterColour: {r: 1, g: 0.95, b: 0.75, a: 1}

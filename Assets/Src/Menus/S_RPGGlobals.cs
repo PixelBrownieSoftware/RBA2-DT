@@ -14,6 +14,16 @@ public class S_RPGGlobals : ScriptableObject
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
     public R_MoveList moveDatabase;
 
+    public int MeanLevel { 
+        get {
+            float PMCount = partyMembers.battleCharList.Count;
+            float levels = 0;
+            foreach (var ch in partyMembers.battleCharList) {
+                levels += ch.level;
+            }
+            return Mathf.CeilToInt(levels/PMCount);
+        } 
+    } 
     public bool ContainsPartyMember(o_battleCharDataN partyMember) {
         return partyMembers.battleCharList.Find(x => x.characterDataSource == partyMember) != null;
     }

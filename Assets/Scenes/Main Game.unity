@@ -879,6 +879,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: fight2
+  passAction: {fileID: 0}
 --- !u!114 &16271545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3307,6 +3308,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: skill
+  passAction: {fileID: 0}
 --- !u!114 &97806336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3971,6 +3973,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: arrange
+  passAction: {fileID: 0}
 --- !u!1001 &177813003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4606,6 +4609,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: pass
+  passAction: {fileID: 11400000, guid: 39ed5711de49e3a47925739bf6a68dd1, type: 2}
 --- !u!114 &205200008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10249,6 +10253,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: back
+  passAction: {fileID: 0}
 --- !u!114 &458902625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11255,6 +11260,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: guard
+  passAction: {fileID: 0}
 --- !u!114 &496119557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12688,6 +12694,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: OVExtra
+  passAction: {fileID: 0}
 --- !u!224 &558643886 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5991622285794606839, guid: ad28a377c8271464e95d23f68314f495,
@@ -13870,6 +13877,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: OVitem
+  passAction: {fileID: 0}
 --- !u!1 &618210080
 GameObject:
   m_ObjectHideFlags: 0
@@ -15068,6 +15076,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: item
+  passAction: {fileID: 0}
 --- !u!114 &634677274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15845,6 +15854,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: OVWeap
+  passAction: {fileID: 0}
 --- !u!1001 &669168818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25967,6 +25977,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: switch
+  passAction: {fileID: 0}
 --- !u!1 &1148074024 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8124916512248166261, guid: 1d0c1c565e329814aaf0a792c4b56f36,
@@ -28759,6 +28770,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: back
+  passAction: {fileID: 0}
 --- !u!114 &1265816229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29549,6 +29561,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: fight
+  passAction: {fileID: 0}
 --- !u!114 &1319472025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33747,6 +33760,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: run
+  passAction: {fileID: 0}
 --- !u!114 &1492543492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35657,6 +35671,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: equip
+  passAction: {fileID: 0}
 --- !u!114 &1561536316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37672,6 +37687,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: deploy
+  passAction: {fileID: 0}
 --- !u!1001 &1679182617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42932,6 +42948,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: party
+  passAction: {fileID: 0}
 --- !u!114 &1845001154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47905,6 +47922,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: status
+  passAction: {fileID: 0}
 --- !u!1 &1997802749
 GameObject:
   m_ObjectHideFlags: 0
@@ -48048,6 +48066,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 1265816228}
   buttonT: combo
+  passAction: {fileID: 0}
 --- !u!114 &1997802755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49083,6 +49102,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: OVPassive
+  passAction: {fileID: 0}
 --- !u!1 &2058944924
 GameObject:
   m_ObjectHideFlags: 0
@@ -49143,6 +49163,7 @@ MonoBehaviour:
   allowMenuPause: 1
   backButton: {fileID: 0}
   buttonT: back
+  passAction: {fileID: 0}
 --- !u!114 &2058944927
 MonoBehaviour:
   m_ObjectHideFlags: 0

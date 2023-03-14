@@ -1,4 +1,21 @@
-﻿//12/03/2023
+﻿//13/03/2023
+/*
+
+    public void PassTurn()
+    {
+        if (halfTurn > 0)
+        {
+            halfTurn--;
+        }
+        else
+        {
+            halfTurn++;
+            fullTurn--;
+        }
+    }
+*/
+
+//12/03/2023
 
 /*
 public void AddItem(string itemName, int amount)

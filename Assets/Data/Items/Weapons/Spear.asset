@@ -18,7 +18,11 @@ MonoBehaviour:
   agiReq: 0
   intReq: 0
   lucReq: 0
-  power: 0
+  power: 7
+  healHealth: 0
+  healStamina: 0
+  fixedValue: 0
+  consumeTurn: 1
   moveType: 0
   moveTarg: 0
   element: 2
@@ -27,13 +31,14 @@ MonoBehaviour:
   endAnimations: []
   statusInflictChance: []
   onParty: 0
-  fixedValue: 0
   cost: 0
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
   moveRequirements: []
   weaponType: 2
   skillPointIncrease: 0

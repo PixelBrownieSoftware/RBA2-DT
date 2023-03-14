@@ -63,6 +63,8 @@ public class s_move : s_ability
     public int power;
     public bool healHealth = false;
     public bool healStamina = false;
+    public bool fixedValue = false;
+    public bool consumeTurn = true;
     public MOVE_TYPE moveType;
     public MOVE_TARGET moveTarg;
     public ELEMENT element;
@@ -71,8 +73,9 @@ public class s_move : s_ability
     public s_actionAnim[] endAnimations;
     public statusInflict[] statusInflictChance;
     public bool onParty;
-    public bool fixedValue = false;
     public int cost = 0;
+
+    public string customFunc;
 
     public int strBuff;
     public int vitBuff;

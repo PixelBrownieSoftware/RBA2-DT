@@ -50,9 +50,13 @@ public class s_enemyGroup : ScriptableObject
     public bool perishIfDone = false;
     public string sceneToGoTo;
     public s_groupMember[] members;
+    public s_groupMember[] members_summonable;
+    public s_groupMember[] members_pre_summon;
     public s_groupMember[] members_Player;
     public s_groupMember member_Guest;
     public s_battleEvent[] events;
+
+    public o_battleCharDataN[] unlockCharacters;
 
     public s_enemyGroup[] branches;
     public Shop_item[] shopItems;

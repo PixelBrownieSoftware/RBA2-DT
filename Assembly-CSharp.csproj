@@ -70,6 +70,7 @@
     <Compile Include="Assets\Src\Menus\Hub\M_PartyStatus.cs" />
     <Compile Include="Assets\G_Buff.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_SpriteListener.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
     <Compile Include="Assets\Src\system\static\s_element.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Src\system\menu\s_battleMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_EnemyGroup.cs" />
     <Compile Include="Assets\Src\Menus\R_Default.cs" />
+    <Compile Include="Assets\Src\Menus\R_ShopItem.cs" />
     <Compile Include="Assets\Src\system\o_animclip.cs" />
     <Compile Include="Assets\Src\Menus\R_CharacterList.cs" />
     <Compile Include="Assets\Src\Channels\CH_BattleCharacter.cs" />
@@ -176,8 +178,6 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
-    <Compile Include="Assets\Src\Menus\R_ShopItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

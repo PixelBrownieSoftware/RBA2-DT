@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Noah
   m_EditorClassIdentifier: 
-  level: 1
   money: 0
   maxSkillPointsB: 12
   maxHitPointsB: 17
@@ -40,7 +39,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   elementals:
-    weaknessChart: []
+    weaknessChart:
+    - element: 5
+      weakness: 0.5
+    - element: 6
+      weakness: 2
   characterColour: {r: 0.3915094, g: 0.7557806, b: 1, a: 1}
   characterColour2: {r: 0.19579923, g: 0.46207052, b: 0.754717, a: 1}
   aiPages:
