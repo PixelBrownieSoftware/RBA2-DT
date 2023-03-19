@@ -12,6 +12,9 @@ public class s_rpgbutton : s_button
     public s_button backButton;
     public string buttonT;
     public s_move passAction;
+    public R_Move currentMove;
+    public R_MoveList characterMoves;
+    public R_Character currentCharacter;
 
     public override void OnStart()
     {
@@ -41,14 +44,12 @@ public class s_rpgbutton : s_button
                 s_menuhandler.GetInstance().GetMenu<s_targetMenu>
                 ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
                 */
-                if (s_battleEngine.engineSingleton.currentCharacter.physWeapon != null)
+                if (currentCharacter.characterRef.physWeapon != null)
                 {
-                    s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov
-                        = s_battleEngine.engineSingleton.currentCharacter.physWeapon;
+                    currentMove.move = currentCharacter.characterRef.physWeapon;
                 } else
                 {
-                    s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov
-                        = s_battleEngine.engineSingleton.defaultAttack;
+                    currentMove.move = s_battleEngine.engineSingleton.defaultAttack;
                 }
                 
 
@@ -64,8 +65,7 @@ public class s_rpgbutton : s_button
                 s_menuhandler.GetInstance().GetMenu<s_targetMenu>
                 ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
                 */
-                s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov
-                    = s_battleEngine.engineSingleton.currentCharacter.rangedWeapon;
+                currentMove.move = currentCharacter.characterRef.rangedWeapon;
 
                 s_menuhandler.GetInstance().SwitchMenu("TargetMenu");
                 s_soundmanager.GetInstance().PlaySound("selectOption");
@@ -74,8 +74,7 @@ public class s_rpgbutton : s_button
             case "skill":
                 backButton.buttonType = "SkillMenu";
                 s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").menType = s_battleMenu.MENU_TYPE.BATTLE;
-                s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").rpgSkills = 
-                    s_battleEngine.engineSingleton.currentCharacter.currentMoves;
+                characterMoves.AddMoves(currentCharacter.characterRef.GetAllMoves());
                 s_menuhandler.GetInstance().SwitchMenu("SkillMenu");
                 s_soundmanager.GetInstance().PlaySound("selectOption");
                 break;
@@ -84,7 +83,7 @@ public class s_rpgbutton : s_button
                 backButton.buttonType = "SkillMenu";
                 //s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").rpgSkills =
                 List<Tuple<s_moveComb, s_move>> moves = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter3(
-                         s_battleEngine.engineSingleton.currentCharacter, 
+                         currentCharacter.characterRef, 
                          s_battleEngine.engineSingleton.playerCharacters);
 
                 List<s_moveComb> cmb = new List<s_moveComb>();
@@ -135,17 +134,17 @@ public class s_rpgbutton : s_button
                 break;
 
             case "pass":
-                s_battleEngine.engineSingleton.battleAction.move = passAction;
+                currentMove.SetMove(passAction);
                 s_battleEngine.engineSingleton.battleAction.target = s_battleEngine.engineSingleton.battleAction.user;
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
-                s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.9f);
+                s_camera.cam.SetTargPos(currentCharacter.characterRef.position, 0.9f);
                 s_soundmanager.GetInstance().PlaySound("selectOption");
                 break;
 
             case "back":
                 s_camera.cam.cameraMode = s_camera.CAMERA_MODE.LERPING;
-                StartCoroutine(s_camera.cam.MoveCamera(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.9f));
+                StartCoroutine(s_camera.cam.MoveCamera(currentCharacter.characterRef.position, 0.9f));
                 s_soundmanager.GetInstance().PlaySound("back");
                 base.OnButtonClicked();
                 break;

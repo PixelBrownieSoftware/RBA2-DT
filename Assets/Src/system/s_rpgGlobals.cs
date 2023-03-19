@@ -9,21 +9,22 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 
+[System.Serializable]
 public struct s_moveComb
 {
     public s_move.MOVE_QUANITY_TYPE comboType;
-    public o_battleCharacter user1;
+    public CH_BattleChar user1;
     public s_move user1Move;
-    public o_battleCharacter user2;
+    public CH_BattleChar user2;
     public s_move user2Move;
-    public o_battleCharacter user3;
+    public CH_BattleChar user3;
     public s_move user3Move;
-    public o_battleCharacter user4;
+    public CH_BattleChar user4;
     public s_move user4Move;
-    public o_battleCharacter user5;
+    public CH_BattleChar user5;
     public s_move user5Move;
 
-    public s_moveComb(o_battleCharacter user1, o_battleCharacter user2, s_move user1Move, s_move user2Move)
+    public s_moveComb(CH_BattleChar user1, CH_BattleChar user2, s_move user1Move, s_move user2Move)
     {
         this.user1 = user1;
         this.user2 = user2;
@@ -37,9 +38,9 @@ public struct s_moveComb
         user5Move = null;
         comboType = s_move.MOVE_QUANITY_TYPE.DUAL_TECH;
     }
-    public s_moveComb(o_battleCharacter user1, o_battleCharacter user2, o_battleCharacter user3, s_move user1Move, s_move user2Move, s_move user3Move)
+    public s_moveComb(CH_BattleChar user1, CH_BattleChar user2, CH_BattleChar user3, s_move user1Move, s_move user2Move, s_move user3Move)
     {
-        this.user1 = user1;
+           this.user1 = user1;
         this.user2 = user2;
         this.user3 = user3;
         user4 = null;
@@ -588,12 +589,10 @@ public class s_rpgGlobals : s_globals
         }
     }
     */
-    List<s_move> FindComboMoveReqList(s_move.moveRequirement req, o_battleCharacter pc)
+    List<s_move> FindComboMoveReqList(s_move.moveRequirement req, CH_BattleChar pc)
     {
         List<s_move> mov = new List<s_move>();
-        List<s_move> userMoves = new List<s_move>();
-        userMoves.AddRange(pc.currentMoves);
-        userMoves.AddRange(pc.extraSkills);
+        List<s_move> userMoves = pc.GetAllMoves();
         switch (req.type)
         {
             case s_move.moveRequirement.MOVE_REQ_TYPE.ELEMENTAL:
@@ -876,7 +875,7 @@ public class s_rpgGlobals : s_globals
         return movs;
     }
     */
-    public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsCharacter3(o_battleCharacter PriUser, List<o_battleCharacter> members)
+    public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsCharacter3(CH_BattleChar PriUser, List<o_battleCharacter> members)
     {
         List<Tuple<s_moveComb, s_move>> movs = new List<Tuple<s_moveComb, s_move>>();
         List<s_move> allMoveData = new List<s_move>();
@@ -906,7 +905,7 @@ public class s_rpgGlobals : s_globals
                                             s_move mo2 = FindComboMoveReq(cmbo.Req2, bc);
                                             if (mo2 == null)
                                                 continue;
-                                            s_moveComb cmb = new s_moveComb(PriUser, bc, mov, mo2);
+                                            s_moveComb cmb = new s_moveComb(PriUser, bc.referencePoint, mov, mo2);
                                             //print(
                                             //    cmb.user1.name + " (" + cmb.user1Move.name + ") " +
                                             //    cmb.user2.name + " (" + cmb.user2Move.name + ") ");

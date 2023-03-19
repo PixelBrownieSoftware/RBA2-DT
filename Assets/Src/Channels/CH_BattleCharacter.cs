@@ -6,8 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "System/Battle character Channel")]
 public class CH_BattleCharacter : SO_ChannelDefaut
 {
-    public UnityAction<o_battleCharacter> OnFunctionEvent;
-    public void RaiseEvent(o_battleCharacter _battleChar)
+    public UnityAction<CH_BattleChar> OnFunctionEvent;
+    public void RaiseEvent(CH_BattleChar _battleChar)
     {
         if (OnFunctionEvent != null)
             OnFunctionEvent.Invoke(_battleChar);

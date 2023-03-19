@@ -6,5 +6,9 @@ using UnityEngine;
 public class R_Move : R_Default
 {
     public s_move move;
+
+    public void SetMove(s_move newMove) {
+        move = newMove;
+    }
 }
 

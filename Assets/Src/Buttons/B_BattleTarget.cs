@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class B_BattleTarget : O_Button
 {
-    public o_battleCharacter target;
+    public CH_BattleChar target;
     public CH_BattleCharacter moveClickEvent;
 
     public void OnClickEvent()
@@ -12,7 +12,7 @@ public class B_BattleTarget : O_Button
         moveClickEvent.RaiseEvent(target);
     }
 
-    public void SetTargetButton(o_battleCharacter target)
+    public void SetTargetButton(CH_BattleChar target)
     {
         this.target = target;
         text.text = "" + target.name + " (" + (target.health * 100) + "%" + ")";

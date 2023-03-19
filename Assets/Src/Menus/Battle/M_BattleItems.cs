@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class M_BattleItems : S_MenuSystem
 {
+    /*
     public R_MoveList moveList;
     public B_BattleMove[] buttons;
     public CH_Move onButtonClickEvents;
@@ -48,5 +49,5 @@ public class M_BattleItems : S_MenuSystem
             }
         }
     }
-
+    */
 }

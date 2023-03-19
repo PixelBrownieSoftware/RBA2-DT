@@ -12,6 +12,8 @@ public class CH_BattleChar : ScriptableObject
     public int level;
     public Vector2 position;
     public o_battleCharPartyData characterData;
+    public o_weapon physWeapon;
+    public o_weapon rangedWeapon;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
     public bool HasStatus(STATUS_EFFECT statEff)
@@ -23,10 +25,16 @@ public class CH_BattleChar : ScriptableObject
         return false;
     }
 
+    public List<s_move> GetAllMoves() {
+        return characterData.AllSkills;
+    }
+
     public void SetStats(o_battleCharacter bc)
     {
         cName = bc.name;
         health = bc.health;
+        physWeapon = bc.physWeapon;
+        rangedWeapon = bc.rangedWeapon;
         maxHealth = bc.maxHealth;
         stamina = bc.stamina;
         maxStamina = bc.maxStamina;

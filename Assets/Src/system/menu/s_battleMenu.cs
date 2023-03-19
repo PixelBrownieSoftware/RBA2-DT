@@ -15,6 +15,8 @@ public class s_battleMenu : s_menucontroller
     public o_battleCharPartyData partyCharacter;
     public R_BattleCharacterList partyMembers;
     public R_Items inventory;
+    public R_Character currentCharacterRef;
+    private CH_BattleChar currentCharacter;
 
     public float[] prices;
 
@@ -173,6 +175,7 @@ public class s_battleMenu : s_menucontroller
     public override void OnOpen()
     {
         base.OnOpen();
+        currentCharacter = currentCharacterRef.characterRef;
         ResetButton();
         int ind = 0;
         switch (menType)
@@ -464,8 +467,8 @@ public class s_battleMenu : s_menucontroller
                     switch (sb.moveButton.moveType)
                     {
                         case s_move.MOVE_TYPE.PHYSICAL:
-                            cost = Mathf.RoundToInt((sb.moveButton.cost / 100) * s_battleEngine.engineSingleton.currentCharacter.maxHealth);
-                            if (s_battleEngine.engineSingleton.currentCharacter.health > cost)
+                            cost = Mathf.RoundToInt((sb.moveButton.cost / 100) * currentCharacter.maxHealth);
+                            if (currentCharacter.health > cost)
                             {
                                 sb.isUsable = true;
                             }
@@ -496,6 +499,7 @@ public class s_battleMenu : s_menucontroller
                 }
                 break;
 
+                /*
             case MENU_TYPE.BATTLE:
                 rpgSkills = new List<s_move>();
                 List<s_move> mv = new List<s_move>();
@@ -516,8 +520,8 @@ public class s_battleMenu : s_menucontroller
                     int cost = 0;
                     switch(sb.moveButton.moveType) {
                         case s_move.MOVE_TYPE.PHYSICAL:
-                            cost = Mathf.RoundToInt((float)(sb.moveButton.cost / 100f) * s_battleEngine.engineSingleton.currentCharacter.maxHealth);
-                            if (s_battleEngine.engineSingleton.currentCharacter.health > cost)
+                            cost = Mathf.RoundToInt((float)(sb.moveButton.cost / 100f) * currentCharacter.maxHealth);
+                            if (currentCharacterRef.characterRef.health > cost)
                             {
                                 sb.isUsable = true;
                             }
@@ -525,7 +529,7 @@ public class s_battleMenu : s_menucontroller
                         case s_move.MOVE_TYPE.SPECIAL:
                         case s_move.MOVE_TYPE.STATUS:
                             cost = sb.moveButton.cost;
-                            if (s_battleEngine.engineSingleton.currentCharacter.stamina >= cost)
+                            if (currentCharacterRef.characterRef.stamina >= cost)
                             {
                                 sb.isUsable = true;
                             }
@@ -536,6 +540,7 @@ public class s_battleMenu : s_menucontroller
                     SetButtonElement(ref sb);
                 }
                 break;
+                */
 
             case MENU_TYPE.EXTRA_SKILL:
                 rpgSkills = s_rpgGlobals.rpgGlSingleton.extraSkills.moveListRef;

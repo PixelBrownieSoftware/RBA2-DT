@@ -79,8 +79,7 @@ public class s_targetMenu : s_menucontroller
                         break;
 
                     case s_move.MOVE_TARGET.SELF:
-                        StartCoroutine(s_camera.cam.MoveCamera(
-                            s_battleEngine.GetInstance().currentCharacter.transform.position, 0.9f));
+                        StartCoroutine(s_camera.cam.MoveCamera(currentCharacter.characterRef.position, 0.9f));
                         break;
                 }
                 switch (mov.moveTarg)

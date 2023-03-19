@@ -14,7 +14,9 @@ public class s_buttonSkill : s_button
     public s_consumable consumable;
     public R_Items inventory;
     public Image element; 
-    public Image buttonImg; 
+    public Image buttonImg;
+    public R_BattleCharacter currentCharacter;
+
     public enum SKILL_TYPE {
         NONE,
         BATTLE,
@@ -114,9 +116,9 @@ public class s_buttonSkill : s_button
                     }
                 }
                 break;
-
+                /*
             case SKILL_TYPE.WEAPON_EQUIP_BATTLE:
-                o_battleCharacter bc = s_battleEngine.GetInstance().currentCharacter;
+                o_battleCharacter bc = currentCharacter.r;
                 if (bc.physWeapon == weaponButton)
                 {
                     buttonImg.color = Color.green;
@@ -133,6 +135,7 @@ public class s_buttonSkill : s_button
                     }
                 }
                 break;
+                */
 
             case SKILL_TYPE.EXTRA_PASSIVES:
 
@@ -186,7 +189,7 @@ public class s_buttonSkill : s_button
                     switch (moveButton.moveType)
                     {
                         case s_move.MOVE_TYPE.PHYSICAL:
-                            cost = Mathf.RoundToInt((float)(moveButton.cost / 100f) * s_battleEngine.engineSingleton.currentCharacter.maxHealth);
+                            cost = Mathf.RoundToInt((float)(moveButton.cost / 100f) * currentCharacter.battleCharacter.maxHealth);
                             costTxt.text = cost + " <color=#05E5B6>HP</color>";
                             break;
 
@@ -383,6 +386,7 @@ public class s_buttonSkill : s_button
                 }
                 break;
 
+                /*
             case SKILL_TYPE.WEAPON_EQUIP_BATTLE:
                 {
                     o_battleCharacter d = s_battleEngine.GetInstance().currentCharacter;
@@ -419,6 +423,7 @@ public class s_buttonSkill : s_button
                     }
                 }
                 break;
+                */
 
             case SKILL_TYPE.WEAPON_EQUIP:
                 {

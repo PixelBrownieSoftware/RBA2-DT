@@ -76,8 +76,7 @@ public class S_RPGGlobals : ScriptableObject
         }
         partyMembers.Add(newCharacter);
     }
-
-    public void AddPartyMember(o_battleCharDataN data, int level)
+    public o_battleCharPartyData CreatePartyMemberData(o_battleCharDataN data, int level)
     {
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
@@ -156,8 +155,37 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.agility = tempAgi;
         }
         newCharacter.characterDataSource = data;
+        return newCharacter;
+    }
+
+    public void AddPartyMember(o_battleCharDataN data, int level)
+    {
+        o_battleCharPartyData newCharacter = CreatePartyMemberData(data, level);
         partyMembers.Add(newCharacter);
     }
+    public o_battleCharPartyData SetPartyCharacterStats(o_battleCharacter data)
+    {
+        o_battleCharPartyData newCharacter = new o_battleCharPartyData();
+        {
+            newCharacter.level = data.level;
+            newCharacter.name = data.name;
+
+            newCharacter.strength = data.strength;
+            newCharacter.vitality = data.vitality;
+            newCharacter.dexterity = data.dexterity;
+
+
+            newCharacter.health = data.health;
+            newCharacter.maxHealth = data.maxHealth;
+            newCharacter.stamina = data.stamina;
+            newCharacter.maxStamina = data.maxStamina;
+
+            newCharacter.currentMoves = data.currentMoves;
+            newCharacter.extraSkills = data.extraSkills;
+        }
+        return newCharacter;
+    }
+
     public void SetPartyMemberStats(o_battleCharacter data)
     {
         o_battleCharPartyData newCharacter = partyMembers.Get(data.name);
@@ -167,6 +195,7 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.strength = data.strength;
             newCharacter.vitality = data.vitality;
             newCharacter.dexterity = data.dexterity;
+            newCharacter.intelligence = data.intelligence;
 
 
             newCharacter.health = data.health;

@@ -5,14 +5,17 @@ using MagnumFoundation2.System;
 
 public class M_BattleTarget : S_MenuSystem
 {
-    public R_CharacterList opponents;
-    public R_CharacterList players;
     public R_CharacterList battleCharacters;
     public R_Move moveRef;
     public List<o_battleCharDataN> battleChr;
     public R_Character currentCharacter;
-    public B_Int[] buttons;
+    public R_Character selectedCharacter;
+    public B_TargetWithUI[] buttons;
+    public R_Text targetMenuTo;
 
+    public CH_BattleCharacter selectTarget;
+    public CH_Text switchMenu;
+    public CH_Func performMove;
     private s_move mov;
 
     public enum SKILL_TYPE
@@ -23,6 +26,21 @@ public class M_BattleTarget : S_MenuSystem
     }
     public SKILL_TYPE skillType;
 
+    public void SetTarget(CH_BattleChar target) {
+        selectedCharacter.characterRef = target;
+        performMove.RaiseEvent();
+        switchMenu.RaiseEvent("EMPTY");
+    }
+
+    private void OnDisable()
+    {
+        selectTarget.OnFunctionEvent -= SetTarget;
+    }
+
+    private void OnEnable()
+    {
+        selectTarget.OnFunctionEvent += SetTarget;
+    }
 
     private void Awake()
     {
@@ -55,7 +73,7 @@ public class M_BattleTarget : S_MenuSystem
         {
             case SKILL_TYPE.BATTLE:
                 s_camera.cam.cameraMode = s_camera.CAMERA_MODE.LERPING;
-                B_Int tg = null;
+                B_BattleTarget tg = null;
                 switch (mov.moveTarg)
                 {
                     default:
@@ -65,8 +83,7 @@ public class M_BattleTarget : S_MenuSystem
                         break;
 
                     case s_move.MOVE_TARGET.SELF:
-                        StartCoroutine(s_camera.cam.MoveCamera(
-                            s_battleEngine.GetInstance().currentCharacter.transform.position, 0.9f));
+                        StartCoroutine(s_camera.cam.MoveCamera(currentCharacter.characterRef.position, 0.9f));
                         break;
                 }
                 switch (mov.moveTarg)
@@ -75,7 +92,7 @@ public class M_BattleTarget : S_MenuSystem
 
                         tg = buttons[0];
 
-                        tg.SetIntButton(players.characterListRef.IndexOf(currentCharacter.characterRef));
+                        tg.SetTargetButton(currentCharacter.characterRef);
                         tg.SetButonText(currentCharacter.name);
                         tg.gameObject.SetActive(true);
                         break;
@@ -86,11 +103,11 @@ public class M_BattleTarget : S_MenuSystem
                             CH_BattleChar battleChar = battleCharacters.GetChracter(i);
                             tg = buttons[i];
                             //bool plContain = s_battleEngine.GetInstance().playerCharacters.Contains(bcs.GetChracter(i));
-                            bool plContain = players.characterListRef.Contains(battleChar);
+                            //bool plContain = players.characterListRef.Contains(battleChar);
                             bool isStatus = mov.moveType == s_move.MOVE_TYPE.STATUS;
 
-                            tg.SetIntButton(players.characterListRef.IndexOf(currentCharacter.characterRef));
-                            tg.SetButonText(currentCharacter.name);
+                            tg.SetTargetButton(battleChar);
+                            tg.SetButonText(battleChar.cName);
                             tg.gameObject.SetActive(true);
                         }
                         break;
@@ -137,7 +154,7 @@ public class M_BattleTarget : S_MenuSystem
 
     private void Update()
     {
-        B_Int tg = null;
+        B_BattleTarget tg = null;
         switch (skillType)
         {
             case SKILL_TYPE.BATTLE:
@@ -145,7 +162,7 @@ public class M_BattleTarget : S_MenuSystem
                 switch (mov.moveTarg)
                 {
                     case s_move.MOVE_TARGET.SINGLE:
-                        for (int i = 0; i < battleCharacters.characterListRef.Count; i++)
+                        for (int i = 0; i < battleCharacters.characterListRef.Count - 1; i++)
                         {
                             CH_BattleChar battleChar = battleCharacters.GetChracter(i);
                             tg = buttons[i];

@@ -19,7 +19,7 @@ public class s_mainBattleMenu : s_menucontroller
         ResetButton();
         //s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").rpgSkills =
         List<Tuple<s_moveComb, s_move>> moves = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter3(
-        battleCharacter, s_battleEngine.engineSingleton.playerCharacters);
+        battleCharacter.referencePoint, s_battleEngine.engineSingleton.playerCharacters);
 
         #region PHYSICAL WEAPON
         {
@@ -65,8 +65,8 @@ public class s_mainBattleMenu : s_menucontroller
         }
         #endregion
 
-        if (s_battleEngine.engineSingleton.currentCharacter.extraSkills.Count > 0
-            || s_battleEngine.engineSingleton.currentCharacter.currentMoves.Count > 0) {
+        if (battleCharacter.extraSkills.Count > 0
+            || battleCharacter.currentMoves.Count > 0) {
             GetButton<s_button>(2);
         }
 

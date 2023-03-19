@@ -6,20 +6,55 @@ using UnityEngine;
 public class M_BattleOptions : S_MenuSystem
 {
     public R_Character currentCharacter;
-    public B_Int[] buttons;
+    public R_CharacterList targetList;
+    public R_CharacterList players;
+    public R_CharacterList opponents;
+    public R_ComboMoves comboMoves;
+    public B_BattleMove[] buttons;
     public R_Items items;
     public R_Boolean isItem;
+    public R_Move selectedMove;
+    public R_MoveList movesList;
+    public CH_Move selectMove;
+    public CH_Text selectMenu;
     public enum B_OPTIONS_TYPE { 
         MOVES,
         ITEMS
     }
     public B_OPTIONS_TYPE options;
 
+    private void OnEnable()
+    {
+        selectMove.OnMoveFunctionEvent += SelectMove;
+    }
+
+    private void OnDisable()
+    {
+        selectMove.OnMoveFunctionEvent -= SelectMove;
+    }
+
     private void Awake()
     {
         foreach (var b in buttons) {
             b.gameObject.SetActive(false);
         }
+    }
+
+    public void SelectMove(s_move move) {
+        selectedMove.move = move;
+        switch (move.moveTarg) {
+            case s_move.MOVE_TARGET.SINGLE:
+                if (move.onParty)
+                {
+                    targetList.AddCharacters(players.characterListRef);
+                }
+                else
+                {
+                    targetList.AddCharacters(opponents.characterListRef);
+                }
+                break;
+        }
+        selectMenu.RaiseEvent("TargetMenu");
     }
 
     public override void StartMenu()
@@ -33,15 +68,14 @@ public class M_BattleOptions : S_MenuSystem
 
         switch (options) {
             case B_OPTIONS_TYPE.MOVES:
-                isItem.boolean = false; 
-                moves = currentCharacter.characterRef.characterData.AllSkills;
+                moves = movesList.moveListRef;
                 if (moves.Count > 0)
                 {
                     for (int i = 0; i < moves.Count; i++)
                     {
                         var button = buttons[i];
                         button.SetButonText(moves[i].name);
-                        button.SetIntButton(i);
+                        button.SetBattleButton(moves[i], moves[i].cost);
                         button.gameObject.SetActive(true);
                     }
                 }
@@ -55,7 +89,7 @@ public class M_BattleOptions : S_MenuSystem
                     foreach (var item in items.inventory) {
 
                         var button = buttons[ind];
-                        button.SetIntButton(ind);
+                        button.SetBattleButton(item.Key, item.Value);
                         button.SetButonText(item.Key.name + " x " + item.Value);
                         button.gameObject.SetActive(true);
                         ind++;

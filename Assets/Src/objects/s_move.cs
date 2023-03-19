@@ -83,6 +83,7 @@ public class s_move : s_ability
     public int agiBuff;
     public int intBuff;
     public int lucBuff;
+    public int guardPoints = 0;
 
     public bool canBuff
     {

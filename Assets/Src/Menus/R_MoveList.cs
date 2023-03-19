@@ -15,6 +15,10 @@ public class R_MoveList : R_Default
         moveListRef.Clear();
     }
 
+    public void SetMoves(List<s_move> moves)
+    {
+        moveListRef= moves;
+    }
     public void AddMoves(List<s_move> moves) {
         moveListRef.AddRange(moves);
     }

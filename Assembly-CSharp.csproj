@@ -98,6 +98,7 @@
     <Compile Include="Assets\Src\Menus\Hub\M_PartyItem.cs" />
     <Compile Include="Assets\Src\system\menu\s_battleMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_EnemyGroup.cs" />
+    <Compile Include="Assets\Src\system\S_RPGTargeter.cs" />
     <Compile Include="Assets\Src\Menus\R_Default.cs" />
     <Compile Include="Assets\Src\Menus\R_ShopItem.cs" />
     <Compile Include="Assets\Src\system\o_animclip.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\Src\Menus\Battle\M_BattleTarget.cs" />
     <Compile Include="Assets\Src\Channels\CH_BCData.cs" />
     <Compile Include="Assets\Src\objects\o_weapon.cs" />
+    <Compile Include="Assets\Src\Buttons\B_TargetWithUI.cs" />
     <Compile Include="Assets\Src\system\misc\s_buttonList.cs" />
     <Compile Include="Assets\Src\ChannelListeners\CHL_ChangeText.cs" />
     <Compile Include="Assets\Src\system\s_rpganim.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="Assets\Src\S_MenuManager.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_IntegerListener.cs" />
     <Compile Include="Assets\Src\Buttons\B_Function.cs" />
+    <Compile Include="Assets\Src\Menus\R_ComboMoves.cs" />
     <Compile Include="Assets\Src\Menus\R_Items.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleDefault.cs" />
     <Compile Include="Assets\Src\objects\o_battleCharDataN.cs" />

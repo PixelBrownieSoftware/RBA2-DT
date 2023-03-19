@@ -59,7 +59,7 @@ public class s_targetButton : s_button
     protected override void OnButtonClicked()
     {
         switch (targType) {
-
+            /*
             case TARGET_TYPE.SWITCH:
                 if (battleCharButton == s_battleEngine.engineSingleton.currentCharacter)
                 {
@@ -80,14 +80,17 @@ public class s_targetButton : s_button
                     s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);
                 }
                 break;
+                */
 
+            /*
             case TARGET_TYPE.DEPLOY:
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
-                s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);
+                s_camera.cam.SetTargPos(c.transform.position, 0.6f);
                 s_soundmanager.GetInstance().PlaySound("selectOption");
                 //s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.AddPartymemberToBattle(battleCharButton));
                 break;
+                */
 
             case TARGET_TYPE.BATTLE:
                 s_battleEngine.engineSingleton.battleAction.cureStatus = isCure;

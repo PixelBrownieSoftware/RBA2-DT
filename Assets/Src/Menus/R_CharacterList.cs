@@ -30,6 +30,10 @@ public class R_CharacterList : R_Default
     {
         characterListRef.Remove(targ);
     }
+    public void AddCharacters(List<CH_BattleChar> targ)
+    {
+        characterListRef.AddRange(targ);
+    }
     public void Add(CH_BattleChar targ)
     {
         characterListRef.Add(targ);
