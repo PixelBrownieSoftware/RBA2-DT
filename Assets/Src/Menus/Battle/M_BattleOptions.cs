@@ -43,18 +43,44 @@ public class M_BattleOptions : S_MenuSystem
     public void SelectMove(s_move move) {
         selectedMove.move = move;
         switch (move.moveTarg) {
-            case s_move.MOVE_TARGET.SINGLE:
-                if (move.onParty)
+            case s_move.MOVE_TARGET.ALLY:
+                targetList.AddCharacters(players.characterListRef);
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY:
+                targetList.AddCharacters(opponents.characterListRef);
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY_ALLY:
                 {
-                    targetList.AddCharacters(players.characterListRef);
-                }
-                else
-                {
-                    targetList.AddCharacters(opponents.characterListRef);
+                    List<CH_BattleChar> allTargets = new List<CH_BattleChar>();
+                    allTargets.AddRange(players.characterListRef);
+                    allTargets.AddRange(opponents.characterListRef);
+                    targetList.AddCharacters(allTargets);
                 }
                 break;
+
+            case s_move.MOVE_TARGET.SELF:
+                targetList.Add(currentCharacter.characterRef);
+                break;
+            case s_move.MOVE_TARGET.NONE:
+
+                break;
         }
-        selectMenu.RaiseEvent("TargetMenu");
+        switch (move.moveTarg)
+        {
+            default:
+                selectMenu.RaiseEvent("TargetMenu");
+                break;
+            case s_move.MOVE_TARGET.NONE:
+
+                break;
+        }
+
+        switch (move.moveTargScope) {
+            case s_move.SCOPE_NUMBER.ALL:
+                break;
+        }
     }
 
     public override void StartMenu()

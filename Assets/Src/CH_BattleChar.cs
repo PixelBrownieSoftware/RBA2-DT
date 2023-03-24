@@ -16,7 +16,7 @@ public class CH_BattleChar : ScriptableObject
     public o_weapon rangedWeapon;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
-    public bool HasStatus(STATUS_EFFECT statEff)
+    public bool HasStatus(S_StatusEffect statEff)
     {
         if (statusEffects.Find(x => x.status == statEff) != null)
         {

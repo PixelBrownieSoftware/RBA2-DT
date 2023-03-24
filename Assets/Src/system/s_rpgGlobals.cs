@@ -621,7 +621,10 @@ public class s_rpgGlobals : s_globals
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_SP:
                 {
-                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healStamina);
+                    s_move mv = userMoves.Find(x => 
+                    x.moveType == s_move.MOVE_TYPE.SP_DRAIN ||
+                    x.moveType == s_move.MOVE_TYPE.SP_RECOVER ||
+                    x.moveType == s_move.MOVE_TYPE.HP_SP_RECOVER);
 
                     if (mv != null)
                     {
@@ -632,7 +635,10 @@ public class s_rpgGlobals : s_globals
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_HP:
                 {
-                    s_move mv = userMoves.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healHealth);
+                    s_move mv = userMoves.Find(x =>
+                    x.moveType == s_move.MOVE_TYPE.HP_RECOVER ||
+                    x.moveType == s_move.MOVE_TYPE.HP_DRAIN ||
+                    x.moveType == s_move.MOVE_TYPE.HP_SP_RECOVER);
 
                     if (mv != null)
                     {
@@ -672,15 +678,22 @@ public class s_rpgGlobals : s_globals
                     return pc.rangedWeapon;
                 break;
             case s_move.moveRequirement.MOVE_REQ_TYPE.BUFF:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.canBuff);
+                return allMV.Find(x => x.canBuff);
             case s_move.moveRequirement.MOVE_REQ_TYPE.DEBUFF:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.canDebuff);
+                return allMV.Find(x => x.canDebuff);
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_ANY:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && (x.healHealth ||x.healStamina));
+                return allMV.Find(x => 
+                x.moveType == s_move.MOVE_TYPE.HP_SP_RECOVER ||
+                x.moveType == s_move.MOVE_TYPE.SP_RECOVER ||
+                x.moveType == s_move.MOVE_TYPE.HP_RECOVER);
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_HP:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healHealth);
+                return allMV.Find(x =>
+                x.moveType == s_move.MOVE_TYPE.HP_SP_RECOVER ||
+                x.moveType == s_move.MOVE_TYPE.HP_RECOVER);
             case s_move.moveRequirement.MOVE_REQ_TYPE.HEAL_SP:
-                return allMV.Find(x => x.moveType == s_move.MOVE_TYPE.STATUS && x.healStamina);
+                return allMV.Find(x =>
+                x.moveType == s_move.MOVE_TYPE.HP_SP_DAMAGE ||
+                x.moveType == s_move.MOVE_TYPE.SP_RECOVER);
         }
         return null;
     }

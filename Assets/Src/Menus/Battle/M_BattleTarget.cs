@@ -86,9 +86,10 @@ public class M_BattleTarget : S_MenuSystem
                         StartCoroutine(s_camera.cam.MoveCamera(currentCharacter.characterRef.position, 0.9f));
                         break;
                 }
-                switch (mov.moveTarg)
+                switch (mov.moveTargScope)
                 {
-                    case s_move.MOVE_TARGET.SELF:
+                    /*
+                    case s_move.SCOPE_NUMBER.ONE:
 
                         tg = buttons[0];
 
@@ -96,15 +97,16 @@ public class M_BattleTarget : S_MenuSystem
                         tg.SetButonText(currentCharacter.name);
                         tg.gameObject.SetActive(true);
                         break;
+                        */
 
-                    case s_move.MOVE_TARGET.SINGLE:
+                    case s_move.SCOPE_NUMBER.ONE:
                         for (int i = 0; i < battleCharacters.characterListRef.Count; i++)
                         {
                             CH_BattleChar battleChar = battleCharacters.GetChracter(i);
                             tg = buttons[i];
                             //bool plContain = s_battleEngine.GetInstance().playerCharacters.Contains(bcs.GetChracter(i));
                             //bool plContain = players.characterListRef.Contains(battleChar);
-                            bool isStatus = mov.moveType == s_move.MOVE_TYPE.STATUS;
+                            bool isStatus = mov.moveType == s_move.MOVE_TYPE.NONE;
 
                             tg.SetTargetButton(battleChar);
                             tg.SetButonText(battleChar.cName);
@@ -112,13 +114,13 @@ public class M_BattleTarget : S_MenuSystem
                         }
                         break;
 
-                    case s_move.MOVE_TARGET.RANDOM:
+                    case s_move.SCOPE_NUMBER.RANDOM:
                         tg = buttons[0];
                         tg.SetButonText("Random");
                         tg.gameObject.SetActive(true);
                         break;
 
-                    case s_move.MOVE_TARGET.ALL:
+                    case s_move.SCOPE_NUMBER.ALL:
                         tg = buttons[0];
                         tg.SetButonText("All");
                         tg.gameObject.SetActive(true);
@@ -159,9 +161,9 @@ public class M_BattleTarget : S_MenuSystem
         {
             case SKILL_TYPE.BATTLE:
 
-                switch (mov.moveTarg)
+                switch (mov.moveTargScope)
                 {
-                    case s_move.MOVE_TARGET.SINGLE:
+                    case s_move.SCOPE_NUMBER.ONE:
                         for (int i = 0; i < battleCharacters.characterListRef.Count - 1; i++)
                         {
                             CH_BattleChar battleChar = battleCharacters.GetChracter(i);
@@ -170,12 +172,8 @@ public class M_BattleTarget : S_MenuSystem
                         }
                         break;
 
-                    case s_move.MOVE_TARGET.RANDOM:
-                        tg = buttons[0];
-                        tg.transform.position = Camera.main.WorldToScreenPoint(getCentroid());
-                        break;
-
-                    case s_move.MOVE_TARGET.ALL:
+                    case s_move.SCOPE_NUMBER.RANDOM:
+                    case s_move.SCOPE_NUMBER.ALL:
                         tg = buttons[0];
                         tg.transform.position = Camera.main.WorldToScreenPoint(getCentroid());
                         break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/*
 [System.Serializable]
 public class element_affinity
 {
@@ -59,7 +60,6 @@ public class element_affinity
     public int heal;
     public int support;
 }
-
 [System.Serializable]
 public struct element_weaknesses
 {
@@ -98,3 +98,4 @@ public class s_element : ScriptableObject
     public string[] elements;
     
 }
+*/

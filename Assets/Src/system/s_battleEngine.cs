@@ -548,21 +548,25 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             lists[i].move = mov;
             switch (mov.moveType)
             {
-                case s_move.MOVE_TYPE.SPECIAL:
-                case s_move.MOVE_TYPE.PHYSICAL:
+                case s_move.MOVE_TYPE.HP_DAMAGE:
                     lists[i].conditions = charAI.CONDITIONS.ALWAYS;
                     break;
 
-                case s_move.MOVE_TYPE.STATUS:
+               default:
                     switch (mov.customFunc)
                     {
                         default:
-                            if (mov.healHealth || mov.healStamina)
-                            {
-                                lists[i].isImportant = true;
-                                lists[i].onParty = true;
-                                lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
-                                lists[i].healthPercentage = 0.5f;
+                            switch (mov.moveType) {
+                                case s_move.MOVE_TYPE.HP_DRAIN:
+                                case s_move.MOVE_TYPE.HP_SP_DRAIN:
+                                case s_move.MOVE_TYPE.SP_DRAIN:
+                                case s_move.MOVE_TYPE.HP_RECOVER:
+                                case s_move.MOVE_TYPE.SP_RECOVER:
+                                    lists[i].isImportant = true;
+                                    lists[i].onParty = true;
+                                    lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
+                                    lists[i].healthPercentage = 0.5f;
+                                    break;
                             }
                             break;
 
@@ -668,7 +672,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         charObj.referencePoint.characterData = rpgManager.SetPartyCharacterStats(charObj);
 
         charObj.character_AI.ai = GetAIList(totalMoves);
-        charObj.elementals = enem.elementals;
+        charObj.elementals = enem.GetElements;
         charObj.inBattle = true;
     }
 
@@ -784,38 +788,44 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
 
     public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ, string dmgType) {
-        
-        if (currentMove.move.onParty)
-        {
-            targ.health += dmg;
-            targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
 
-        }
-        else
-        {
-            targ.health -= dmg;
-            targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
+        switch (currentMove.move.moveType) {
+            case s_move.MOVE_TYPE.HP_DAMAGE:
+            case s_move.MOVE_TYPE.SP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_SP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_DRAIN:
+            case s_move.MOVE_TYPE.SP_DRAIN:
+            case s_move.MOVE_TYPE.HP_SP_DRAIN:
+                targ.health -= dmg;
+                targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
 
-            Vector2 characterPos = targ.transform.position;
-            if (oppositionCharacters.Contains(targ))
-            {
-                SpawnDamageObject(dmg, characterPos, true, Color.white, dmgType);
-            }
-            else
-            {
-                SpawnDamageObject(dmg, characterPos, false, targ.battleCharData.characterColour, dmgType);
-            }
-            for (int i = 0; i < 2; i++)
-            {
-                targ.transform.position = characterPos + new Vector2(15, 0);
-                yield return new WaitForSeconds(0.02f);
-                targ.transform.position = characterPos;
-                yield return new WaitForSeconds(0.02f);
-                targ.transform.position = characterPos + new Vector2(-15, 0);
-                yield return new WaitForSeconds(0.02f);
-                targ.transform.position = characterPos;
-                yield return new WaitForSeconds(0.02f);
-            }
+                Vector2 characterPos = targ.transform.position;
+                if (oppositionCharacters.Contains(targ))
+                {
+                    SpawnDamageObject(dmg, characterPos, true, Color.white, dmgType);
+                }
+                else
+                {
+                    SpawnDamageObject(dmg, characterPos, false, targ.battleCharData.characterColour, dmgType);
+                }
+                for (int i = 0; i < 2; i++)
+                {
+                    targ.transform.position = characterPos + new Vector2(15, 0);
+                    yield return new WaitForSeconds(0.02f);
+                    targ.transform.position = characterPos;
+                    yield return new WaitForSeconds(0.02f);
+                    targ.transform.position = characterPos + new Vector2(-15, 0);
+                    yield return new WaitForSeconds(0.02f);
+                    targ.transform.position = characterPos;
+                    yield return new WaitForSeconds(0.02f);
+                }
+                break;
+
+            case s_move.MOVE_TYPE.SP_RECOVER:
+            case s_move.MOVE_TYPE.HP_RECOVER:
+                targ.health += dmg;
+                targ.health = Mathf.Clamp(targ.health, 0, targ.maxHealth);
+                break;
         }
     }
 
@@ -936,7 +946,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_actionAnim.MOTION.ALL_SELF:
                                 {
                                     List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(true))
+                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ALLY))
                                     {
                                         allPositions.Add(v.transform.position);
                                     }
@@ -946,7 +956,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_actionAnim.MOTION.ALL_TARGET:
                                 {
                                     List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(false))
+                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ENEMY))
                                     {
                                         allPositions.Add(v.transform.position);
                                     }
@@ -1005,7 +1015,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_actionAnim.MOTION.ALL_SELF:
                                 {
                                     List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(true))
+                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ALLY))
                                     {
                                         allPositions.Add(v.transform.position);
                                     }
@@ -1016,7 +1026,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_actionAnim.MOTION.ALL_TARGET:
                                 {
                                     List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(false))
+                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ENEMY))
                                     {
                                         allPositions.Add(v.transform.position);
                                     }
@@ -1154,43 +1164,53 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
     }
 
-    public List<o_battleCharacter> AllTargetsLiving(bool self)
+    public List<o_battleCharacter> AllTargetsLiving(s_move.MOVE_TARGET scope)
     {
-        List<o_battleCharacter> bcs = AllTargets(self);
+        List<o_battleCharacter> bcs = AllTargets(scope);
         return bcs.FindAll(x => x.health > 0);
     }
 
-    public List<o_battleCharacter> AllTargets(bool self) {
+    public List<o_battleCharacter> AllTargets(s_move.MOVE_TARGET scope) {
         List<o_battleCharacter> bcs = new List<o_battleCharacter>();
         if (isPlayerTurn)
         {
-            if (self)
-            {
-                bcs.AddRange(playerCharacters);
-                if (hasGuest)
-                {
-                    bcs.Add(guest);
-                }
-            }
-            else
-            {
-                bcs.AddRange(oppositionCharacters);
+            switch (scope) {
+                case s_move.MOVE_TARGET.ALLY:
+                    bcs.AddRange(playerCharacters);
+                    if (hasGuest)
+                    {
+                        bcs.Add(guest);
+                    }
+                    break;
+                case s_move.MOVE_TARGET.ENEMY:
+                    bcs.AddRange(oppositionCharacters);
+                    break;
             }
         }
         else
         {
-            if (self)
+            switch (scope)
             {
-                bcs.AddRange(oppositionCharacters);
+                case s_move.MOVE_TARGET.ALLY:
+                    bcs.AddRange(oppositionCharacters);
+                    break;
+                case s_move.MOVE_TARGET.ENEMY:
+                    bcs.AddRange(playerCharacters);
+                    if (hasGuest)
+                    {
+                        bcs.Add(guest);
+                    }
+                    break;
             }
-            else
+        }
+        if (scope == s_move.MOVE_TARGET.ENEMY_ALLY)
+        {
+            bcs.AddRange(playerCharacters);
+            if (hasGuest)
             {
-                bcs.AddRange(playerCharacters);
-                if (hasGuest)
-                {
-                    bcs.Add(guest);
-                }
+                bcs.Add(guest);
             }
+            bcs.AddRange(oppositionCharacters);
         }
         return bcs;
     }
@@ -1240,7 +1260,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case s_battleAction.MOVE_TYPE.MOVE:
                 if (battleAction.isCombo)
                 {
-                    for(int i =0; i < 5; i++) 
+                    for (int i = 0; i < 5; i++)
                     {
                         o_battleCharacter bc = null;
                         s_move combMov = null;
@@ -1273,31 +1293,23 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                         if (bc == null)
                             continue;
-                        switch (combMov.moveType)
+                        if (combMov.element.isMagic)
                         {
-                            case s_move.MOVE_TYPE.PHYSICAL:
-                                bc.health -= Mathf.RoundToInt(((float)(combMov.cost / 100) * bc.maxHealth));
-                                break;
-
-                            case s_move.MOVE_TYPE.SPECIAL:
-                            case s_move.MOVE_TYPE.STATUS:
-                                bc.stamina -= combMov.cost;
-                                break;
+                            bc.stamina -= combMov.cost;
+                        } else
+                        {
+                            bc.health -= Mathf.RoundToInt(((float)(combMov.cost / 100) * bc.maxHealth));
                         }
                     }
                 } else
                 {
-                    switch (mov.moveType)
+                    if (mov.element.isMagic)
                     {
-                        case s_move.MOVE_TYPE.PHYSICAL:
-                            user.health -=
-                                Mathf.RoundToInt((float)(mov.cost / 100f) * user.maxHealth);
-                            break;
-
-                        case s_move.MOVE_TYPE.SPECIAL:
-                        case s_move.MOVE_TYPE.STATUS:
-                            user.stamina -= mov.cost;
-                            break;
+                        user.stamina -= mov.cost;
+                    }
+                    else
+                    {
+                        Mathf.RoundToInt((float)(mov.cost / 100f) * user.maxHealth);
                     }
                 }
                 animations = mov.animations;
@@ -1391,15 +1403,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case s_battleAction.MOVE_TYPE.MOVE:
                 if (animations != null)
                 {
-                    switch (currentMove.move.moveTarg)
+                    switch (currentMove.move.moveTargScope)
                     {
-                        case s_move.MOVE_TARGET.SINGLE:
+                        case s_move.SCOPE_NUMBER.ONE:
                             yield return StartCoroutine(PlayAttackAnimation(animations, targ, currentCharacterObject));
                             break;
 
-                        case s_move.MOVE_TARGET.ALL:
+                        case s_move.SCOPE_NUMBER.ALL:
                             {
-                                List<o_battleCharacter> bcs = AllTargets(currentMove.move.onParty);
+                                List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
                                 print(bcs.Count);
                                 foreach (var b in bcs)
                                 {
@@ -1408,13 +1420,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             }
                             break;
 
-                        case s_move.MOVE_TARGET.RANDOM:
+                        case s_move.SCOPE_NUMBER.RANDOM:
                             {
-                                List<o_battleCharacter> bcs = AllTargets(currentMove.move.onParty);
+                                List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
                                 int rand = UnityEngine.Random.Range(2, 5);
                                 for (int i = 0; i < rand; i++)
                                 {
-                                    bcs = AllTargetsLiving(currentMove.move.onParty);
+                                    bcs = AllTargetsLiving(currentMove.move.moveTarg);
                                     if (bcs.Count == 0)
                                         break;
                                     o_battleCharacter bc = bcs[UnityEngine.Random.Range(0, bcs.Count)];
@@ -1561,6 +1573,20 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     {
         s_camera.cam.SetZoom();
         foreach (s_statusEff eff in currentCharacterObject.statusEffects) {
+            switch (eff.status.variableChange) {
+                case S_StatusEffect.VARIABLE_CHANGE.HP_REGEN:
+                    if (eff.status.regenPercentage > 0)
+                    {
+                        //StartCoroutine(DamageAnimation(eff.damage, currentCharacterObject, ""));
+                    }
+                    else
+                    {
+                        StartCoroutine(DamageAnimation(eff.damage, currentCharacterObject, ""));
+                    }
+                    break;
+            }
+            eff.duration--;
+            /*
             switch (eff.status) {
                 case STATUS_EFFECT.POISON:
                     //We'll have some stat calculations as if this status effect is damage, there would be some kind of formula.
@@ -1585,6 +1611,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     eff.duration--;
                     break;
             }
+            */
         }
         yield return new WaitForSeconds(0.1f);
     }
@@ -1675,7 +1702,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     if (statusEffects != null)
                     {
                         foreach (s_statusEff eff in statusEffects)
-                        {
+                        {/*
                             switch (eff.status)
                             {
                                 case STATUS_EFFECT.CONFUSED:
@@ -1706,6 +1733,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                     eff.duration -= 1;
                                     break;
                             }
+                            */
                             if (eff.duration == 0)
                                 currentCharacterObject.statusEffects.Remove(eff);
                         }
@@ -1768,40 +1796,50 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     o_battleCharacter potentialTrg = null;
                     s_move move = ai.move;
-                    switch (move.moveType)
+                    if (move.element.isMagic)
                     {
-                        case s_move.MOVE_TYPE.PHYSICAL:
-                            if (currentCharacterObject.health <= move.cost)
-                            {
-                                continue;
-                            }
-                            break;
-                        case s_move.MOVE_TYPE.SPECIAL:
-                        case s_move.MOVE_TYPE.STATUS:
-                            switch (move.customFunc)
-                            {
-                                case "callAlly":
-                                case "callAllies":
-                                    if (oppositionCharacters.Count >= 4)
-                                    {
-                                        continue;
-                                    }
-                                    break;
-                            }
-                            if (currentCharacterObject.stamina < move.cost)
-                            {
-                                continue;
-                            }
-                            break;
+                        switch (move.customFunc)
+                        {
+                            case "callAlly":
+                            case "callAllies":
+                                if (oppositionCharacters.Count >= 4)
+                                {
+                                    continue;
+                                }
+                                break;
+                        }
+                        if (currentCharacterObject.stamina < move.cost)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (currentCharacterObject.health <= move.cost)
+                        {
+                            continue;
+                        }
                     }
                     if (!currentCharacterObject.GetAllMoves.Contains(move)) {
                         continue;
                     }
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
-                    if (ai.move.onParty) {
-                        targets = allies;
-                    } else {
-                        targets = baddies;
+                    switch (ai.move.moveTarg) {
+                        case s_move.MOVE_TARGET.ALLY:
+                            targets = allies;
+                            break;
+                        case s_move.MOVE_TARGET.ENEMY:
+                            targets = baddies;
+                            break;
+
+                        case s_move.MOVE_TARGET.ENEMY_ALLY:
+                            targets.AddRange(allies);
+                            targets.AddRange(baddies);
+                            break;
+
+                        case s_move.MOVE_TARGET.SELF:
+
+                            break;
                     }
 
                     currentMove.SetMove(ai.move);
@@ -1914,10 +1952,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     currentMove.SetMove(alwaysMoves[UnityEngine.Random.Range(0, alwaysMoves.Count - 1)]);
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
-                    if (currentMove.move.onParty)
-                        targets = allies;
-                    else
-                        targets = baddies;
+                    targets = AllTargetsLiving(currentMove.move.moveTarg);
                     targetCharacter.SetCharacter(targets[UnityEngine.Random.Range(0, targets.Count)].referencePoint);
                 }
                 battleAction.isCombo = battleAction.combo.comboType != s_move.MOVE_QUANITY_TYPE.MONO_TECH;
@@ -1957,24 +1992,37 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
         }
     }
-    public List<CH_BattleChar> GetTargets(bool onParty)
+    public List<CH_BattleChar> GetTargets(s_move.MOVE_TARGET scope)
     {
         List<CH_BattleChar> targs = new List<CH_BattleChar>();
-        if (!onParty)
-        {
-            //MenuControl(oppositionCharacters.Count, MENU_CONTROLL_TYPE.LINEAR_UP_DOWN, new Vector2(0, 0));
-            for (int i = 0; i < oppositionCharacters.Count; i++)
-            {
-                if (oppositionCharacters[i].health > 0)
-                    targs.Add(oppositionCharacters[i].referencePoint);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < playerCharacters.Count; i++)
-            {
-                targs.Add(playerCharacters[i].referencePoint);
-            }
+        switch (scope) {
+            case s_move.MOVE_TARGET.ALLY:
+                for (int i = 0; i < playerCharacters.Count; i++)
+                {
+                    targs.Add(playerCharacters[i].referencePoint);
+                }
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY:
+                for (int i = 0; i < oppositionCharacters.Count; i++)
+                {
+                    if (oppositionCharacters[i].health > 0)
+                        targs.Add(oppositionCharacters[i].referencePoint);
+                }
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY_ALLY:
+
+                for (int i = 0; i < playerCharacters.Count; i++)
+                {
+                    targs.Add(playerCharacters[i].referencePoint);
+                }
+                for (int i = 0; i < oppositionCharacters.Count; i++)
+                {
+                    if (oppositionCharacters[i].health > 0)
+                        targs.Add(oppositionCharacters[i].referencePoint);
+                }
+                break;
         }
         return targs;
     }
@@ -2087,13 +2135,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleAction.isCombo = true;
         battleAction.combo = combo;
         currentMove.SetMove(move); 
-        GetTargets(move.onParty);
+        GetTargets(move.moveTarg);
         //s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").bcs = 
         s_menuhandler.GetInstance().SwitchMenu("TargetMenu");
         battleEngine = BATTLE_ENGINE_STATE.TARGET;
         menuchoice = 0;
     }
-
+    /*
     public void SelectSkillOption(s_move move) {
         battleAction.type = s_battleAction.MOVE_TYPE.MOVE;
         currentMove.SetMove(move);
@@ -2140,7 +2188,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleEngine = BATTLE_ENGINE_STATE.TARGET;
         menuchoice = 0;
     }
+    */
 
+    /// <summary>
+    /// Probably for counters or something
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator OnAttack() {
         if (isPlayerTurn) {
 
@@ -2149,16 +2202,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 if (bc.health <= 0) {
                     continue;
                 }
+                /*
                 if (currentMove.move.moveTarg == s_move.MOVE_TARGET.SINGLE) {
                     if (targetCharacterObject.health > 0) {
 
                     }
                 }
+                */
             }
         }
         yield return new WaitForSeconds(0.1f);
     }
 
+    /*
     public float GetElementStat(o_battleCharacter user, s_move move) {
         float pow = 0;
         float basePow = 0;
@@ -2200,37 +2256,36 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         pow = basePow + elementalPow;
         return pow;
     }
+    */
 
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
     {
-        ELEMENT el = ELEMENT.NONE;
-        el = move.element;
+        S_Element el = move.element;
         int dmg = 0;
         if (!move.fixedValue)
         {
-            if (move.moveType != s_move.MOVE_TYPE.STATUS)
-            {
-                float multipler = 1f;
-                float elementals = user.elementals[el];
-                if (elementals < 0 && elementals > -1)
-                    multipler = (elementals * -1);
-                else if (elementals <= -1)
-                    multipler = ((elementals + 1) * -1);
+            float multipler = 1f;
+            float elementals = user.elementals[el];
+            if (elementals < 0 && elementals > -1)
+                multipler = (elementals * -1);
+            else if (elementals <= -1)
+                multipler = ((elementals + 1) * -1);
 
-                if (modifiers != null)
+            if (modifiers != null)
+            {
+                foreach (float mod in modifiers)
                 {
-                    foreach (float mod in modifiers)
-                    {
-                        multipler += mod;
-                    }
+                    multipler += mod;
                 }
-
-                dmg = (int)(move.power * (GetElementStat(user, move) / (float)target.vitalityNet) * multipler);
             }
-            else
-            {
-                dmg = (int)(move.power * (user.intelligence /2));
-            }
+            float elementalDamage =
+                (user.strengthNet * el.strength) +
+                (user.vitalityNet * el.vitality) +
+                (user.dexterityNet * el.dexterity) +
+                (user.intelligenceNet * el.intelligence) +
+                (user.luckNet * el.luck) +
+                (user.agiNet * el.agility);
+            dmg = (int)((move.power * elementalDamage / (float)target.vitalityNet) * multipler);
         }
         else { dmg = move.power; }
         return dmg;
@@ -2386,8 +2441,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 switch (currentMove.move.moveType)
                 {
                     #region ATTACK
-                    case s_move.MOVE_TYPE.PHYSICAL:
-                    case s_move.MOVE_TYPE.SPECIAL:
+                    case s_move.MOVE_TYPE.HP_DAMAGE:
+                    case s_move.MOVE_TYPE.HP_DRAIN:
+                    case s_move.MOVE_TYPE.HP_SP_DAMAGE:
+                    case s_move.MOVE_TYPE.HP_SP_DRAIN:
 
                         #region CHECK FOR SACRIFICE
                         {
@@ -2412,7 +2469,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 {
                                     continue;
                                 }
-                                if (currentMove.move.moveTarg == s_move.MOVE_TARGET.SINGLE)
+                                if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
                                 {
                                     if (targetCharacter.characterRef.health < dmg && bc.health > 
                                         CalculateDamage(currentCharacterObject, bc, currentMove.move, null))
@@ -2465,7 +2522,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 float smirkChance = UnityEngine.Random.Range(0, 1);
                                 ELEMENT_WEAKNESS fl = 0;
                                 float elementWeakness = targ.elementals[mov.element];
-                                if (mov.moveType == s_move.MOVE_TYPE.STATUS)
+                                if (mov.moveType == s_move.MOVE_TYPE.NONE)
                                 {
                                     fl = ELEMENT_WEAKNESS.NONE;
                                 }
@@ -2540,6 +2597,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                         break;
                                 }
                                 #region HIT FROZEN FOE
+                                /*
                                 if (targ.HasStatus(STATUS_EFFECT.FROZEN))
                                 {
                                     switch (finalDamageFlag)
@@ -2558,7 +2616,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                             break;
                                     }
                                 }
-
+                                */
                                 #endregion
                                 switch (finalDamageFlag)
                                 {
@@ -2632,6 +2690,31 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 }
                             }
                             #region ELEMENT STATUS
+                            foreach (var statusEff in mov.element.statusInflict)
+                            {
+                                float status_inflict_chance = 0;
+                                s_statusEff eff = new s_statusEff();
+                                float ch = UnityEngine.Random.Range(0f, 1f);
+                                S_StatusEffect status = statusEff.statusEffect;
+                                if (statusEff.add_remove)
+                                {
+                                    if (ch < statusEff.chance)
+                                    {
+                                        eff.damage = Mathf.CeilToInt(dmg * status.regenPercentage);
+                                        /*
+                                            if (currentMove.move.element == ELEMENT.ICE)
+                                        {
+                                            targ.guardPoints = 0;
+                                        }
+                                        */
+                                        eff.duration = status.minDuration;
+                                        eff.status = status;
+                                        targ.SetStatus(eff);
+                                    }
+                                    
+                                }
+                            }
+                            /*
                             {
                                 float status_inflict_chance = 0;
                                 s_statusEff eff = new s_statusEff();
@@ -2694,6 +2777,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                         break;
                                 }
                             }
+                            */
                             #endregion
 
                             for (int i = 0; i < 2; i++)
@@ -2744,75 +2828,75 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     #endregion
 
                     #region STATUS
-                    case s_move.MOVE_TYPE.STATUS:
-                        if (mov.healHealth)
-                        {
-                            ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
-                            targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
-                                0, targetCharacterObject.maxHealth);
-                            SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
-                        }
-                        if (mov.healStamina) {
-                            targ.stamina += dmg;
-                            targ.stamina = Mathf.Clamp(targ.stamina,
-                                0, targ.maxStamina);
-                            SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
-                        }
-                        List<o_battleCharacter> targs = new List<o_battleCharacter>();
-                        switch (mov.customFunc) {
-                            case "callAlly":
-                                targs.Add(AddSummonableRand());
-                                break;
-                            case "callAllies":
-                                targs.Add(AddSummonableRand());
-                                targs.Add(AddSummonableRand());
-                                break;
-                            default:
-                                targs.Add(targ);
-                                break;
-                        }
-                        foreach (var ch in targs)
-                        {
-                            if (mov.intBuff != 0)
-                            {
-                                ch.intelligenceBuff += mov.intBuff;
-                                /*
-                                if (targ.intelligenceBuff > 0)
-                                {
-                                    SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
-                                    yield return new WaitForSeconds(0.05f);
-                                }
-                                */
-                            }
-                            if (mov.lucBuff != 0)
-                            {
-                                ch.luckBuff += mov.lucBuff;
-                            }
-                            if (mov.vitBuff != 0)
-                            {
-                                ch.vitalityBuff += mov.vitBuff;
-                            }
-                            if (mov.strBuff != 0)
-                            {
-                                ch.strengthBuff += mov.strBuff;
-                            }
-                            if (mov.dexBuff != 0)
-                            {
-                                ch.dexterityBuff += mov.dexBuff;
-                            }
-                            if (mov.agiBuff != 0)
-                            {
-                                ch.agilityBuff += mov.agiBuff;
-                            }
-                            if (mov.guardPoints != 0)
-                            {
-                                ch.guardPoints += mov.guardPoints;
-                            }
-                        }
+                    case s_move.MOVE_TYPE.HP_RECOVER:
+                        ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
+                        targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
+                            0, targetCharacterObject.maxHealth);
+                        SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                        break;
+
+                    case s_move.MOVE_TYPE.SP_RECOVER:
+
+                        targ.stamina += dmg;
+                        targ.stamina = Mathf.Clamp(targ.stamina,
+                            0, targ.maxStamina);
+                        SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
                         break;
                         #endregion
                 }
                 break;
+        }
+        List<o_battleCharacter> targs = new List<o_battleCharacter>();
+        switch (mov.customFunc)
+        {
+            case "callAlly":
+                targs.Add(AddSummonableRand());
+                break;
+            case "callAllies":
+                targs.Add(AddSummonableRand());
+                targs.Add(AddSummonableRand());
+                break;
+            default:
+                targs.Add(targ);
+                break;
+        }
+        foreach (var ch in targs)
+        {
+            if (mov.intBuff != 0)
+            {
+                ch.intelligenceBuff += mov.intBuff;
+                /*
+                if (targ.intelligenceBuff > 0)
+                {
+                    SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
+                    yield return new WaitForSeconds(0.05f);
+                }
+                */
+            }
+            if (mov.lucBuff != 0)
+            {
+                ch.luckBuff += mov.lucBuff;
+            }
+            if (mov.vitBuff != 0)
+            {
+                ch.vitalityBuff += mov.vitBuff;
+            }
+            if (mov.strBuff != 0)
+            {
+                ch.strengthBuff += mov.strBuff;
+            }
+            if (mov.dexBuff != 0)
+            {
+                ch.dexterityBuff += mov.dexBuff;
+            }
+            if (mov.agiBuff != 0)
+            {
+                ch.agilityBuff += mov.agiBuff;
+            }
+            if (mov.guardPoints != 0)
+            {
+                ch.guardPoints += mov.guardPoints;
+            }
         }
         //Show Damage output here
 
@@ -3043,7 +3127,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     print(spRestTurn);
                     c.stamina += spRestTurn;
                     c.stamina = Mathf.Clamp(c.stamina, 0, c.maxStamina );
-                    c.RemoveStatus(STATUS_EFFECT.FROZEN);
+                    c.RemoveStatusOnEndTurn();
                     for (int i2 = 0; i2 < c.battleCharData.turnIcons; i2++)
                     {
                         fullTurn++;

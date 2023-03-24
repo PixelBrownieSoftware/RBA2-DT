@@ -12,7 +12,7 @@ public class s_buttonItem : s_button
     {
         //s_battleEngine.engineSingleton.battleAction.move = moveButton;
         s_battleEngine.engineSingleton.battleAction.type = s_battleEngine.s_battleAction.MOVE_TYPE.ITEM;
-        s_battleEngine.engineSingleton.SetTargets(moveButton.onParty);
+        //s_battleEngine.engineSingleton.SetTargets(moveButton.onParty);
         s_menuhandler.GetInstance().GetMenu<s_targetMenu>("TargetMenu").mov = moveButton;
         base.OnButtonClicked();
     }

@@ -30,7 +30,7 @@ public class s_move : s_ability
             HEAL_ANY,
         }
         public o_weapon.WEAPON_TYPE weapType;
-        public ELEMENT element;
+        public S_Element element;
         public MOVE_REQ_TYPE type;
         public s_move move;
         public bool requirePower = false;
@@ -41,7 +41,7 @@ public class s_move : s_ability
     [System.Serializable]
     public struct statusInflict
     {
-        public STATUS_EFFECT status_effect;
+        public S_StatusEffect status_effect;
         public float status_inflict_chance;
         public int duration;
         public int damage;
@@ -49,30 +49,41 @@ public class s_move : s_ability
 
     public enum MOVE_TYPE
     {
-        PHYSICAL,
-        SPECIAL,
-        STATUS
+        HP_DAMAGE,
+        SP_DAMAGE,
+        HP_SP_DAMAGE,
+        HP_RECOVER,
+        SP_RECOVER,
+        HP_SP_RECOVER,
+        HP_DRAIN,
+        SP_DRAIN,
+        HP_SP_DRAIN,
+        NONE
     }
     public enum MOVE_TARGET
     {
-        SINGLE,
-        ALL,
-        RANDOM,
+        NONE,
+        ENEMY,
+        ALLY,
+        ENEMY_ALLY,
         SELF
     }
+    public enum SCOPE_NUMBER { 
+        ONE,
+        ALL,
+        RANDOM
+    }
     public int power;
-    public bool healHealth = false;
-    public bool healStamina = false;
     public bool fixedValue = false;
     public bool consumeTurn = true;
     public MOVE_TYPE moveType;
     public MOVE_TARGET moveTarg;
-    public ELEMENT element;
+    public SCOPE_NUMBER moveTargScope;
+    public S_Element element;
     public s_actionAnim[] preAnimations;
     public s_actionAnim[] animations;
     public s_actionAnim[] endAnimations;
     public statusInflict[] statusInflictChance;
-    public bool onParty;
     public int cost = 0;
 
     public string customFunc;

@@ -18,7 +18,7 @@ public class ed_move : Editor
         switch (req.type)
         {
             case s_move.moveRequirement.MOVE_REQ_TYPE.ELEMENTAL:
-                req.element = (ELEMENT)EditorGUILayout.EnumPopup(req.element);
+               // req.element = (ELEMENT)EditorGUILayout.EnumPopup(req.element);
                 break;
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.SPECIFIC:
@@ -63,6 +63,7 @@ public class ed_move : Editor
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField("Element");
 
+                    /*
                     switch (data.element) {
                         case ELEMENT.FIRE:
                             GUI.color = Color.red;
@@ -71,12 +72,14 @@ public class ed_move : Editor
                             GUI.color = Color.cyan;
                             break;
                     }
+                    */
                     EditorGUILayout.LabelField(data.element.ToString());
                     GUI.color = Color.white;
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField("Type");
+                    /*
                     switch (data.moveType) {
                         case s_move.MOVE_TYPE.PHYSICAL:
                             GUI.color = Color.grey;
@@ -85,6 +88,7 @@ public class ed_move : Editor
                             GUI.color = Color.blue;
                             break;
                     }
+                    */
                     EditorGUILayout.LabelField(data.moveType.ToString());
                     GUI.color = Color.white;
                     EditorGUILayout.Space();
@@ -182,15 +186,18 @@ public class ed_move : Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
                     EditorGUILayout.BeginHorizontal();
+                    /*
                     EditorGUILayout.LabelField("Element:");
                     data.element = (ELEMENT)EditorGUILayout.EnumPopup(data.element);
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
+                    */
                     EditorGUILayout.LabelField("Type:");
                     data.moveType = (s_move.MOVE_TYPE)EditorGUILayout.EnumPopup(data.moveType);
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
+                    /*
                     switch (data.moveType) {
                         case s_move.MOVE_TYPE.STATUS:
                             EditorGUILayout.BeginHorizontal();
@@ -204,6 +211,7 @@ public class ed_move : Editor
                             EditorGUILayout.EndHorizontal();
                             break;
                     }
+                    */
                     EditorGUILayout.LabelField("Status stuff:");
                     EditorGUILayout.Space();
                     EditorGUILayout.BeginHorizontal();
@@ -241,7 +249,7 @@ public class ed_move : Editor
 
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField("Element:");
-                    data.element = (ELEMENT)EditorGUILayout.EnumPopup(data.element);
+                    //data.element = (ELEMENT)EditorGUILayout.EnumPopup(data.element);
                     EditorGUILayout.EndHorizontal();
 
 

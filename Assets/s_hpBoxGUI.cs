@@ -100,6 +100,7 @@ public class s_hpBoxGUI : MonoBehaviour
             #region STATUS EFFECTS
             List<string> statusEffs = new List<string>();
             foreach (s_statusEff stat in bc.statusEffects) {
+                /*
                 switch (stat.status) {
                     case STATUS_EFFECT.POISON:
                         statusEffs.Add("psn");
@@ -112,6 +113,7 @@ public class s_hpBoxGUI : MonoBehaviour
                         statusEffs.Add("con");
                         break;
                 }
+                */
             }
             if (statusEffs.Count > 0)
             {

@@ -30,6 +30,7 @@ public class s_targetMenu : s_menucontroller
         return s_camera.cam.GetCentroid(allPositions);
     }
 
+    /*
     private void Update()
     {
         s_targetButton tg = null;
@@ -61,7 +62,8 @@ public class s_targetMenu : s_menucontroller
         }
 
     }
-
+    */
+    /*
     public override void OnOpen()
     {
         ResetButton();
@@ -144,4 +146,5 @@ public class s_targetMenu : s_menucontroller
         }
 
     }
+    */
 }

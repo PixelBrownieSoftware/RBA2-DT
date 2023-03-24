@@ -27,7 +27,7 @@ public class s_passive : s_ability
     public PASSIVE_TYPE passiveSkillType;
     public COUNTER_TYPE counterType;
     public STAT_TYPE stat;
-    public ELEMENT element;
+    public S_Element element;
     public float percentage;
     public string customPassive;
 }

@@ -184,6 +184,8 @@ public class s_buttonSkill : s_button
                 break;
 
             case SKILL_TYPE.BATTLE:
+                
+               /*
                 if (menuButton != null)
                 {
                     switch (moveButton.moveType)
@@ -199,6 +201,7 @@ public class s_buttonSkill : s_button
                             break;
                     }
                 }
+                */
                 break;
 
             case SKILL_TYPE.ITEM:
@@ -308,7 +311,7 @@ public class s_buttonSkill : s_button
                 }
                 break;
                 */
-
+            /*
             case SKILL_TYPE.ITEM_BATTLE:
             case SKILL_TYPE.BATTLE:
 
@@ -330,7 +333,7 @@ public class s_buttonSkill : s_button
                     s_soundmanager.GetInstance().PlaySound("selectOption");
                 }
                 break;
-
+                */
 
             case SKILL_TYPE.GROUP_SELECT:
                 base.OnButtonClicked();

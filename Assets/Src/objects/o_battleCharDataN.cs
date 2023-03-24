@@ -18,12 +18,13 @@ public class o_battleCharDataN : ScriptableObject
 
         public charAI[] ai;
     }
-
     [System.Serializable]
-    public struct skill_affinity {
-        public ELEMENT el;
-        public int points;
+    public struct el_weaknesses
+    {
+        public S_Element element;
+        public float value;
     }
+
 
     public float money;
 
@@ -58,7 +59,7 @@ public class o_battleCharDataN : ScriptableObject
     
     public List<s_move> moveLearn;
     //public element_affinity elementAffinities;
-    public element_weaknesses elementals;
+    public el_weaknesses[] elementals;
     public Color characterColour = new Color(1, 0.95f, 0.75f);
     public Color characterColour2 = new Color(1, 0.95f, 0.75f);
 
@@ -73,4 +74,14 @@ public class o_battleCharDataN : ScriptableObject
     public bool equip_gun = true;
     public bool equip_sword = true;
     public bool equip_staff = true;
+
+    public Dictionary<S_Element, float> GetElements {
+        get {
+            Dictionary<S_Element, float> els = new Dictionary<S_Element, float>();
+            foreach (var element in elementals) {
+                els.Add(element.element, element.value);
+            }
+            return els;
+        }
+    }
 }

@@ -116,6 +116,7 @@
     <Compile Include="Assets\Src\Menus\Hub\M_GachaGen.cs" />
     <Compile Include="Assets\Src\system\menu\s_overworldPlayerTargetMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_Move.cs" />
+    <Compile Include="Assets\Src\objects\S_StatusEffect.cs" />
     <Compile Include="Assets\Src\Menus\S_RPGGlobals.cs" />
     <Compile Include="Assets\Src\Menus\R_Text.cs" />
     <Compile Include="Assets\Src\Channels\CH_SoundPitch.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Assets\Src\Channels\CH_Text.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_CharacterStatus.cs" />
     <Compile Include="Assets\Src\Channels\CH_Func.cs" />
+    <Compile Include="Assets\Src\objects\S_Element.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyMenu.cs" />
     <Compile Include="Assets\Src\S_MenuManager.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_IntegerListener.cs" />

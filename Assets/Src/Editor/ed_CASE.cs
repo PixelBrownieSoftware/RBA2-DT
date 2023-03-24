@@ -140,19 +140,19 @@ public class ed_CASE : Editor
             lists[i].move = mov;
             switch (mov.moveType)
             {
-                case s_move.MOVE_TYPE.SPECIAL:
-                case s_move.MOVE_TYPE.PHYSICAL:
+                case s_move.MOVE_TYPE.HP_DAMAGE:
+                case s_move.MOVE_TYPE.HP_SP_DAMAGE:
                     lists[i].conditions = charAI.CONDITIONS.ALWAYS;
                     break;
 
-                case s_move.MOVE_TYPE.STATUS:
-                    if (mov.healHealth || mov.healStamina)
-                    {
-                        lists[i].isImportant = true;
-                        lists[i].onParty = true;
-                        lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
-                        lists[i].healthPercentage = 0.5f;
-                    }
+                case s_move.MOVE_TYPE.HP_DRAIN:
+                case s_move.MOVE_TYPE.SP_DRAIN:
+                case s_move.MOVE_TYPE.HP_RECOVER:
+                case s_move.MOVE_TYPE.SP_RECOVER:
+                    lists[i].isImportant = true;
+                    lists[i].onParty = true;
+                    lists[i].conditions = charAI.CONDITIONS.USER_PARTY_HP_LOWER;
+                    lists[i].healthPercentage = 0.5f;
                     break;
             }
         }

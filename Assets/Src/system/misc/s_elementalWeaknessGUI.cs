@@ -9,7 +9,7 @@ public class s_elementalWeaknessGUI : MonoBehaviour
     public Text weakTXT;
     public Text weakTXTShadow;
     o_battleCharPartyData bcD;
-    public ELEMENT el;
+    public S_Element el;
 
     public Color normal;
     public Color frail;

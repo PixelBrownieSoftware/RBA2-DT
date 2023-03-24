@@ -110,6 +110,7 @@ public class s_battleMenu : s_menucontroller
         return false;
     }
 
+    /*
     public void SetButtonElement(ref s_buttonSkill img) {
 
         Sprite draw = null;
@@ -152,26 +153,25 @@ public class s_battleMenu : s_menucontroller
                 draw = wind_picture;
                 break;
         }
-        if (img.moveButton.moveType == s_move.MOVE_TYPE.STATUS)
-        {
-            if (img.moveButton.healStamina)
-            {
-                draw = heal_SP_picture;
-            }
-            if (img.moveButton.healHealth)
-            {
+        switch (img.moveButton.moveType) {
+            case s_move.MOVE_TYPE.HP_RECOVER:
                 draw = heal_HP_picture;
-            }
-            if (img.moveButton.canBuff)
-            {
+                break;
+            case s_move.MOVE_TYPE.SP_RECOVER:
+            case s_move.MOVE_TYPE.HP_SP_RECOVER:
+                draw = heal_SP_picture;
+                break;
+            case s_move.MOVE_TYPE.NONE:
                 draw = support_picture;
-            }
+                break;
         }
         img.element.color = Color.white;
         img.costGUI.color = Color.white;
         img.element.sprite = draw;
     }
+    */
 
+    /*
     public override void OnOpen()
     {
         base.OnOpen();
@@ -276,12 +276,6 @@ public class s_battleMenu : s_menucontroller
                 weapons = s_rpgGlobals.rpgGlSingleton.GetWeapons();
                 for (int i = 0; i < weapons.Count; i++)
                 {
-                    /*
-                    if (partyCharacter.currentPhysWeapon == weapons[i])
-                        continue;
-                    if (partyCharacter.currentRangeWeapon == weapons[i])
-                        continue;
-                    */
                     if (PhysWeapEqupped(weapons[i]))
                         continue;
                     if (RangeWeapEqupped(weapons[i]))
@@ -499,7 +493,6 @@ public class s_battleMenu : s_menucontroller
                 }
                 break;
 
-                /*
             case MENU_TYPE.BATTLE:
                 rpgSkills = new List<s_move>();
                 List<s_move> mv = new List<s_move>();
@@ -540,7 +533,6 @@ public class s_battleMenu : s_menucontroller
                     SetButtonElement(ref sb);
                 }
                 break;
-                */
 
             case MENU_TYPE.EXTRA_SKILL:
                 rpgSkills = s_rpgGlobals.rpgGlSingleton.extraSkills.moveListRef;
@@ -622,6 +614,7 @@ public class s_battleMenu : s_menucontroller
                 break;
         }
     }
+    */
 
     public void ChangeRequirements(s_move mov)
     {

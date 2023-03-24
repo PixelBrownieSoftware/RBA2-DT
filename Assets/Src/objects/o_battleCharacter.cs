@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
 public class O_BattleCharacterStats
 {
     public int level;
@@ -36,6 +37,7 @@ public class O_BattleCharacterStats
     public o_weapon physWeapon;
     public o_weapon rangedWeapon;
 }
+*/
 
 public enum ELEMENT_WEAKNESS {
     NONE,
@@ -60,6 +62,7 @@ public enum STATUS_EFFECT
     STRAIN,
     DEPRESSED
 }
+/*
 public enum ELEMENT { 
     NONE,
     STRIKE,
@@ -75,6 +78,7 @@ public enum ELEMENT {
     LIGHT,
     PSYCHIC
 }
+*/
 
 [System.Serializable]
 public class o_equip
@@ -134,7 +138,7 @@ public class charAI
     public TURN_COUNTER turnCounters;
     public ACTION AIaction = ACTION.MOVE;
     public CONDITIONS conditions;
-    public ELEMENT element;
+    public S_Element element;
     public float healthPercentage;
     public string name;
     public bool onParty;
@@ -247,8 +251,7 @@ public class o_battleCharPartyData
     public List<s_move> currentMoves = new List<s_move>();
     public List<s_move> extraSkills = new List<s_move>();
     public List<s_passive> passives = new List<s_passive>();
-    public element_affinity elementAffinities;
-    public element_weaknesses elementWeakness;
+    public Dictionary<S_Element,float> elementWeakness;
     public o_weapon currentPhysWeapon;
     public o_weapon currentRangeWeapon;
     public s_consumable consumable;
@@ -320,18 +323,18 @@ public class s_statusEff
     public s_statusEff()
     {
     }
-    public s_statusEff(STATUS_EFFECT status, int duration) {
+    public s_statusEff(S_StatusEffect status, int duration) {
         this.status = status;
         this.duration = duration;
     }
-    public s_statusEff(STATUS_EFFECT status, int duration, int damage)
+    public s_statusEff(S_StatusEffect status, int duration, int damage)
     {
         this.damage = damage;
         this.status = status;
         this.duration = duration;
     }
 
-    public STATUS_EFFECT status;
+    public S_StatusEffect status;
     public int duration;
     public int damage;
 }
@@ -366,7 +369,7 @@ public class o_battleCharacter : MonoBehaviour
     public s_rpganim animations;
 
     public o_battleCharDataN battleCharData;
-    public element_weaknesses elementals;
+    public Dictionary<S_Element, float> elementals;
     //public element_affinity elementalAffinities;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
@@ -475,63 +478,15 @@ public class o_battleCharacter : MonoBehaviour
         }
 
         #region STATUS EFFECTS
-        List<string> statusEffs = new List<string>();
-        foreach (s_statusEff stat in statusEffects)
-        {
-            switch (stat.status)
-            {
-                case STATUS_EFFECT.SMIRK:
-                    statusEffs.Add("smk");
-                    break;
-                case STATUS_EFFECT.POISON:
-                    statusEffs.Add("psn");
-                    break;
-                case STATUS_EFFECT.STUN:
-                    statusEffs.Add("stn");
-                    break;
-
-                case STATUS_EFFECT.CONFUSED:
-                    statusEffs.Add("con");
-                    break;
-
-                case STATUS_EFFECT.FROZEN:
-                    statusEffs.Add("frz");
-                    break;
-
-                case STATUS_EFFECT.BURN:
-                    statusEffs.Add("brn");
-                    break;
-            }
-        }
         for (int i = 0; i < statusEffectIcon.Length; i++)
         {
-            if (statusEffs.Count <= i)
+            if (statusEffects.Count <= i)
             {
                 statusEffectIcon[i].enabled = false;
                 statusEffectIcon[i].color = Color.clear;
                 continue;
             }
-            switch (statusEffs[i])
-            {
-                case "smk":
-                    statusEffectIcon[i].sprite = poisionIcon;
-                    break;
-                case "psn":
-                    statusEffectIcon[i].sprite = poisionIcon;
-                    break;
-                case "stn":
-                    statusEffectIcon[i].sprite = stunIcon;
-                    break;
-                case "con":
-                    statusEffectIcon[i].sprite = confuseIcon;
-                    break;
-                case "brn":
-                    statusEffectIcon[i].sprite = burnIcon;
-                    break;
-                case "frz":
-                    statusEffectIcon[i].sprite = frozenIcon;
-                    break;
-            }
+            statusEffectIcon[i].sprite = statusEffects[i].status.statusImage;
             statusEffectIcon[i].enabled = true;
             statusEffectIcon[i].color = Color.white;
         }
@@ -583,7 +538,7 @@ public class o_battleCharacter : MonoBehaviour
 
     }
 
-    public bool HasStatus(STATUS_EFFECT statEff) {
+    public bool HasStatus(S_StatusEffect statEff) {
         if (statusEffects.Find(x => x.status == statEff) != null) {
             return true;
         }
@@ -594,28 +549,40 @@ public class o_battleCharacter : MonoBehaviour
     {
         if (statusEffects.Find(x => x.status == statEff.status) == null)
         {
-            if (statEff.status == STATUS_EFFECT.SMIRK)
-            {
-                if (statusEffects.Count > 0)
-                    statusEffects.Add(statEff);
-            }
-            else
-            {
+            /*
+        if (statEff.status == STATUS_EFFECT.SMIRK)
+        {
+            if (statusEffects.Count > 0)
                 statusEffects.Add(statEff);
-                if (statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK) != null) {
-                    statusEffects.Remove(statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK));
-                }
+        }
+        else
+        {
+            statusEffects.Add(statEff);
+            if (statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK) != null) {
+                statusEffects.Remove(statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK));
             }
         }
+            */
+            statusEffects.Add(statEff);
+        }
     }
-    public s_statusEff GetStatus(STATUS_EFFECT statEff) {
+    public s_statusEff GetStatus(S_StatusEffect statEff) {
         return statusEffects.Find(x => x.status == statEff);
     }
-    public void RemoveStatus(STATUS_EFFECT statEff)
+    public void RemoveStatus(S_StatusEffect statEff)
     {
         if (statusEffects.Find(x => x.status == statEff) != null)
         {
             statusEffects.Remove(statusEffects.Find(x => x.status == statEff));
+        }
+    }
+    public void RemoveStatusOnEndTurn()
+    {
+        foreach (var status in statusEffects) {
+            if (status.status.removeOnEndRound)
+            {
+                RemoveStatus(status.status);
+            }
         }
     }
 
