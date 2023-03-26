@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
 public class s_partyOverworldMenu : s_menucontroller
 {
     public PARTY_MENU_TYPE ptMode;
@@ -52,3 +53,4 @@ public class s_partyOverworldMenu : s_menucontroller
         }
     }
 }
+*/

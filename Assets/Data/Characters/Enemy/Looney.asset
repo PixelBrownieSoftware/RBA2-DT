@@ -37,9 +37,8 @@ MonoBehaviour:
   moveLearn:
   - {fileID: 11400000, guid: cd6f1c0bc01235046909664e132e2dce, type: 2}
   elementals:
-    weaknessChart:
-    - element: 2
-      weakness: 2
+  - element: {fileID: 11400000, guid: 652b6b8f93cdd764f8592830ec566fb8, type: 2}
+    value: 2
   characterColour: {r: 0.9622642, g: 0.937638, b: 0.48567107, a: 1}
   characterColour2: {r: 0.8773585, g: 0.77332914, b: 0.33521718, a: 1}
   aiPages:
@@ -48,7 +47,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0

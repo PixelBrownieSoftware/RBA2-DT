@@ -49,6 +49,7 @@ public class S_RPGGlobals : ScriptableObject
                 }
             }
 
+            /*
             if (data.currentPhysWeapon != "")
             {
                 newCharacter.currentPhysWeapon = GetWeapon(data.currentPhysWeapon);
@@ -57,7 +58,7 @@ public class S_RPGGlobals : ScriptableObject
             {
                 newCharacter.currentRangeWeapon = GetWeapon(data.currentRangedWeapon);
             }
-
+            */
             //newCharacter.inBattle = true;
 
             newCharacter.currentMoves = new List<s_move>();
@@ -126,6 +127,15 @@ public class S_RPGGlobals : ScriptableObject
                 newCharacter.level++;
             }
 
+            if (data.secondMove != null)
+            {
+                newCharacter.secondMove = data.secondMove;
+            }
+            if (data.thirdMove != null)
+            {
+                newCharacter.thirdMove = data.thirdMove;
+            }
+            /*
             if (data.defaultRangedWeapon != null)
             {
                 AddWeapon(data.defaultRangedWeapon.name);
@@ -136,6 +146,7 @@ public class S_RPGGlobals : ScriptableObject
                 AddWeapon(data.defaultRangedWeapon.name);
                 newCharacter.currentRangeWeapon = data.defaultRangedWeapon;
             }
+            */
 
             //newCharacter.inBattle = true;
             //newCharacter.elementAffinities = data.elementAffinities;

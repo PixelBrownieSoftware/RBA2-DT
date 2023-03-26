@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class s_skillDrawMenu : s_menucontroller
 {
     public s_enemyGroup SkDr;
@@ -9,7 +10,6 @@ public class s_skillDrawMenu : s_menucontroller
 
     public void GetSkillsFromGroup()
     {
-        /*
         foreach (s_enemyGroup.s_groupMember bc in SkDr.members)
         {
             o_battleCharDataN no = bc.memberDat;
@@ -22,7 +22,6 @@ public class s_skillDrawMenu : s_menucontroller
                 }
             }
         }
-        */
     }
 
     public override void OnOpen()
@@ -39,3 +38,4 @@ public class s_skillDrawMenu : s_menucontroller
         base.OnOpen();
     }
 }
+*/

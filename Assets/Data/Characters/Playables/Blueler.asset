@@ -43,13 +43,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7d93ac692514f384f82c62bb6f2365d6, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   elementals:
-    weaknessChart:
-    - element: 4
-      weakness: 0.5
-    - element: 5
-      weakness: 0.7
-    - element: 3
-      weakness: 2.3
+  - element: {fileID: 11400000, guid: b033c1bbf082d0442bc3ebdff03d8154, type: 2}
+    value: 2
+  - element: {fileID: 11400000, guid: 9960c19a89a5aaf45b4f2e65d6db53ad, type: 2}
+    value: 0.5
   characterColour: {r: 0.4198113, g: 0.60606354, b: 1, a: 1}
   characterColour2: {r: 0.15886435, g: 0.4047911, b: 0.9622642, a: 1}
   aiPages:

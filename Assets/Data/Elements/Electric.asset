@@ -19,3 +19,7 @@ MonoBehaviour:
   dexterity: 0.5
   luck: 0
   isMagic: 1
+  statusInflict:
+  - statusEffect: {fileID: 11400000, guid: 481ad93df5a7fba4a8ef819f5ac3c0d7, type: 2}
+    chance: 0.3
+    add_remove: 1

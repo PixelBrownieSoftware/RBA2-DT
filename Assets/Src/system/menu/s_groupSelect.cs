@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class s_groupSelect : s_menucontroller
 {
     public List<s_enemyGroup> enemyGroup;
@@ -20,3 +21,4 @@ public class s_groupSelect : s_menucontroller
         }
     }
 }
+*/

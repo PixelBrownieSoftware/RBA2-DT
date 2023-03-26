@@ -4,6 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class BC_Stats {
+
+    public int strength;
+    public int vitality;
+    public int dexterity;
+    public int agility;
+    public int intelligence;
+    public int luck;
+}
+
 /*
 public class O_BattleCharacterStats
 {
@@ -252,10 +262,21 @@ public class o_battleCharPartyData
     public List<s_move> extraSkills = new List<s_move>();
     public List<s_passive> passives = new List<s_passive>();
     public Dictionary<S_Element,float> elementWeakness;
-    public o_weapon currentPhysWeapon;
-    public o_weapon currentRangeWeapon;
+    public s_move secondMove;
+    public s_move thirdMove;
+    //public o_weapon currentPhysWeapon;
+    //public o_weapon currentRangeWeapon;
     public s_consumable consumable;
     public int durationConsumable;
+
+    public float GetElementWeakness(S_Element element)
+    {
+        foreach (var el in characterDataSource.elementals) {
+            if (el.element == element)
+                return el.value;
+        }
+        return 1f;
+    }
 
     public List<s_move> AllSkills {
         get {
@@ -358,6 +379,7 @@ public class o_battleCharacter : MonoBehaviour
     public int agilityBuff;
     public int intelligenceBuff;
     public int luckBuff;
+    private BC_Stats statusStats = new BC_Stats();
     public float experiencePoints;
     public CH_BattleChar referencePoint;
 
@@ -369,7 +391,7 @@ public class o_battleCharacter : MonoBehaviour
     public s_rpganim animations;
 
     public o_battleCharDataN battleCharData;
-    public Dictionary<S_Element, float> elementals;
+    public Dictionary<S_Element, float> elementals = new Dictionary<S_Element, float>();
     //public element_affinity elementalAffinities;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
@@ -383,6 +405,8 @@ public class o_battleCharacter : MonoBehaviour
 
     public o_weapon physWeapon;
     public o_weapon rangedWeapon;
+    public s_move secondMove;
+    public s_move thirdMove;
 
     public Animation[] customAnims;
     public Animator animHandler;
@@ -405,47 +429,86 @@ public class o_battleCharacter : MonoBehaviour
     #endregion
 
     public int strengthNet {
-        get {
-            return strength + (int)((float)strengthBuff * 2.5f);
+        get
+        {
+            int net = strength + (int)((float)strengthBuff * 2.5f) + statusStats.strength;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
     public int vitalityNet
     {
         get
         {
-            return vitality + guardPoints + (int)((float)vitalityBuff * 2.5f);
+            int net = vitality + guardPoints + (int)((float)vitalityBuff * 2.5f) + statusStats.vitality;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
     public int dexterityNet
     {
         get
         {
-            return dexterity + (int)((float)dexterityBuff * 2.5f);
+            int net = dexterity + (int)((float)dexterityBuff * 2.5f) + statusStats.dexterity;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
     public int agiNet
     {
         get
         {
-            return agility + (int)((float)agilityBuff * 2.5f);
+            int net = agility + (int)((float)agilityBuff * 2.5f) + statusStats.agility;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
     public int intelligenceNet
     {
         get
         {
-            return intelligence + (int)((float)intelligenceBuff * 2.5f);
+            int net = intelligence + (int)((float)intelligenceBuff * 2.5f) + statusStats.intelligence;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
     public int luckNet
     {
         get
         {
-            return luck + (int)((float)luckBuff * 2.5f);
+            int net = luck + (int)((float)luckBuff * 2.5f) + statusStats.luck + statusStats.luck;
+            net = Mathf.Clamp(net, 1, int.MaxValue);
+            return net;
         }
     }
 
     public int guardPoints = 0;
+
+    public void UpdateStatusEffectBuffs() {
+        int str = 0;
+        int vit = 0;
+        int agi = 0;
+        int intel = 0;
+        int dex = 0;
+        int luc = 0;
+
+        foreach (var status in statusEffects) {
+            S_StatusEffect statEff = status.status;
+            str += statEff.strAffect;
+            vit += statEff.vitAffect;
+            agi += statEff.agiAffect;
+            intel += statEff.intAffect;
+            dex += statEff.dexAffect;
+            luc += statEff.lucAffect;
+        }
+
+        statusStats.strength = str; 
+        statusStats.vitality = vit; 
+        statusStats.strength = agi; 
+        statusStats.strength = intel; 
+        statusStats.dexterity = dex;
+        statusStats.luck = luc;
+    }
 
     public List<s_move> GetAllMoves
     {
@@ -538,6 +601,13 @@ public class o_battleCharacter : MonoBehaviour
 
     }
 
+    public float GetElementWeakness(S_Element element) {
+        if (!elementals.ContainsKey(element)) {
+            return 1f;
+        }
+        return elementals[element];
+    }
+
     public bool HasStatus(S_StatusEffect statEff) {
         if (statusEffects.Find(x => x.status == statEff) != null) {
             return true;
@@ -564,6 +634,7 @@ public class o_battleCharacter : MonoBehaviour
         }
             */
             statusEffects.Add(statEff);
+            UpdateStatusEffectBuffs();
         }
     }
     public s_statusEff GetStatus(S_StatusEffect statEff) {

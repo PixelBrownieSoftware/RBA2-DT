@@ -19,23 +19,27 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 7
-  moveType: 1
-  moveTarg: 0
-  element: 6
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
+  moveTarg: 1
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: d4b24f652d5fddc4a8adc781375323bc, type: 2}
   preAnimations: []
   animations: []
   endAnimations: []
   statusInflictChance:
-  - status_effect: 2
+  - status_effect: {fileID: 0}
     status_inflict_chance: 1
     duration: 5
     damage: 0
-  onParty: 0
-  fixedValue: 0
   cost: 5
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
   moveRequirements: []

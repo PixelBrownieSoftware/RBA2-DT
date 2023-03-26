@@ -12,6 +12,10 @@ public abstract class O_Button : MonoBehaviour
     public void SetButtonColour(Color colour) { 
         image.color = colour;
     }
+    public void SetButonTextColour(Color colour)
+    {
+        text.color = colour;
+    }
 
     public void SetButonText(string _text) { 
         text.text = _text;

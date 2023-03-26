@@ -28,6 +28,7 @@ public class M_CharacterStatus : S_MenuSystem
 
     o_battleCharPartyData currentBattleCharacterData;
     public R_BattleCharacter characterData;
+    public CH_Func assignElementalAffinities;
     public Text health;
     public Text stamina;
     public Text nameCharacter;
@@ -38,6 +39,7 @@ public class M_CharacterStatus : S_MenuSystem
     {
         base.StartMenu();
         currentBattleCharacterData = characterData.battleCharacter;
+        assignElementalAffinities.RaiseEvent();
     }
 
     private void Update()

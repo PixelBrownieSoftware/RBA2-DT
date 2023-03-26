@@ -19,10 +19,22 @@ public class s_elementalWeaknessGUI : MonoBehaviour
     public Color reflect;
     float elementWeakness;
     ELEMENT_WEAKNESS aff;
+    public R_BattleCharacter currentCharacter;
+    public CH_Func setData;
 
-    public void SetToDat(o_battleCharPartyData pd) {
-        bcD = pd;
-        elementWeakness = bcD.elementWeakness[el];
+    private void OnEnable()
+    {
+        setData.OnFunctionEvent += SetToDat;
+    }
+
+    private void OnDisable()
+    {
+        setData.OnFunctionEvent -= SetToDat;
+    }
+
+    public void SetToDat() {
+        bcD = currentCharacter.battleCharacter;
+        elementWeakness = bcD.GetElementWeakness(el);
         if (elementWeakness >= 2)
             aff = ELEMENT_WEAKNESS.FRAIL;
         else if (elementWeakness < 2 && elementWeakness > 0)

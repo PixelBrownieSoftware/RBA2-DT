@@ -39,7 +39,8 @@ public class ed_move : Editor
                 break;
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.ELEMENTAL:
-                str = "A " + req.element.ToString() + " type skill";
+                if(req.element != null)
+                    str = "A " + req.element.ToString() + " type skill";
                 break;
 
             case s_move.moveRequirement.MOVE_REQ_TYPE.SPECIFIC:
@@ -73,7 +74,8 @@ public class ed_move : Editor
                             break;
                     }
                     */
-                    EditorGUILayout.LabelField(data.element.ToString());
+                    if(data.element != null)
+                        EditorGUILayout.LabelField(data.element.ToString());
                     GUI.color = Color.white;
                     EditorGUILayout.EndHorizontal();
 

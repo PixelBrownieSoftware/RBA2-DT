@@ -66,8 +66,10 @@ public class o_battleCharDataN : ScriptableObject
     public ai_page[] aiPages = new ai_page[1];
     public RuntimeAnimatorController anim;
     public o_RPGItem[] items;
-    public o_weapon defaultPhysWeapon;
-    public o_weapon defaultRangedWeapon;
+    public s_move secondMove;
+    public s_move thirdMove;
+    //public o_weapon defaultPhysWeapon;
+    //public o_weapon defaultRangedWeapon;
     public bool persistence;
 
     public bool equip_fist = true;
@@ -79,6 +81,11 @@ public class o_battleCharDataN : ScriptableObject
         get {
             Dictionary<S_Element, float> els = new Dictionary<S_Element, float>();
             foreach (var element in elementals) {
+                if (element.element == null)
+                {
+                    Debug.LogWarning("There is an unset element in " + name + ". Please remove or change it.");
+                    continue;
+                }
                 els.Add(element.element, element.value);
             }
             return els;

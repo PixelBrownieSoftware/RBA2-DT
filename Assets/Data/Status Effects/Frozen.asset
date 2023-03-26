@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0474001ea9bb0df4897313b139308ea7, type: 3}
+  m_Name: Frozen
+  m_EditorClassIdentifier: 
+  restriction: 1
+  variableChange: 0
+  maxDuration: 0
+  minDuration: 0
+  regenPercentage: 0
+  strAffect: 0
+  vitAffect: 0
+  dexAffect: 0
+  agiAffect: 0
+  intAffect: 0
+  lucAffect: 0
+  removeOnEndRound: 1
+  criticalOnHit:
+  - {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
+  - {fileID: 11400000, guid: 652b6b8f93cdd764f8592830ec566fb8, type: 2}
+  - {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
+  - {fileID: 11400000, guid: b033c1bbf082d0442bc3ebdff03d8154, type: 2}
+  statusImage: {fileID: 8358860530532573307, guid: c642104f9a91dd54fb4c6f0ad2dddbdc,
+    type: 3}

@@ -12,15 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Cleave
   m_EditorClassIdentifier: 
+  strReq: 6
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 6
+  fixedValue: 0
+  consumeTurn: 1
   moveType: 0
-  comboType: 0
   moveTarg: 0
-  element: 0
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
+  preAnimations: []
   animations:
   - name: 
     actionType: 7
     teleport: 1
+    start: 0
     goal: 4
     offset: {x: 0, y: 0}
     animation_id: 0
@@ -32,9 +42,12 @@ MonoBehaviour:
     initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   - name: attack
     actionType: 6
     teleport: 0
+    start: 0
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
@@ -46,9 +59,12 @@ MonoBehaviour:
     initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   - name: 
     actionType: 7
     teleport: 0
+    start: 0
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
@@ -60,9 +76,12 @@ MonoBehaviour:
     initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   - name: 
     actionType: 0
     teleport: 0
+    start: 0
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
@@ -74,9 +93,12 @@ MonoBehaviour:
     initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   - name: 
     actionType: 5
     teleport: 0
+    start: 0
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
@@ -88,32 +110,17 @@ MonoBehaviour:
     initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  endAnimations: []
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
-  isHeal: 0
-  cureStatus: 0
-  Req1:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  strReq: 6
-  dxReq: 0
-  vitReq: 0
-  agiReq: 0
+  cost: 0
+  customFunc: 
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
+  moveRequirements: []

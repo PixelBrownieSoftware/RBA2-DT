@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Greendori
   m_EditorClassIdentifier: 
-  level: 39
   money: 0
   maxSkillPointsB: 20
   maxHitPointsB: 19
@@ -42,7 +41,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
   - {fileID: 11400000, guid: c56eb97e398912640b97b41642878e38, type: 2}
   elementals:
-    weaknessChart: []
+  - element: {fileID: 11400000, guid: d4b24f652d5fddc4a8adc781375323bc, type: 2}
+    value: 2
   characterColour: {r: 0.32392004, g: 1, b: 0.11792451, a: 1}
   characterColour2: {r: 0.31382358, g: 0.6603774, b: 0.25854397, a: 1}
   aiPages:

@@ -121,7 +121,7 @@ public class s_RPGSave : dat_save {
     public s_RPGSave(
         List<o_battleCharPartyData> partyMembers,
         R_MoveList extraMoves,
-        List<s_shopItem> shopItems,
+        List<string> shopItems,
         Dictionary<string, int> inventoryItems,
         List<string> weapons,
         float money)
@@ -145,11 +145,12 @@ public class s_RPGSave : dat_save {
                 mem.currentMoves.Add(mv.name);
             }
             
-            if(a.currentPhysWeapon != null)
-                mem.currentPhysWeapon = a.currentPhysWeapon.name;
-            if (a.currentRangeWeapon != null)
-                mem.currentRangedWeapon = a.currentRangeWeapon.name;
-
+            /*
+            if(a.secondMove != null)
+                mem.secondMove = a.secondMove.name;
+            if (a.thirdMove != null)
+                mem.thirdMove = a.thirdMove.name;
+            */
             partySave.Add(mem);
         }
 
@@ -166,6 +167,7 @@ public class s_RPGSave : dat_save {
             }
         }
 
+        /*
         List<sav_shopItem> savedShopItems = new List<sav_shopItem>();
         foreach (var shopIt in shopItems) {
             savedShopItems.Add(new sav_shopItem(shopIt.item.name, shopIt.price));
@@ -176,12 +178,13 @@ public class s_RPGSave : dat_save {
         {
             savedItems.Add(new sav_item(shopIt.Key, shopIt.Value));
         }
+        */
 
         this.money = money;
         party_members = partySave.ToArray();
         this.weapons = weapons.ToArray();
-        shop_items = savedShopItems.ToArray();
-        inventory = savedItems.ToArray();
+        //shop_items = savedShopItems.ToArray();
+        //inventory = savedItems.ToArray();
         extraSkills = exMoves.ToArray();
     }
 }
@@ -200,13 +203,13 @@ public class s_rpgGlobals : s_globals
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
     public List<s_move> moveDatabase = new List<s_move>();
 
-    public List<s_shopItem> shopItems = new List<s_shopItem>();
+    //public List<s_shopItem> shopItems = new List<s_shopItem>();
 
     public R_MoveList extraSkills;
     public List<s_passive> extraPassives = new List<s_passive>();
 
     //So we can set it's object state once a level has been completed
-    public o_locationOverworld locationObjectName;
+    //public o_locationOverworld locationObjectName;
     public Text moneyTxt;
 
     public s_move[] comboMoveData;
@@ -251,6 +254,7 @@ public class s_rpgGlobals : s_globals
     {
         try
         {
+            /*
             FileStream fs = new FileStream(saveDataName, FileMode.Create);
             BinaryFormatter bin = new BinaryFormatter();
 
@@ -265,6 +269,7 @@ public class s_rpgGlobals : s_globals
             sav.trigStates = objectStates;
             bin.Serialize(fs, sav);
             fs.Close();
+            */
 
         } catch (Exception e) {
             print(e);
@@ -307,6 +312,7 @@ public class s_rpgGlobals : s_globals
                     }
                 }
             }
+            /*
             if (sav.shop_items != null)
             {
                 foreach (var it in sav.shop_items)
@@ -314,6 +320,7 @@ public class s_rpgGlobals : s_globals
                     shopItems.Add(new s_shopItem(it.price, itemDatabase.Find(x => x.name == it.name)));
                 }
             }
+            */
             if (sav.inventory != null)
             {
                 foreach (var it in sav.inventory)
@@ -364,10 +371,12 @@ public class s_rpgGlobals : s_globals
         if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo == "")
         {
             s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
-        } 
+        }
+        /*
         if (!isFlee)
             if (locationObjectName != null)
                 locationObjectName.isDone = true;
+        */
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         //rpgScene.SetActive(false);
         //rpgSceneGUI.SetActive(false);
@@ -380,8 +389,10 @@ public class s_rpgGlobals : s_globals
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);
         s_camera.cam.cameraMode = s_camera.CAMERA_MODE.CHARACTER_FOCUS;
+        /*
         if (locationObjectName != null)
             AddTriggerState(new triggerState(locationObjectName.name, "Overworld", true));
+        */
         SaveData();
 
         SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
@@ -397,10 +408,12 @@ public class s_rpgGlobals : s_globals
         partyMembers.Clear();
     }
 
+    /*
     public void SetLocationObject(o_locationOverworld lc)
     {
         locationObjectName = lc;
     }
+    */
 
     public IEnumerator SwitchToBattle(s_enemyGroup gr)
     {
@@ -413,10 +426,12 @@ public class s_rpgGlobals : s_globals
         s_battleEngine.engineSingleton.nonChangablePlayers = false;
         s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.StartBattle());
     }
+    /*
     public IEnumerator SwitchToBattle(s_enemyGroup gr, o_locationOverworld lc) {
         locationObjectName = lc;
         yield return SwitchToBattle(gr);
     }
+    */
 
     public void SwitchToBattle() {
         StartCoroutine(SwitchToBattle(enemyGroupSelect.enemyGroup));

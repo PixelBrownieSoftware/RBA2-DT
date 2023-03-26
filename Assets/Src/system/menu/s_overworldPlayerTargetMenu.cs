@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class s_overworldPlayerTargetMenu : s_menucontroller
 {
     public s_enemyGroup group;
@@ -21,3 +22,4 @@ public class s_overworldPlayerTargetMenu : s_menucontroller
         base.OnOpen();
     }
 }
+*/

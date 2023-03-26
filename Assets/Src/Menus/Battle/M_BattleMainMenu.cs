@@ -13,6 +13,8 @@ public class M_BattleMainMenu : S_MenuSystem
     private R_MoveList currentMovesRef;
     [SerializeField]
     private R_Move currentMoveRef;
+    [SerializeField]
+    private R_Items inventory;
     public B_Function[] buttons;
 
     public s_move meleeAttack;
@@ -24,9 +26,9 @@ public class M_BattleMainMenu : S_MenuSystem
 
     [SerializeField]
     private CH_Text changeMenu;
-
     [SerializeField]
-    private R_Boolean isItem;
+    private R_Text battleMenuType;
+
     [SerializeField]
     private CH_Func goToMelee;
     [SerializeField]
@@ -63,12 +65,19 @@ public class M_BattleMainMenu : S_MenuSystem
             currentMoveRef.SetMove(defaultAttack);
         changeMenu.RaiseEvent("TargetMenu");
     }
+    public void GoToComboSkills()
+    {
+        print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
+        currentMovesRef.SetMoves(currentCharacter.GetAllMoves());
+        battleMenuType.text = "Combos";
+        changeMenu.RaiseEvent("BattleSkillMenu");
+    }
 
     public void GoToSkills()
     {
         print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
         currentMovesRef.SetMoves(currentCharacter.GetAllMoves());
-        isItem.boolean = false;
+        battleMenuType.text = "Skills";
         changeMenu.RaiseEvent("BattleSkillMenu");
     }
     public void GuardAction()
@@ -109,12 +118,12 @@ public class M_BattleMainMenu : S_MenuSystem
         {
             buttons[2].gameObject.SetActive(true);
         }
-        //Placeholder condition
-        if (0 == 1)
-        {
-            buttons[3].gameObject.SetActive(true);
-        }
+
         buttons[4].gameObject.SetActive(true);
+        if (inventory.inventory.Count > 0)
+        {
+            buttons[5].gameObject.SetActive(true);
+        }
         buttons[6].gameObject.SetActive(true);
     }
 }

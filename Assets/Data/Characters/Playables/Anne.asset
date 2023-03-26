@@ -43,8 +43,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2889445efa3b4c349b7ffa3ec707b319, type: 2}
   - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
   - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
-  elementals:
-    weaknessChart: []
+  elementals: []
   characterColour: {r: 0.85310155, g: 0.5518868, b: 1, a: 1}
   characterColour2: {r: 0.8040012, g: 0.34242615, b: 0.8962264, a: 1}
   aiPages:
@@ -53,7 +52,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -64,7 +63,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 19
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0.5
       name: 
       onParty: 1
@@ -75,7 +74,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0

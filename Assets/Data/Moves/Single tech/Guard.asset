@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Guard
   m_EditorClassIdentifier: 
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 0
-  moveType: 2
-  comboType: 0
-  moveTarg: 0
-  element: 0
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 9
+  moveTarg: 4
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 557862e97ab269e4f8e9b6a66e719e7c, type: 2}
+  preAnimations: []
   animations:
   - name: 
     actionType: 0
@@ -29,28 +38,21 @@ MonoBehaviour:
     animframes: {fileID: 0}
     time: 0
     speed: 0
+    toZoom: 0
+    initialZoom: 0
     simulteneous: 0
     targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  endAnimations: []
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
-  Req1:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    element: 0
-    type: 0
-    move: {fileID: 0}
+  cost: 0
+  customFunc: 
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 1
+  moveRequirements: []

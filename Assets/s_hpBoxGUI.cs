@@ -32,7 +32,7 @@ public class s_hpBoxGUI : MonoBehaviour
 
     public GameObject ob;
 
-    bool _materialDirty = true;
+    public R_Character currentCharacter;
 
     public Sprite poisionIcon;
     public Sprite stunIcon;
@@ -70,15 +70,12 @@ public class s_hpBoxGUI : MonoBehaviour
         }
     }
 
-    public void SetMaterialDirty() {
-        _materialDirty = true;
-    }
 
     public void Update()
     {
         if (bc != null)
         {
-            if (bc == s_battleEngine.engineSingleton.currentCharacter)
+            if (bc.referencePoint == currentCharacter.characterRef)
             {
                 Arrow.gameObject.SetActive(true);
             }

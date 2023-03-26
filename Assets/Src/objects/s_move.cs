@@ -76,9 +76,9 @@ public class s_move : s_ability
     public int power;
     public bool fixedValue = false;
     public bool consumeTurn = true;
-    public MOVE_TYPE moveType;
-    public MOVE_TARGET moveTarg;
-    public SCOPE_NUMBER moveTargScope;
+    public MOVE_TYPE moveType = MOVE_TYPE.HP_DAMAGE;
+    public MOVE_TARGET moveTarg = MOVE_TARGET.ENEMY;
+    public SCOPE_NUMBER moveTargScope = SCOPE_NUMBER.ONE;
     public S_Element element;
     public s_actionAnim[] preAnimations;
     public s_actionAnim[] animations;

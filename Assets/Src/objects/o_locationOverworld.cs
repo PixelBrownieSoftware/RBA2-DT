@@ -4,6 +4,7 @@ using MagnumFoundation2.System;
 using MagnumFoundation2.Objects;
 using System.Collections.Generic;
 
+/*
 [System.Serializable]
 public struct s_shopItem {
     public float price;
@@ -188,3 +189,4 @@ public class o_locationOverworld : s_object
         
     }
 }
+*/

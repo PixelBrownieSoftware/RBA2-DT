@@ -19,19 +19,23 @@ MonoBehaviour:
   intReq: 6
   lucReq: 0
   power: 12
-  moveType: 1
-  moveTarg: 0
-  element: 12
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
+  moveTarg: 1
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 34edbd49a9b03f3449ec3d76d7229759, type: 2}
   preAnimations: []
   animations: []
   endAnimations: []
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
-  cost: 10
-  statusType: 0
+  cost: 8
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
   moveRequirements: []

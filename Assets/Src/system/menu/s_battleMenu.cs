@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MagnumFoundation2;
 using UnityEngine.UI;
-
+/*
 public class s_battleMenu : s_menucontroller
 {
     public List<s_move> rpgSkills = new List<s_move>();
@@ -110,7 +110,6 @@ public class s_battleMenu : s_menucontroller
         return false;
     }
 
-    /*
     public void SetButtonElement(ref s_buttonSkill img) {
 
         Sprite draw = null;
@@ -614,7 +613,6 @@ public class s_battleMenu : s_menucontroller
                 break;
         }
     }
-    */
 
     public void ChangeRequirements(s_move mov)
     {
@@ -623,7 +621,6 @@ public class s_battleMenu : s_menucontroller
         dex.statNum = partyCharacter.dexterity;
         agi.statNum = partyCharacter.agility;
         
-        /*
         str.requirementNum = mov.strReq;
         vit.requirementNum = mov.vitReq;
         dex.requirementNum = mov.dxReq;
@@ -648,7 +645,6 @@ public class s_battleMenu : s_menucontroller
             agi.gameObject.SetActive(true);
         else
             agi.gameObject.SetActive(false);
-        */
     }
 
     public void ChangeRequirements(s_passive mov)
@@ -658,7 +654,6 @@ public class s_battleMenu : s_menucontroller
         dex.statNum = partyCharacter.dexterity;
         agi.statNum = partyCharacter.agility;
 
-        /*
         str.requirementNum = mov.strReq;
         vit.requirementNum = mov.vitReq;
         dex.requirementNum = mov.dxReq;
@@ -683,7 +678,6 @@ public class s_battleMenu : s_menucontroller
             agi.gameObject.SetActive(true);
         else
             agi.gameObject.SetActive(false);
-        */
     }
 
     public override void ResetButton<T>(T b)
@@ -697,3 +691,4 @@ public class s_battleMenu : s_menucontroller
         d.costTxt.text = "";
     }
 }
+*/

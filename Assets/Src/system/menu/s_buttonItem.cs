@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MagnumFoundation2.System;
 
+/*
 public class s_buttonItem : s_button
 {
     public s_move moveButton;
@@ -18,3 +19,4 @@ public class s_buttonItem : s_button
     }
 
 }
+*/

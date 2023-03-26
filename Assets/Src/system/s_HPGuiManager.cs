@@ -17,8 +17,7 @@ public class s_HPGuiManager : MonoBehaviour
     public void SetPartyMember(int index, o_battleCharacter to) {
         if (HP_GUIS.Length < index)
             return;
-        HP_GUIS[ index].bc = to;
-        HP_GUIS[index].SetMaterialDirty();
+        HP_GUIS[index].bc = to;
         HP_GUIS[index].SetMaterial();
     }
 
@@ -28,7 +27,6 @@ public class s_HPGuiManager : MonoBehaviour
         {
             foreach (s_hpBoxGUI c in HP_GUIS)
             {
-                c.SetMaterialDirty();
                 c.bc = null;
                 c.SetMaterial();
             }
@@ -39,7 +37,6 @@ public class s_HPGuiManager : MonoBehaviour
             {
 
                 HP_GUIS[ind].bc = c;
-                HP_GUIS[ind].SetMaterialDirty();
                 HP_GUIS[ind].SetMaterial();
                 ind++;
             }
@@ -47,7 +44,6 @@ public class s_HPGuiManager : MonoBehaviour
         else
         {
             HP_GUIS[bc.IndexOf(from)].bc = to;
-            HP_GUIS[bc.IndexOf(from)].SetMaterialDirty();
         }
     }
 }

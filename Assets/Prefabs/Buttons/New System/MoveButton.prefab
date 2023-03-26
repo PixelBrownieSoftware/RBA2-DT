@@ -404,6 +404,19 @@ MonoBehaviour:
   move: {fileID: 0}
   moveClickEvent: {fileID: 0}
   tmp: {fileID: 418721599901313599}
+  combo:
+    comboType: 0
+    user1: {fileID: 0}
+    user1Move: {fileID: 0}
+    user2: {fileID: 0}
+    user2Move: {fileID: 0}
+    user3: {fileID: 0}
+    user3Move: {fileID: 0}
+    user4: {fileID: 0}
+    user4Move: {fileID: 0}
+    user5: {fileID: 0}
+    user5Move: {fileID: 0}
+  currentCombo: {fileID: 11400000, guid: 0967ac1d3f68d6f469f4eb569bb7dbae, type: 2}
 --- !u!1 &6708335808348260403
 GameObject:
   m_ObjectHideFlags: 0

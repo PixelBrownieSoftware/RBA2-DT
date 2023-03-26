@@ -16,11 +16,15 @@ MonoBehaviour:
   dxReq: 0
   vitReq: 0
   agiReq: 0
+  intReq: 0
+  lucReq: 0
   power: 9
+  fixedValue: 0
+  consumeTurn: 1
   moveType: 0
-  comboType: 0
-  moveTarg: 0
-  element: 0
+  moveTarg: 1
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
   preAnimations: []
   animations:
   - name: 
@@ -76,51 +80,13 @@ MonoBehaviour:
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
   cost: 18
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
-  Req1:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-    requirePower: 0
-    lowerPowerReq: 0
-    upperPowerReq: -1
-  Req2:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-    requirePower: 0
-    lowerPowerReq: 0
-    upperPowerReq: -1
-  Req3:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-    requirePower: 0
-    lowerPowerReq: 0
-    upperPowerReq: -1
-  Req4:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-    requirePower: 0
-    lowerPowerReq: 0
-    upperPowerReq: -1
-  Req5:
-    weapType: 0
-    element: 0
-    type: 0
-    move: {fileID: 0}
-    requirePower: 0
-    lowerPowerReq: 0
-    upperPowerReq: -1
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
+  moveRequirements: []

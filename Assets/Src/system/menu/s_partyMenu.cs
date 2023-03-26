@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class s_partyMenu : s_menucontroller
 {
     public List<o_battleCharacter> bc = new List<o_battleCharacter>();
@@ -54,3 +55,4 @@ public class s_partyMenu : s_menucontroller
         }
     }
 }
+*/

@@ -10,6 +10,9 @@ public class B_TargetWithUI : B_BattleTarget
 
     public new void SetTargetButton(CH_BattleChar target) {
         base.SetTargetButton(target);
-        health.value = isHP ? (target.health / target.maxHealth) : (target.stamina / target.maxStamina);
+        float HPCompare = (float)((float)target.health / (float)target.maxHealth);
+        print("HP: " + HPCompare);
+        health.maxValue = 1f;
+        health.value = isHP ? HPCompare : (float)((float)target.stamina / (float)target.maxStamina);
     }
 }

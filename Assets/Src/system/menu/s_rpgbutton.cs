@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MagnumFoundation2.System.Core;
 using MagnumFoundation2.System;
-
+/*
 [RequireComponent(typeof(Button))]
 public class s_rpgbutton : s_button
 {
@@ -40,10 +40,8 @@ public class s_rpgbutton : s_button
                 backButton.buttonType = "BattleMenu";
                 s_battleEngine.engineSingleton.SelectSkillOption();
                 s_battleEngine.engineSingleton.SetTargets(false);
-                /*
-                s_menuhandler.GetInstance().GetMenu<s_targetMenu>
-                ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
-                */
+                //s_menuhandler.GetInstance().GetMenu<s_targetMenu>
+                //("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
                 if (currentCharacter.characterRef.physWeapon != null)
                 {
                     currentMove.move = currentCharacter.characterRef.physWeapon;
@@ -61,10 +59,8 @@ public class s_rpgbutton : s_button
                 backButton.buttonType = "BattleMenu";
                 s_battleEngine.engineSingleton.SelectSkillRangedOption();
                 s_battleEngine.engineSingleton.SetTargets(false);
-                /*
-                s_menuhandler.GetInstance().GetMenu<s_targetMenu>
-                ("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
-                */
+                //s_menuhandler.GetInstance().GetMenu<s_targetMenu>
+                //("TargetMenu").bcs = s_battleEngine.engineSingleton.GetTargets(false);
                 currentMove.move = currentCharacter.characterRef.rangedWeapon;
 
                 s_menuhandler.GetInstance().SwitchMenu("TargetMenu");
@@ -208,3 +204,4 @@ public class s_rpgbutton : s_button
     }
 
 }
+*/

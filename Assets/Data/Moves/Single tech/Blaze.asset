@@ -19,9 +19,12 @@ MonoBehaviour:
   intReq: 7
   lucReq: 0
   power: 9
-  moveType: 1
-  moveTarg: 2
-  element: 3
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
+  moveTarg: 1
+  moveTargScope: 2
+  element: {fileID: 11400000, guid: b033c1bbf082d0442bc3ebdff03d8154, type: 2}
   preAnimations:
   - name: 
     actionType: 8
@@ -94,12 +97,13 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
   cost: 13
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
   moveRequirements: []

@@ -16,10 +16,15 @@ MonoBehaviour:
   dxReq: 5
   vitReq: 3
   agiReq: 3
+  intReq: 0
+  lucReq: 0
   power: 3
-  moveType: 1
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
   moveTarg: 1
-  element: 3
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: b033c1bbf082d0442bc3ebdff03d8154, type: 2}
   preAnimations:
   - name: zoom stuff
     actionType: 8
@@ -92,19 +97,20 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
   cost: 6
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
   moveRequirements:
   - comboType: 1
     Req1:
       weapType: 0
-      element: 3
+      element: {fileID: 0}
       type: 0
       move: {fileID: 0}
       requirePower: 0
@@ -112,7 +118,7 @@ MonoBehaviour:
       upperPowerReq: 0
     Req2:
       weapType: 0
-      element: 3
+      element: {fileID: 0}
       type: 0
       move: {fileID: 0}
       requirePower: 0
@@ -120,7 +126,7 @@ MonoBehaviour:
       upperPowerReq: 0
     Req3:
       weapType: 0
-      element: 0
+      element: {fileID: 0}
       type: 0
       move: {fileID: 0}
       requirePower: 0
@@ -128,7 +134,7 @@ MonoBehaviour:
       upperPowerReq: 0
     Req4:
       weapType: 0
-      element: 0
+      element: {fileID: 0}
       type: 0
       move: {fileID: 0}
       requirePower: 0
@@ -136,7 +142,7 @@ MonoBehaviour:
       upperPowerReq: 0
     Req5:
       weapType: 0
-      element: 0
+      element: {fileID: 0}
       type: 0
       move: {fileID: 0}
       requirePower: 0

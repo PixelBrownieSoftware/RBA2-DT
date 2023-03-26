@@ -72,8 +72,9 @@ public class M_BattleTarget : S_MenuSystem
         switch (skillType)
         {
             case SKILL_TYPE.BATTLE:
-                s_camera.cam.cameraMode = s_camera.CAMERA_MODE.LERPING;
-                B_BattleTarget tg = null;
+                //s_camera.cam.cameraMode = s_camera.CAMERA_MODE.LERPING;
+                B_TargetWithUI tg = null;
+                /*
                 switch (mov.moveTarg)
                 {
                     default:
@@ -86,6 +87,7 @@ public class M_BattleTarget : S_MenuSystem
                         StartCoroutine(s_camera.cam.MoveCamera(currentCharacter.characterRef.position, 0.9f));
                         break;
                 }
+                */
                 switch (mov.moveTargScope)
                 {
                     /*

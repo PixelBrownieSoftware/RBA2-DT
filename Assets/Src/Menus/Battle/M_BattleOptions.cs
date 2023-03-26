@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class M_BattleOptions : S_MenuSystem
 {
@@ -15,13 +16,13 @@ public class M_BattleOptions : S_MenuSystem
     public R_Boolean isItem;
     public R_Move selectedMove;
     public R_MoveList movesList;
+    public R_CurrentCombo currentCombo;
     public CH_Move selectMove;
     public CH_Text selectMenu;
-    public enum B_OPTIONS_TYPE { 
-        MOVES,
-        ITEMS
-    }
-    public B_OPTIONS_TYPE options;
+    [SerializeField]
+    private R_Text battleMenuType;
+
+    public TextMeshProUGUI comboMoveDesc;
 
     private void OnEnable()
     {
@@ -44,11 +45,11 @@ public class M_BattleOptions : S_MenuSystem
         selectedMove.move = move;
         switch (move.moveTarg) {
             case s_move.MOVE_TARGET.ALLY:
-                targetList.AddCharacters(players.characterListRef);
+                targetList.SetCharacters(players.characterListRef);
                 break;
 
             case s_move.MOVE_TARGET.ENEMY:
-                targetList.AddCharacters(opponents.characterListRef);
+                targetList.SetCharacters(opponents.characterListRef);
                 break;
 
             case s_move.MOVE_TARGET.ENEMY_ALLY:
@@ -56,7 +57,7 @@ public class M_BattleOptions : S_MenuSystem
                     List<CH_BattleChar> allTargets = new List<CH_BattleChar>();
                     allTargets.AddRange(players.characterListRef);
                     allTargets.AddRange(opponents.characterListRef);
-                    targetList.AddCharacters(allTargets);
+                    targetList.SetCharacters(allTargets);
                 }
                 break;
 
@@ -92,8 +93,9 @@ public class M_BattleOptions : S_MenuSystem
         base.StartMenu();
         List<s_move> moves = null;
 
-        switch (options) {
-            case B_OPTIONS_TYPE.MOVES:
+        switch (battleMenuType.text) {
+
+            case "Skills":
                 moves = movesList.moveListRef;
                 if (moves.Count > 0)
                 {
@@ -101,13 +103,106 @@ public class M_BattleOptions : S_MenuSystem
                     {
                         var button = buttons[i];
                         button.SetButonText(moves[i].name);
-                        button.SetBattleButton(moves[i], moves[i].cost);
+                        int cost = moves[i].cost;
+                        bool canUse = true;
+                        if (moves[i].element.isMagic)
+                            canUse = currentCharacter.characterRef.stamina >= cost;
+                        else
+                            canUse = currentCharacter.characterRef.health > cost;
+                        if (!canUse)
+                        {
+                            button.SetButtonColour(Color.grey);
+                            button.SetButonTextColour(Color.grey);
+                            button.SetBattleButton(moves[i], moves[i].cost);
+                            button.move = null;
+                        }
+                        else
+                        {
+                            button.SetButtonColour(Color.white);
+                            button.SetButonTextColour(Color.white);
+                            button.SetBattleButton(moves[i], moves[i].cost);
+                        }
                         button.gameObject.SetActive(true);
                     }
                 }
                 break;
 
-            case B_OPTIONS_TYPE.ITEMS:
+
+            case "Combos":
+                {
+                    int ind = 0;
+                    Dictionary<s_move, List<s_moveComb>> combos = comboMoves.FindComboMovesUser(currentCharacter.characterRef);
+                    foreach (var move in combos)
+                    {
+                        foreach (var combo in move.Value) {
+
+                            //Yes, I know, dreadful code - I cannot stand looking at this either
+                            var button = buttons[ind];
+                            button.SetButonText(moves[ind].name);
+                            int cost = moves[ind].cost;
+                            bool canUse1 = true;
+                            bool canUse2 = true;
+                            bool canUse3 = true;
+                            bool canUse4 = true;
+                            bool canUse5 = true;
+                            button.combo = combo;
+
+                            if (combo.user1Move != null)
+                            {
+                                cost = combo.user1Move.cost;
+                                if (combo.user1Move.element.isMagic)
+                                    canUse1 = currentCharacter.characterRef.stamina >= cost;
+                                else
+                                    canUse1 = currentCharacter.characterRef.health > cost;
+                            }
+                            if (combo.user2Move != null)
+                            {
+                                cost = combo.user2Move.cost;
+                                if (combo.user2Move.element.isMagic)
+                                    canUse2 = currentCharacter.characterRef.stamina >= cost;
+                                else
+                                    canUse2 = currentCharacter.characterRef.health > cost;
+                            }
+                            if (combo.user3Move != null)
+                            {
+                                cost = combo.user3Move.cost;
+                                if (combo.user3Move.element.isMagic)
+                                    canUse3 = currentCharacter.characterRef.stamina >= cost;
+                                else
+                                    canUse3 = currentCharacter.characterRef.health > cost;
+                            }
+                            if (combo.user4Move != null)
+                            {
+                                cost = combo.user4Move.cost;
+                                if (combo.user4Move.element.isMagic)
+                                    canUse4 = currentCharacter.characterRef.stamina >= cost;
+                                else
+                                    canUse4 = currentCharacter.characterRef.health > cost;
+                            }
+
+                            bool canUse = canUse1 && canUse2 && canUse3 && canUse4 && canUse5;
+
+                            if (!canUse)
+                            {
+                                button.SetButtonColour(Color.grey);
+                                button.SetButonTextColour(Color.grey);
+                                button.SetBattleButton(move.Key, move.Key.cost);
+                                button.move = null;
+                            }
+                            else
+                            {
+                                button.SetButtonColour(Color.white);
+                                button.SetButonTextColour(Color.white);
+                                button.SetBattleButton(move.Key, move.Key.cost);
+                            }
+                            button.gameObject.SetActive(true);
+                            ind++;
+                        }
+                    }
+                }
+                break;
+
+            case "Items":
                 isItem.boolean = true;
                 if (items.inventory.Count > 0)
                 {

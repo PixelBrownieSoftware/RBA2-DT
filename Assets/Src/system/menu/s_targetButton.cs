@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using MagnumFoundation2.System;
 using MagnumFoundation2.System.Core;
 
+/*
 public class s_targetButton : s_button
 {
     public CH_BattleChar battleCharButton;
@@ -59,7 +60,7 @@ public class s_targetButton : s_button
     protected override void OnButtonClicked()
     {
         switch (targType) {
-            /*
+
             case TARGET_TYPE.SWITCH:
                 if (battleCharButton == s_battleEngine.engineSingleton.currentCharacter)
                 {
@@ -80,9 +81,7 @@ public class s_targetButton : s_button
                     s_camera.cam.SetTargPos(s_battleEngine.engineSingleton.currentCharacter.transform.position, 0.6f);
                 }
                 break;
-                */
 
-            /*
             case TARGET_TYPE.DEPLOY:
                 s_battleEngine.engineSingleton.EndAction();
                 s_menuhandler.GetInstance().SwitchMenu("EMPTY");
@@ -90,7 +89,6 @@ public class s_targetButton : s_button
                 s_soundmanager.GetInstance().PlaySound("selectOption");
                 //s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.AddPartymemberToBattle(battleCharButton));
                 break;
-                */
 
             case TARGET_TYPE.BATTLE:
                 s_battleEngine.engineSingleton.battleAction.cureStatus = isCure;
@@ -105,3 +103,4 @@ public class s_targetButton : s_button
         }
     }
 }
+*/

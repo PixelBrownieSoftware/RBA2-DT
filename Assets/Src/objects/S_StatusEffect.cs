@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Status effect", menuName = "Status effect")]
 public class S_StatusEffect : ScriptableObject
 {
-    public enum RESTRICTION { NONE, CANNOT_MOVE }
+    public enum RESTRICTION { NONE, CANNOT_MOVE, RANDOM_FOE, RANDOM_ALLY, RANDOM_ALL }
     public RESTRICTION restriction;
     public VARIABLE_CHANGE variableChange;
     public int maxDuration;

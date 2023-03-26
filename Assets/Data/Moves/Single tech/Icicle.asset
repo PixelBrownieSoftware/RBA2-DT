@@ -19,9 +19,12 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 15
-  moveType: 1
-  moveTarg: 0
-  element: 4
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
+  moveTarg: 1
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 9960c19a89a5aaf45b4f2e65d6db53ad, type: 2}
   preAnimations: []
   animations:
   - name: 
@@ -128,12 +131,13 @@ MonoBehaviour:
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
   cost: 9
-  statusType: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
   moveRequirements: []

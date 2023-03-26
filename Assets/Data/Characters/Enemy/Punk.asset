@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Punk
   m_EditorClassIdentifier: 
-  level: 1
   money: 0.45
   maxSkillPointsB: 7
   maxHitPointsB: 18
@@ -38,7 +37,8 @@ MonoBehaviour:
   moveLearn:
   - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
   elementals:
-    weaknessChart: []
+  - element: {fileID: 11400000, guid: d4b24f652d5fddc4a8adc781375323bc, type: 2}
+    value: 0.5
   characterColour: {r: 0.61166894, g: 0.735849, b: 0.12148449, a: 1}
   characterColour2: {r: 0.41119078, g: 0.6037736, b: 0.17942329, a: 1}
   aiPages:
@@ -47,7 +47,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0

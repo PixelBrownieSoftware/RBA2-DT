@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class s_groupSelectButton : s_button
 {
     public s_enemyGroup group;
@@ -14,3 +15,4 @@ public class s_groupSelectButton : s_button
         base.OnButtonClicked();
     }
 }
+*/

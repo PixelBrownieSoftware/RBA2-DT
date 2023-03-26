@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MagnumFoundation2.System.Core;
 using MagnumFoundation2.System;
-
+/*
 public class s_buttonSkill : s_button
 {
     public s_battleMenu BMenu;
@@ -71,7 +71,6 @@ public class s_buttonSkill : s_button
     {
         switch (typeOfButton)
         {
-            /*
             case SKILL_TYPE.SHOP:
                 if (cost > s_rpgGlobals.money)
                 {
@@ -95,8 +94,6 @@ public class s_buttonSkill : s_button
                 }
                 costTxt.text = cost + "";
                 break;
-                */
-
             case SKILL_TYPE.WEAPON_EQUIP:
 
                 o_battleCharPartyData d = s_menuhandler.GetInstance().GetMenu<s_battleMenu>("OverworldExtraSkill").partyCharacter;
@@ -116,7 +113,6 @@ public class s_buttonSkill : s_button
                     }
                 }
                 break;
-                /*
             case SKILL_TYPE.WEAPON_EQUIP_BATTLE:
                 o_battleCharacter bc = currentCharacter.r;
                 if (bc.physWeapon == weaponButton)
@@ -135,7 +131,6 @@ public class s_buttonSkill : s_button
                     }
                 }
                 break;
-                */
 
             case SKILL_TYPE.EXTRA_PASSIVES:
 
@@ -185,7 +180,6 @@ public class s_buttonSkill : s_button
 
             case SKILL_TYPE.BATTLE:
                 
-               /*
                 if (menuButton != null)
                 {
                     switch (moveButton.moveType)
@@ -201,7 +195,6 @@ public class s_buttonSkill : s_button
                             break;
                     }
                 }
-                */
                 break;
 
             case SKILL_TYPE.ITEM:
@@ -235,14 +228,12 @@ public class s_buttonSkill : s_button
         if (d.passives.Find(x => x == passiveButton) != null)
             return false;
 
-        /*
         if (d.strength >= passiveButton.strReq
         && d.vitality >= passiveButton.vitReq
         && d.dexterity >= passiveButton.dxReq
         && d.agility >= passiveButton.agiReq)
             return true;
         else
-        */
             return false;
     }
 
@@ -250,14 +241,12 @@ public class s_buttonSkill : s_button
     {
         if (d.currentMoves.Find(x => x == moveButton) != null)
             return false;
-        /*
         if (d.strength >= moveButton.strReq
         && d.vitality >= moveButton.vitReq
         && d.dexterity >= moveButton.dxReq
         && d.agility >= moveButton.agiReq)
             return true;
         else
-        */
             return false;
     }
 
@@ -302,7 +291,6 @@ public class s_buttonSkill : s_button
     protected override void OnButtonClicked()
     {
         switch (typeOfButton) {
-            /*
             case SKILL_TYPE.SHOP:
                 if (cost <= s_rpgGlobals.money)
                 {
@@ -310,8 +298,6 @@ public class s_buttonSkill : s_button
                     inventory.AddItem(moveButton);
                 }
                 break;
-                */
-            /*
             case SKILL_TYPE.ITEM_BATTLE:
             case SKILL_TYPE.BATTLE:
 
@@ -333,7 +319,6 @@ public class s_buttonSkill : s_button
                     s_soundmanager.GetInstance().PlaySound("selectOption");
                 }
                 break;
-                */
 
             case SKILL_TYPE.GROUP_SELECT:
                 base.OnButtonClicked();
@@ -425,9 +410,7 @@ public class s_buttonSkill : s_button
                         }
                     }
                 }
-                break;
-                */
-
+                break
             case SKILL_TYPE.WEAPON_EQUIP:
                 {
                     o_battleCharPartyData d = s_menuhandler.GetInstance().GetMenu<s_battleMenu>("OverworldExtraSkill").partyCharacter;
@@ -467,3 +450,4 @@ public class s_buttonSkill : s_button
         }
     }
 }
+*/

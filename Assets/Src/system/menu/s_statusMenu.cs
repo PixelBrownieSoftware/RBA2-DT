@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
 public class s_statusMenu : s_menucontroller
 {
     public s_guiList str;
@@ -56,7 +57,7 @@ public class s_statusMenu : s_menucontroller
                 agiTXT.text = agiShadTXT.text = "" + characterData.agility;
 
                 //strike_aff.text = characterData.wea
-                affs.ForEach(x => x.SetToDat(characterData));
+                affs.ForEach(x => x.SetToDat());
                 {
                     int i = 0;
                     foreach (s_move m in characterData.currentMoves)
@@ -75,3 +76,4 @@ public class s_statusMenu : s_menucontroller
         b.txt.text = mov[i].name;
     }
 }
+*/

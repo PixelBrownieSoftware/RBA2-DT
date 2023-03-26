@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Malculus
   m_EditorClassIdentifier: 
-  level: 40
   money: 0
   maxSkillPointsB: 36
   maxHitPointsB: 58
-  maxHitPointsGMin: 7
-  maxHitPointsGMax: 12
+  maxHitPointsGMin: 18
+  maxHitPointsGMax: 33
   maxSkillPointsGMin: 5
   maxSkillPointsGMax: 6
   agilityB: 4
@@ -42,8 +41,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
-  elementals:
-    weaknessChart: []
+  elementals: []
   characterColour: {r: 0.66386706, g: 0.3066038, b: 1, a: 1}
   characterColour2: {r: 0.57617795, g: 0.107467055, b: 0.6509434, a: 1}
   aiPages:
@@ -52,7 +50,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -63,7 +61,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -74,7 +72,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -85,7 +83,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -96,7 +94,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -107,7 +105,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 19
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0.5
       name: 
       onParty: 1
@@ -116,8 +114,8 @@ MonoBehaviour:
       number2: 0
   anim: {fileID: 9100000, guid: 94c6103fea7c4e1409c18af694a5c25b, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 11400000, guid: fe8d11913b1cf8a469872f83666118ca, type: 2}
-  defaultRangedWeapon: {fileID: 0}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1
