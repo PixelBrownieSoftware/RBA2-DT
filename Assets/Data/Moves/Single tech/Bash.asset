@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
+  m_Name: Bash
+  m_EditorClassIdentifier: 
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
+  power: 5
+  fixedValue: 0
+  consumeTurn: 1
+  moveType: 0
+  moveTarg: 1
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
+  preAnimations: []
+  animations:
+  - name: 
+    actionType: 7
+    teleport: 1
+    start: 0
+    goal: 4
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: attack
+    actionType: 6
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0.35
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: 
+    actionType: 7
+    teleport: 0
+    start: 0
+    goal: 3
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: 
+    actionType: 0
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0.25
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: 
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  endAnimations: []
+  statusInflictChance: []
+  cost: 0
+  customFunc: 
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0
+  moveRequirements: []

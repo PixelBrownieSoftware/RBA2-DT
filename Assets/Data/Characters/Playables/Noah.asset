@@ -39,11 +39,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
   elementals:
-    weaknessChart:
-    - element: 5
-      weakness: 0.5
-    - element: 6
-      weakness: 2
+  - element: {fileID: 0}
+    value: 0
   characterColour: {r: 0.3915094, g: 0.7557806, b: 1, a: 1}
   characterColour2: {r: 0.19579923, g: 0.46207052, b: 0.754717, a: 1}
   aiPages:
@@ -52,7 +49,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -63,7 +60,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 19
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0.5
       name: 
       onParty: 1
@@ -72,8 +69,9 @@ MonoBehaviour:
       number2: 0
   anim: {fileID: 9100000, guid: 4cdca35113b95524e8ecf29561e58b23, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 0}
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1

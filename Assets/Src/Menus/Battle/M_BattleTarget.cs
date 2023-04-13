@@ -10,6 +10,7 @@ public class M_BattleTarget : S_MenuSystem
     public List<o_battleCharDataN> battleChr;
     public R_Character currentCharacter;
     public R_Character selectedCharacter;
+    public R_BattleCharacter selectedCharacterDat;
     public B_TargetWithUI[] buttons;
     public R_Text targetMenuTo;
 
@@ -17,7 +18,7 @@ public class M_BattleTarget : S_MenuSystem
     public CH_Text switchMenu;
     public CH_Func performMove;
     private s_move mov;
-
+    //"EMPTY"
     public enum SKILL_TYPE
     {
         BATTLE,
@@ -28,8 +29,10 @@ public class M_BattleTarget : S_MenuSystem
 
     public void SetTarget(CH_BattleChar target) {
         selectedCharacter.characterRef = target;
-        performMove.RaiseEvent();
-        switchMenu.RaiseEvent("EMPTY");
+        selectedCharacterDat.battleCharacter = target.characterData;
+        if (targetMenuTo.text != "CharacterStatus")
+            performMove.RaiseEvent();
+        switchMenu.RaiseEvent(targetMenuTo.text);
     }
 
     private void OnDisable()

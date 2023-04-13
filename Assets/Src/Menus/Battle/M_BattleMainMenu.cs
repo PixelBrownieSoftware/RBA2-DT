@@ -15,22 +15,34 @@ public class M_BattleMainMenu : S_MenuSystem
     private R_Move currentMoveRef;
     [SerializeField]
     private R_Items inventory;
+
+    public R_CharacterList targetList;
+    public R_CharacterList players;
+    public R_CharacterList opponents;
+
     public B_Function[] buttons;
 
     public s_move meleeAttack;
     public s_move rangedAttack;
 
     public s_move defaultAttack;
+    public s_move analyseMove;
     public s_move guard;
     public s_move pass;
 
     [SerializeField]
     private CH_Text changeMenu;
     [SerializeField]
+    private R_Text menuText;
+    [SerializeField]
     private R_Text battleMenuType;
 
     [SerializeField]
-    private CH_Func goToMelee;
+    private CH_Func goToFirst;
+    [SerializeField]
+    private CH_Func goToSecond;
+    [SerializeField]
+    private CH_Func goToThird;
     [SerializeField]
     private CH_Func goToSkills;
     [SerializeField]
@@ -39,30 +51,99 @@ public class M_BattleMainMenu : S_MenuSystem
     private CH_Func goToGuard;
     [SerializeField]
     private CH_Func performMove;
+    [SerializeField]
+    private CH_Func goToAnalyse;
 
     private void OnEnable()
     {
         goToSkills.OnFunctionEvent += GoToSkills;
-        goToMelee.OnFunctionEvent += MeleeAttack;
+        goToFirst.OnFunctionEvent += PrimaryMove;
+        goToSecond.OnFunctionEvent += SecondMove;
+        goToThird.OnFunctionEvent += ThirdMove;
         goToPass.OnFunctionEvent += PassAction;
         goToGuard.OnFunctionEvent += GuardAction;
+        goToAnalyse.OnFunctionEvent += GoToAnalyse;
     }
 
     private void OnDisable()
     {
         goToSkills.OnFunctionEvent -= GoToSkills;
-        goToMelee.OnFunctionEvent -= MeleeAttack;
+        goToFirst.OnFunctionEvent -= PrimaryMove;
+        goToSecond.OnFunctionEvent -= SecondMove;
+        goToThird.OnFunctionEvent -= ThirdMove;
         goToPass.OnFunctionEvent -= PassAction;
         goToGuard.OnFunctionEvent -= GuardAction;
+        goToAnalyse.OnFunctionEvent -= GoToAnalyse;
     }
 
-
-    public void MeleeAttack()
+    public void SelectMove()
     {
-        if (meleeAttack != null)
-            currentMoveRef.SetMove(meleeAttack);
-        else
-            currentMoveRef.SetMove(defaultAttack);
+        switch (currentMoveRef.move.moveTarg)
+        {
+            case s_move.MOVE_TARGET.ALLY:
+                targetList.SetCharacters(players.characterListRef);
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY:
+                targetList.SetCharacters(opponents.characterListRef);
+                break;
+
+            case s_move.MOVE_TARGET.ENEMY_ALLY:
+                {
+                    List<CH_BattleChar> allTargets = new List<CH_BattleChar>();
+                    allTargets.AddRange(players.characterListRef);
+                    allTargets.AddRange(opponents.characterListRef);
+                    targetList.SetCharacters(allTargets);
+                }
+                break;
+
+            case s_move.MOVE_TARGET.SELF:
+                {
+                    List<CH_BattleChar> allTargets = new List<CH_BattleChar>();
+                    allTargets.Add(currentCharacter);
+                    targetList.SetCharacters(allTargets);
+                }
+                break;
+            case s_move.MOVE_TARGET.NONE:
+
+                break;
+        }
+        switch (currentMoveRef.move.moveTarg)
+        {
+            default:
+                changeMenu.RaiseEvent("TargetMenu");
+                break;
+            case s_move.MOVE_TARGET.NONE:
+
+                break;
+        }
+
+        switch (currentMoveRef.move.moveTargScope)
+        {
+            case s_move.SCOPE_NUMBER.ALL:
+                break;
+        }
+    }
+
+    public void PrimaryMove()
+    {
+        currentMoveRef.SetMove(currentCharacterRef.characterRef.characterData.characterDataSource.firstMove);
+        SelectMove();
+        menuText.text = "EMPTY";
+        changeMenu.RaiseEvent("TargetMenu");
+    }
+    public void SecondMove()
+    {
+        currentMoveRef.SetMove(currentCharacterRef.characterRef.characterData.characterDataSource.secondMove);
+        SelectMove();
+        menuText.text = "EMPTY";
+        changeMenu.RaiseEvent("TargetMenu");
+    }
+    public void ThirdMove()
+    {
+        currentMoveRef.SetMove(currentCharacterRef.characterRef.characterData.characterDataSource.thirdMove);
+        SelectMove();
+        menuText.text = "EMPTY";
         changeMenu.RaiseEvent("TargetMenu");
     }
     public void GoToComboSkills()
@@ -70,7 +151,15 @@ public class M_BattleMainMenu : S_MenuSystem
         print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
         currentMovesRef.SetMoves(currentCharacter.GetAllMoves());
         battleMenuType.text = "Combos";
+        menuText.text = "EMPTY";
         changeMenu.RaiseEvent("BattleSkillMenu");
+    }
+    public void GoToAnalyse()
+    {
+        menuText.text = "CharacterStatus";
+        currentMoveRef.SetMove(analyseMove);
+        SelectMove();
+        changeMenu.RaiseEvent("TargetMenu");
     }
 
     public void GoToSkills()
@@ -85,6 +174,7 @@ public class M_BattleMainMenu : S_MenuSystem
         targetCharacterRef.SetCharacter(currentCharacter);
         currentMoveRef.SetMove(guard);
         performMove.RaiseEvent();
+        menuText.text = "EMPTY";
         changeMenu.RaiseEvent("EMPTY");
     }
     public void PassAction()
@@ -92,6 +182,7 @@ public class M_BattleMainMenu : S_MenuSystem
         targetCharacterRef.SetCharacter(currentCharacter);
         currentMoveRef.SetMove(pass);
         performMove.RaiseEvent();
+        menuText.text = "EMPTY";
         changeMenu.RaiseEvent("EMPTY");
     }
 
@@ -124,6 +215,7 @@ public class M_BattleMainMenu : S_MenuSystem
         {
             buttons[5].gameObject.SetActive(true);
         }
+        buttons[7].gameObject.SetActive(true);
         buttons[6].gameObject.SetActive(true);
     }
 }

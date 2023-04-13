@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5774f209b82f4a47a46bdfa88e191a2, type: 3}
   m_Name: Force
   m_EditorClassIdentifier: 
-  strength: 2
+  strength: 0.86
   vitality: 0
   intelligence: 0
   agility: 0
-  dexterity: 0.5
+  dexterity: 0.16
   luck: 0
   isMagic: 0
   statusInflict:
   - statusEffect: {fileID: 11400000, guid: 310d48aaeb07bfa46b66fd2799c62570, type: 2}
-    chance: 1
+    chance: 0.05
     add_remove: 1

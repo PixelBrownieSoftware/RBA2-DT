@@ -129,11 +129,11 @@ public class S_RPGGlobals : ScriptableObject
 
             if (data.secondMove != null)
             {
-                newCharacter.secondMove = data.secondMove;
+                newCharacter.characterDataSource.secondMove = data.secondMove;
             }
             if (data.thirdMove != null)
             {
-                newCharacter.thirdMove = data.thirdMove;
+                newCharacter.characterDataSource.thirdMove = data.thirdMove;
             }
             /*
             if (data.defaultRangedWeapon != null)
@@ -191,6 +191,7 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.stamina = data.stamina;
             newCharacter.maxStamina = data.maxStamina;
 
+            newCharacter.characterDataSource = data.battleCharData;
             newCharacter.currentMoves = data.currentMoves;
             newCharacter.extraSkills = data.extraSkills;
         }

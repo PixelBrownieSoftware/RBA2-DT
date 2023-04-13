@@ -66,6 +66,7 @@ public class o_battleCharDataN : ScriptableObject
     public ai_page[] aiPages = new ai_page[1];
     public RuntimeAnimatorController anim;
     public o_RPGItem[] items;
+    public s_move firstMove;
     public s_move secondMove;
     public s_move thirdMove;
     //public o_weapon defaultPhysWeapon;

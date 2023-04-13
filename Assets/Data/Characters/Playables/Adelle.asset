@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Adelle
   m_EditorClassIdentifier: 
-  level: 1
   money: 0
   maxSkillPointsB: 15
   maxHitPointsB: 12
@@ -40,9 +39,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 24c5766369d352343802f2b62a8f7306, type: 2}
   - {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
   elementals:
-    weaknessChart:
-    - element: 6
-      weakness: 2.5
+  - element: {fileID: 0}
+    value: 0
   characterColour: {r: 0.9379185, g: 0.5990566, b: 1, a: 1}
   characterColour2: {r: 0.6912669, g: 0.34825563, b: 0.8113208, a: 1}
   aiPages:
@@ -51,7 +49,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -62,7 +60,7 @@ MonoBehaviour:
       turnCounters: 0
       AIaction: 0
       conditions: 0
-      element: 0
+      element: {fileID: 0}
       healthPercentage: 0
       name: 
       onParty: 0
@@ -71,8 +69,9 @@ MonoBehaviour:
       number2: 0
   anim: {fileID: 9100000, guid: bb1d546b6dd0be6458be60d9978082ed, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 0}
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 0

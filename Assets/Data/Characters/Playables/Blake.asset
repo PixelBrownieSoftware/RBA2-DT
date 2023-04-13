@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
   m_Name: Blake
   m_EditorClassIdentifier: 
-  level: 1
   money: 0
   maxSkillPointsB: 10
   maxHitPointsB: 25
@@ -38,16 +37,17 @@ MonoBehaviour:
   turnIcons: 1
   moveLearn: []
   elementals:
-    weaknessChart: []
+  - element: {fileID: 0}
+    value: 0
   characterColour: {r: 0.427451, g: 0.9529412, b: 0.75734156, a: 1}
   characterColour2: {r: 0.23713954, g: 0.6531249, b: 0.6886792, a: 1}
   aiPages:
   - ai: []
   anim: {fileID: 9100000, guid: a1f0a3838b5e04d4aa74107dc82ab91a, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 11400000, guid: ea56d6dc8a0ee6b41b1076c9bef09136,
-    type: 2}
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 0
   equip_gun: 1

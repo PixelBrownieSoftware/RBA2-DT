@@ -45,9 +45,9 @@ MonoBehaviour:
   - ai: []
   anim: {fileID: 9100000, guid: 5aef83e9d7b213e489bc029ea5e6ff5f, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 11400000, guid: ccfcc177a830cb44fa408078fead83d9,
-    type: 2}
+  firstMove: {fileID: 11400000, guid: a9fd51b61c4cf1f41aeb13a0409adcea, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1

@@ -394,10 +394,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         o_battleCharPartyData pbc = partyMembers.GetIndex(i);
                         o_battleCharDataN bc = pbc.characterDataSource;
                         c.transform.position = plPos[i];
-                        if (pbc.secondMove != null)
-                            c.secondMove = pbc.secondMove;
-                        if (pbc.thirdMove != null)
-                            c.thirdMove = pbc.thirdMove;
+                        if (pbc.characterDataSource.secondMove != null)
+                            c.secondMove = pbc.characterDataSource.secondMove;
+                        if (pbc.characterDataSource.thirdMove != null)
+                            c.thirdMove = pbc.characterDataSource.thirdMove;
                         c.animHandler.runtimeAnimatorController = bc.anim;
                         c.animHandler.Play("idle");
                         c.inBattle = pbc.inBattle;
@@ -451,7 +451,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             foreach (o_battleCharacter bc in AllCharacters) {
                 positions.Add(bc.transform.position);
             }
-            s_camera.cam.TeleportCamera(s_camera.cam.GetCentroid(positions));
+            //s_camera.cam.TeleportCamera(s_camera.cam.GetCentroid(positions));
+            s_camera.cam.TeleportCamera(new Vector2(360,310));
         }
         #endregion
 
@@ -3128,7 +3129,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             currentPartyCharactersQueue.Dequeue();
             currentPartyCharactersQueue.Enqueue(currentCharacterObject);
             
-            yield return StartCoroutine(s_camera.cam.MoveCamera(currentPartyCharactersQueue.Peek().transform.position, 0.9f));
+            //yield return StartCoroutine(s_camera.cam.MoveCamera(currentPartyCharactersQueue.Peek().transform.position, 0.9f));
             yield return new WaitForSeconds(0.25f);
             battleEngine = BATTLE_ENGINE_STATE.SELECT_CHARACTER;
         }

@@ -73,13 +73,14 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
-    <Compile Include="Assets\Src\system\static\s_element.cs" />
+    <Compile Include="Assets\Src\system\static\s_calculation.cs" />
     <Compile Include="Assets\Src\system\S_Bootstrapper.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_Gacha.cs" />
     <Compile Include="Assets\Src\system\misc\s_menuButton.cs" />
     <Compile Include="Assets\Src\Menus\S_AnalyseMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_EventListener.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetMenu.cs" />
+    <Compile Include="Assets\Src\Menus\R_CurrentCombo.cs" />
     <Compile Include="Assets\Src\Buttons\B_BattleMove.cs" />
     <Compile Include="Assets\Src\system\s_rpgGlobals.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyOverworldMenu.cs" />
@@ -183,7 +184,6 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\R_CurrentCombo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

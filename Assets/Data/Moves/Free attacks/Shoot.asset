@@ -18,7 +18,7 @@ MonoBehaviour:
   agiReq: 0
   intReq: 0
   lucReq: 0
-  power: 7
+  power: 5
   fixedValue: 0
   consumeTurn: 1
   moveType: 0

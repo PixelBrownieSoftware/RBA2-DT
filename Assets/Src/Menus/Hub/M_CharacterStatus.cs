@@ -21,11 +21,6 @@ public class M_CharacterStatus : S_MenuSystem
     public Text vitTXT;
     public Text agiTXT;
 
-    public Text strShadTXT;
-    public Text dxShadTXT;
-    public Text vitShadTXT;
-    public Text agiShadTXT;
-
     o_battleCharPartyData currentBattleCharacterData;
     public R_BattleCharacter characterData;
     public CH_Func assignElementalAffinities;

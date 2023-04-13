@@ -262,8 +262,6 @@ public class o_battleCharPartyData
     public List<s_move> extraSkills = new List<s_move>();
     public List<s_passive> passives = new List<s_passive>();
     public Dictionary<S_Element,float> elementWeakness;
-    public s_move secondMove;
-    public s_move thirdMove;
     //public o_weapon currentPhysWeapon;
     //public o_weapon currentRangeWeapon;
     public s_consumable consumable;
