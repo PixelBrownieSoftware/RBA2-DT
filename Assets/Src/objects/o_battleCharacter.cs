@@ -589,14 +589,13 @@ public class o_battleCharacter : MonoBehaviour
         stamina = dat.stamina;
     }
 
-    public void SetStatsToPartyData()
+    public void SetElementWeakness(S_Element element, float aff)
     {
-
-    }
-
-    public void SetStatsToBattleCharData()
-    {
-
+        if (!elementals.ContainsKey(element)) {
+            elementals.Add(element, aff);
+        } else {
+            elementals[element] = aff;
+        }
     }
 
     public float GetElementWeakness(S_Element element) {
@@ -617,20 +616,6 @@ public class o_battleCharacter : MonoBehaviour
     {
         if (statusEffects.Find(x => x.status == statEff.status) == null)
         {
-            /*
-        if (statEff.status == STATUS_EFFECT.SMIRK)
-        {
-            if (statusEffects.Count > 0)
-                statusEffects.Add(statEff);
-        }
-        else
-        {
-            statusEffects.Add(statEff);
-            if (statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK) != null) {
-                statusEffects.Remove(statusEffects.Find(x => x.status == STATUS_EFFECT.SMIRK));
-            }
-        }
-            */
             statusEffects.Add(statEff);
             UpdateStatusEffectBuffs();
         }
@@ -647,10 +632,14 @@ public class o_battleCharacter : MonoBehaviour
     }
     public void RemoveStatusOnEndTurn()
     {
-        foreach (var status in statusEffects) {
-            if (status.status.removeOnEndRound)
+        if (statusEffects != null)
+        {
+            foreach (var status in statusEffects)
             {
-                RemoveStatus(status.status);
+                if (status.status.removeOnEndRound)
+                {
+                    RemoveStatus(status.status);
+                }
             }
         }
     }

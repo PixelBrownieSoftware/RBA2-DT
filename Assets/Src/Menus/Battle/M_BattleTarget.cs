@@ -28,8 +28,12 @@ public class M_BattleTarget : S_MenuSystem
     public SKILL_TYPE skillType;
 
     public void SetTarget(CH_BattleChar target) {
-        selectedCharacter.characterRef = target;
-        selectedCharacterDat.battleCharacter = target.characterData;
+        switch (mov.moveTargScope) {
+            case s_move.SCOPE_NUMBER.ONE:
+                selectedCharacter.characterRef = target;
+                selectedCharacterDat.battleCharacter = target.characterData;
+                break;
+        }
         if (targetMenuTo.text != "CharacterStatus")
             performMove.RaiseEvent();
         switchMenu.RaiseEvent(targetMenuTo.text);

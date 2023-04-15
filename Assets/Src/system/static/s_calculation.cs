@@ -4,9 +4,11 @@ using UnityEngine;
 using System;
 public static class s_calculation {
 
-    public static void DetermineHPCost(s_move move, int strength, int vitality, int maxHP) {
+    public static int DetermineHPCost(s_move move, int strength, int vitality, int maxHP) {
         int strVit = strength + vitality;
         float perc = strVit / ((maxHP/2) + strVit);
+        perc -= .5f;
+        return Mathf.RoundToInt(move.cost + (move.cost * perc));
     }
 }
 /*

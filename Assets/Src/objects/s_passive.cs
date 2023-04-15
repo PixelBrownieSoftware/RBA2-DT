@@ -8,15 +8,23 @@ public class s_passive : s_ability
     public enum PASSIVE_TYPE {
         STAT_BOOST,
         ELEMENT_DMG_BOOST,
-        ELEMENT_RES_BOOST,
+        RESIST,
+        NULL,
+        ABSORB,
+        REPEL,
         SACRIFICE,
         REGEN,
         COUNTER,
         CUSTOM
     }
-    public enum COUNTER_TYPE {
-        PHYSICAL,
-        SPECIAL
+    public enum PASSIVE_TRIGGER {
+        ALWAYS,
+        SELF_HIT,
+        ALLY_HIT,
+        SELF_ALLY_HIT,
+        SELF_DEFEAT,
+        ALLY_DEFEAT,
+        SELF_ALLY_DEFEAT
     }
     public enum STAT_TYPE
     {
@@ -25,7 +33,7 @@ public class s_passive : s_ability
     }
 
     public PASSIVE_TYPE passiveSkillType;
-    public COUNTER_TYPE counterType;
+    public PASSIVE_TRIGGER passiveTrigger;
     public STAT_TYPE stat;
     public S_Element element;
     public float percentage;

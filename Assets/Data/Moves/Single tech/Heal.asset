@@ -22,7 +22,7 @@ MonoBehaviour:
   fixedValue: 0
   consumeTurn: 1
   moveType: 3
-  moveTarg: 0
+  moveTarg: 2
   moveTargScope: 0
   element: {fileID: 11400000, guid: 0e605d2498ec8114aaae852b98ab7fc6, type: 2}
   preAnimations: []
