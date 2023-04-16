@@ -51,13 +51,12 @@ public class o_battleCharDataN : ScriptableObject
     public int intelligenceGT = 3;
     public int dexterityGT = 3;
 
-    public s_passive characterPassive;
-
     public Sprite battleImage;
 
     public int turnIcons = 1;
     
     public List<s_move> moveLearn;
+    public List<S_Passive> passiveLearn;
     //public element_affinity elementAffinities;
     public el_weaknesses[] elementals;
     public Color characterColour = new Color(1, 0.95f, 0.75f);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Passive move")]
-public class s_passive : s_ability
+public class S_Passive : s_ability
 {
     public enum PASSIVE_TYPE {
         STAT_BOOST,
@@ -22,6 +22,8 @@ public class s_passive : s_ability
         SELF_HIT,
         ALLY_HIT,
         SELF_ALLY_HIT,
+        SELF_BEFORE_HIT,
+        ALLY_BEFORE_HIT,
         SELF_DEFEAT,
         ALLY_DEFEAT,
         SELF_ALLY_DEFEAT

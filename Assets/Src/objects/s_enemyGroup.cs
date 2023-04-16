@@ -41,7 +41,7 @@ public class s_enemyGroup : ScriptableObject
         public int level;
         public int maxLevel;
         public s_move[] extraSkills;
-        public s_passive[] passives;
+        public S_Passive[] passives;
         public o_weapon[] weaponSelections;
     }
     public bool fleeable = true;

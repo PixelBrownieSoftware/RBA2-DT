@@ -1,5 +1,79 @@
-﻿//14/04/2023
+﻿//16/04/2023
+/*
+public Dictionary<o_battleCharacter, S_Passive> TriggerOtherCharacterPassives(int dmg, o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers)
+{
+    Dictionary<o_battleCharacter, S_Passive> counters = new Dictionary<o_battleCharacter, S_Passive>();
+    List<o_battleCharacter> counterOpts;
+    if (isPlayerTurn)
+    {
+        counterOpts = oppositionCharacters;
+    }
+    else
+    {
+        counterOpts = playerCharacters;
+    }
+    float minimum_res = 6;
+    o_battleCharacter sacrifice = null;
+    foreach (o_battleCharacter bc in counterOpts)
+    {
+        if (bc.health <= 0)
+        {
+            continue;
+        }
+        S_Passive getPassive()
+        {
+            List<S_Passive> passives = new List<S_Passive>();
+            foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers)
+            {
+                passives.AddRange(bc.GetAllPassives.FindAll(x => x.passiveTrigger == trig));
+            }
+            foreach (var passiveIndex in passives)
+            {
+                float perc = UnityEngine.Random.Range(0f, 1f);
+                if (perc > passiveIndex.percentage)
+                {
+                    return passiveIndex;
+                }
+            }
+            return null;
+        }
 
+        S_Passive passiveSelected = getPassive();
+        if (!passiveSelected)
+        {
+            continue;
+        }
+        if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
+        {
+            int newDmg = CalculateDamage(currentCharacterObject, bc, currentMove.move, null);
+            switch (passiveSelected.passiveSkillType)
+            {
+                case S_Passive.PASSIVE_TYPE.SACRIFICE:
+
+                    if (targetCharacter.characterRef.health < newDmg && bc.health > newDmg)
+                    {
+                        if (bc.referencePoint.characterData.elementals[currentMove.move.element] >= 2)
+                        {
+                            float elementWeakness = bc.referencePoint.characterData.GetElementWeakness(currentMove.move.element);
+                            if (minimum_res > elementWeakness)
+                            {
+                                sacrifice = bc;
+                                minimum_res = elementWeakness;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+    if (sacrifice != null)
+    {
+        dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
+        return sacrifice;
+    }
+}
+*/
+//14/04/2023
 /*
  * press turn combo stuff
 int numOfTimes = 1;

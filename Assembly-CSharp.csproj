@@ -77,6 +77,7 @@
     <Compile Include="Assets\Src\system\S_Bootstrapper.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_Gacha.cs" />
     <Compile Include="Assets\Src\system\misc\s_menuButton.cs" />
+    <Compile Include="Assets\Src\Menus\R_Passives.cs" />
     <Compile Include="Assets\Src\Menus\S_AnalyseMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_EventListener.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetMenu.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Src\Menus\Battle\M_BattleItems.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_PartyItem.cs" />
     <Compile Include="Assets\Src\system\menu\s_battleMenu.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_CharacterExtraPassives.cs" />
     <Compile Include="Assets\Src\Menus\R_EnemyGroup.cs" />
     <Compile Include="Assets\Src\system\S_RPGTargeter.cs" />
     <Compile Include="Assets\Src\Menus\R_Default.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Assets\Src\Channels\CH_Move.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_HubBattleSelect.cs" />
     <Compile Include="Assets\Src\objects\s_battleGroup.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_CharacterPassives.cs" />
     <Compile Include="Assets\Src\system\menu\s_expMenu.cs" />
     <Compile Include="Assets\Src\system\rpg_menu.cs" />
     <Compile Include="Assets\Src\system\s_battleEngine.cs" />
@@ -184,8 +187,6 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\Hub\M_CharacterPassives.cs" />
-    <Compile Include="Assets\Src\Menus\R_Passives.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

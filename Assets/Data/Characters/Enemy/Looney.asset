@@ -31,11 +31,11 @@ MonoBehaviour:
   luckGT: 2
   intelligenceGT: 4
   dexterityGT: 5
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
   turnIcons: 1
   moveLearn:
   - {fileID: 11400000, guid: cd6f1c0bc01235046909664e132e2dce, type: 2}
+  passiveLearn: []
   elementals:
   - element: {fileID: 11400000, guid: 652b6b8f93cdd764f8592830ec566fb8, type: 2}
     value: 2
@@ -59,8 +59,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}
     minAmount: 0
     maxAmount: 1
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 0}
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1

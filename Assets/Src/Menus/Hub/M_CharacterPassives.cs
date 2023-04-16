@@ -6,7 +6,7 @@ using TMPro;
 public class M_CharacterPassives : S_MenuSystem
 {
     [SerializeField]
-    private R_MoveList skills;
+    private R_Passives skills;
     [SerializeField]
     private R_BattleCharacter currentCharacter;
     [SerializeField]
@@ -21,7 +21,7 @@ public class M_CharacterPassives : S_MenuSystem
     {
         base.StartMenu();
         skills.Clear();
-        skills.AddMoves(currentCharacter.battleCharacter.currentMoves);
+        skills.AddMoves(currentCharacter.battleCharacter.passives);
         UpdateButtons();
     }
 
@@ -44,15 +44,15 @@ public class M_CharacterPassives : S_MenuSystem
         int indButton = 0;
         for (int i = 0; i < skillButtons.Length; i++)
         {
-            if (skills.moveListRef == null)
+            if (skills.passives == null)
             {
                 skillButtons[i].gameObject.SetActive(false);
             }
             else
             {
-                if (skills.moveListRef.Count > i)
+                if (skills.passives.Count > i)
                 {
-                    s_move skill = skills.GetMove(i);
+                    S_Passive skill = skills.GetMove(i);
                     skillButtons[indButton].gameObject.SetActive(true);
                     skillButtons[indButton].SetIntButton(i);
                     skillButtons[indButton].SetButonText(skill.name);

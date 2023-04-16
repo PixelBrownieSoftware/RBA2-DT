@@ -103,7 +103,11 @@ public class M_BattleOptions : S_MenuSystem
                     {
                         var button = buttons[i];
                         button.SetButonText(moves[i].name);
-                        int cost = moves[i].cost;
+                        int cost = 0;
+                        if (moves[i].element.isMagic)
+                            cost = moves[i].cost;
+                        else
+                            cost = s_calculation.DetermineHPCost(moves[i], currentCharacter.characterRef.strengthNet, currentCharacter.characterRef.vitalityNet, currentCharacter.characterRef.maxHealth);
                         bool canUse = true;
                         if (moves[i].element.isMagic)
                             canUse = currentCharacter.characterRef.stamina >= cost;

@@ -25,6 +25,8 @@ MonoBehaviour:
     extraSkills: []
     passives: []
     weaponSelections: []
+  members_summonable: []
+  members_pre_summon: []
   members_Player: []
   member_Guest:
     memberDat: {fileID: 0}
@@ -35,6 +37,7 @@ MonoBehaviour:
     passives: []
     weaponSelections: []
   events: []
+  unlockCharacters: []
   branches:
   - {fileID: 11400000, guid: 50616b7cc3af31643a05b0a563dfb4ba, type: 2}
   - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}

@@ -206,14 +206,14 @@ public class s_rpgGlobals : s_globals
     //public List<s_shopItem> shopItems = new List<s_shopItem>();
 
     public R_MoveList extraSkills;
-    public List<s_passive> extraPassives = new List<s_passive>();
+    public List<S_Passive> extraPassives = new List<S_Passive>();
 
     //So we can set it's object state once a level has been completed
     //public o_locationOverworld locationObjectName;
     public Text moneyTxt;
 
     public s_move[] comboMoveData;
-    public s_passive[] passiveMoveData;
+    public S_Passive[] passiveMoveData;
     public s_menuButton[] buttonObjects;
     public int extraSkillAmount = 4;
     public int extraPassiveSkillAmount = 4;

@@ -260,20 +260,29 @@ public class o_battleCharPartyData
     public o_battleCharDataN characterDataSource;
     public List<s_move> currentMoves = new List<s_move>();
     public List<s_move> extraSkills = new List<s_move>();
-    public List<s_passive> passives = new List<s_passive>();
-    public Dictionary<S_Element,float> elementWeakness;
-    //public o_weapon currentPhysWeapon;
-    //public o_weapon currentRangeWeapon;
-    public s_consumable consumable;
-    public int durationConsumable;
+    public List<S_Passive> passives = new List<S_Passive>();
+    public List<S_Passive> extraPassives = new List<S_Passive>();
+    public Dictionary<S_Element, float> elementals = new Dictionary<S_Element, float>();
+
+    public void SetElementWeakness(S_Element element, float aff)
+    {
+        if (!elementals.ContainsKey(element))
+        {
+            elementals.Add(element, aff);
+        }
+        else
+        {
+            elementals[element] = aff;
+        }
+    }
 
     public float GetElementWeakness(S_Element element)
     {
-        foreach (var el in characterDataSource.elementals) {
-            if (el.element == element)
-                return el.value;
+        if (!elementals.ContainsKey(element))
+        {
+            return 1f;
         }
-        return 1f;
+        return elementals[element];
     }
 
     public List<s_move> AllSkills {
@@ -383,13 +392,13 @@ public class o_battleCharacter : MonoBehaviour
 
     public List<s_move> currentMoves;
     public List<s_move> extraSkills;
-    public List<s_passive> extraPassives;
+    public List<S_Passive> passives;
+    public List<S_Passive> extraPassives;
     public o_battleCharDataN.ai_page character_AI;
     public int characterPage;
     public s_rpganim animations;
 
     public o_battleCharDataN battleCharData;
-    public Dictionary<S_Element, float> elementals = new Dictionary<S_Element, float>();
     //public element_affinity elementalAffinities;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
 
@@ -518,6 +527,16 @@ public class o_battleCharacter : MonoBehaviour
             return moves;
         }
     }
+    public List<S_Passive> GetAllPassives
+    {
+        get
+        {
+            List<S_Passive> moves = new List<S_Passive>();
+            moves.AddRange(passives);
+            moves.AddRange(extraPassives);
+            return moves;
+        }
+    }
 
     public void Awake()
     {
@@ -589,21 +608,6 @@ public class o_battleCharacter : MonoBehaviour
         stamina = dat.stamina;
     }
 
-    public void SetElementWeakness(S_Element element, float aff)
-    {
-        if (!elementals.ContainsKey(element)) {
-            elementals.Add(element, aff);
-        } else {
-            elementals[element] = aff;
-        }
-    }
-
-    public float GetElementWeakness(S_Element element) {
-        if (!elementals.ContainsKey(element)) {
-            return 1f;
-        }
-        return elementals[element];
-    }
 
     public bool HasStatus(S_StatusEffect statEff) {
         if (statusEffects.Find(x => x.status == statEff) != null) {

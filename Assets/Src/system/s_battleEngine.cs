@@ -115,9 +115,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     private R_ComboMoves currentC;
 
     public R_MoveList extraSkills;
+    public R_Passives extraPassives;
     public R_EnemyGroupList battleGroupRef;
     public R_EnemyGroupList battleGroupDoneRef;
-    //public s_battleAction battleAction;
     
     public int roundNum;
 
@@ -403,6 +403,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         c.inBattle = pbc.inBattle;
                         allCharacterReferences.Add(c.referencePoint);
                         SetStatsPlayer(ref c, pbc);
+                        c.referencePoint.characterData.elementals = bc.GetElements;
                         if (c != null)
                         {
                             if (c.inBattle)
@@ -654,11 +655,20 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         charObj.currentMoves = new List<s_move>();
         charObj.extraSkills = new List<s_move>();
+        charObj.passives = new List<S_Passive>();
+        charObj.extraPassives = new List<S_Passive>();
         foreach (s_move mv in enem.moveLearn)
         {
             if (mv.MeetsRequirements(charObj))
             {
                 charObj.currentMoves.Add(mv);
+            }
+        }
+        foreach (var mv in enem.passiveLearn)
+        {
+            if (mv.MeetsRequirements(charObj))
+            {
+                charObj.passives.Add(mv);
             }
         }
         if (mem.extraSkills != null)
@@ -671,38 +681,53 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
             }
         }
+        if (mem.passives != null)
+        {
+            foreach (var mv in mem.passives)
+            {
+                if (mv.MeetsRequirements(charObj))
+                {
+                    charObj.extraPassives.Add(mv);
+                }
+            }
+        }
         List<s_move> totalMoves = new List<s_move>();
         totalMoves.AddRange(charObj.currentMoves);
         totalMoves.AddRange(charObj.extraSkills);
         charObj.referencePoint.characterData = rpgManager.SetPartyCharacterStats(charObj);
 
         charObj.character_AI.ai = GetAIList(totalMoves);
-        charObj.elementals = enem.GetElements;
+        charObj.referencePoint.characterData.elementals = enem.GetElements;
         if (mem.passives != null)
         {
-            foreach (var passive in mem.passives)
+            AssignPassivesAffinity(mem.passives, ref charObj);
+        }
+        charObj.inBattle = true;
+    }
+
+    public void AssignPassivesAffinity(S_Passive[] passives, ref o_battleCharacter charObj) {
+        foreach (var passive in passives)
+        {
+            if (passive.MeetsRequirements(charObj))
             {
-                if (passive.MeetsRequirements(charObj))
+                charObj.extraPassives.Add(passive);
+                switch (passive.passiveSkillType)
                 {
-                    charObj.extraPassives.Add(passive);
-                    switch (passive.passiveSkillType) {
-                        case s_passive.PASSIVE_TYPE.ABSORB:
-                            charObj.SetElementWeakness(passive.element, -2f);
-                            break;
-                        case s_passive.PASSIVE_TYPE.NULL:
-                            charObj.SetElementWeakness(passive.element, 0f);
-                            break;
-                        case s_passive.PASSIVE_TYPE.REPEL:
-                            charObj.SetElementWeakness(passive.element, -1f);
-                            break;
-                        case s_passive.PASSIVE_TYPE.RESIST:
-                            charObj.SetElementWeakness(passive.element, 0.5f);
-                            break;
-                    }
+                    case S_Passive.PASSIVE_TYPE.ABSORB:
+                        charObj.referencePoint.characterData.SetElementWeakness(passive.element, -2f);
+                        break;
+                    case S_Passive.PASSIVE_TYPE.NULL:
+                        charObj.referencePoint.characterData.SetElementWeakness(passive.element, 0f);
+                        break;
+                    case S_Passive.PASSIVE_TYPE.REPEL:
+                        charObj.referencePoint.characterData.SetElementWeakness(passive.element, -1f);
+                        break;
+                    case S_Passive.PASSIVE_TYPE.RESIST:
+                        charObj.referencePoint.characterData.SetElementWeakness(passive.element, 0.5f);
+                        break;
                 }
             }
         }
-        charObj.inBattle = true;
     }
 
     public void SetStatsOpponent(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem)
@@ -735,6 +760,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         charObj.extraSkills = new List<s_move>();
         charObj.currentMoves.AddRange(enem.currentMoves);
         charObj.extraSkills.AddRange(enem.extraSkills);
+        charObj.extraPassives.AddRange(enem.extraPassives);
+        charObj.passives.AddRange(enem.passives);
+
+        AssignPassivesAffinity(enem.passives.ToArray(), ref charObj);
 
         playersReference.Add(charObj.referencePoint);
         playerCharacters.Add(charObj);
@@ -749,9 +778,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     #endregion
 
     #region Aimations
-    public void FindProjectile() {
-
-    }
     public IEnumerator AddPartymemberToBattle(o_battleCharacter to)
     {
         List<o_battleCharacter> bc = playerCharacters.FindAll(x => x.inBattle);
@@ -1303,7 +1329,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         else
         {
-            user.health -= mov.cost;
+            user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
         }
         animations = mov.animations;
 
@@ -1801,7 +1827,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ELEMENT_TARG_FRAIL:
                             foreach (o_battleCharacter bc in targets)
                             {
-                                if (bc.elementals[ai.move.element] >= 2) {
+                                if (bc.referencePoint.characterData.elementals[ai.move.element] >= 2) {
                                     potentialTrg = bc;
                                     break;
                                 }
@@ -1811,7 +1837,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case charAI.CONDITIONS.ELEMENT_TARG_STRONGEST:
                             foreach (o_battleCharacter bc in targets)
                             {
-                                int aff = (int)bc.elementals[ai.move.element];
+                                int aff = (int)bc.referencePoint.characterData.elementals[ai.move.element];
                                 if (aff > 1.999f)
                                 {
                                     potentialTrg = bc;
@@ -2012,7 +2038,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         EndAction();
     }
 
-
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
     {
         S_Element el = move.element;
@@ -2020,7 +2045,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (!move.fixedValue)
         {
             float multipler = 1f;
-            float elementals = user.GetElementWeakness(el);
+            float elementals = user.referencePoint.characterData.GetElementWeakness(el);
             if (elementals < 0 && elementals > -1)
                 multipler = (elementals * -1);
             else if (elementals <= -1)
@@ -2116,6 +2141,99 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     }
 
+    /// <summary>
+    /// This returns anyone with an ally trigger
+    /// </summary>
+    /// <param name="dmg"></param>
+    /// <param name="targ">The triggerer</param>
+    /// <param name="passiveTriggers"></param>
+    /// <returns></returns>
+    IEnumerator TriggerOtherCharacterPassives(int dmg, o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers, Vector2 characterPos) {
+        Dictionary<o_battleCharacter, S_Passive> counters = new Dictionary<o_battleCharacter, S_Passive>();
+        List<o_battleCharacter> counterOpts;
+        if (isPlayerTurn)
+        {
+            counterOpts = oppositionCharacters;
+        }
+        else
+        {
+            counterOpts = playerCharacters;
+        }
+        float minimum_res = 6;
+        o_battleCharacter sacrifice = null;
+        foreach (o_battleCharacter bc in counterOpts)
+        {
+            if (bc.health <= 0)
+            {
+                continue;
+            }
+            S_Passive getPassive() {
+                List<S_Passive> passives = new List<S_Passive>();
+                foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers) {
+                    passives.AddRange(bc.GetAllPassives.FindAll(x => x.passiveTrigger == trig));
+                }
+                foreach (var passiveIndex in passives) {
+                    float perc = UnityEngine.Random.Range(0f,1f);
+                    if (perc > passiveIndex.percentage) {
+                        return passiveIndex;
+                    }
+                }
+                return null;
+            }
+
+            S_Passive passiveSelected = getPassive();
+            if (!passiveSelected)
+            {
+                continue;
+            }
+            if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
+            {
+                counters.Add(bc, passiveSelected);
+            }
+        }
+        if (counters.Count > 0) {
+
+            foreach (var item in counters)
+            {
+                switch (item.Value.passiveSkillType)
+                {
+                    case S_Passive.PASSIVE_TYPE.COUNTER:
+
+                        float ch = UnityEngine.Random.Range(0f, 1f);
+                        if (ch < item.Value.percentage)
+                        {
+                            yield return StartCoroutine(DisplayMoveName(item.Value.name));
+
+                            characterPos = currentCharacterObject.transform.position;
+                            dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null);
+
+                            DamageEffect(dmg, currentCharacterObject, characterPos, DAMAGE_FLAGS.NONE);
+
+                            for (int i = 0; i < 2; i++)
+                            {
+                                currentCharacterObject.transform.position = characterPos + new Vector2(15, 0);
+                                yield return new WaitForSeconds(0.02f);
+                                currentCharacterObject.transform.position = characterPos;
+                                yield return new WaitForSeconds(0.02f);
+                                currentCharacterObject.transform.position = characterPos + new Vector2(-15, 0);
+                                yield return new WaitForSeconds(0.02f);
+                                currentCharacterObject.transform.position = characterPos;
+                                yield return new WaitForSeconds(0.02f);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        /*
+        if (sacrifice != null)
+        {
+            dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
+            return sacrifice;
+        }
+        */
+    }
+
     public IEnumerator CalculateAttk(o_battleCharacter targ)
     {
 
@@ -2136,60 +2254,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case s_move.MOVE_TYPE.HP_SP_DAMAGE:
             case s_move.MOVE_TYPE.HP_SP_DRAIN:
 
-                #region CHECK FOR SACRIFICE
-                {
-                    List<o_battleCharacter> counterOpts;
-                    if (isPlayerTurn)
-                    {
-                        counterOpts = oppositionCharacters;
-                    }
-                    else
-                    {
-                        counterOpts = playerCharacters;
-                    }
-                    float minimum_res = 6;
-                    o_battleCharacter sacrifice = null;
-                    foreach (o_battleCharacter bc in counterOpts)
-                    {
-                        if (bc.health <= 0)
-                        {
-                            continue;
-                        }
-                        if (!bc.extraPassives.Find(x => x.passiveSkillType == s_passive.PASSIVE_TYPE.SACRIFICE))
-                        {
-                            continue;
-                        }
-                        if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
-                        {
-                            if (targetCharacter.characterRef.health < dmg && bc.health >
-                                CalculateDamage(currentCharacterObject, bc, currentMove.move, null))
-                            {
-                                if (bc.elementals[currentMove.move.element] >= 2)
-                                {
-                                    /*
-                                    if (minimum_res > bc.elementals[(int)battleAction.move.element])
-                                    {
-                                        sacrifice = bc;
-                                        minimum_res = bc.elementals[(int)battleAction.move.element];
-                                    }
-                                    */
-                                }
-                            }
-                        }
-                    }
-                    if (sacrifice != null)
-                    {
-                        targetCharacter.SetCharacter(sacrifice.referencePoint);
-                        dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
-                    }
-                }
-                #endregion
 
                 #region PRESS TURN STUFF
                 {
                     float smirkChance = UnityEngine.Random.Range(0, 1);
                     ELEMENT_WEAKNESS fl = 0;
-                    float elementWeakness = targ.GetElementWeakness(mov.element);
+                    float elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
                     if (mov.moveType == s_move.MOVE_TYPE.NONE)
                     {
                         fl = ELEMENT_WEAKNESS.NONE;
@@ -2310,6 +2380,18 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     }
                 }
                 dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
+
+                #region PASSIVE BEFORE HIT CHECK
+                {
+                    S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_BEFORE_HIT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_BEFORE_HIT
+                    };
+                    yield return StartCoroutine(TriggerOtherCharacterPassives(dmg, targ,triggers, characterPos));
+                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
+                }
+                #endregion
+
                 #region AGILITY DODGE CHECK
                 {
                     int userAgil = currentCharacterObject.agiNet + 2;
@@ -2391,43 +2473,17 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                 #region CHECK FOR COUNTER
                 {
-                    foreach (var passive in targ.extraPassives) {
-                        switch (passive.passiveTrigger) {
-                            case s_passive.PASSIVE_TRIGGER.SELF_HIT:
-                                switch (passive.passiveSkillType) {
-                                    case s_passive.PASSIVE_TYPE.COUNTER:
-
-                                        float ch = UnityEngine.Random.Range(0f, 1f);
-                                        if (ch < passive.percentage)
-                                        {
-                                            characterPos = currentCharacterObject.transform.position;
-                                            dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null);
-
-                                            DamageEffect(dmg, currentCharacterObject, characterPos, DAMAGE_FLAGS.NONE);
-
-                                            for (int i = 0; i < 2; i++)
-                                            {
-                                                currentCharacterObject.transform.position = characterPos + new Vector2(15, 0);
-                                                yield return new WaitForSeconds(0.02f);
-                                                currentCharacterObject.transform.position = characterPos;
-                                                yield return new WaitForSeconds(0.02f);
-                                                currentCharacterObject.transform.position = characterPos + new Vector2(-15, 0);
-                                                yield return new WaitForSeconds(0.02f);
-                                                currentCharacterObject.transform.position = characterPos;
-                                                yield return new WaitForSeconds(0.02f);
-                                            }
-                                        }
-                                        break;
-                                }
-                                break;
-                        }
-                    }
+                    S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_HIT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_HIT
+                    };
+                    yield return StartCoroutine(TriggerOtherCharacterPassives(dmg, targ, triggers, characterPos));
+                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
                 }
                 #endregion
 
                 break;
-            #endregion
-
+                #endregion
             #endregion
 
             #region STATUS
@@ -2613,9 +2669,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 foreach (var mv in en.extraPassives)
                 {
-                    if (!s_rpgGlobals.rpgGlSingleton.extraPassives.Contains(mv))
+                    if (!extraPassives.ListContains(mv))
                     {
-                        s_rpgGlobals.rpgGlSingleton.extraPassives.Add(mv);
+                        extraPassives.AddMove(mv);
                         extSkillLearn.Add(mv.name);
                     }
                 }
@@ -2741,7 +2797,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 currentPartyCharactersQueue.Enqueue(c);
             }
-            yield return StartCoroutine(PollBattleEvent());
             battleEngine = BATTLE_ENGINE_STATE.SELECT_CHARACTER;
         }
         else
@@ -2754,6 +2809,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             battleEngine = BATTLE_ENGINE_STATE.SELECT_CHARACTER;
         }
     }
+    /*
     public IEnumerator PollBattleEvent()
     {
         bool conditionFufilled = false;
@@ -2821,6 +2877,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         l1a:
         battleEngine = BATTLE_ENGINE_STATE.NONE;
     }
+    */
     #endregion
 
     #region DRAW STUFF

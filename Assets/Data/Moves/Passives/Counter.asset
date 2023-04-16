@@ -16,9 +16,11 @@ MonoBehaviour:
   dxReq: 0
   vitReq: 0
   agiReq: 0
-  passiveSkillType: 5
-  counterType: 0
+  intReq: 0
+  lucReq: 0
+  passiveSkillType: 8
+  passiveTrigger: 1
   stat: 0
-  element: 0
-  percentage: 0.35
+  element: {fileID: 0}
+  percentage: 1
   customPassive: 
