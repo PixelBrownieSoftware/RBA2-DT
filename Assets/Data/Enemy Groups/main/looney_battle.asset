@@ -23,7 +23,8 @@ MonoBehaviour:
     level: 1
     maxLevel: 0
     extraSkills: []
-    passives: []
+    passives:
+    - {fileID: 11400000, guid: 05bb62dfb3c117e42ae4b0f96f867609, type: 2}
     weaponSelections: []
   members_summonable: []
   members_pre_summon: []

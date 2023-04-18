@@ -152,6 +152,11 @@ public class S_RPGGlobals : ScriptableObject
             //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
 
+            List<S_Passive> passive2Learn = data.passiveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (passive2Learn != null)
+            {
+                newCharacter.passives.AddRange(passive2Learn);
+            }
             List<s_move> mv2Learn = data.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
             if (mv2Learn != null)
             {

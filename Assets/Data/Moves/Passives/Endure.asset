@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b055d59a9ef3f3348a4db949dbcc9a73, type: 3}
+  m_Name: Endure
+  m_EditorClassIdentifier: 
+  strReq: 0
+  dxReq: 0
+  vitReq: 0
+  agiReq: 0
+  intReq: 0
+  lucReq: 0
+  singleUse: 1
+  passiveSkillType: 7
+  passiveTrigger: 6
+  stat: 0
+  element: {fileID: 0}
+  percentage: 1
+  percentageHeal: 0.25
+  customPassive: 

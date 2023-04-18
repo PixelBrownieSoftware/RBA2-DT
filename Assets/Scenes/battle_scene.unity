@@ -25731,6 +25731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cbb77579b865a4ebc8401b96b06336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: {fileID: 0}
 --- !u!1001 &986312882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49482,7 +49483,7 @@ MonoBehaviour:
   currentMove: {fileID: 11400000, guid: 4d639a2510d75c64aa0e7855614b7917, type: 2}
   currentC: {fileID: 11400000, guid: 4c65540d5d9dfd04a9570888331a1ae5, type: 2}
   extraSkills: {fileID: 11400000, guid: 75514ab29a365f64890e564b7f360da8, type: 2}
-  extraPassives: {fileID: 0}
+  extraPassives: {fileID: 11400000, guid: d7b571d1746471549adc746133ace3f3, type: 2}
   battleGroupRef: {fileID: 11400000, guid: 2137c49ee41941044ab6886d232c5ce9, type: 2}
   battleGroupDoneRef: {fileID: 11400000, guid: 438a58488beb6b5419ea4d794950974e, type: 2}
   roundNum: 0

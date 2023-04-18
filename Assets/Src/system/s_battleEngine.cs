@@ -118,7 +118,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public R_Passives extraPassives;
     public R_EnemyGroupList battleGroupRef;
     public R_EnemyGroupList battleGroupDoneRef;
-    
+
+    private Dictionary<o_battleCharacter, S_Passive> usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
+    private Dictionary<Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>, List<S_Passive>> characterPassiveReference = new Dictionary<Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>, List<S_Passive>>();
+
     public int roundNum;
 
     public int fullTurn;
@@ -279,6 +282,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             ob.render.sprite = null;
         }
+        usedPassives.Clear();
+        usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
     }
 
     public IEnumerator StartBattle() {
@@ -289,6 +294,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         playersReference.Clear();
         enemiesReference.Clear();
         SceneManager.UnloadSceneAsync("Overworld");
+        usedPassives.Clear();
+        usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
 
         //ffff
         #region CLEAR GUI
@@ -431,6 +438,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 SetStatsNonChangable(ref c, mem);
                 playersReference.Add(c.referencePoint);
                 c.render.color = Color.white;
+            }
+        }
+
+        foreach (var character in GetAllCharacters()) {
+            foreach (var passive in character.GetAllPassives)
+            {
+                Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter> passiveChar = new Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>(passive.passiveTrigger, character);
+                if (!characterPassiveReference.ContainsKey(passiveChar)) {
+                    characterPassiveReference.Add(passiveChar, character.GetAllPassives.FindAll(x => x.passiveTrigger == passive.passiveTrigger));
+                }
             }
         }
         #endregion
@@ -2141,6 +2158,49 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     }
 
+    public IEnumerator PassiveSkillDo(KeyValuePair<o_battleCharacter, S_Passive> user_skill, Vector2 characterPos)
+    {
+        o_battleCharacter targ = user_skill.Key;
+        int dmg = 0;
+        yield return StartCoroutine(DisplayMoveName(user_skill.Value.name));
+        if (user_skill.Value.singleUse)
+        {
+            usedPassives.Add(targ, user_skill.Value);
+        }
+        switch (user_skill.Value.passiveSkillType)
+        {
+            case S_Passive.PASSIVE_TYPE.COUNTER:
+
+
+                characterPos = currentCharacterObject.transform.position;
+                dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null);
+
+                DamageEffect(dmg, currentCharacterObject, characterPos, DAMAGE_FLAGS.NONE);
+
+                for (int i = 0; i < 2; i++)
+                {
+                    currentCharacterObject.transform.position = characterPos + new Vector2(15, 0);
+                    yield return new WaitForSeconds(0.02f);
+                    currentCharacterObject.transform.position = characterPos;
+                    yield return new WaitForSeconds(0.02f);
+                    currentCharacterObject.transform.position = characterPos + new Vector2(-15, 0);
+                    yield return new WaitForSeconds(0.02f);
+                    currentCharacterObject.transform.position = characterPos;
+                    yield return new WaitForSeconds(0.02f);
+                }
+                break;
+
+            case S_Passive.PASSIVE_TYPE.REGEN:
+                dmg = Mathf.RoundToInt(targ.maxHealth * user_skill.Value.percentageHeal);
+                //int spDmg
+                targ.health += dmg;
+                targ.health = Mathf.Clamp(targ.health,
+                    0, targetCharacterObject.maxHealth);
+                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                break;
+        }
+    }
+
     /// <summary>
     /// This returns anyone with an ally trigger
     /// </summary>
@@ -2148,7 +2208,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     /// <param name="targ">The triggerer</param>
     /// <param name="passiveTriggers"></param>
     /// <returns></returns>
-    IEnumerator TriggerOtherCharacterPassives(int dmg, o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers, Vector2 characterPos) {
+    /*
+    IEnumerator TriggerCharacterPassives(o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers, Vector2 characterPos) {
         Dictionary<o_battleCharacter, S_Passive> counters = new Dictionary<o_battleCharacter, S_Passive>();
         List<o_battleCharacter> counterOpts;
         if (isPlayerTurn)
@@ -2169,12 +2230,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             S_Passive getPassive() {
                 List<S_Passive> passives = new List<S_Passive>();
-                foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers) {
+                foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers)
+                {
                     passives.AddRange(bc.GetAllPassives.FindAll(x => x.passiveTrigger == trig));
+                    print(passives[0].name);
                 }
                 foreach (var passiveIndex in passives) {
+
+                    if (usedPassives.ContainsKey(bc) && usedPassives.ContainsValue(passiveIndex))
+                    {
+                        continue;
+                    }
                     float perc = UnityEngine.Random.Range(0f,1f);
-                    if (perc > passiveIndex.percentage) {
+                    if (perc < passiveIndex.percentage) {
                         return passiveIndex;
                     }
                 }
@@ -2195,43 +2263,32 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             foreach (var item in counters)
             {
-                switch (item.Value.passiveSkillType)
-                {
-                    case S_Passive.PASSIVE_TYPE.COUNTER:
-
-                        float ch = UnityEngine.Random.Range(0f, 1f);
-                        if (ch < item.Value.percentage)
-                        {
-                            yield return StartCoroutine(DisplayMoveName(item.Value.name));
-
-                            characterPos = currentCharacterObject.transform.position;
-                            dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null);
-
-                            DamageEffect(dmg, currentCharacterObject, characterPos, DAMAGE_FLAGS.NONE);
-
-                            for (int i = 0; i < 2; i++)
-                            {
-                                currentCharacterObject.transform.position = characterPos + new Vector2(15, 0);
-                                yield return new WaitForSeconds(0.02f);
-                                currentCharacterObject.transform.position = characterPos;
-                                yield return new WaitForSeconds(0.02f);
-                                currentCharacterObject.transform.position = characterPos + new Vector2(-15, 0);
-                                yield return new WaitForSeconds(0.02f);
-                                currentCharacterObject.transform.position = characterPos;
-                                yield return new WaitForSeconds(0.02f);
-                            }
-                        }
-                        break;
-                }
+                yield return StartCoroutine(PassiveSkillDo(item, characterPos));
             }
         }
-        /*
-        if (sacrifice != null)
+    }
+    */
+
+    IEnumerator TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER trigger, o_battleCharacter targ, Vector2 characterPos)
+    {
+        Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter> trigger_char = new Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>(trigger, targ);
+        if (characterPassiveReference.ContainsKey(trigger_char))
+            yield return null;
+        List<S_Passive> passives = characterPassiveReference[trigger_char];
+        S_Passive passiveToDo = null;
+        foreach (var passiveIndex in passives)
         {
-            dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
-            return sacrifice;
+            if (usedPassives.ContainsKey(targ) && usedPassives.ContainsValue(passiveIndex))
+            {
+                continue;
+            }
+            float perc = UnityEngine.Random.Range(0f, 1f);
+            if (perc < passiveIndex.percentage)
+            {
+                passiveToDo = passiveIndex;
+            }
         }
-        */
+        yield return StartCoroutine(PassiveSkillDo(new KeyValuePair<o_battleCharacter, S_Passive>(targ, passiveToDo), characterPos));
     }
 
     public IEnumerator CalculateAttk(o_battleCharacter targ)
@@ -2253,8 +2310,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case s_move.MOVE_TYPE.HP_DRAIN:
             case s_move.MOVE_TYPE.HP_SP_DAMAGE:
             case s_move.MOVE_TYPE.HP_SP_DRAIN:
-
-
                 #region PRESS TURN STUFF
                 {
                     float smirkChance = UnityEngine.Random.Range(0, 1);
@@ -2387,7 +2442,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                      S_Passive.PASSIVE_TRIGGER.ALLY_BEFORE_HIT,
                      S_Passive.PASSIVE_TRIGGER.SELF_BEFORE_HIT
                     };
-                    yield return StartCoroutine(TriggerOtherCharacterPassives(dmg, targ,triggers, characterPos));
+                    //yield return StartCoroutine(TriggerSingleTargetPassives( targ,triggers, characterPos));
                     //targetCharacter.SetCharacter(sacrifice.referencePoint);
                 }
                 #endregion
@@ -2464,6 +2519,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         targ.transform.position = characterPos;
                         yield return new WaitForSeconds(0.02f);
                     }
+                    #region CHECK FOR COUNTER
+                    {
+                        yield return StartCoroutine(TriggerSingleTargetPassives( S_Passive.PASSIVE_TRIGGER.SELF_HIT ,targ, characterPos));
+                        //targetCharacter.SetCharacter(sacrifice.referencePoint);
+                    }
+                    #endregion
                 }
                 else
                 {
@@ -2471,16 +2532,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     yield return new WaitForSeconds(0.02f);
                 }
 
-                #region CHECK FOR COUNTER
-                {
-                    S_Passive.PASSIVE_TRIGGER[] triggers = {
-                     S_Passive.PASSIVE_TRIGGER.ALLY_HIT,
-                     S_Passive.PASSIVE_TRIGGER.SELF_HIT
-                    };
-                    yield return StartCoroutine(TriggerOtherCharacterPassives(dmg, targ, triggers, characterPos));
-                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
-                }
-                #endregion
 
                 break;
                 #endregion
@@ -2559,6 +2610,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
 
         yield return new WaitForSeconds(0.18f);
+
+        #region CHECK FOR ON DEFEAT
+        if (targ.health <= 0)
+        {
+            /*
+            S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_DEFEAT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT
+                    };
+            yield return StartCoroutine(TriggerCharacterPassives(targ, triggers, characterPos));
+            */
+            yield return StartCoroutine(TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT, targ, characterPos));
+            //targetCharacter.SetCharacter(sacrifice.referencePoint);
+        }
+        #endregion
+
         if (targ.health <= 0)
         {
             targ.statusEffects.Clear();
@@ -2566,11 +2633,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             {
                 s_soundmanager.GetInstance().PlaySound("enemy_defeat");
             }
-            else {
+            else
+            {
                 s_soundmanager.GetInstance().PlaySound("player_defeat");
             }
             yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
-            if (oppositionCharacters.Contains(targ) && !targ.persistence) {
+            if (oppositionCharacters.Contains(targ) && !targ.persistence)
+            {
                 enemiesReference.Remove(targ.referencePoint);
                 oppositionCharacters.Remove(targ);
                 ReshuffleOpponentPositions();
@@ -2667,12 +2736,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                     }
                 }
-                foreach (var mv in en.extraPassives)
+                if (en.extraPassives != null)
                 {
-                    if (!extraPassives.ListContains(mv))
+                    foreach (var mv in en.extraPassives)
                     {
-                        extraPassives.AddMove(mv);
-                        extSkillLearn.Add(mv.name);
+                        if (!extraPassives.ListContains(mv))
+                        {
+                            extraPassives.AddMove(mv);
+                            extSkillLearn.Add(mv.name);
+                        }
                     }
                 }
             }
@@ -2696,6 +2768,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             foreach (o_battleCharacter c in playerCharacters)
             {
                 c.extraSkills.Clear();
+                c.extraPassives.Clear();
                 if (c == guest)
                     continue;
                 rpgManager.SetPartyMemberStats(c);
@@ -2801,6 +2874,17 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         else
         {
+
+            #region CHECK FOR ALWAYS
+            if (currentCharacterObject.health > 0)
+            {
+                yield return StartCoroutine(TriggerSingleTargetPassives(
+                    S_Passive.PASSIVE_TRIGGER.ALWAYS,
+                    currentCharacterObject,
+                    currentCharacterObject.transform.position));
+                //targetCharacter.SetCharacter(sacrifice.referencePoint);
+            }
+            #endregion
             currentPartyCharactersQueue.Dequeue();
             currentPartyCharactersQueue.Enqueue(currentCharacterObject);
             

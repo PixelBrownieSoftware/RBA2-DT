@@ -32,12 +32,15 @@ public class S_Passive : s_ability
     {
         HEALTH,
         STAMINA,
+        HP_SP
     }
 
+    public bool singleUse = false;
     public PASSIVE_TYPE passiveSkillType;
     public PASSIVE_TRIGGER passiveTrigger;
     public STAT_TYPE stat;
     public S_Element element;
     public float percentage;
+    public float percentageHeal; //Health will be healed more than stamina
     public string customPassive;
 }
