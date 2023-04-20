@@ -12,6 +12,7 @@ public class ed_move : Editor
     const int requirmentMax = 20;
     const int buffMax = 5;
 
+    /*
     public void DrawReqGUITool(ref s_move.moveRequirement req)
     {
         req.type = (s_move.moveRequirement.MOVE_REQ_TYPE)EditorGUILayout.EnumPopup(req.type);
@@ -49,7 +50,7 @@ public class ed_move : Editor
         }
         EditorGUILayout.LabelField(str);
     }
-
+    */
     public override void OnInspectorGUI()
     {
         data = (s_move)target;
@@ -139,6 +140,7 @@ public class ed_move : Editor
                     GUI.color = Color.white;
                     EditorGUILayout.Space();
                     EditorGUILayout.EndHorizontal();
+                    /*
                     if (data.moveRequirements != null)
                     {
                         foreach (var cmb in data.moveRequirements)
@@ -173,6 +175,7 @@ public class ed_move : Editor
                             }
                         }
                     }
+                    */
                     break;
 
                 case 1:

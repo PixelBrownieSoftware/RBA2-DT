@@ -10,13 +10,11 @@ public class M_BattleOptions : S_MenuSystem
     public R_CharacterList targetList;
     public R_CharacterList players;
     public R_CharacterList opponents;
-    public R_ComboMoves comboMoves;
     public B_BattleMove[] buttons;
     public R_Items items;
     public R_Boolean isItem;
     public R_Move selectedMove;
     public R_MoveList movesList;
-    public R_CurrentCombo currentCombo;
     public CH_Move selectMove;
     public CH_Text selectMenu;
     [SerializeField]
@@ -131,7 +129,7 @@ public class M_BattleOptions : S_MenuSystem
                 }
                 break;
 
-
+                /*
             case "Combos":
                 {
                     int ind = 0;
@@ -205,7 +203,7 @@ public class M_BattleOptions : S_MenuSystem
                     }
                 }
                 break;
-
+                */
             case "Items":
                 isItem.boolean = true;
                 if (items.inventory.Count > 0)

@@ -26,6 +26,12 @@ public class R_CharacterList : R_Default
         return characterListRef.Contains(targ);
     }
 
+    public void ClearSheild() {
+        for (int i = 0; i < characterListRef.Count; i++) {
+            characterListRef[i].sheildAffinity = null;
+        }
+    }
+
     public void Remove(CH_BattleChar targ)
     {
         characterListRef.Remove(targ);

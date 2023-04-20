@@ -40,12 +40,12 @@ public class R_Passives : R_Default
     {
         passives.Remove(targ);
     }
-    public S_Passive GetMove(string index)
+    public S_Passive GetPassive(string index)
     {
         return passives.Find(x => x.name == index);
     }
 
-    public S_Passive GetMove(int index)
+    public S_Passive GetPassive(int index)
     {
         return passives[index];
     }

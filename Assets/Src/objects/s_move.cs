@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Move")]
 public class s_move : s_ability
 {
+    /*
     [System.Serializable]
     public struct moveRquirementList
     {
@@ -15,7 +16,8 @@ public class s_move : s_ability
         public moveRequirement Req4;
         public moveRequirement Req5;
     }
-
+    */
+    /*
     [System.Serializable]
     public class moveRequirement {
         public enum MOVE_REQ_TYPE {
@@ -37,6 +39,7 @@ public class s_move : s_ability
         public int lowerPowerReq;
         public int upperPowerReq = -1;  // 0 > means that there is no upper bound
     }
+    */
 
     [System.Serializable]
     public struct statusInflict
@@ -80,6 +83,7 @@ public class s_move : s_ability
     public MOVE_TARGET moveTarg = MOVE_TARGET.ENEMY;
     public SCOPE_NUMBER moveTargScope = SCOPE_NUMBER.ONE;
     public S_Element element;
+    public S_Element elementsSheild;
     public s_actionAnim[] preAnimations;
     public s_actionAnim[] animations;
     public s_actionAnim[] endAnimations;
@@ -122,6 +126,7 @@ public class s_move : s_ability
         }
     }
 
+    /*
     public moveRquirementList[] moveRequirements;
 
     public enum MOVE_QUANITY_TYPE {
@@ -131,4 +136,5 @@ public class s_move : s_ability
         QUAD_TECH,
         PENTA_TECH
     }
+    */
 }

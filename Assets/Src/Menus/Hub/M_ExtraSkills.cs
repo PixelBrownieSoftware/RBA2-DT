@@ -57,7 +57,67 @@ public class M_ExtraSkills : S_MenuSystem
     public void GetAvailibleSkill(int i)
     {
         moveDescription.text = "" + availibleSkills.GetMove(i).name;
-        equipButton.gameObject.SetActive(true);
+
+        o_battleCharPartyData bcDat = currentCharacter.battleCharacter;
+        s_move extraSkill = availibleSkills.GetMove(i);
+
+        bool strReqFufil = bcDat.strength >= extraSkill.strReq;
+        bool vitReqFufil = bcDat.vitality >= extraSkill.vitReq;
+        bool dexReqFufil = bcDat.dexterity >= extraSkill.dxReq;
+        bool agiReqFufil = bcDat.agility >= extraSkill.agiReq;
+        bool lucReqFufil = bcDat.luck >= extraSkill.lucReq;
+        bool intReqFufil = bcDat.intelligence >= extraSkill.intReq;
+
+        bool canEquip = strReqFufil && vitReqFufil && dexReqFufil && agiReqFufil && lucReqFufil && intReqFufil;
+
+        string strengthReq = "";
+        string vitalityReq = "";
+        string dexterityReq = "";
+        string agilityReq = "";
+        string luckReq = "";
+        string intelligenceReq = "";
+
+        if (strReqFufil)
+            strengthReq = "<color=green>" + extraSkill.strReq + "</color>";
+        else
+            strengthReq = "<color=red>" + extraSkill.strReq + "</color>";
+        if (vitReqFufil)
+            vitalityReq = "<color=green>" + extraSkill.vitReq + "</color>";
+        else
+            vitalityReq = "<color=red>" + extraSkill.vitReq + "</color>";
+        if (dexReqFufil)
+            dexterityReq = "<color=green>" + extraSkill.dxReq + "</color>";
+        else
+            dexterityReq = "<color=red>" + extraSkill.dxReq + "</color>";
+        if (agiReqFufil)
+            agilityReq = "<color=green>" + extraSkill.agiReq + "</color>";
+        else
+            agilityReq = "<color=red>" + extraSkill.agiReq + "</color>";
+        if (lucReqFufil)
+            luckReq = "<color=green>" + extraSkill.lucReq + "</color>";
+        else
+            luckReq = "<color=red>" + extraSkill.lucReq + "</color>";
+        if (intReqFufil)
+            intelligenceReq = "<color=green>" + extraSkill.intReq + "</color>";
+        else
+            intelligenceReq = "<color=red>" + extraSkill.intReq + "</color>";
+
+        moveDescription.text = "" + extraSkill.name + "\n" +
+            "Strength: " + strengthReq + "\n" +
+            "Vitality: " + vitalityReq + "\n" +
+            "Luck: " + luckReq + "\n" +
+            "Dexterity: " + dexterityReq + "\n" +
+            "Agility: " + agilityReq + "\n" +
+            "Intelligence: " + intelligenceReq + "\n";
+
+        if (canEquip)
+        {
+            equipButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            equipButton.gameObject.SetActive(false);
+        }
         unequipButton.gameObject.SetActive(false);
         equipButton.SetIntButton(i);
     }

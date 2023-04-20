@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(menuName = "System/Rpg Global")]
 public class S_RPGGlobals : ScriptableObject
@@ -13,6 +14,7 @@ public class S_RPGGlobals : ScriptableObject
     public List<s_move> itemDatabase = new List<s_move>();
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
     public R_MoveList moveDatabase;
+    public R_Passives passiveDatabase;
 
     public int MeanLevel { 
         get {
@@ -39,32 +41,26 @@ public class S_RPGGlobals : ScriptableObject
             int tempVit = data.vitality;
             int tempDx = data.dexterity;
             int tempAgi = data.agility;
-            foreach (var pd in allCharactersData.characterSetters)
-            {
-
-                if (pd.name == data.characterDataSource)
-                {
-                    newCharacter.characterDataSource = pd;
-                    break;
-                }
-            }
-
-            /*
-            if (data.currentPhysWeapon != "")
-            {
-                newCharacter.currentPhysWeapon = GetWeapon(data.currentPhysWeapon);
-            }
-            if (data.currentRangedWeapon != "")
-            {
-                newCharacter.currentRangeWeapon = GetWeapon(data.currentRangedWeapon);
-            }
-            */
-            //newCharacter.inBattle = true;
-
+            newCharacter.characterDataSource = allCharactersData.characterSetters.Find(x => x.name == data.characterDataSource);
             newCharacter.currentMoves = new List<s_move>();
-            foreach (string pd in data.currentMoves)
+            newCharacter.passives = new List<S_Passive>();
+            List<S_Passive> passive2Learn = newCharacter.characterDataSource.passiveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (passive2Learn != null)
             {
-                newCharacter.currentMoves.Add(moveDatabase.GetMove(pd));
+                newCharacter.passives.AddRange(passive2Learn);
+            }
+            List<s_move> mv2Learn = newCharacter.characterDataSource.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (mv2Learn != null)
+            {
+                newCharacter.currentMoves.AddRange(mv2Learn);
+            }
+            foreach (string pd in data.assignedSkills)
+            {
+                newCharacter.extraSkills.Add(moveDatabase.GetMove(pd));
+            }
+            foreach (string pd in data.assignePassives)
+            {
+                newCharacter.extraPassives.Add(passiveDatabase.GetPassive(pd));
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;
@@ -77,6 +73,50 @@ public class S_RPGGlobals : ScriptableObject
         }
         partyMembers.Add(newCharacter);
     }
+
+    public void AddSaveGlobals(s_RPGSave savedata) {
+        //savedata.
+        //inventory.AddItem();
+        /*
+        s_RPGSave sav = (s_RPGSave)s_mainmenu.save;
+        weapons.AddRange(sav.weapons);
+        foreach (var s in sav.party_members)
+        {
+            //AddPartyMember(s);
+        }
+        player.transform.position = new Vector3(sav.location.x, sav.location.y);
+        extraSkillAmount = sav.extraSkillAmount;
+        money._float = sav.money;
+        if (sav.extraSkills != null)
+        {
+            foreach (var it in sav.extraSkills)
+            {
+                s_move mov = moveDatabase.Find(x => x.name == it.name);
+                extraSkills.AddMove(mov);
+                if (it.character != "")
+                {
+                    o_battleCharPartyData pc = partyMembers.Get(it.character);
+                    pc.extraSkills.Add(mov);
+                }
+            }
+        }
+        if (sav.shop_items != null)
+        {
+            foreach (var it in sav.shop_items)
+            {
+                shopItems.Add(new s_shopItem(it.price, itemDatabase.Find(x => x.name == it.name)));
+            }
+        }
+        if (sav.inventory != null)
+        {
+            foreach (var it in sav.inventory)
+            {
+                //AddItem(it.name, it.amount);
+            }
+        }
+        */
+    }
+
     public o_battleCharPartyData CreatePartyMemberData(o_battleCharDataN data, int level)
     {
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();

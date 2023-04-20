@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 
+/*
 [System.Serializable]
 public struct s_moveComb
 {
@@ -53,7 +54,7 @@ public struct s_moveComb
         comboType = s_move.MOVE_QUANITY_TYPE.TRIPLE_TECH;
     }
 }
-
+*/
 [System.Serializable]
 public class s_RPGSave : dat_save {
     [System.Serializable]
@@ -68,6 +69,17 @@ public class s_RPGSave : dat_save {
         }
     }
     [System.Serializable]
+    public struct sav_enemyWeakness
+    {
+        public string name;
+        public string[] weaknesses;
+        public sav_enemyWeakness(string name, List<string> weaknesses)
+        {
+            this.name = name;
+            this.weaknesses = weaknesses.ToArray();
+        }
+    }
+    [System.Serializable]
     public struct sav_item
     {
         public string name;
@@ -76,16 +88,6 @@ public class s_RPGSave : dat_save {
         {
             this.name = name;
             this.amount = amount;
-        }
-    }
-    [System.Serializable]
-    public struct sav_skill
-    {
-        public string character;
-        public string name;
-        public sav_skill(string character, string name) {
-            this.character = character;
-            this.name = name;
         }
     }
     [System.Serializable]
@@ -101,21 +103,20 @@ public class s_RPGSave : dat_save {
         public int vitality;
         public int dexterity;
         public int agility;
+        public int intelligence;
         public int luck;
         public bool inBattle;
 
         public string characterDataSource;
-        public List<string> currentMoves = new List<string>();
-        public string currentPhysWeapon;
-        public string currentRangedWeapon;
+        public List<string> assignedSkills = new List<string>();
+        public List<string> assignePassives = new List<string>();
     }
 
     public float money;
     public sav_party[] party_members;
     public sav_shopItem[] shop_items;
     public sav_item[] inventory;
-    public sav_skill[] extraSkills;
-    public string[] weapons;
+    public string[] extraSkills;
     public int extraSkillAmount;
 
     public s_RPGSave(
@@ -123,7 +124,7 @@ public class s_RPGSave : dat_save {
         R_MoveList extraMoves,
         List<string> shopItems,
         Dictionary<string, int> inventoryItems,
-        List<string> weapons,
+        S_EnemyWeaknessReveal enemyWeaknesses,
         float money)
     {
         List<sav_party> partySave = new List<sav_party>();
@@ -132,39 +133,31 @@ public class s_RPGSave : dat_save {
             mem.health = a.maxHealth;
             mem.stamina = a.maxStamina;
             mem.name = a.name;
-            mem.inBattle = a.inBattle;
+            mem.experience = a.experiencePoints;
 
             mem.strength = a.strength;
             mem.vitality = a.vitality;
             mem.dexterity = a.dexterity;
             mem.agility = a.agility;
+            mem.intelligence = a.intelligence;
+            mem.luck = a.luck;
 
             mem.characterDataSource = a.characterDataSource.name;
 
-            foreach (var mv in a.currentMoves) {
-                mem.currentMoves.Add(mv.name);
+            foreach (var mv in a.extraSkills) {
+                mem.assignedSkills.Add(mv.name);
             }
-            
-            /*
-            if(a.secondMove != null)
-                mem.secondMove = a.secondMove.name;
-            if (a.thirdMove != null)
-                mem.thirdMove = a.thirdMove.name;
-            */
+            foreach (var mv in a.extraPassives)
+            {
+                mem.assignePassives.Add(mv.name);
+            }
             partySave.Add(mem);
         }
 
-        List<sav_skill> exMoves = new List<sav_skill>();
+        List<string> exMoves = new List<string>();
         foreach (var exMV in extraMoves.moveListRef)
         {
-            o_battleCharPartyData dat = partyMembers.Find(x => x.extraSkills.Contains(exMV));
-            if (dat != null)
-            {
-                exMoves.Add(new sav_skill(dat.name, exMV.name));
-            }
-            else {
-                exMoves.Add(new sav_skill("", exMV.name));
-            }
+            exMoves.Add(exMV.name);
         }
 
         /*
@@ -182,7 +175,6 @@ public class s_RPGSave : dat_save {
 
         this.money = money;
         party_members = partySave.ToArray();
-        this.weapons = weapons.ToArray();
         //shop_items = savedShopItems.ToArray();
         //inventory = savedItems.ToArray();
         extraSkills = exMoves.ToArray();
@@ -202,6 +194,7 @@ public class s_rpgGlobals : s_globals
     public List<s_move> itemDatabase = new List<s_move>();
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
     public List<s_move> moveDatabase = new List<s_move>();
+    public S_EnemyWeaknessReveal weaknesses;
 
     //public List<s_shopItem> shopItems = new List<s_shopItem>();
 
@@ -254,11 +247,10 @@ public class s_rpgGlobals : s_globals
     {
         try
         {
-            /*
             FileStream fs = new FileStream(saveDataName, FileMode.Create);
             BinaryFormatter bin = new BinaryFormatter();
 
-            s_RPGSave sav = new s_RPGSave(partyMembers.battleCharList, extraSkills, shopItems, null, weapons, money._float);
+            s_RPGSave sav = new s_RPGSave(partyMembers.battleCharList, extraSkills, null, null, weaknesses, money._float);
             // inventory.inventory
             List<Tuple<string, float>> dvF = new List<Tuple<string, float>>();
             List<Tuple<string, int>> dvI = new List<Tuple<string, int>>();
@@ -269,7 +261,6 @@ public class s_rpgGlobals : s_globals
             sav.trigStates = objectStates;
             bin.Serialize(fs, sav);
             fs.Close();
-            */
 
         } catch (Exception e) {
             print(e);
@@ -291,6 +282,7 @@ public class s_rpgGlobals : s_globals
 
         if (s_mainmenu.isload)
         {
+            /*
             s_RPGSave sav = (s_RPGSave)s_mainmenu.save;
             weapons.AddRange(sav.weapons);
             foreach (var s in sav.party_members)
@@ -312,7 +304,6 @@ public class s_rpgGlobals : s_globals
                     }
                 }
             }
-            /*
             if (sav.shop_items != null)
             {
                 foreach (var it in sav.shop_items)
@@ -320,7 +311,6 @@ public class s_rpgGlobals : s_globals
                     shopItems.Add(new s_shopItem(it.price, itemDatabase.Find(x => x.name == it.name)));
                 }
             }
-            */
             if (sav.inventory != null)
             {
                 foreach (var it in sav.inventory)
@@ -328,8 +318,10 @@ public class s_rpgGlobals : s_globals
                     //AddItem(it.name, it.amount);
                 }
             }
+            */
         }
-        else{
+        else
+        {
             foreach (var ind in partyMembersStart.characterSetters)
             {
                 rpgManager.AddPartyMember(ind, 1);
@@ -604,6 +596,7 @@ public class s_rpgGlobals : s_globals
         }
     }
     */
+    /*
     List<s_move> FindComboMoveReqList(s_move.moveRequirement req, CH_BattleChar pc)
     {
         List<s_move> mov = new List<s_move>();
@@ -671,7 +664,9 @@ public class s_rpgGlobals : s_globals
         }
         return mov;
     }
+    */
 
+    /*
     s_move FindComboMoveReq(s_move.moveRequirement req, o_battleCharacter pc) {
         List<s_move> allMV = new List<s_move>();
         allMV.AddRange(pc.currentMoves);
@@ -712,7 +707,7 @@ public class s_rpgGlobals : s_globals
         }
         return null;
     }
-
+    */
     /*
     public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsParty(List<o_battleCharacter> members) {
         List<Tuple<s_moveComb, s_move>> movs = new List<Tuple<s_moveComb, s_move>>();
@@ -903,6 +898,7 @@ public class s_rpgGlobals : s_globals
         return movs;
     }
     */
+    /*
     public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsCharacter3(CH_BattleChar PriUser, List<o_battleCharacter> members)
     {
         List<Tuple<s_moveComb, s_move>> movs = new List<Tuple<s_moveComb, s_move>>();
@@ -951,7 +947,7 @@ public class s_rpgGlobals : s_globals
         }
         return movs;
     }
-
+    */
     public List<o_weapon> GetWeapons()
     {
         List<o_weapon> weaps = new List<o_weapon>();

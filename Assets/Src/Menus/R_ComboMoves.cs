@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 [CreateAssetMenu(menuName = "Registers/Combo moves")]
 public class R_ComboMoves : R_Default
 {
@@ -56,3 +57,4 @@ public class R_ComboMoves : R_Default
         }
     }
 }
+*/

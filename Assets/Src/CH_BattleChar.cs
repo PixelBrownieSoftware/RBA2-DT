@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,9 @@ public class CH_BattleChar : ScriptableObject
     public int level;
     public Vector2 position;
     public o_battleCharPartyData characterData;
-    public o_weapon physWeapon;
-    public o_weapon rangedWeapon;
     public List<s_statusEff> statusEffects = new List<s_statusEff>();
+    public Tuple<S_Element, float> sheildAffinity;
+
     public bool HasStatus(S_StatusEffect statEff)
     {
         if (statusEffects.Find(x => x.status == statEff) != null)
@@ -62,8 +63,6 @@ public class CH_BattleChar : ScriptableObject
     {
         cName = bc.name;
         health = bc.health;
-        physWeapon = bc.physWeapon;
-        rangedWeapon = bc.rangedWeapon;
         maxHealth = bc.maxHealth;
         stamina = bc.stamina;
         maxStamina = bc.maxStamina;

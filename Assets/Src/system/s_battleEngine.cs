@@ -111,8 +111,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public R_Character targetCharacter;
     [SerializeField]
     private R_Move currentMove;
-    [SerializeField]
-    private R_ComboMoves currentC;
 
     public R_MoveList extraSkills;
     public R_Passives extraPassives;
@@ -2272,8 +2270,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     IEnumerator TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER trigger, o_battleCharacter targ, Vector2 characterPos)
     {
         Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter> trigger_char = new Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>(trigger, targ);
-        if (characterPassiveReference.ContainsKey(trigger_char))
-            yield return null;
+        if (!characterPassiveReference.ContainsKey(trigger_char))
+            yield break;
+        if (characterPassiveReference[trigger_char] != null)
+            yield break;
         List<S_Passive> passives = characterPassiveReference[trigger_char];
         S_Passive passiveToDo = null;
         foreach (var passiveIndex in passives)
@@ -2314,7 +2314,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     float smirkChance = UnityEngine.Random.Range(0, 1);
                     ELEMENT_WEAKNESS fl = 0;
-                    float elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
+                    float elementWeakness = 1;
+                    elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
+                    if (targ.referencePoint.sheildAffinity != null) {
+                        elementWeakness = targ.referencePoint.sheildAffinity.Item2;
+                    }
                     if (mov.moveType == s_move.MOVE_TYPE.NONE)
                     {
                         fl = ELEMENT_WEAKNESS.NONE;
@@ -2449,7 +2453,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                 #region AGILITY DODGE CHECK
                 {
-                    int userAgil = currentCharacterObject.agiNet + 2;
+                    int userAgil = currentCharacterObject.agiNet + 3;
                     int targAgil = targ.agiNet - 1;
                     targAgil = Mathf.Clamp(targAgil, 1, int.MaxValue);
                     int totalAgil = userAgil + targAgil;
@@ -2605,6 +2609,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             {
                 ch.guardPoints += mov.guardPoints;
             }
+            if (currentMove.move.elementsSheild != null) {
+                switch (currentMove.move.power) {
+                    case 0:
+                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0.5f);
+                        break;
+                    case 1:
+                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0);
+                        break;
+                    case 2:
+                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -1);
+                        break;
+                    case 3:
+                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -2);
+                        break;
+                }
+            }
         }
         //Show Damage output here
 
@@ -2707,7 +2727,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
 
             List<string> extSkillLearn = new List<string>();
-
+            changeMenu.RaiseEvent("ExperienceMenu");
             foreach (o_battleCharacter en in oppositionCharacters)
             {
                 if (en.health > 0)
@@ -2781,7 +2801,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
             }
         }
-        s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
+        //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
 
     public float TotalEXP(o_battleCharacter recipent) {
@@ -2829,6 +2849,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     if (currentCharacter == guest)
                     {
+                        enemiesReference.ClearSheild();
                         bcs.AddRange(oppositionCharacters);
                         isPlayerTurn = false;
                     }
@@ -2838,10 +2859,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 else
                 {
+                    enemiesReference.ClearSheild();
                     bcs.AddRange(oppositionCharacters);
                     isPlayerTurn = false;
                 }
-            } else {
+            } else
+            {
+                playersReference.ClearSheild();
                 bcs.AddRange(playerCharacters);
                 isPlayerTurn = true;
             }

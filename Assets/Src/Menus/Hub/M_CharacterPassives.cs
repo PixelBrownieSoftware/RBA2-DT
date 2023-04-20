@@ -36,7 +36,7 @@ public class M_CharacterPassives : S_MenuSystem
     }
     public void GetAvailibleSkill(int i)
     {
-        moveDescription.text = "" + skills.GetMove(i).name;
+        moveDescription.text = "" + skills.GetPassive(i).name;
     }
 
     public void UpdateButtons()
@@ -52,7 +52,7 @@ public class M_CharacterPassives : S_MenuSystem
             {
                 if (skills.passives.Count > i)
                 {
-                    S_Passive skill = skills.GetMove(i);
+                    S_Passive skill = skills.GetPassive(i);
                     skillButtons[indButton].gameObject.SetActive(true);
                     skillButtons[indButton].SetIntButton(i);
                     skillButtons[indButton].SetButonText(skill.name);

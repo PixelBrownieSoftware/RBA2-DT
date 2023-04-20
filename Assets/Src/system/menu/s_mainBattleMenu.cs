@@ -13,14 +13,15 @@ public class s_mainBattleMenu : s_menucontroller
     public Sprite staffIcon;
     public R_Items inventory;
 
+    /*
     public override void OnOpen()
     {
         base.OnOpen();
         ResetButton();
         //s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").rpgSkills =
+        
         List<Tuple<s_moveComb, s_move>> moves = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter3(
         battleCharacter.referencePoint, s_battleEngine.engineSingleton.playerCharacters);
-
         #region PHYSICAL WEAPON
         {
             Image img = GetButton<s_button>(0).GetComponent<Image>();
@@ -88,4 +89,5 @@ public class s_mainBattleMenu : s_menucontroller
             GetButton<s_button>(9).gameObject.SetActive(false);
 
     }
+    */
 }

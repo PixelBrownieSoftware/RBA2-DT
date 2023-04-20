@@ -15,11 +15,15 @@ public class M_CharacterStatus : S_MenuSystem
     public s_guiList dx;
     public s_guiList vit;
     public s_guiList agi;
+    public s_guiList luc;
+    public s_guiList inte;
 
     public Text strTXT;
     public Text dxTXT;
     public Text vitTXT;
     public Text agiTXT;
+    public Text intTxt;
+    public Text lucTxt;
 
     o_battleCharPartyData currentBattleCharacterData;
     public R_BattleCharacter characterData;

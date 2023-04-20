@@ -190,21 +190,12 @@ public class M_BattleMainMenu : S_MenuSystem
     public override void StartMenu()
     {
         currentCharacter = currentCharacterRef.characterRef;
-        if (currentCharacter.physWeapon != null)
-            meleeAttack = currentCharacter.physWeapon;
-        else
-            meleeAttack = null;
-        if (currentCharacter.rangedWeapon != null)
-            rangedAttack =currentCharacter.rangedWeapon;
         foreach (var button in buttons)
         {
             button.gameObject.SetActive(false);
         }
         base.StartMenu();
         buttons[0].gameObject.SetActive(true);
-        if (currentCharacter.rangedWeapon != null) {
-            buttons[1].gameObject.SetActive(true);
-        }
         if (currentCharacter.GetAllMoves().Count > 0)
         {
             buttons[2].gameObject.SetActive(true);
