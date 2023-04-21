@@ -15,11 +15,13 @@ public class S_Element : ScriptableObject
     public bool isMagic = true;
 
     public effect[] statusInflict;
-
     [System.Serializable]
-    public struct effect {
+    public struct effect
+    {
         public S_StatusEffect statusEffect;
         public float chance;
         public bool add_remove;
     }
+    //For cosmetics
+    public Color elementColour = Color.white;
 }

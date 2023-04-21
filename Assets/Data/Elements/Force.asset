@@ -23,3 +23,4 @@ MonoBehaviour:
   - statusEffect: {fileID: 11400000, guid: 310d48aaeb07bfa46b66fd2799c62570, type: 2}
     chance: 0.05
     add_remove: 1
+  elementColour: {r: 0.7264151, g: 0.53564095, b: 0.5036935, a: 1}

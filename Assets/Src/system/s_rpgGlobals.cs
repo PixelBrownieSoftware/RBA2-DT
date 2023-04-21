@@ -116,18 +116,21 @@ public class s_RPGSave : dat_save {
     public sav_party[] party_members;
     public sav_shopItem[] shop_items;
     public sav_item[] inventory;
+    public sav_enemyWeakness[] enemyWeaknesses;
     public string[] extraSkills;
-    public int extraSkillAmount;
+    public string[] extraPassives;
 
     public s_RPGSave(
         List<o_battleCharPartyData> partyMembers,
         R_MoveList extraMoves,
-        List<string> shopItems,
-        Dictionary<string, int> inventoryItems,
+        R_Passives extraPassives,
+        List<Shop_item> shopItems,
+        R_Items inventoryItems,
         S_EnemyWeaknessReveal enemyWeaknesses,
         float money)
     {
         List<sav_party> partySave = new List<sav_party>();
+        List<sav_enemyWeakness> weaknessesEnemySave = new List<sav_enemyWeakness>();
         foreach (var a in partyMembers) {
             sav_party mem = new sav_party();
             mem.health = a.maxHealth;
@@ -159,24 +162,39 @@ public class s_RPGSave : dat_save {
         {
             exMoves.Add(exMV.name);
         }
+        List<string> exPassives = new List<string>();
+        foreach (var exPs in extraPassives.passives)
+        {
+            exPassives.Add(exPs.name);
+        }
 
-        /*
+        foreach (var enWK in enemyWeaknesses.enemyElementWeaknesses)
+        {
+            List<string> weaknessSaves = new List<string>();
+            foreach (var stuff in enWK.Value) {
+                weaknessSaves.Add(stuff.name);
+            }
+            weaknessesEnemySave.Add(new sav_enemyWeakness(enWK.Key.name, weaknessSaves));
+        }
+
         List<sav_shopItem> savedShopItems = new List<sav_shopItem>();
-        foreach (var shopIt in shopItems) {
+        foreach (var shopIt in shopItems)
+        {
             savedShopItems.Add(new sav_shopItem(shopIt.item.name, shopIt.price));
         }
 
         List<sav_item> savedItems = new List<sav_item>();
-        foreach (var shopIt in inventoryItems)
+        foreach (var shopIt in inventoryItems.inventory)
         {
-            savedItems.Add(new sav_item(shopIt.Key, shopIt.Value));
+            savedItems.Add(new sav_item(shopIt.Key.name, shopIt.Value));
         }
-        */
 
         this.money = money;
         party_members = partySave.ToArray();
-        //shop_items = savedShopItems.ToArray();
-        //inventory = savedItems.ToArray();
+        this.enemyWeaknesses = weaknessesEnemySave.ToArray();
+        shop_items = savedShopItems.ToArray();
+        inventory = savedItems.ToArray();
+        this.extraPassives = exPassives.ToArray();
         extraSkills = exMoves.ToArray();
     }
 }
@@ -195,6 +213,8 @@ public class s_rpgGlobals : s_globals
     public List<o_weapon> weaponDatabase = new List<o_weapon>();
     public List<s_move> moveDatabase = new List<s_move>();
     public S_EnemyWeaknessReveal weaknesses;
+    [SerializeField]
+    private R_Boolean isSave;
 
     //public List<s_shopItem> shopItems = new List<s_shopItem>();
 
@@ -213,12 +233,14 @@ public class s_rpgGlobals : s_globals
     public Sprite BGBattle;
 
     public CH_Func gotoBattleChannel;
+    public CH_Func gotoOverworldChannel;
     public CH_Text changeMenu;
     public R_EnemyGroup enemyGroupSelect;
 
     private void OnEnable()
     {
         gotoBattleChannel.OnFunctionEvent += SwitchToBattle;
+        gotoOverworldChannel.OnFunctionEvent += SwitchToOverworld;
     }
 
     private void OnDisable()
@@ -240,13 +262,14 @@ public class s_rpgGlobals : s_globals
             }
             */
         }
-        moneyTxt.text = "£" + money._float;
+        moneyTxt.text = "£" + Mathf.Round((money._float/100f)/100f);
     }
 
     public override void SaveData()
     {
         try
         {
+            /*
             FileStream fs = new FileStream(saveDataName, FileMode.Create);
             BinaryFormatter bin = new BinaryFormatter();
 
@@ -261,6 +284,7 @@ public class s_rpgGlobals : s_globals
             sav.trigStates = objectStates;
             bin.Serialize(fs, sav);
             fs.Close();
+            */
 
         } catch (Exception e) {
             print(e);
@@ -280,48 +304,9 @@ public class s_rpgGlobals : s_globals
         base.StartStuff();
 
 
-        if (s_mainmenu.isload)
+        if (!isSave.boolean)
         {
-            /*
-            s_RPGSave sav = (s_RPGSave)s_mainmenu.save;
-            weapons.AddRange(sav.weapons);
-            foreach (var s in sav.party_members)
-            {
-                //AddPartyMember(s);
-            }
-            player.transform.position = new Vector3(sav.location.x, sav.location.y);
-            extraSkillAmount = sav.extraSkillAmount;
-            money._float = sav.money;
-            if (sav.extraSkills != null)
-            {
-                foreach (var it in sav.extraSkills)
-                {
-                    s_move mov = moveDatabase.Find(x => x.name == it.name);
-                    extraSkills.AddMove(mov);
-                    if (it.character != "") {
-                        o_battleCharPartyData pc = partyMembers.Get(it.character);
-                        pc.extraSkills.Add(mov);
-                    }
-                }
-            }
-            if (sav.shop_items != null)
-            {
-                foreach (var it in sav.shop_items)
-                {
-                    shopItems.Add(new s_shopItem(it.price, itemDatabase.Find(x => x.name == it.name)));
-                }
-            }
-            if (sav.inventory != null)
-            {
-                foreach (var it in sav.inventory)
-                {
-                    //AddItem(it.name, it.amount);
-                }
-            }
-            */
-        }
-        else
-        {
+            money._float = 0;
             foreach (var ind in partyMembersStart.characterSetters)
             {
                 rpgManager.AddPartyMember(ind, 1);
@@ -342,9 +327,13 @@ public class s_rpgGlobals : s_globals
             //AddPartyMember(partyMemberBaseData[6], 35);
             //AddItem("Medicine", 5);
             //AddItem("Energy drink", 5);
-            foreach (var ind in partyMembersStart.characterSetters)
+            if (!isSave.boolean)
             {
-                rpgManager.AddPartyMember(ind, 1);
+                money._float = 0;
+                foreach (var ind in partyMembersStart.characterSetters)
+                {
+                    rpgManager.AddPartyMember(ind, 1);
+                }
             }
             print("This is cool");
         } else {
@@ -400,12 +389,6 @@ public class s_rpgGlobals : s_globals
         partyMembers.Clear();
     }
 
-    /*
-    public void SetLocationObject(o_locationOverworld lc)
-    {
-        locationObjectName = lc;
-    }
-    */
 
     public IEnumerator SwitchToBattle(s_enemyGroup gr)
     {
@@ -424,6 +407,18 @@ public class s_rpgGlobals : s_globals
         yield return SwitchToBattle(gr);
     }
     */
+    public IEnumerator SwitchToOverworldMenu()
+    {
+        yield return SceneManager.UnloadSceneAsync("Title", UnloadSceneOptions.None);
+        yield return SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
+        if (isSave.boolean) {
+            rpgManager.LoadSaveData();
+        }
+    }
+    public void SwitchToOverworld()
+    {
+        StartCoroutine(SwitchToOverworldMenu());
+    }
 
     public void SwitchToBattle() {
         StartCoroutine(SwitchToBattle(enemyGroupSelect.enemyGroup));
@@ -441,6 +436,36 @@ public class s_rpgGlobals : s_globals
                 bc.inBattle = true;
             }
         }
+    }
+    public List<o_weapon> GetWeapons()
+    {
+        List<o_weapon> weaps = new List<o_weapon>();
+        foreach (string val in weapons)
+        {
+            weaps.Add(GetWeapon(val));
+        }
+        return weaps;
+    }
+    public o_weapon GetWeapon(string itemName)
+    {
+        if (weapons.Contains(itemName))
+        {
+            return weaponDatabase.Find(x => x.name == itemName);
+        }
+        else return null;
+    }
+    public void AddWeapon(string itemName)
+    {
+        if (!weapons.Contains(itemName))
+        {
+            weapons.Add(itemName);
+        }
+    }
+    public IEnumerator BattleTransition()
+    {
+
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene("BattleScene");
     }
 
     /*
@@ -948,29 +973,6 @@ public class s_rpgGlobals : s_globals
         return movs;
     }
     */
-    public List<o_weapon> GetWeapons()
-    {
-        List<o_weapon> weaps = new List<o_weapon>();
-        foreach (string val in weapons)
-        {
-            weaps.Add(GetWeapon(val));
-        }
-        return weaps;
-    }
-    public o_weapon GetWeapon(string itemName) {
-        if (weapons.Contains(itemName))
-        {
-            return weaponDatabase.Find(x => x.name == itemName);
-        }
-        else return null;
-    }
-    public void AddWeapon(string itemName)
-    {
-        if (!weapons.Contains(itemName))
-        {
-            weapons.Add(itemName);
-        }
-    }
     /*
     [MenuItem("AssetDatabase/LoadAssetExample")]
     static void ImportExample()
@@ -1036,9 +1038,10 @@ public class s_rpgGlobals : s_globals
     }
     */
 
-    public IEnumerator BattleTransition() {
-
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("BattleScene");
+    /*
+    public void SetLocationObject(o_locationOverworld lc)
+    {
+        locationObjectName = lc;
     }
+    */
 }

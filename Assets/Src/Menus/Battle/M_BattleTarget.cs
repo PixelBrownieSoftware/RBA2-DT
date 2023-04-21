@@ -184,7 +184,7 @@ public class M_BattleTarget : S_MenuSystem
                     case s_move.SCOPE_NUMBER.RANDOM:
                     case s_move.SCOPE_NUMBER.ALL:
                         tg = buttons[0];
-                        tg.transform.position = Camera.main.WorldToScreenPoint(getCentroid());
+                        tg.transform.position = Camera.main.WorldToScreenPoint(new Vector3(300, 300, 0)); // Camera.main.WorldToScreenPoint(getCentroid());
                         break;
                 }
                 break;

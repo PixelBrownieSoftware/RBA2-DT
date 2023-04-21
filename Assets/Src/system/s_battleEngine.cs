@@ -89,6 +89,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     private S_RPGGlobals rpgManager;
     [SerializeField]
     private R_ShopItem shopItems;
+    [SerializeField]
+    private S_EnemyWeaknessReveal enemyWeaknessReveal;
 
     public Queue<o_battleCharacter> currentPartyCharactersQueue = new Queue<o_battleCharacter>();
     public List<o_battleCharacter> playerCharacters;
@@ -317,13 +319,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             {
                 List<Vector2> enPos = new List<Vector2>();
-                if (enemyGroup.members_pre_summon.Length > 0)
+                if (enemyGroup.members_pre_summon != null)
                 {
-                    int leng = (enemyGroup.members.Length) + (enemyGroup.members_pre_summon.Length);
-                    print("length: " + leng);
-                    enPos.AddRange(battlePositionsPlayer[leng - 1]);
-                }
-                else
+                    if (enemyGroup.members_pre_summon.Length > 0)
+                    {
+                        int leng = (enemyGroup.members.Length) + (enemyGroup.members_pre_summon.Length);
+                        print("length: " + leng);
+                        enPos.AddRange(battlePositionsPlayer[leng - 1]);
+                    }
+                    else
+                    {
+                        enPos.AddRange(battlePositionsPlayer[enemyGroup.members.Length - 1]);
+                    }
+                } else
                 {
                     enPos.AddRange(battlePositionsPlayer[enemyGroup.members.Length - 1]);
                 }
@@ -398,6 +406,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         c.render.color = Color.clear;
                         o_battleCharPartyData pbc = partyMembers.GetIndex(i);
                         o_battleCharDataN bc = pbc.characterDataSource;
+                        c.experiencePoints = pbc.experiencePoints;
                         c.transform.position = plPos[i];
                         if (pbc.characterDataSource.secondMove != null)
                             c.secondMove = pbc.characterDataSource.secondMove;
@@ -787,6 +796,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public void SetStatsPlayer(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem)
     {
         SetStatsNonChangable(ref charObj, mem);
+        foreach (var elem in rpgManager.allElements.elementsList)
+        {
+            enemyWeaknessReveal.AddElementWeakness(mem.memberDat, elem);
+        }
         playersReference.Add(charObj.referencePoint);
         playerCharacters.Add(charObj);
     }
@@ -2317,7 +2330,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     float elementWeakness = 1;
                     elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
                     if (targ.referencePoint.sheildAffinity != null) {
-                        elementWeakness = targ.referencePoint.sheildAffinity.Item2;
+                        if(targ.referencePoint.sheildAffinity.Item1 == mov.element)
+                            elementWeakness = targ.referencePoint.sheildAffinity.Item2;
                     }
                     if (mov.moveType == s_move.MOVE_TYPE.NONE)
                     {
@@ -2476,6 +2490,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 DamageEffect(dmg, targ, characterPos, damageFlag);
                 if (damageFlag != DAMAGE_FLAGS.MISS)
                 {
+                    enemyWeaknessReveal.AddElementWeakness(targ.referencePoint.characterData.characterDataSource, mov.element);
                     if (mov.statusInflictChance != null)
                     {
                         foreach (s_move.statusInflict statusChance in mov.statusInflictChance)
@@ -2500,7 +2515,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         {
                             if (statusEff.add_remove)
                             {
-                                eff.damage = Mathf.CeilToInt(dmg * status.regenPercentage);
+                                eff.damage = Mathf.CeilToInt(dmg * (status.regenPercentage * -1));
                                 eff.duration = status.minDuration;
                                 eff.status = status;
                                 targ.SetStatus(eff);
@@ -2511,7 +2526,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                     }
                     #endregion
-
                     for (int i = 0; i < 2; i++)
                     {
                         targ.transform.position = characterPos + new Vector2(15, 0);
@@ -2572,60 +2586,66 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 targs.Add(targ);
                 break;
         }
-        foreach (var ch in targs)
-        {
-            if (mov.intBuff != 0)
+        if(finalDamageFlag != DAMAGE_FLAGS.MISS || finalDamageFlag != DAMAGE_FLAGS.VOID ||
+            finalDamageFlag != DAMAGE_FLAGS.ABSORB || finalDamageFlag != DAMAGE_FLAGS.REFLECT){
+            foreach (var ch in targs)
             {
-                ch.intelligenceBuff += mov.intBuff;
-                /*
-                if (targ.intelligenceBuff > 0)
+                if (mov.intBuff != 0)
                 {
-                    SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
-                    yield return new WaitForSeconds(0.05f);
+                    ch.intelligenceBuff += mov.intBuff;
+                    /*
+                    if (targ.intelligenceBuff > 0)
+                    {
+                        SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    */
                 }
-                */
-            }
-            if (mov.lucBuff != 0)
-            {
-                ch.luckBuff += mov.lucBuff;
-            }
-            if (mov.vitBuff != 0)
-            {
-                ch.vitalityBuff += mov.vitBuff;
-            }
-            if (mov.strBuff != 0)
-            {
-                ch.strengthBuff += mov.strBuff;
-            }
-            if (mov.dexBuff != 0)
-            {
-                ch.dexterityBuff += mov.dexBuff;
-            }
-            if (mov.agiBuff != 0)
-            {
-                ch.agilityBuff += mov.agiBuff;
-            }
-            if (mov.guardPoints != 0)
-            {
-                ch.guardPoints += mov.guardPoints;
-            }
-            if (currentMove.move.elementsSheild != null) {
-                switch (currentMove.move.power) {
-                    case 0:
-                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0.5f);
-                        break;
-                    case 1:
-                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0);
-                        break;
-                    case 2:
-                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -1);
-                        break;
-                    case 3:
-                        ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -2);
-                        break;
+                if (mov.lucBuff != 0)
+                {
+                    ch.luckBuff += mov.lucBuff;
+                }
+                if (mov.vitBuff != 0)
+                {
+                    ch.vitalityBuff += mov.vitBuff;
+                }
+                if (mov.strBuff != 0)
+                {
+                    ch.strengthBuff += mov.strBuff;
+                }
+                if (mov.dexBuff != 0)
+                {
+                    ch.dexterityBuff += mov.dexBuff;
+                }
+                if (mov.agiBuff != 0)
+                {
+                    ch.agilityBuff += mov.agiBuff;
+                }
+                if (mov.guardPoints != 0)
+                {
+                    ch.guardPoints += mov.guardPoints;
+                }
+                if (currentMove.move.elementsSheild != null)
+                {
+                    switch (currentMove.move.power)
+                    {
+                        case 0:
+                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0.5f);
+                            break;
+                        case 1:
+                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0);
+                            break;
+                        case 2:
+                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -1);
+                            break;
+                        case 3:
+                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -2);
+                            break;
+                    }
                 }
             }
         }
+            
         //Show Damage output here
 
 
@@ -2684,8 +2704,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
 
-            foreach (o_battleCharacter c in playerCharacters)
+            for(int ind =0; ind < playerCharacters.Count; ind++)
             {
+                o_battleCharacter c = playerCharacters[ind];
                 if (c == guest)
                     continue;
                 float exp = TotalEXP(c);
@@ -2699,20 +2720,20 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     print(c.experiencePoints);
                     if (c.experiencePoints >= 1f)
                     {
-                        o_battleCharDataN chdat = c.battleCharData;
-                        if (i % chdat.strengthGT == 0)
-                            c.strength++;
-                        if (i % chdat.vitalityGT == 0)
-                            c.vitality++;
-                        if (i % chdat.dexterityGT == 0)
-                            c.dexterity++;
-                        if (i % chdat.intelligenceGT == 0)
-                            c.intelligence++;
-                        if (i % chdat.agilityGT == 0)
-                            c.agility++;
-                        if (i % chdat.luckGT == 0)
-                            c.luck++;
                         c.level++;
+                        o_battleCharDataN chdat = c.battleCharData;
+                        if (c.level % chdat.strengthGT == 0)
+                            c.strength++;
+                        if (c.level % chdat.vitalityGT == 0)
+                            c.vitality++;
+                        if (c.level % chdat.dexterityGT == 0)
+                            c.dexterity++;
+                        if (c.level % chdat.intelligenceGT == 0)
+                            c.intelligence++;
+                        if (c.level % chdat.agilityGT == 0)
+                            c.agility++;
+                        if (c.level % chdat.luckGT == 0)
+                            c.luck++;
                         c.experiencePoints = 0;
                         exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
                         c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
@@ -2721,9 +2742,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         if (mv2Learn != null) {
                             c.currentMoves.AddRange(mv2Learn);
                         }
+                        print(c.name + "Level up! Lv." + c.level);
                     }
                     //yield return new WaitForSeconds(Time.deltaTime);
                 }
+                c.experiencePoints = (c.experiencePoints * 100f) / 100f;
+                rpgManager.SetPartyMemberStats(c);
             }
 
             List<string> extSkillLearn = new List<string>();
@@ -2791,7 +2815,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 c.extraPassives.Clear();
                 if (c == guest)
                     continue;
-                rpgManager.SetPartyMemberStats(c);
             }
             if (enemyGroup.unlockCharacters.Length > 0)
             {
@@ -2800,6 +2823,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     rpgManager.AddPartyMember(c, rpgManager.MeanLevel);
                 }
             }
+            rpgManager.SaveData();
         }
         //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }

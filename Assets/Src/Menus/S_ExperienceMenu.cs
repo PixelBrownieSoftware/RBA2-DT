@@ -34,8 +34,9 @@ public class S_ExperienceMenu : S_MenuSystem
     public override void StartMenu()
     {
         base.StartMenu();
-        overworldButton.gameObject.SetActive(false);
-        continueButton.gameObject.SetActive(true);
+        overworldButton.gameObject.SetActive(true);
+        continueButton.gameObject.SetActive(false);
+        //continueButton.gameObject.SetActive(true);
         exp = new float[players.battleCharList.Count];
         foreach (var gui in expGUI)
         {
@@ -44,9 +45,10 @@ public class S_ExperienceMenu : S_MenuSystem
         int index = 0;
         foreach (var chara in players.battleCharList)
         {
+            exp[index] = chara.experiencePoints;
             expGUI[index].gameObject.SetActive(true);
             exp[index] = chara.experiencePoints;
-            expText[index].text = chara.name + " LV: " + chara.level + " EXP: " + Mathf.Round((chara.experiencePoints/1)* 100) + "%";
+            expText[index].text = chara.name + " LV: " + chara.level + " EXP: " + (exp[index] * 100) + "%";
             sliders[index].value = chara.experiencePoints / 1;
         }
     }
@@ -69,7 +71,7 @@ public class S_ExperienceMenu : S_MenuSystem
         {
             expGUI[index].gameObject.SetActive(true);
             exp[index] = chara.experiencePoints;
-            expText[index].text = chara.name + " LV: " + chara.level + " EXP: " + Mathf.Round((chara.experiencePoints / 1) * 100) + "%";
+            expText[index].text = chara.name + " LV: " + chara.level + " EXP: " + (exp[index] * 100) + "%";
             sliders[index].value = chara.experiencePoints / 1;
         }
     }

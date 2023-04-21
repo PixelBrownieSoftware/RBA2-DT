@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58630894e412bde4c90318607bd88613, type: 3}
-  m_Name: AllCharacters
+  m_Script: {fileID: 11500000, guid: 6cd261ddb09ca4c4ba4a6c404c1b642a, type: 3}
+  m_Name: GoToOverworld
   m_EditorClassIdentifier: 
-  description: 
-  _isReset: 0
-  characterListRef: []
-  characterListRefBase: []
+  description: 'This is to go to the overworld menu from the title.
+
+'

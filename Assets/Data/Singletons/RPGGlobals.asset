@@ -16,7 +16,13 @@ MonoBehaviour:
   partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
   allCharactersData: {fileID: 11400000, guid: f0e7fce64af33924480c1df7bf40380b, type: 2}
   inventory: {fileID: 11400000, guid: 3dd2ca028c2506941831047c7411831a, type: 2}
-  weapons: []
-  itemDatabase: []
-  weaponDatabase: []
-  moveDatabase: {fileID: 11400000, guid: 05637fc5d2abd2540828ec47c3ca2e57, type: 2}
+  shopItems: {fileID: 11400000, guid: 76359f9805305f542930a8335662d6b6, type: 2}
+  moveDatabase: {fileID: 11400000, guid: a644befec8ebc904b877036ba9b490e0, type: 2}
+  extraSkills: {fileID: 11400000, guid: 75514ab29a365f64890e564b7f360da8, type: 2}
+  extraPassives: {fileID: 11400000, guid: d7b571d1746471549adc746133ace3f3, type: 2}
+  passiveDatabase: {fileID: 11400000, guid: 243720ba061fc654f8c1a675c220a662, type: 2}
+  money: {fileID: 11400000, guid: 8c0dcce795c6329458ff12ad2c08b843, type: 2}
+  enemyWeaknessReveal: {fileID: 11400000, guid: 81c21dff194830140864b7ad9b46bd45,
+    type: 2}
+  allElements: {fileID: 11400000, guid: 761f074c58c1f0f43adb08d9b5833d9d, type: 2}
+  saveData: {fileID: 11400000, guid: 24128bff5c61b9547af418bf29aed1e8, type: 2}

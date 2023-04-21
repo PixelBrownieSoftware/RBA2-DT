@@ -112,6 +112,7 @@
     <Compile Include="Assets\Src\Menus\R_BattleCharacterList.cs" />
     <Compile Include="Assets\Src\system\menu\s_buttonItem.cs" />
     <Compile Include="Assets\Src\system\menu\s_guiList.cs" />
+    <Compile Include="Assets\Src\system\S_EnemyWeaknessReveal.cs" />
     <Compile Include="Assets\Src\objects\o_locSpr.cs" />
     <Compile Include="Assets\Src\objects\s_enemyGroup.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_OverworldSkills.cs" />
@@ -187,7 +188,9 @@
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\system\S_EnemyWeaknessReveal.cs" />
+    <Compile Include="Assets\Src\Menus\R_Elements.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_TitleMenu.cs" />
+    <Compile Include="Assets\Src\Menus\R_Save.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

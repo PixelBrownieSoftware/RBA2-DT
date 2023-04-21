@@ -29,3 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
   - {fileID: 11400000, guid: e58575b29ff3ab74a865032e2b27d2c6, type: 2}
   statusImage: {fileID: 0}
+  statusRemove:
+  - {fileID: 11400000, guid: b5a5f4f323ac5bc46a98a3e0e75e445a, type: 2}

@@ -26,3 +26,5 @@ MonoBehaviour:
   removeOnEndRound: 0
   criticalOnHit: []
   statusImage: {fileID: 0}
+  statusRemove:
+  - {fileID: 11400000, guid: b5a5f4f323ac5bc46a98a3e0e75e445a, type: 2}

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cee028805798d740bb5860cd1780b0d, type: 3}
+  m_Name: SaveData
+  m_EditorClassIdentifier: 
+  description: A reference to the save data.
+  _isReset: 0
+  saveData:
+    trigStates: []
+    hp: 0
+    MAXhp: 0
+    currentmap: 
+    location:
+      x: 0
+      y: 0
+      z: 0
+    money: 0
+    party_members: []
+    shop_items: []
+    inventory: []
+    enemyWeaknesses: []
+    extraSkills: []
+    extraPassives: []

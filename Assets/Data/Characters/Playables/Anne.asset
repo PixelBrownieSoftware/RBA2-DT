@@ -31,7 +31,6 @@ MonoBehaviour:
   luckGT: 3
   intelligenceGT: 3
   dexterityGT: 3
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
   turnIcons: 1
@@ -43,6 +42,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2889445efa3b4c349b7ffa3ec707b319, type: 2}
   - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
   - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
+  - {fileID: 11400000, guid: 01a0ae9f5f6120d4590d6f290771e30c, type: 2}
+  passiveLearn: []
   elementals: []
   characterColour: {r: 0.85310155, g: 0.5518868, b: 1, a: 1}
   characterColour2: {r: 0.8040012, g: 0.34242615, b: 0.8962264, a: 1}

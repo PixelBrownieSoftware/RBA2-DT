@@ -1,5 +1,7 @@
-using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 
@@ -10,11 +12,15 @@ public class S_RPGGlobals : ScriptableObject
     public R_BattleCharacterList partyMembers;
     public R_CharacterSetterList allCharactersData;
     public R_Items inventory;
-    public List<string> weapons = new List<string>();
-    public List<s_move> itemDatabase = new List<s_move>();
-    public List<o_weapon> weaponDatabase = new List<o_weapon>();
+    public R_ShopItem shopItems;
     public R_MoveList moveDatabase;
+    public R_MoveList extraSkills;
+    public R_Passives extraPassives;
     public R_Passives passiveDatabase;
+    public R_Float money;
+    public S_EnemyWeaknessReveal enemyWeaknessReveal;
+    public R_Elements allElements;
+    public R_Save saveData;
 
     public int MeanLevel { 
         get {
@@ -25,7 +31,32 @@ public class S_RPGGlobals : ScriptableObject
             }
             return Mathf.CeilToInt(levels/PMCount);
         } 
-    } 
+    }
+
+
+    public void SaveData()
+    {
+        try
+        {
+            FileStream fs = new FileStream("save.RB2", FileMode.Create);
+            BinaryFormatter bin = new BinaryFormatter();
+            s_RPGSave sav = new s_RPGSave(
+                partyMembers.battleCharList, 
+                extraSkills, 
+                extraPassives, 
+                shopItems.shopItems, 
+                inventory, 
+                enemyWeaknessReveal, 
+                money._float);
+            bin.Serialize(fs, sav);
+            fs.Close();
+            Debug.Log("File saved!");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+        }
+    }
     public bool ContainsPartyMember(o_battleCharDataN partyMember) {
         return partyMembers.battleCharList.Find(x => x.characterDataSource == partyMember) != null;
     }
@@ -64,57 +95,61 @@ public class S_RPGGlobals : ScriptableObject
             }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;
-
+            newCharacter.experiencePoints = data.experience;
             newCharacter.strength = tempStr;
             newCharacter.vitality = tempVit;
             newCharacter.dexterity = tempDx;
             newCharacter.agility = tempAgi;
             newCharacter.inBattle = data.inBattle;
+            foreach (var elem in allElements.elementsList)
+            {
+                enemyWeaknessReveal.AddElementWeakness(newCharacter.characterDataSource, elem);
+            }
         }
         partyMembers.Add(newCharacter);
     }
 
-    public void AddSaveGlobals(s_RPGSave savedata) {
-        //savedata.
-        //inventory.AddItem();
-        /*
-        s_RPGSave sav = (s_RPGSave)s_mainmenu.save;
-        weapons.AddRange(sav.weapons);
-        foreach (var s in sav.party_members)
+    public void LoadSaveData() {
+        s_RPGSave savedata = saveData.saveData;
+        foreach (var s in savedata.party_members)
         {
-            //AddPartyMember(s);
+            AddPartyMember(s);
         }
-        player.transform.position = new Vector3(sav.location.x, sav.location.y);
-        extraSkillAmount = sav.extraSkillAmount;
-        money._float = sav.money;
-        if (sav.extraSkills != null)
+        money._float = savedata.money;
+        if (savedata.extraSkills != null)
         {
-            foreach (var it in sav.extraSkills)
+            foreach (var it in savedata.extraSkills)
             {
-                s_move mov = moveDatabase.Find(x => x.name == it.name);
-                extraSkills.AddMove(mov);
-                if (it.character != "")
-                {
-                    o_battleCharPartyData pc = partyMembers.Get(it.character);
-                    pc.extraSkills.Add(mov);
+                extraSkills.AddMove(moveDatabase.GetMove(it));
+            }
+        }
+        if (savedata.shop_items != null)
+        {
+            foreach (var it in savedata.shop_items)
+            {
+                Shop_item item = new Shop_item();
+                item.item = moveDatabase.GetMove(it.name);
+                item.price = it.price;
+                shopItems.AddItem(item);
+            }
+        }
+        if (savedata.inventory != null)
+        {
+            foreach (var it in savedata.inventory)
+            {
+                inventory.AddItem(moveDatabase.GetMove(it.name), it.amount);
+            }
+        }
+        if (savedata.enemyWeaknesses != null)
+        {
+            foreach (var weak in savedata.enemyWeaknesses)
+            {
+                List<S_Element> elementals = new List<S_Element>();
+                foreach (string element in weak.weaknesses) {
+                    enemyWeaknessReveal.AddElementWeakness(allCharactersData.GetCharacter(weak.name), allElements.GetElement(element));
                 }
             }
         }
-        if (sav.shop_items != null)
-        {
-            foreach (var it in sav.shop_items)
-            {
-                shopItems.Add(new s_shopItem(it.price, itemDatabase.Find(x => x.name == it.name)));
-            }
-        }
-        if (sav.inventory != null)
-        {
-            foreach (var it in sav.inventory)
-            {
-                //AddItem(it.name, it.amount);
-            }
-        }
-        */
     }
 
     public o_battleCharPartyData CreatePartyMemberData(o_battleCharDataN data, int level)
@@ -175,20 +210,6 @@ public class S_RPGGlobals : ScriptableObject
             {
                 newCharacter.characterDataSource.thirdMove = data.thirdMove;
             }
-            /*
-            if (data.defaultRangedWeapon != null)
-            {
-                AddWeapon(data.defaultRangedWeapon.name);
-                newCharacter.currentRangeWeapon = data.defaultRangedWeapon;
-            }
-            if (data.defaultRangedWeapon != null)
-            {
-                AddWeapon(data.defaultRangedWeapon.name);
-                newCharacter.currentRangeWeapon = data.defaultRangedWeapon;
-            }
-            */
-
-            //newCharacter.inBattle = true;
             //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
 
@@ -217,6 +238,10 @@ public class S_RPGGlobals : ScriptableObject
     public void AddPartyMember(o_battleCharDataN data, int level)
     {
         o_battleCharPartyData newCharacter = CreatePartyMemberData(data, level);
+        foreach (var elem in allElements.elementsList)
+        {
+            enemyWeaknessReveal.AddElementWeakness(data, elem);
+        }
         partyMembers.Add(newCharacter);
     }
     public o_battleCharPartyData SetPartyCharacterStats(o_battleCharacter data)
@@ -248,13 +273,15 @@ public class S_RPGGlobals : ScriptableObject
         o_battleCharPartyData newCharacter = partyMembers.Get(data.name);
         {
             newCharacter.name = data.name;
-
+            newCharacter.level = data.level;
             newCharacter.strength = data.strength;
             newCharacter.vitality = data.vitality;
             newCharacter.dexterity = data.dexterity;
             newCharacter.intelligence = data.intelligence;
+            newCharacter.luck = data.luck;
+            newCharacter.agility = data.agility;
 
-
+            newCharacter.experiencePoints = data.experiencePoints;
             newCharacter.health = data.health;
             newCharacter.maxHealth = data.maxHealth;
             newCharacter.stamina = data.stamina;
@@ -317,28 +344,4 @@ public class S_RPGGlobals : ScriptableObject
         }
     }
 
-    public List<o_weapon> GetWeapons()
-    {
-        List<o_weapon> weaps = new List<o_weapon>();
-        foreach (string val in weapons)
-        {
-            weaps.Add(GetWeapon(val));
-        }
-        return weaps;
-    }
-    public o_weapon GetWeapon(string itemName)
-    {
-        if (weapons.Contains(itemName))
-        {
-            return weaponDatabase.Find(x => x.name == itemName);
-        }
-        else return null;
-    }
-    public void AddWeapon(string itemName)
-    {
-        if (!weapons.Contains(itemName))
-        {
-            weapons.Add(itemName);
-        }
-    }
 }

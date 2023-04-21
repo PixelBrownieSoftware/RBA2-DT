@@ -19,3 +19,5 @@ MonoBehaviour:
   dexterity: 0
   luck: 0
   isMagic: 1
+  statusInflict: []
+  elementColour: {r: 0.33908868, g: 0.5660378, b: 0.4748005, a: 1}

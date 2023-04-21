@@ -25,7 +25,7 @@ public class S_EnemyWeaknessReveal : ScriptableObject
 
    public bool EnemyWeaknessExists(o_battleCharDataN enemy, S_Element element)
     {
-        if (enemyElementWeaknesses != null)
+        if (enemyElementWeaknesses == null)
             return false;
         bool enemyExists = enemyElementWeaknesses.ContainsKey(enemy);
         if (!enemyExists)
@@ -41,7 +41,7 @@ public class S_EnemyWeaknessReveal : ScriptableObject
 
     public void AddElementWeakness(o_battleCharDataN enemy, S_Element element)
     {
-        if (enemyElementWeaknesses != null)
+        if (enemyElementWeaknesses == null)
             enemyElementWeaknesses = new Dictionary<o_battleCharDataN, HashSet<S_Element>>();
         bool enemyExists = enemyElementWeaknesses.ContainsKey(enemy);
         if (!enemyExists)

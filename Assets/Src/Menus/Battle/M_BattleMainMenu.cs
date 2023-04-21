@@ -146,6 +146,7 @@ public class M_BattleMainMenu : S_MenuSystem
         menuText.text = "EMPTY";
         changeMenu.RaiseEvent("TargetMenu");
     }
+    /*
     public void GoToComboSkills()
     {
         print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
@@ -154,6 +155,7 @@ public class M_BattleMainMenu : S_MenuSystem
         menuText.text = "EMPTY";
         changeMenu.RaiseEvent("BattleSkillMenu");
     }
+    */
     public void GoToAnalyse()
     {
         menuText.text = "CharacterStatus";
@@ -167,6 +169,7 @@ public class M_BattleMainMenu : S_MenuSystem
         print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
         currentMovesRef.SetMoves(currentCharacter.GetAllMoves());
         battleMenuType.text = "Skills";
+        menuText.text = "EMPTY";
         changeMenu.RaiseEvent("BattleSkillMenu");
     }
     public void GuardAction()

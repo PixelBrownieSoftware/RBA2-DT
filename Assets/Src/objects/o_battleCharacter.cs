@@ -427,6 +427,7 @@ public class o_battleCharacter : MonoBehaviour
     public GameObject vitalityBuffIcon;
     public GameObject intelligenceBuffIcon;
     public GameObject luckBuffIcon;
+    public SpriteRenderer sheildFx;
 
     public Sprite poisionIcon;
     public Sprite stunIcon;
@@ -540,7 +541,6 @@ public class o_battleCharacter : MonoBehaviour
 
     public void Awake()
     {
-        render = GetComponent<SpriteRenderer>();
            animations = GetComponent<s_rpganim>();
         rbody2d = GetComponent<Rigidbody2D>();
     }
@@ -556,7 +556,15 @@ public class o_battleCharacter : MonoBehaviour
             referencePoint.position = transform.position;
             referencePoint.SetStats(this);
         }
-
+        if (referencePoint.sheildAffinity != null)
+        {
+            sheildFx.gameObject.SetActive(true);
+            Color shAffColour = referencePoint.sheildAffinity.Item1.elementColour;
+            sheildFx.color = new Color(shAffColour.a, shAffColour.b, shAffColour.g, 0.75f);
+        }
+        else {
+            sheildFx.gameObject.SetActive(false);
+        }
         #region STATUS EFFECTS
         for (int i = 0; i < statusEffectIcon.Length; i++)
         {

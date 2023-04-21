@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491b0151eed2fb248943bb07865422da, type: 3}
+  m_Name: AllPassives
+  m_EditorClassIdentifier: 
+  description: All the passives in the game
+  _isReset: 0
+  passives:
+  - {fileID: 11400000, guid: c1390e2b186ab0d44bf0254c3965c3e0, type: 2}
+  - {fileID: 11400000, guid: 53ec58f39bb900442a2f446871a00ba3, type: 2}
+  - {fileID: 11400000, guid: 05bb62dfb3c117e42ae4b0f96f867609, type: 2}
+  - {fileID: 11400000, guid: 7e32bb35d7e64fe4ea113a0691ba252a, type: 2}
+  - {fileID: 11400000, guid: 01e21168c49432646b1ced96ce9d94f1, type: 2}
+  - {fileID: 11400000, guid: 8e90f804a50c19d4e982a4d5faee82ea, type: 2}
+  - {fileID: 11400000, guid: 28418347bfa64574385385c2bab660eb, type: 2}
+  - {fileID: 11400000, guid: 01835839032a6254fb0e8bf58caf5de6, type: 2}
+  - {fileID: 11400000, guid: aa9ec3ae33126824b9d6c084ec40910d, type: 2}
+  - {fileID: 11400000, guid: 45db8fd33aaab554da2682111cb20b97, type: 2}
+  - {fileID: 11400000, guid: d2d95335b1e2d5449b626e217cf53f01, type: 2}
+  - {fileID: 11400000, guid: 7e81eba741ca7634685c791d5fac6c7f, type: 2}
+  - {fileID: 11400000, guid: a5adfc8a07b8e704b9cbc2a41be687b4, type: 2}

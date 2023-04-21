@@ -3584,6 +3584,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d994a0b751054040b878402a079be16, type: 2}
   - {fileID: 11400000, guid: 4912b89a641754248a1900fe15e1c5ce, type: 2}
   - {fileID: 11400000, guid: 6396ccac0594c604280cf62b30bf44ac, type: 2}
+  weaknesses: {fileID: 11400000, guid: 81c21dff194830140864b7ad9b46bd45, type: 2}
+  isSave: {fileID: 11400000, guid: 577f5ce3605c77a4b8f7db9895fbb8a2, type: 2}
   extraSkills: {fileID: 11400000, guid: 75514ab29a365f64890e564b7f360da8, type: 2}
   extraPassives: []
   moneyTxt: {fileID: 1609439065}
@@ -3617,6 +3619,8 @@ MonoBehaviour:
   extraPassiveSkillAmount: 4
   BGBattle: {fileID: 0}
   gotoBattleChannel: {fileID: 11400000, guid: 135e94053f442da439e6b90fb9a84e86, type: 2}
+  gotoOverworldChannel: {fileID: 11400000, guid: 5191ec6beaaebd34aab49c2dff232d1f,
+    type: 2}
   changeMenu: {fileID: 11400000, guid: a858318d54f8fbb4aaca029f553861cc, type: 2}
   enemyGroupSelect: {fileID: 11400000, guid: ac48cee5557201f40b5f54b78202661e, type: 2}
 --- !u!4 &134986292

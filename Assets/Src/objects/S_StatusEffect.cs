@@ -28,4 +28,6 @@ public class S_StatusEffect : ScriptableObject
     //a critical hit will occur
     public S_Element[] criticalOnHit;
     public Sprite statusImage;
+
+    public S_StatusEffect[] statusRemove;
 }

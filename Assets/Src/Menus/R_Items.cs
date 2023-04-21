@@ -24,6 +24,18 @@ public class R_Items : R_Default
         return items;
     }
 
+    public void AddItem(s_move item, int amount)
+    {
+        if (inventory.ContainsKey(item))
+        {
+            inventory[item]+= amount;
+        }
+        else
+        {
+            inventory.Add(item, amount);
+        }
+    }
+
     public void AddItem(s_move item) {
         if (inventory.ContainsKey(item))
         {

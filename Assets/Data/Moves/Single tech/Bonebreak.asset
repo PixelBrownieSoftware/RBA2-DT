@@ -25,6 +25,7 @@ MonoBehaviour:
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations: []
   endAnimations: []
@@ -32,10 +33,9 @@ MonoBehaviour:
   cost: 10
   customFunc: 
   strBuff: 0
-  vitBuff: 1
+  vitBuff: -1
   dexBuff: 0
   agiBuff: 0
   intBuff: 0
   lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

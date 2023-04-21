@@ -16,14 +16,15 @@ public class M_CharacterStatus : S_MenuSystem
     public s_guiList vit;
     public s_guiList agi;
     public s_guiList luc;
-    public s_guiList inte;
+    public s_guiList mag;
 
     public Text strTXT;
     public Text dxTXT;
     public Text vitTXT;
     public Text agiTXT;
-    public Text intTxt;
+    public Text magTxt;
     public Text lucTxt;
+    public Text ExpTxt;
 
     o_battleCharPartyData currentBattleCharacterData;
     public R_BattleCharacter characterData;
@@ -49,17 +50,22 @@ public class M_CharacterStatus : S_MenuSystem
             {
                 health.text = "" + currentBattleCharacterData.maxHealth;
                 stamina.text = "" + currentBattleCharacterData.maxStamina;
-                nameCharacter.text = currentBattleCharacterData.name;
+                nameCharacter.text = currentBattleCharacterData.name + " Lv." + currentBattleCharacterData.level;
                 str.amount = currentBattleCharacterData.strength;
                 dx.amount = currentBattleCharacterData.dexterity;
                 agi.amount = currentBattleCharacterData.agility;
                 vit.amount = currentBattleCharacterData.vitality;
+                luc.amount = currentBattleCharacterData.luck;
+                mag.amount = currentBattleCharacterData.intelligence;
 
                 strTXT.text = "" + currentBattleCharacterData.strength;
                 vitTXT.text = "" + currentBattleCharacterData.vitality;
                 dxTXT.text = "" + currentBattleCharacterData.dexterity;
                 agiTXT.text = "" + currentBattleCharacterData.agility;
-
+                magTxt.text = "" + currentBattleCharacterData.intelligence;
+                lucTxt.text = "" + currentBattleCharacterData.luck;
+                if (ExpTxt != null)
+                    ExpTxt.text = currentBattleCharacterData.experiencePoints + "%";
                 /*
                 //strike_aff.text = characterData.wea
                 affs.ForEach(x => x.SetToDat(characterData));

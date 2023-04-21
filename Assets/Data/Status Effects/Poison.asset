@@ -27,3 +27,5 @@ MonoBehaviour:
   criticalOnHit: []
   statusImage: {fileID: 4770986977414676471, guid: c642104f9a91dd54fb4c6f0ad2dddbdc,
     type: 3}
+  statusRemove:
+  - {fileID: 11400000, guid: b5a5f4f323ac5bc46a98a3e0e75e445a, type: 2}
