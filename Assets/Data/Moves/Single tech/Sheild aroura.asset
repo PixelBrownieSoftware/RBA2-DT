@@ -19,12 +19,14 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 0
+  elementalSheildAffinity: 0.5
   fixedValue: 0
   consumeTurn: 1
   moveType: 9
   moveTarg: 2
   moveTargScope: 0
   element: {fileID: 11400000, guid: 557862e97ab269e4f8e9b6a66e719e7c, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations:
   - name: 
     actionType: 8
@@ -117,10 +119,9 @@ MonoBehaviour:
   cost: 7
   customFunc: 
   strBuff: 0
-  vitBuff: 0
+  vitBuff: 1
   dexBuff: 0
   agiBuff: 0
   intBuff: 0
   lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

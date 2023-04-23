@@ -77,7 +77,9 @@ public class s_move : s_ability
         RANDOM
     }
     public int power;
+    public float elementalSheildAffinity = 0.5f;
     public bool fixedValue = false;
+    public bool includeDefeated = false;
     public bool consumeTurn = true;
     public MOVE_TYPE moveType = MOVE_TYPE.HP_DAMAGE;
     public MOVE_TARGET moveTarg = MOVE_TARGET.ENEMY;

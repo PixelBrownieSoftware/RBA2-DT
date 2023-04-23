@@ -141,6 +141,7 @@
     <Compile Include="Assets\Src\objects\s_moveanim.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyMemberButton.cs" />
     <Compile Include="Assets\Src\Menus\R_MoveList.cs" />
+    <Compile Include="Assets\Src\Menus\R_Save.cs" />
     <Compile Include="Assets\Src\Buttons\B_SceneTrans.cs" />
     <Compile Include="Assets\Src\o_billboard.cs" />
     <Compile Include="Assets\Src\system\menu\s_skillDrawButton.cs" />
@@ -160,11 +161,13 @@
     <Compile Include="Assets\Src\system\misc\s_elementalWeaknessGUI.cs" />
     <Compile Include="Assets\Src\system\s_rpgEvents.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_Hub.cs" />
+    <Compile Include="Assets\Src\Menus\Hub\M_TitleMenu.cs" />
     <Compile Include="Assets\Src\Menus\R_Float.cs" />
     <Compile Include="Assets\Src\Buttons\B_Int.cs" />
     <Compile Include="Assets\Src\Menus\R_Boolean.cs" />
     <Compile Include="Assets\Src\system\s_HPGuiManager.cs" />
     <Compile Include="Assets\Src\objects\c_player.cs" />
+    <Compile Include="Assets\Src\Menus\R_Elements.cs" />
     <Compile Include="Assets\Src\objects\S_Passive.cs" />
     <Compile Include="Assets\Src\Menus\S_ExperienceMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_BooleanListener.cs" />
@@ -186,11 +189,9 @@
     <Compile Include="Assets\Src\Channels\CH_MapTransfer.cs" />
     <Compile Include="Assets\Src\objects\s_move.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_ExtraSkills.cs" />
+    <Compile Include="Assets\Src\system\S_Loader.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\R_Elements.cs" />
-    <Compile Include="Assets\Src\Menus\Hub\M_TitleMenu.cs" />
-    <Compile Include="Assets\Src\Menus\R_Save.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

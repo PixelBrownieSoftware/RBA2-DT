@@ -24,12 +24,22 @@ public class R_EnemyGroupList : R_Default
             groupList.Clear();
         }
     }
+
+    public s_enemyGroup GetGroup(string group) {
+        return groupList.Find(x => x.name == group);
+    }
     public void RemoveGroup(s_enemyGroup group)
     {
         groupList.Remove(group);
     }
 
+    public void Clear() {
+        groupList.Clear();
+    }
+
     public void AddGroup(s_enemyGroup group) {
+        if (groupList == null)
+            groupList = new List<s_enemyGroup>();
         groupList.Add(group);
     }
 }

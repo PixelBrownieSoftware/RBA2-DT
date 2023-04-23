@@ -12,24 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Body slam
   m_EditorClassIdentifier: 
-  strReq: 3
+  strReq: 5
   dxReq: 0
   vitReq: 2
   agiReq: 0
   intReq: 0
   lucReq: 0
-  power: 8
+  power: 9
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 0
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations: []
   endAnimations: []
   statusInflictChance: []
-  cost: 18
+  cost: 7
   customFunc: 
   strBuff: 0
   vitBuff: 0
@@ -38,4 +41,3 @@ MonoBehaviour:
   intBuff: 0
   lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

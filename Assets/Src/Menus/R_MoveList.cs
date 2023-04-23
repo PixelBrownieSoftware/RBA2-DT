@@ -7,6 +7,14 @@ public class R_MoveList : R_Default
 {
     public List<s_move> moveListRef = new List<s_move>();
 
+    private void OnDisable()
+    {
+        if (_isReset)
+        {
+            moveListRef.Clear();
+        }
+    }
+
     public s_move PickRandom() {
         return moveListRef[Random.Range(0, moveListRef.Count)];
     }

@@ -119,6 +119,8 @@ public class s_RPGSave : dat_save {
     public sav_enemyWeakness[] enemyWeaknesses;
     public string[] extraSkills;
     public string[] extraPassives;
+    public string[] groupsDone;
+    public string[] currentGroups;
 
     public s_RPGSave(
         List<o_battleCharPartyData> partyMembers,
@@ -127,6 +129,8 @@ public class s_RPGSave : dat_save {
         List<Shop_item> shopItems,
         R_Items inventoryItems,
         S_EnemyWeaknessReveal enemyWeaknesses,
+        R_EnemyGroupList groupsDone,
+        R_EnemyGroupList currentGroups,
         float money)
     {
         List<sav_party> partySave = new List<sav_party>();
@@ -144,7 +148,7 @@ public class s_RPGSave : dat_save {
             mem.agility = a.agility;
             mem.intelligence = a.intelligence;
             mem.luck = a.luck;
-
+            mem.inBattle = a.inBattle;
             mem.characterDataSource = a.characterDataSource.name;
 
             foreach (var mv in a.extraSkills) {
@@ -156,7 +160,16 @@ public class s_RPGSave : dat_save {
             }
             partySave.Add(mem);
         }
-
+        List<string> groupsCurrentList = new List<string>();
+        foreach (var groupCurrent in currentGroups.groupList)
+        {
+            groupsCurrentList.Add(groupCurrent.name);
+        }
+        List<string> groupsDoneList = new List<string>();
+        foreach (var groupDone in groupsDone.groupList)
+        {
+            groupsDoneList.Add(groupDone.name);
+        }
         List<string> exMoves = new List<string>();
         foreach (var exMV in extraMoves.moveListRef)
         {
@@ -196,6 +209,8 @@ public class s_RPGSave : dat_save {
         inventory = savedItems.ToArray();
         this.extraPassives = exPassives.ToArray();
         extraSkills = exMoves.ToArray();
+        this.groupsDone = groupsDoneList.ToArray();
+        this.currentGroups = groupsCurrentList.ToArray();
     }
 }
 
@@ -262,7 +277,7 @@ public class s_rpgGlobals : s_globals
             }
             */
         }
-        moneyTxt.text = "£" + Mathf.Round((money._float/100f)/100f);
+        moneyTxt.text = "£" + money._float;
     }
 
     public override void SaveData()
@@ -302,16 +317,6 @@ public class s_rpgGlobals : s_globals
     public override void StartStuff()
     {
         base.StartStuff();
-
-
-        if (!isSave.boolean)
-        {
-            money._float = 0;
-            foreach (var ind in partyMembersStart.characterSetters)
-            {
-                rpgManager.AddPartyMember(ind, 1);
-            }
-        }
         s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
     }
 
@@ -327,6 +332,7 @@ public class s_rpgGlobals : s_globals
             //AddPartyMember(partyMemberBaseData[6], 35);
             //AddItem("Medicine", 5);
             //AddItem("Energy drink", 5);
+            /*
             if (!isSave.boolean)
             {
                 money._float = 0;
@@ -335,6 +341,7 @@ public class s_rpgGlobals : s_globals
                     rpgManager.AddPartyMember(ind, 1);
                 }
             }
+            */
             print("This is cool");
         } else {
             Destroy(gameObject);
@@ -411,9 +418,6 @@ public class s_rpgGlobals : s_globals
     {
         yield return SceneManager.UnloadSceneAsync("Title", UnloadSceneOptions.None);
         yield return SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
-        if (isSave.boolean) {
-            rpgManager.LoadSaveData();
-        }
     }
     public void SwitchToOverworld()
     {

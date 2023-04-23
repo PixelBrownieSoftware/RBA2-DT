@@ -43,11 +43,25 @@ public class M_BattleOptions : S_MenuSystem
         selectedMove.move = move;
         switch (move.moveTarg) {
             case s_move.MOVE_TARGET.ALLY:
-                targetList.SetCharacters(players.characterListRef);
+                if (move.includeDefeated)
+                {
+                    targetList.SetCharacters(players.characterListRef);
+                }
+                else
+                {
+                    targetList.SetCharacters(players.characterListRef.FindAll(x => x.health > 0));
+                }
                 break;
 
             case s_move.MOVE_TARGET.ENEMY:
-                targetList.SetCharacters(opponents.characterListRef);
+                if (move.includeDefeated)
+                {
+                    targetList.SetCharacters(opponents.characterListRef);
+                }
+                else
+                {
+                    targetList.SetCharacters(opponents.characterListRef.FindAll(x => x.health > 0));
+                }
                 break;
 
             case s_move.MOVE_TARGET.ENEMY_ALLY:

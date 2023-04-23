@@ -19,14 +19,50 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 5
+  elementalSheildAffinity: 0.5
   fixedValue: 0
   consumeTurn: 1
   moveType: 0
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
-  animations: []
+  animations:
+  - name: attack
+    actionType: 7
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: attack
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0.3
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
   cost: 0
@@ -38,4 +74,3 @@ MonoBehaviour:
   intBuff: 0
   lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

@@ -15,17 +15,23 @@ public class M_BattleMainMenu : S_MenuSystem
     private R_Move currentMoveRef;
     [SerializeField]
     private R_Items inventory;
+    [SerializeField]
+    private R_EnemyGroup currentGroup;
 
     public R_CharacterList targetList;
     public R_CharacterList players;
     public R_CharacterList opponents;
 
-    public B_Function[] buttons;
+    public B_Function primaryAttackButton;
+    public B_Function secondaryAttackButton;
+    public B_Function teritaryAttackButton;
+    public B_Function skillsButton;
+    public B_Function guardButton;
+    public B_Function itemButton;
+    public B_Function analyseButton;
+    public B_Function passButton;
+    public B_Function runButton;
 
-    public s_move meleeAttack;
-    public s_move rangedAttack;
-
-    public s_move defaultAttack;
     public s_move analyseMove;
     public s_move guard;
     public s_move pass;
@@ -53,6 +59,10 @@ public class M_BattleMainMenu : S_MenuSystem
     private CH_Func performMove;
     [SerializeField]
     private CH_Func goToAnalyse;
+    [SerializeField]
+    private CH_Func goToItems;
+    [SerializeField]
+    private CH_Func runFromBattle;
 
     private void OnEnable()
     {
@@ -63,6 +73,8 @@ public class M_BattleMainMenu : S_MenuSystem
         goToPass.OnFunctionEvent += PassAction;
         goToGuard.OnFunctionEvent += GuardAction;
         goToAnalyse.OnFunctionEvent += GoToAnalyse;
+        runFromBattle.OnFunctionEvent += RunFromBattle;
+        goToItems.OnFunctionEvent += GoToItems;
     }
 
     private void OnDisable()
@@ -74,6 +86,13 @@ public class M_BattleMainMenu : S_MenuSystem
         goToPass.OnFunctionEvent -= PassAction;
         goToGuard.OnFunctionEvent -= GuardAction;
         goToAnalyse.OnFunctionEvent -= GoToAnalyse;
+        runFromBattle.OnFunctionEvent -= RunFromBattle;
+        goToItems.OnFunctionEvent -= GoToItems;
+    }
+
+    public void RunFromBattle()
+    {
+        changeMenu.RaiseEvent("EMPTY");
     }
 
     public void SelectMove()
@@ -81,11 +100,25 @@ public class M_BattleMainMenu : S_MenuSystem
         switch (currentMoveRef.move.moveTarg)
         {
             case s_move.MOVE_TARGET.ALLY:
-                targetList.SetCharacters(players.characterListRef);
+                if (currentMoveRef.move.includeDefeated)
+                {
+                    targetList.SetCharacters(players.characterListRef);
+                }
+                else
+                {
+                    targetList.SetCharacters(players.characterListRef.FindAll(x => x.health > 0));
+                }
                 break;
 
             case s_move.MOVE_TARGET.ENEMY:
-                targetList.SetCharacters(opponents.characterListRef);
+                if (currentMoveRef.move.includeDefeated)
+                {
+                    targetList.SetCharacters(opponents.characterListRef);
+                }
+                else
+                {
+                    targetList.SetCharacters(opponents.characterListRef.FindAll(x => x.health > 0));
+                }
                 break;
 
             case s_move.MOVE_TARGET.ENEMY_ALLY:
@@ -163,12 +196,17 @@ public class M_BattleMainMenu : S_MenuSystem
         SelectMove();
         changeMenu.RaiseEvent("TargetMenu");
     }
-
     public void GoToSkills()
     {
         print(currentCharacterRef.characterRef.characterData.currentMoves.Count);
         currentMovesRef.SetMoves(currentCharacter.GetAllMoves());
         battleMenuType.text = "Skills";
+        menuText.text = "EMPTY";
+        changeMenu.RaiseEvent("BattleSkillMenu");
+    }
+    public void GoToItems()
+    {
+        battleMenuType.text = "Items";
         menuText.text = "EMPTY";
         changeMenu.RaiseEvent("BattleSkillMenu");
     }
@@ -189,27 +227,30 @@ public class M_BattleMainMenu : S_MenuSystem
         changeMenu.RaiseEvent("EMPTY");
     }
 
-
     public override void StartMenu()
     {
         currentCharacter = currentCharacterRef.characterRef;
-        foreach (var button in buttons)
-        {
-            button.gameObject.SetActive(false);
-        }
+        secondaryAttackButton.gameObject.SetActive(false);
+        teritaryAttackButton.gameObject.SetActive(false);
+        skillsButton.gameObject.SetActive(false);
+        itemButton.gameObject.SetActive(false);
+        runButton.gameObject.SetActive(false);
         base.StartMenu();
-        buttons[0].gameObject.SetActive(true);
+        primaryAttackButton.gameObject.SetActive(true);
+        guardButton.gameObject.SetActive(true);
+        passButton.gameObject.SetActive(true);
+        analyseButton.gameObject.SetActive(true);
         if (currentCharacter.GetAllMoves().Count > 0)
         {
-            buttons[2].gameObject.SetActive(true);
+            skillsButton.gameObject.SetActive(true);
         }
-
-        buttons[4].gameObject.SetActive(true);
         if (inventory.inventory.Count > 0)
         {
-            buttons[5].gameObject.SetActive(true);
+            itemButton.gameObject.SetActive(true);
         }
-        buttons[7].gameObject.SetActive(true);
-        buttons[6].gameObject.SetActive(true);
+        if (currentGroup.enemyGroup.fleeable)
+        {
+            runButton.gameObject.SetActive(true);
+        }
     }
 }

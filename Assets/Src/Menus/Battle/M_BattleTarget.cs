@@ -173,7 +173,7 @@ public class M_BattleTarget : S_MenuSystem
                 switch (mov.moveTargScope)
                 {
                     case s_move.SCOPE_NUMBER.ONE:
-                        for (int i = 0; i < battleCharacters.characterListRef.Count - 1; i++)
+                        for (int i = 0; i < battleCharacters.characterListRef.Count; i++)
                         {
                             CH_BattleChar battleChar = battleCharacters.GetChracter(i);
                             tg = buttons[i];

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fleeable: 0
   fixedPlayers: 1
+  guestInvolved: 1
+  perishIfDone: 0
   sceneToGoTo: 
   members:
   - memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
@@ -23,6 +25,8 @@ MonoBehaviour:
     extraSkills: []
     passives: []
     weaponSelections: []
+  members_summonable: []
+  members_pre_summon: []
   members_Player:
   - memberDat: {fileID: 11400000, guid: 8b42bae2bb7fbdf45a02c0da49daed50, type: 2}
     levType: 1
@@ -59,7 +63,18 @@ MonoBehaviour:
     extraSkills: []
     passives: []
     weaponSelections: []
+  member_Guest:
+    memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
+    levType: 1
+    level: 30
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
   events: []
+  unlockCharacters: []
+  branches: []
+  shopItems: []
   bg1: {fileID: 21300000, guid: 5a339771bf3f4704d8fa3195e3b585a6, type: 3}
   bg2: {fileID: 21300000, guid: 5c0ef5051754eae4da8d0ef8a94d111e, type: 3}
   material1: {fileID: 2100000, guid: 9944d8a085f518b46b460a164d4b2049, type: 2}

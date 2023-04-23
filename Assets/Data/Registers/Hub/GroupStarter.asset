@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8866d8fc618fc0b4db51b608bc57c44f, type: 3}
+  m_Name: GroupStarter
+  m_EditorClassIdentifier: 
+  description: This is the group you get in the begining of the game.
+  _isReset: 0
+  groupList:
+  - {fileID: 11400000, guid: ef6bfa35656e570489663a4a6e659e99, type: 2}
+  - {fileID: 11400000, guid: a528ba627d5bd9443be5848ce0a22fb5, type: 2}
+  groupListDefault: []

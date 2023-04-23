@@ -458,6 +458,7 @@ MonoBehaviour:
   saveData: {fileID: 11400000, guid: 24128bff5c61b9547af418bf29aed1e8, type: 2}
   loadGameButton: {fileID: 2018937721}
   isSave: {fileID: 11400000, guid: 577f5ce3605c77a4b8f7db9895fbb8a2, type: 2}
+  hasStartedGame: {fileID: 11400000, guid: 723d02f104036c14dbeef0400486c9ee, type: 2}
 --- !u!1001 &2018937719
 PrefabInstance:
   m_ObjectHideFlags: 0

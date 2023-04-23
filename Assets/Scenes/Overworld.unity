@@ -4973,6 +4973,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9967e0f94ee394eb4127ac34b02a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  partyMembersStart: {fileID: 11400000, guid: 779f56c64c552254abfa715fd20705fb, type: 2}
+  groupsStart: {fileID: 11400000, guid: 2022798d7816cfc4896fd406496ab79f, type: 2}
+  partyMembers: {fileID: 11400000, guid: 23c13f84f7db731469932dbd6aec91c9, type: 2}
+  rpgManager: {fileID: 11400000, guid: a60afbfc70f8dd94baec1f20e3492674, type: 2}
+  isSave: {fileID: 11400000, guid: 577f5ce3605c77a4b8f7db9895fbb8a2, type: 2}
+  hasStartedGame: {fileID: 11400000, guid: 723d02f104036c14dbeef0400486c9ee, type: 2}
+  money: {fileID: 11400000, guid: 8c0dcce795c6329458ff12ad2c08b843, type: 2}
   shopItems: {fileID: 11400000, guid: 76359f9805305f542930a8335662d6b6, type: 2}
   menuChanger: {fileID: 11400000, guid: a858318d54f8fbb4aaca029f553861cc, type: 2}
   shopButton: {fileID: 1829251905}

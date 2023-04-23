@@ -17,6 +17,9 @@ public class S_RPGGlobals : ScriptableObject
     public R_MoveList extraSkills;
     public R_Passives extraPassives;
     public R_Passives passiveDatabase;
+    public R_EnemyGroupList groupsDone;
+    public R_EnemyGroupList groupsCurrent;
+    public R_EnemyGroupList groupsAvailible;
     public R_Float money;
     public S_EnemyWeaknessReveal enemyWeaknessReveal;
     public R_Elements allElements;
@@ -33,7 +36,6 @@ public class S_RPGGlobals : ScriptableObject
         } 
     }
 
-
     public void SaveData()
     {
         try
@@ -46,7 +48,9 @@ public class S_RPGGlobals : ScriptableObject
                 extraPassives, 
                 shopItems.shopItems, 
                 inventory, 
-                enemyWeaknessReveal, 
+                enemyWeaknessReveal,
+                groupsDone,
+                groupsCurrent,
                 money._float);
             bin.Serialize(fs, sav);
             fs.Close();
@@ -71,7 +75,9 @@ public class S_RPGGlobals : ScriptableObject
             int tempStr = data.strength;
             int tempVit = data.vitality;
             int tempDx = data.dexterity;
+            int tempMag = data.intelligence;
             int tempAgi = data.agility;
+            int tempLuc = data.luck;
             newCharacter.characterDataSource = allCharactersData.characterSetters.Find(x => x.name == data.characterDataSource);
             newCharacter.currentMoves = new List<s_move>();
             newCharacter.passives = new List<S_Passive>();
@@ -100,6 +106,8 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.vitality = tempVit;
             newCharacter.dexterity = tempDx;
             newCharacter.agility = tempAgi;
+            newCharacter.intelligence = tempMag;
+            newCharacter.luck = tempLuc;
             newCharacter.inBattle = data.inBattle;
             foreach (var elem in allElements.elementsList)
             {
@@ -150,6 +158,22 @@ public class S_RPGGlobals : ScriptableObject
                 }
             }
         }
+        if (savedata.groupsDone != null)
+        {
+            groupsDone.Clear();
+            foreach (var groupDone in savedata.groupsDone)
+            {
+                groupsDone.AddGroup(groupsAvailible.GetGroup(groupDone));
+            }
+        }
+        if (savedata.currentGroups != null)
+        {
+            foreach (var groupCurrent in savedata.currentGroups)
+            {
+                if(!groupsDone.groupList.Contains(groupsAvailible.GetGroup(groupCurrent)))
+                    groupsCurrent.AddGroup(groupsAvailible.GetGroup(groupCurrent));
+            }
+        }
     }
 
     public o_battleCharPartyData CreatePartyMemberData(o_battleCharDataN data, int level)
@@ -180,7 +204,7 @@ public class S_RPGGlobals : ScriptableObject
             int tempDx = data.dexterityB;
             int tempLuc = data.luckB;
             int tempAgi = data.agilityB;
-            int tempInt = data.intelligenceB;
+            int tempMag = data.intelligenceB;
 
             for (int i = 1; i < level; i++)
             {
@@ -198,7 +222,7 @@ public class S_RPGGlobals : ScriptableObject
                 if (data.agilityGT % level == 0)
                     tempAgi++;
                 if (data.intelligenceGT % level == 0)
-                    tempInt++;
+                    tempMag++;
                 newCharacter.level++;
             }
 
@@ -229,6 +253,8 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.strength = tempStr;
             newCharacter.vitality = tempVit;
             newCharacter.dexterity = tempDx;
+            newCharacter.intelligence = tempMag;
+            newCharacter.luck = tempLuc;
             newCharacter.agility = tempAgi;
         }
         newCharacter.characterDataSource = data;
@@ -244,6 +270,7 @@ public class S_RPGGlobals : ScriptableObject
         }
         partyMembers.Add(newCharacter);
     }
+
     public o_battleCharPartyData SetPartyCharacterStats(o_battleCharacter data)
     {
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
@@ -343,5 +370,4 @@ public class S_RPGGlobals : ScriptableObject
             //yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-
 }

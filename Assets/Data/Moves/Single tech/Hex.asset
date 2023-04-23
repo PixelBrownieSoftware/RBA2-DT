@@ -19,12 +19,15 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 8
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 0
   moveTarg: 1
   moveTargScope: 0
-  element: {fileID: 11400000, guid: e58575b29ff3ab74a865032e2b27d2c6, type: 2}
+  element: {fileID: 11400000, guid: 34edbd49a9b03f3449ec3d76d7229759, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations: []
   endAnimations: []
@@ -38,4 +41,3 @@ MonoBehaviour:
   intBuff: 0
   lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

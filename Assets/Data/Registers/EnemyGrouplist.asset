@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8866d8fc618fc0b4db51b608bc57c44f, type: 3}
   m_Name: EnemyGrouplist
   m_EditorClassIdentifier: 
-  description: 
+  description: The current list of groups.
   _isReset: 1
   groupList:
   - {fileID: 11400000, guid: ef6bfa35656e570489663a4a6e659e99, type: 2}
-  - {fileID: 11400000, guid: 50616b7cc3af31643a05b0a563dfb4ba, type: 2}
-  - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}
-  - {fileID: 11400000, guid: 82ee284ea79be4d48bf57eeb80c8795a, type: 2}
-  groupListDefault:
-  - {fileID: 11400000, guid: ef6bfa35656e570489663a4a6e659e99, type: 2}
   - {fileID: 11400000, guid: a528ba627d5bd9443be5848ce0a22fb5, type: 2}
+  groupListDefault: []

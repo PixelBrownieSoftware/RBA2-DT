@@ -31,7 +31,6 @@ MonoBehaviour:
   luckGT: 2
   intelligenceGT: 2
   dexterityGT: 3
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
   turnIcons: 3
   moveLearn:
@@ -41,6 +40,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  passiveLearn: []
   elementals: []
   characterColour: {r: 0.66386706, g: 0.3066038, b: 1, a: 1}
   characterColour2: {r: 0.57617795, g: 0.107467055, b: 0.6509434, a: 1}
@@ -114,6 +114,7 @@ MonoBehaviour:
       number2: 0
   anim: {fileID: 9100000, guid: 94c6103fea7c4e1409c18af694a5c25b, type: 2}
   items: []
+  firstMove: {fileID: 11400000, guid: fd976a8ae2334be4a972d3c87634d3ae, type: 2}
   secondMove: {fileID: 0}
   thirdMove: {fileID: 0}
   persistence: 0

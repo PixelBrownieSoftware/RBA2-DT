@@ -21,6 +21,9 @@ MonoBehaviour:
   extraSkills: {fileID: 11400000, guid: 75514ab29a365f64890e564b7f360da8, type: 2}
   extraPassives: {fileID: 11400000, guid: d7b571d1746471549adc746133ace3f3, type: 2}
   passiveDatabase: {fileID: 11400000, guid: 243720ba061fc654f8c1a675c220a662, type: 2}
+  groupsDone: {fileID: 11400000, guid: 438a58488beb6b5419ea4d794950974e, type: 2}
+  groupsCurrent: {fileID: 11400000, guid: 2137c49ee41941044ab6886d232c5ce9, type: 2}
+  groupsAvailible: {fileID: 11400000, guid: 88d07487cd5bcf541b053a85a66a224f, type: 2}
   money: {fileID: 11400000, guid: 8c0dcce795c6329458ff12ad2c08b843, type: 2}
   enemyWeaknessReveal: {fileID: 11400000, guid: 81c21dff194830140864b7ad9b46bd45,
     type: 2}

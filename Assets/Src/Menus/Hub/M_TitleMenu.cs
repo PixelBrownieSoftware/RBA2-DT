@@ -17,6 +17,8 @@ public class M_TitleMenu : S_MenuSystem
     public B_Function loadGameButton;
     [SerializeField]
     private R_Boolean isSave;
+    [SerializeField]
+    private R_Boolean hasStartedGame;
 
     private void OnEnable()
     {
@@ -32,6 +34,7 @@ public class M_TitleMenu : S_MenuSystem
 
     private void Awake()
     {
+        hasStartedGame.boolean = false;
         if (File.Exists("save.RB2"))
             loadGameButton.gameObject.SetActive(true);
         else

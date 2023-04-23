@@ -24,8 +24,6 @@ public class o_battleCharDataN : ScriptableObject
         public S_Element element;
         public float value;
     }
-
-
     public float money;
 
     /// Base stats the character starts with

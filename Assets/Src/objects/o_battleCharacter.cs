@@ -168,6 +168,7 @@ public class s_actionAnim
         HIT_ANIMATION,
         CALCULATION, //calculations,
         ANIMATION,
+        CHAR_ANIMATION,
         MOVE_CAMERA,
         ZOOM_CAMERA,
         FADE_TARGET
@@ -296,7 +297,7 @@ public class o_battleCharPartyData
 }
 //[System.Serializable]
 
-
+/*
 [System.Serializable]
 public class o_battleCharData 
 {
@@ -344,6 +345,7 @@ public class o_battleCharData
     public charAI[] character_AI;
     public float[] elementAffinities = new float[12];
 }
+*/
 
 [System.Serializable]
 public class s_statusEff
@@ -662,6 +664,10 @@ public class o_battleCharacter : MonoBehaviour
     public void SwitchAnimation(string animName)
     {
         animHandler.Play(animName);
+    }
+
+    public float GetAnimHandlerState() {
+        return animHandler.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public s_move GetRandomMove {

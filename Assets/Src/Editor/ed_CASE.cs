@@ -6,6 +6,7 @@ using System.Linq;
 using System.IO;
 using MagnumFoundation2;
 
+/*
 [System.Serializable]
 public struct s_characterData {
 
@@ -15,6 +16,7 @@ public struct s_characterData {
     }
     public List<o_battleCharData> characterdata;
 }
+*/
 [System.Serializable]
 public struct s_skillData
 {
@@ -121,7 +123,6 @@ public class ed_CASE : Editor
 
     //public List<o_ite> itemdata;
     public List<s_move> skilldata;
-    public List<o_battleCharData> characterdata;
     Vector2 scrollPos;
     public bool[] aiBoolList;
 

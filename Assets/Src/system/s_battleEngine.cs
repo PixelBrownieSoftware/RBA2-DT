@@ -153,6 +153,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public CH_Text changeMenu;
     public CH_Func perfomMove;
+    public CH_Func retreatOption;
     #endregion
 
     #region graphics
@@ -256,11 +257,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     private void OnEnable()
     {
         perfomMove.OnFunctionEvent += EndAction;
+        retreatOption.OnFunctionEvent += RunFromBattle;
     }
 
     private void OnDisable()
     {
         perfomMove.OnFunctionEvent -= EndAction;
+        retreatOption.OnFunctionEvent -= RunFromBattle;
     }
 
     public void Awake()
@@ -297,7 +300,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         usedPassives.Clear();
         usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
 
-        //ffff
         #region CLEAR GUI
         HPGUIMan.ClearHPGui();
         foreach (var ptIc in PT_GUI) {
@@ -459,8 +461,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         #endregion
 
-        //combo
-
         #region CLEAR ALL STATUS EFFECTS
         {
             for (int i = 0; i < AllCharacters.Count; i++)
@@ -567,7 +567,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
 
     #region Set stats
-
     public charAI[] GetAIList(List<s_move> moves)
     {
         charAI[] lists = new charAI[moves.Count];
@@ -611,7 +610,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         return lists;
     }
-
     public void SetStatsNonChangable(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem) {
         int tempLvl = 1;
 
@@ -632,7 +630,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         charObj.name = enem.name;
         charObj.level = tempLvl;
         charObj.battleCharData = enem;
-
         {
             int tempHPMin = enem.maxHitPointsGMin;
             int tempSPMin = enem.maxSkillPointsGMin;
@@ -728,7 +725,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         charObj.inBattle = true;
     }
-
     public void AssignPassivesAffinity(S_Passive[] passives, ref o_battleCharacter charObj) {
         foreach (var passive in passives)
         {
@@ -753,14 +749,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
         }
     }
-
     public void SetStatsOpponent(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem)
     {
         SetStatsNonChangable(ref charObj, mem);
         enemiesReference.Add(charObj.referencePoint);
         oppositionCharacters.Add(charObj);
     }
-    
     public void SetStatsPlayer(ref o_battleCharacter charObj, o_battleCharPartyData enem)
     {
         int tempHP = enem.maxHealth;
@@ -769,15 +763,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         int tempVit = enem.vitality;
         int tempDx = enem.dexterity;
         int tempAgi = enem.agility;
-        
+        int tempLuc = enem.luck;
+        int tempMag = enem.intelligence;
+
         charObj.name = enem.name;
         charObj.level = enem.level;
         charObj.health = charObj.maxHealth = tempHP;
         charObj.stamina = charObj.maxStamina = tempSP;
         charObj.vitality = tempVit;
         charObj.dexterity = tempDx;
+        charObj.intelligence = tempMag;
         charObj.strength = tempStr;
         charObj.agility = tempAgi;
+        charObj.luck = tempLuc;
         charObj.battleCharData = enem.characterDataSource;
         charObj.referencePoint.characterData = enem;
         charObj.currentMoves = new List<s_move>();
@@ -792,7 +790,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         playersReference.Add(charObj.referencePoint);
         playerCharacters.Add(charObj);
     }
-
     public void SetStatsPlayer(ref o_battleCharacter charObj, s_enemyGroup.s_groupMember mem)
     {
         SetStatsNonChangable(ref charObj, mem);
@@ -818,7 +815,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         yield return new WaitForSeconds(0.1f);
 
     }
-
     public IEnumerator ChangePartyMember(o_battleCharacter from, o_battleCharacter to) {
         List<o_battleCharacter> bc = playerCharacters.FindAll(x => x.inBattle);
 
@@ -841,7 +837,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         yield return new WaitForSeconds(0.1f);
         
     }
-
     public IEnumerator PlayFadeCharacter(o_battleCharacter t, Color from, Color to) {
         t.render.color = from;
         float dt = 0;
@@ -851,7 +846,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             yield return new WaitForSeconds(Time.deltaTime);
         };
     }
-
     public IEnumerator PlayProjectileAnimation(string objName ,Vector2 start, Vector2 target)
     {
         s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
@@ -869,7 +863,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         projectile.DespawnObject();
     }
-
     public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ, string dmgType) {
 
         switch (currentMove.move.moveType) {
@@ -911,7 +904,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
         }
     }
-
     public IEnumerator DodgeAnimation(o_battleCharacter targ, Vector2 characterPos) {
 
         SpawnDamageObject(0, characterPos, Color.white, "miss_attack");
@@ -947,7 +939,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-
     public IEnumerator PlayAttackAnimation(s_actionAnim[] animations, o_battleCharacter targ, o_battleCharacter user) {
 
         Vector3 dir = new Vector2(0, 0);
@@ -965,6 +956,26 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 float timer = 0;
                 switch (an.actionType)
                 {
+                    case s_actionAnim.ACTION_TYPE.CHAR_ANIMATION:
+                        user.SwitchAnimation(an.name);
+                        
+                        if (an.time > 0)
+                        {
+                            while (timer < an.time)
+                            {
+                                timer += Time.deltaTime;
+                                yield return new WaitForSeconds(Time.deltaTime);
+                            }
+                        }    
+                        else {
+                            while (timer < user.GetAnimHandlerState())
+                            {
+                                timer += Time.deltaTime;
+                                yield return new WaitForSeconds(Time.deltaTime);
+                            }
+                        }
+                        break;
+
                     case s_actionAnim.ACTION_TYPE.ANIMATION:
                         {
                             Vector2 start = new Vector2(0, 0);
@@ -977,11 +988,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 case s_actionAnim.MOTION.TO_TARGET:
                                     start = targ.transform.position;
                                     break;
-                                    /*
-                                case s_actionAnim.MOTION.USER_2:
-                                    start = ReferenceToCharacter(currComb.user2).transform.position;
-                                    break;
-                                    */
                             }
                             s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
                             projectile.anim.Play(an.name);
@@ -1006,20 +1012,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             case s_actionAnim.MOTION.TO_TARGET:
                                 StartCoroutine(PlayFadeCharacter(targetCharacterObject, an.startColour, an.endColour));
                                 break;
-                                /*
-                            case s_actionAnim.MOTION.USER_2:
-                                StartCoroutine(PlayFadeCharacter(ReferenceToCharacter(currComb.user2), an.startColour, an.endColour));
-                                break;
-                            case s_actionAnim.MOTION.USER_3:
-                                StartCoroutine(PlayFadeCharacter(ReferenceToCharacter(currComb.user3), an.startColour, an.endColour));
-                                break;
-                            case s_actionAnim.MOTION.USER_4:
-                                StartCoroutine(PlayFadeCharacter(ReferenceToCharacter(currComb.user4), an.startColour, an.endColour));
-                                break;
-                            case s_actionAnim.MOTION.USER_5:
-                                StartCoroutine(PlayFadeCharacter(ReferenceToCharacter(currComb.user5), an.startColour, an.endColour));
-                                break;
-                                */
                         }
 
                         yield return new WaitForSeconds(an.time);
@@ -1226,23 +1218,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
                             switch (an.goal)
                             {
-                                /*
-                                case s_actionAnim.MOTION.USER_2:
-                                    end = ReferenceToCharacter(currComb.user2).transform.position;
-                                    break;
-
-                                case s_actionAnim.MOTION.USER_3:
-                                    end = ReferenceToCharacter(currComb.user3).transform.position;
-                                    break;
-
-                                case s_actionAnim.MOTION.USER_4:
-                                    end = ReferenceToCharacter(currComb.user4).transform.position;
-                                    break;
-
-                                case s_actionAnim.MOTION.USER_5:
-                                    end = ReferenceToCharacter(currComb.user5).transform.position;
-                                    break;
-                                    */
                                 case s_actionAnim.MOTION.SELF:
                                     end = user.transform.position;
                                     break;
@@ -1263,13 +1238,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             yield return StartCoroutine(CalculateAttk(targ));
         }
     }
-
     public List<o_battleCharacter> AllTargetsLiving(s_move.MOVE_TARGET scope)
     {
         List<o_battleCharacter> bcs = AllTargets(scope);
         return bcs.FindAll(x => x.health > 0);
     }
-
     public List<o_battleCharacter> AllTargets(s_move.MOVE_TARGET scope) {
         List<o_battleCharacter> bcs = new List<o_battleCharacter>();
         if (isPlayerTurn)
@@ -1314,7 +1287,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         return bcs;
     }
-
     public IEnumerator DisplayMoveName(string moveName)
     {
         displayMoveName.img.gameObject.SetActive(true);
@@ -1526,14 +1498,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         #endregion
 
         yield return StartCoroutine(CheckStatusEffectAfterAction());
-        yield return StartCoroutine(CheckCutscene());
         finalDamageFlag = DAMAGE_FLAGS.NONE;
         battleEngine = BATTLE_ENGINE_STATE.END;
-    }
-    public IEnumerator CheckCutscene()
-    {
-        //s_camera.cam.SetZoom();
-        yield return new WaitForSeconds(0.1f);
     }
     public IEnumerator CheckStatusEffectAfterAction()
     {
@@ -1556,7 +1522,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         yield return new WaitForSeconds(0.1f);
     }
-    
     public IEnumerator DoEndTurnAnimation(bool isPturn)
     {
         yield return new WaitForSeconds(0.4f);
@@ -1564,7 +1529,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         isPlayerTurn = isPturn;
         battleEngine = BATTLE_ENGINE_STATE.SELECT_CHARACTER;
     }
-
     public void SpawnDamageObject(float dmg, Vector2 characterPos, Color colour, string damageObjType)
     {
         /*
@@ -1718,7 +1682,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
             if (isPlayerTurn)
             {
-                if(currentCharacter != guest)
+                if(currentCharacter.characterRef != guest.referencePoint)
                     PlayerTurn();
                 else
                     AITurn();
@@ -2001,7 +1965,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     {
         targetCharacters.characterListRef = targs;
     }
-
     public void SetTargets(bool onParty) {
         targetCharacters.Clear();
         if (!onParty)
@@ -2024,7 +1987,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 targetCharacters.Add(guest.referencePoint);
         }
     }
-
+    public void RunFromBattle() {
+        StartCoroutine(ConcludeBattle());
+    }
     public void RearangeTurnOrder() {
         List<o_battleCharacter> bcs = playerCharacters.FindAll(x => x.inBattle);
         currentPartyCharactersQueue.Clear();
@@ -2041,7 +2006,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             ind++;
         }
     }
-
     public void SelectTarget(CH_BattleChar bc) {
         targetCharacter.SetCharacter(bc);
         EndAction();
@@ -2050,7 +2014,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleEngine = BATTLE_ENGINE_STATE.PROCESS_ACTION;
         StartCoroutine(ExcecuteMove());
     }
-
     public void GuardOption()
     {
         currentMove.SetMove(guard);
@@ -2058,14 +2021,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleEngine = BATTLE_ENGINE_STATE.END;
         menuchoice = 0;
     }
-
     public void SelectSkillOptionGuard()
     {
         currentMove.SetMove(guard);
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         EndAction();
     }
-
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
     {
         S_Element el = move.element;
@@ -2098,7 +2059,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         else { dmg = move.power; }
         return dmg;
     }
-    
     public void DamageEffect(int dmg, o_battleCharacter target ,Vector2 characterPos, DAMAGE_FLAGS fl) {
         switch (fl)
         {
@@ -2168,7 +2128,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
 
     }
-
     public IEnumerator PassiveSkillDo(KeyValuePair<o_battleCharacter, S_Passive> user_skill, Vector2 characterPos)
     {
         o_battleCharacter targ = user_skill.Key;
@@ -2211,7 +2170,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
         }
     }
-
+    public IEnumerator ApplySmirk(o_battleCharacter target, float chance) {
+        yield return new WaitForSeconds(0.1f);
+    }
     /// <summary>
     /// This returns anyone with an ally trigger
     /// </summary>
@@ -2279,7 +2240,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
     }
     */
-
     IEnumerator TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER trigger, o_battleCharacter targ, Vector2 characterPos)
     {
         Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter> trigger_char = new Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>(trigger, targ);
@@ -2303,10 +2263,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         yield return StartCoroutine(PassiveSkillDo(new KeyValuePair<o_battleCharacter, S_Passive>(targ, passiveToDo), characterPos));
     }
-
     public IEnumerator CalculateAttk(o_battleCharacter targ)
     {
-
         if (currentMove.move.moveType == s_move.MOVE_TYPE.HP_DAMAGE) {
             if (targ.health <= 0)
                 yield break;
@@ -2429,8 +2387,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         case DAMAGE_FLAGS.CRITICAL:
                             #region LUCK CHECK
                             {
-                                int userLuc = currentCharacterObject.agiNet + 2;
-                                int targLuc = targ.agiNet - 1;
+                                int userLuc = currentCharacterObject.luckNet + 2;
+                                int targLuc = targ.luckNet - 1;
                                 targLuc = Mathf.Clamp(targLuc, 1, int.MaxValue);
                                 int totalLuck = userLuc + targLuc;
 
@@ -2502,6 +2460,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                     statusChance.status_effect,
                                     statusChance.duration,
                                     statusChance.damage));
+                                foreach (var statusChange in statusChance.status_effect.statusRemove) {
+                                    targetCharacterObject.RemoveStatus(statusChange);
+                                }
                             }
                         }
                     }
@@ -2627,28 +2588,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 if (currentMove.move.elementsSheild != null)
                 {
-                    switch (currentMove.move.power)
-                    {
-                        case 0:
-                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0.5f);
-                            break;
-                        case 1:
-                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, 0);
-                            break;
-                        case 2:
-                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -1);
-                            break;
-                        case 3:
-                            ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, -2);
-                            break;
-                    }
+                    ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, currentMove.move.elementalSheildAffinity);
                 }
             }
         }
             
         //Show Damage output here
-
-
         yield return new WaitForSeconds(0.18f);
 
         #region CHECK FOR ON DEFEAT
@@ -2686,7 +2631,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
         }
     }
-    
     public IEnumerator ConcludeBattle()
     {
         //Fade
@@ -2696,14 +2640,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         currentPartyCharactersQueue.Clear();
         battleEngine = BATTLE_ENGINE_STATE.NONE;
         yield return new WaitForSeconds(0.1f);
-        //yield return StartCoroutine(s_globals.globalSingle.s(true));
-
         if (!nonChangablePlayers)
         {
             s_menuhandler.GetInstance().SwitchMenu("ExperienceMenu");
-
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
-
             for(int ind =0; ind < playerCharacters.Count; ind++)
             {
                 o_battleCharacter c = playerCharacters[ind];
@@ -2712,11 +2652,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 float exp = TotalEXP(c);
                 int initailTotal = (int)(exp * 100);
                 print(initailTotal);
-
                 //we add the exp and make it so that it checks for a level up
                 for (int i = 0; i < initailTotal; i++)
                 {
                     c.experiencePoints += 0.01f;
+                    c.experiencePoints = MathF.Round(c.experiencePoints * 100f) / 100f;
                     print(c.experiencePoints);
                     if (c.experiencePoints >= 1f)
                     {
@@ -2744,9 +2684,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         print(c.name + "Level up! Lv." + c.level);
                     }
-                    //yield return new WaitForSeconds(Time.deltaTime);
                 }
-                c.experiencePoints = (c.experiencePoints * 100f) / 100f;
                 rpgManager.SetPartyMemberStats(c);
             }
 
@@ -2757,7 +2695,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 if (en.health > 0)
                     continue;
                 //For now it's going to be a random amount... later it'll be "en.battleCharData.money"
-                float moneyGiven = Mathf.Round(UnityEngine.Random.Range(0.05f, 1.25f) * 100.0f) * 0.01f;
+                float moneyGiven = en.battleCharData.money;
                 money._float += moneyGiven;
                 foreach (s_move mv in en.currentMoves)
                 {
@@ -2766,7 +2704,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         print("Added skill");
                         extraSkills.AddMove(mv);
                         extSkillLearn.Add(mv.name);
-                    }
+                    } 
                 }
                 if (en.extraSkills != null)
                 {
@@ -2792,7 +2730,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     }
                 }
             }
-            if (allDefeated & !battleGroupDoneRef.groupList.Contains(enemyGroup)) {
+            if (allDefeated && !battleGroupDoneRef.groupList.Contains(enemyGroup)) {
                 battleGroupDoneRef.AddGroup(enemyGroup);
                 if (enemyGroup.perishIfDone) {
                     battleGroupRef.RemoveGroup(enemyGroup);
@@ -2823,11 +2761,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     rpgManager.AddPartyMember(c, rpgManager.MeanLevel);
                 }
             }
-            rpgManager.SaveData();
         }
+        rpgManager.SaveData();
         //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
-
     public float TotalEXP(o_battleCharacter recipent) {
         List<o_battleCharacter> opponents = oppositionCharacters.FindAll(x => x.health <= 0);
         float expTotal = 0f;
@@ -2838,7 +2775,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         return expTotal;
     }
-
     public IEnumerator GameOver()
     {
         yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
@@ -2851,7 +2787,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         battleEngine = BATTLE_ENGINE_STATE.NONE;
         s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
-
     public IEnumerator NextTeamTurn()
     {
         //PT_GUI

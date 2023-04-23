@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584799f4821e40943951b44d2b15b979, type: 3}
   m_Name: ExtraSkills
   m_EditorClassIdentifier: 
-  description: 
-  _isReset: 0
+  description: All the extra skills that you have.
+  _isReset: 1
   moveListRef: []
