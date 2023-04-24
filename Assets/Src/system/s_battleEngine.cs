@@ -244,11 +244,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     #endregion
 
     public o_battleCharacter ReferenceToCharacter(CH_BattleChar refer) {
+        print("Reference: " + refer);
+        print("Reference: " + refer);
         return GetAllCharacters().Find(x => x.referencePoint == refer);
     }
 
     public List<o_battleCharacter> GetAllCharacters() {
         List<o_battleCharacter> bcs = new List<o_battleCharacter>();
+        if (hasGuest)
+            bcs.Add(guest);
         bcs.AddRange(playerCharacters);
         bcs.AddRange(oppositionCharacters);
         return bcs;
@@ -986,7 +990,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                     break;
                                 //If the move was random this sets the target
                                 case s_actionAnim.MOTION.TO_TARGET:
-                                    start = targ.transform.position;
+                                    if(targ != null)
+                                        start = targ.transform.position;
                                     break;
                             }
                             s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
@@ -1325,6 +1330,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         if (mov.element.isMagic)
         {
+            print("User: " + user);
+            print("Target: " + targ);
+            print("Move: " + mov);
             user.stamina -= mov.cost;
         }
         else
@@ -1697,7 +1705,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     {
         List<o_battleCharacter> allies = new List<o_battleCharacter>();
         List<o_battleCharacter> baddies = new List<o_battleCharacter>();
-        if (currentCharacter != guest)
+        if (currentCharacter.characterRef != guest.referencePoint)
         {
             allies.AddRange(oppositionCharacters);
             baddies.AddRange(playerCharacters.FindAll(x => x.inBattle == true && x.health > 0));
@@ -2029,6 +2037,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
     {
+        if (target == null)
+            return 0;
         S_Element el = move.element;
         int dmg = 0;
         if (!move.fixedValue)
@@ -2806,7 +2816,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             if (isPlayerTurn) {
                 if (hasGuest)
                 {
-                    if (currentCharacter == guest)
+                    if (currentCharacter.characterRef == guest.referencePoint)
                     {
                         enemiesReference.ClearSheild();
                         bcs.AddRange(oppositionCharacters);

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d8baa6a79621f46b5ac4b75afb71f7, type: 3}
   m_Name: SelectedCharacter
   m_EditorClassIdentifier: 
-  description: 
+  description: The target character who is selectedin battle.
   _isReset: 0
-  characterRef: {fileID: 0}
+  characterRef: {fileID: 11400000, guid: 84f39121a340fbc48ab68bf1cd1b87d1, type: 2}
