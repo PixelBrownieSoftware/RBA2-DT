@@ -23,11 +23,13 @@ public class M_ExtraSkills : S_MenuSystem
     private CH_Int equipSelect;
     [SerializeField]
     private CH_Int deEquipSelect;
+    [SerializeField]
+    private CH_Int changePage;
+    public R_Int extraSkillsMax;
 
     public TextMeshProUGUI moveDescription;
     public B_Int equipButton;
     public B_Int unequipButton;
-
     private int page = 0;
 
     public override void StartMenu()
@@ -38,21 +40,35 @@ public class M_ExtraSkills : S_MenuSystem
         unequipButton.gameObject.SetActive(false);
         equipButton.gameObject.SetActive(false);
     }
-
-    private void OnEnable()
+    public void ChangePage(int i)
     {
+        if (i == 1) {
+            if (availibleButtons.Length * (page + 1) < availibleSkills.moveListRef.Count) {
+                page++;
+                UpdateButtons();
+            }
+        }
+        if (i == -1) {
+            if (page > 0) {
+                page--;
+                UpdateButtons();
+            }
+        }
+    }
+    private void OnEnable() {
         equip.OnFunctionEvent += EquipSkill;
         deEquip.OnFunctionEvent += UnequipSkill;
         equipSelect.OnFunctionEvent += GetAvailibleSkill;
         deEquipSelect.OnFunctionEvent += GetEquippedSkill;
+        changePage.OnFunctionEvent += ChangePage;
     }
-
     private void OnDisable()
     {
         equip.OnFunctionEvent -= EquipSkill;
         deEquip.OnFunctionEvent -= UnequipSkill;
         equipSelect.OnFunctionEvent -= GetAvailibleSkill;
         deEquipSelect.OnFunctionEvent -= GetEquippedSkill;
+        changePage.OnFunctionEvent -= ChangePage;
     }
     public void GetAvailibleSkill(int i)
     {
@@ -77,12 +93,16 @@ public class M_ExtraSkills : S_MenuSystem
         string luckReq = "";
         string intelligenceReq = "";
 
-        if (strReqFufil)
-            strengthReq = "<color=green>" + extraSkill.strReq + "</color>";
+        if (strReqFufil) {
+            if (extraSkill.strReq != 0)
+                strengthReq = "<color=green>" + extraSkill.strReq + "</color>";
+        }
         else
             strengthReq = "<color=red>" + extraSkill.strReq + "</color>";
-        if (vitReqFufil)
-            vitalityReq = "<color=green>" + extraSkill.vitReq + "</color>";
+        if (vitReqFufil) {
+            if (extraSkill.vitReq != 0)
+                vitalityReq = "<color=green>" + extraSkill.vitReq + "</color>";
+        }
         else
             vitalityReq = "<color=red>" + extraSkill.vitReq + "</color>";
         if (dexReqFufil)
@@ -131,6 +151,8 @@ public class M_ExtraSkills : S_MenuSystem
 
     public void EquipSkill(int i)
     {
+        if (extraSkillsMax.integer == currentCharacter.battleCharacter.extraSkills.Count)
+            return;
         unequipButton.gameObject.SetActive(true);
         equipButton.gameObject.SetActive(false);
         currentCharacter.battleCharacter.extraSkills.Add(availibleSkills.GetMove(i));
@@ -147,20 +169,30 @@ public class M_ExtraSkills : S_MenuSystem
     public void UpdateButtons() {
         int indButton = 0;
         for (int i = 0; i < availibleButtons.Length; i++) {
+            int index = i + (availibleButtons.Length * page);
             if (availibleSkills.moveListRef == null)
             {
                 availibleButtons[i].gameObject.SetActive(false);
             }
             else
             {
-                if (availibleSkills.moveListRef.Count > i)
+                if (availibleSkills.moveListRef.Count > index)
                 {
-                    s_move skill = availibleSkills.moveListRef[i];
+                    s_move skill = availibleSkills.moveListRef[index];
                     if (!currentCharacter.battleCharacter.extraSkills.Contains(skill))
                     {
                         availibleButtons[indButton].gameObject.SetActive(true);
-                        availibleButtons[indButton].SetIntButton(i);
+                        availibleButtons[indButton].SetIntButton(index);
                         availibleButtons[indButton].SetButonText(skill.name);
+                        if (extraSkillsMax.integer == currentCharacter.battleCharacter.extraSkills.Count)
+                            availibleButtons[indButton].SetButtonColour(Color.grey);
+                        else if (extraSkillsMax.integer > currentCharacter.battleCharacter.extraSkills.Count)
+                        {
+                            if(skill.MeetsRequirements(currentCharacter.battleCharacter))
+                                availibleButtons[indButton].SetButtonColour(Color.white);
+                            else
+                                availibleButtons[indButton].SetButtonColour(Color.red);
+                        }
                         indButton++;
                     }
                     else

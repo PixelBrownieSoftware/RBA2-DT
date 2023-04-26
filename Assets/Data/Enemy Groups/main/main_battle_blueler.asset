@@ -15,16 +15,9 @@ MonoBehaviour:
   fleeable: 1
   fixedPlayers: 0
   guestInvolved: 1
-  perishIfDone: 0
+  perishIfDone: 1
   sceneToGoTo: 
   members:
-  - memberDat: {fileID: 11400000, guid: 96ed822c9b2791140ac520b584458c08, type: 2}
-    levType: 1
-    level: 6
-    maxLevel: 0
-    extraSkills: []
-    passives: []
-    weaponSelections: []
   - memberDat: {fileID: 11400000, guid: 96ed822c9b2791140ac520b584458c08, type: 2}
     levType: 1
     level: 6

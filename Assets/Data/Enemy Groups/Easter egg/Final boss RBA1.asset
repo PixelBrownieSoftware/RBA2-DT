@@ -64,7 +64,7 @@ MonoBehaviour:
     passives: []
     weaponSelections: []
   member_Guest:
-    memberDat: {fileID: 11400000, guid: 5e9df151aac063e4ca2869ec693f58ca, type: 2}
+    memberDat: {fileID: 11400000, guid: 9dfaece1bb0c63643b339b14253978f4, type: 2}
     levType: 1
     level: 30
     maxLevel: 0

@@ -1253,12 +1253,16 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         if (isPlayerTurn)
         {
             switch (scope) {
+                case s_move.MOVE_TARGET.ENEMY_ALLY:
+                    bcs.AddRange(oppositionCharacters);
+                    bcs.AddRange(playerCharacters);
+                    if (hasGuest)
+                        bcs.Add(guest);
+                    break;
                 case s_move.MOVE_TARGET.ALLY:
                     bcs.AddRange(playerCharacters);
                     if (hasGuest)
-                    {
                         bcs.Add(guest);
-                    }
                     break;
                 case s_move.MOVE_TARGET.ENEMY:
                     bcs.AddRange(oppositionCharacters);
@@ -1281,14 +1285,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     break;
             }
         }
-        if (scope == s_move.MOVE_TARGET.ENEMY_ALLY)
-        {
+        if (scope == s_move.MOVE_TARGET.ENEMY_ALLY) {
             bcs.AddRange(playerCharacters);
             if (hasGuest)
-            {
                 bcs.Add(guest);
-            }
             bcs.AddRange(oppositionCharacters);
+        }
+        if (scope == s_move.MOVE_TARGET.SELF){
+            bcs.Add(currentCharacterObject);
         }
         return bcs;
     }
@@ -1784,7 +1788,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             break;
 
                         case s_move.MOVE_TARGET.SELF:
-
+                            targets.Add(currentCharacterObject);
                             break;
                     }
 
@@ -1808,7 +1812,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                             continue;
 
                         case charAI.CONDITIONS.ALWAYS:
-                            potentialTrg = targets[UnityEngine.Random.Range(0, targets.Count - 1)];
+                            potentialTrg = targets[UnityEngine.Random.Range(0, targets.Count)];
                             alwaysMoves.Add(move);
                             print(move.name);
                             break;
@@ -1899,7 +1903,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     currentMove.SetMove(alwaysMoves[UnityEngine.Random.Range(0, alwaysMoves.Count - 1)]);
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
                     targets = AllTargetsLiving(currentMove.move.moveTarg);
-                    targetCharacter.SetCharacter(targets[UnityEngine.Random.Range(0, targets.Count)].referencePoint);
+                    targetCharacter.SetCharacter(targets[UnityEngine.Random.Range(0, targets.Count-1)].referencePoint);
                 }
                 //battleAction.isCombo = battleAction.combo.comboType != s_move.MOVE_QUANITY_TYPE.MONO_TECH;
                 battleEngine = BATTLE_ENGINE_STATE.PROCESS_ACTION;

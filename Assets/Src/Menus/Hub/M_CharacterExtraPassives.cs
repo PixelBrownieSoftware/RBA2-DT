@@ -23,10 +23,12 @@ public class M_CharacterExtraPassives : S_MenuSystem
     private CH_Int equipSelect;
     [SerializeField]
     private CH_Int deEquipSelect;
-
+    public R_Int extraPassivesMax;
     public TextMeshProUGUI moveDescription;
     public B_Int equipButton;
     public B_Int unequipButton;
+    [SerializeField]
+    private CH_Int changePage;
 
     private int page = 0;
 
@@ -38,7 +40,25 @@ public class M_CharacterExtraPassives : S_MenuSystem
         unequipButton.gameObject.SetActive(false);
         equipButton.gameObject.SetActive(false);
     }
-
+    public void ChangePage(int i)
+    {
+        if (i == 1)
+        {
+            if (availibleButtons.Length * (page + 1) < availibleSkills.passives.Count)
+            {
+                page++;
+                UpdateButtons();
+            }
+        }
+        if (i == -1)
+        {
+            if (page > 0)
+            {
+                page--;
+                UpdateButtons();
+            }
+        }
+    }
     private void OnEnable()
     {
         equip.OnFunctionEvent += EquipSkill;
@@ -46,7 +66,6 @@ public class M_CharacterExtraPassives : S_MenuSystem
         equipSelect.OnFunctionEvent += GetAvailibleSkill;
         deEquipSelect.OnFunctionEvent += GetEquippedSkill;
     }
-
     private void OnDisable()
     {
         equip.OnFunctionEvent -= EquipSkill;
@@ -121,6 +140,8 @@ public class M_CharacterExtraPassives : S_MenuSystem
 
     public void EquipSkill(int i)
     {
+        if (extraPassivesMax.integer == currentCharacter.battleCharacter.extraSkills.Count)
+            return;
         unequipButton.gameObject.SetActive(true);
         equipButton.gameObject.SetActive(false);
         currentCharacter.battleCharacter.extraPassives.Add(availibleSkills.GetPassive(i));
@@ -139,20 +160,30 @@ public class M_CharacterExtraPassives : S_MenuSystem
         int indButton = 0;
         for (int i = 0; i < availibleButtons.Length; i++)
         {
+            int index = i + (availibleButtons.Length * page);
             if (availibleSkills.passives == null)
             {
                 availibleButtons[i].gameObject.SetActive(false);
             }
             else
             {
-                if (availibleSkills.passives.Count > i)
+                if (availibleSkills.passives.Count > index)
                 {
-                    S_Passive skill = availibleSkills.passives[i];
+                    S_Passive skill = availibleSkills.passives[index];
                     if (!currentCharacter.battleCharacter.extraPassives.Contains(skill))
                     {
                         availibleButtons[indButton].gameObject.SetActive(true);
-                        availibleButtons[indButton].SetIntButton(i);
+                        availibleButtons[indButton].SetIntButton(index);
                         availibleButtons[indButton].SetButonText(skill.name);
+                        if (extraPassivesMax.integer == currentCharacter.battleCharacter.extraSkills.Count)
+                            availibleButtons[indButton].SetButtonColour(Color.grey);
+                        else if (extraPassivesMax.integer > currentCharacter.battleCharacter.extraSkills.Count)
+                        {
+                            if (skill.MeetsRequirements(currentCharacter.battleCharacter))
+                                availibleButtons[indButton].SetButtonColour(Color.white);
+                            else
+                                availibleButtons[indButton].SetButtonColour(Color.red);
+                        }
                         indButton++;
                     }
                     else

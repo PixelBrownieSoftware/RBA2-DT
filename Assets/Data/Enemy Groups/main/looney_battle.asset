@@ -39,7 +39,7 @@ MonoBehaviour:
   events: []
   unlockCharacters: []
   branches:
-  - {fileID: 11400000, guid: 50616b7cc3af31643a05b0a563dfb4ba, type: 2}
+  - {fileID: 11400000, guid: bed4826738019064aa4c08769f0b2aca, type: 2}
   - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}
   - {fileID: 11400000, guid: 82ee284ea79be4d48bf57eeb80c8795a, type: 2}
   shopItems:

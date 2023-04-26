@@ -227,7 +227,7 @@ public class M_BattleOptions : S_MenuSystem
 
                         var button = buttons[ind];
                         button.SetBattleButton(item.Key, item.Value);
-                        button.SetButonText(item.Key.name + " x " + item.Value);
+                        button.SetButonText(item.Key.name);
                         button.gameObject.SetActive(true);
                         ind++;
                     }

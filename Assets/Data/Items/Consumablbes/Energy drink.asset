@@ -12,38 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Energy drink
   m_EditorClassIdentifier: 
-  power: 5
-  moveType: 2
-  comboType: 0
-  moveTarg: 0
-  element: 0
-  animations: []
-  statusInflictChance: []
-  onParty: 1
-  fixedValue: 1
-  cost: 0
-  statusType: 2
-  Req1:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req2:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req3:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req4:
-    element: 0
-    type: 0
-    move: {fileID: 0}
-  Req5:
-    element: 0
-    type: 0
-    move: {fileID: 0}
   strReq: 0
   dxReq: 0
   vitReq: 0
   agiReq: 0
+  intReq: 0
+  lucReq: 0
+  power: 5
+  elementalSheildAffinity: 0.5
+  fixedValue: 1
+  includeDefeated: 0
+  consumeTurn: 1
+  moveType: 4
+  moveTarg: 2
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 0e605d2498ec8114aaae852b98ab7fc6, type: 2}
+  elementsSheild: {fileID: 0}
+  preAnimations: []
+  animations: []
+  endAnimations: []
+  statusInflictChance: []
+  cost: 0
+  customFunc: 
+  strBuff: 0
+  vitBuff: 0
+  dexBuff: 0
+  agiBuff: 0
+  intBuff: 0
+  lucBuff: 0
+  guardPoints: 0

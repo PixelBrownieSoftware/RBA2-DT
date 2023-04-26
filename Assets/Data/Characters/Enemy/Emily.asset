@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3d2f313b412145b26ca4956966792, type: 3}
+  m_Name: Emily
+  m_EditorClassIdentifier: 
+  money: 0
+  maxSkillPointsB: 17
+  maxHitPointsB: 28
+  maxHitPointsGMin: 2
+  maxHitPointsGMax: 3
+  maxSkillPointsGMin: 4
+  maxSkillPointsGMax: 5
+  agilityB: 1
+  strengthB: 2
+  vitalityB: 3
+  luckB: 4
+  intelligenceB: 6
+  dexterityB: 2
+  agilityGT: 4
+  strengthGT: 4
+  vitalityGT: 5
+  luckGT: 4
+  intelligenceGT: 4
+  dexterityGT: 3
+  battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
+    type: 3}
+  turnIcons: 1
+  moveLearn:
+  - {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
+  - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
+  - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
+  - {fileID: 11400000, guid: c56eb97e398912640b97b41642878e38, type: 2}
+  passiveLearn: []
+  elementals:
+  - element: {fileID: 11400000, guid: 9960c19a89a5aaf45b4f2e65d6db53ad, type: 2}
+    value: 2
+  characterColour: {r: 0.32392004, g: 1, b: 0.11792451, a: 1}
+  characterColour2: {r: 0.31382358, g: 0.6603774, b: 0.25854397, a: 1}
+  aiPages:
+  - ai:
+    - move: {fileID: 11400000, guid: 01ed13c06b4a7934397195995b3ba16f, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: {fileID: 0}
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: {fileID: 0}
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: {fileID: 0}
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: c56eb97e398912640b97b41642878e38, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 19
+      element: {fileID: 0}
+      healthPercentage: 0.5
+      name: 
+      onParty: 1
+      isImportant: 1
+      number1: 0
+      number2: 0
+  anim: {fileID: 9100000, guid: 6f00b46059a7e8246b767ff8e7ba9b36, type: 2}
+  items: []
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
+  persistence: 0
+  equip_fist: 1
+  equip_gun: 0
+  equip_sword: 0
+  equip_staff: 1

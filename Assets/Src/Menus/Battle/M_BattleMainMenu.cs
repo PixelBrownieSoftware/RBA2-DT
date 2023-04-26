@@ -240,6 +240,10 @@ public class M_BattleMainMenu : S_MenuSystem
         guardButton.gameObject.SetActive(true);
         passButton.gameObject.SetActive(true);
         analyseButton.gameObject.SetActive(true);
+        if(currentCharacter.characterData.characterDataSource.secondMove != null)
+            secondaryAttackButton.gameObject.SetActive(true);
+        if (currentCharacter.characterData.characterDataSource.thirdMove != null)
+            teritaryAttackButton.gameObject.SetActive(true);
         if (currentCharacter.GetAllMoves().Count > 0)
         {
             skillsButton.gameObject.SetActive(true);

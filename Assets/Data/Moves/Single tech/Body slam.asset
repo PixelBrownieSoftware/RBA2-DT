@@ -18,7 +18,7 @@ MonoBehaviour:
   agiReq: 0
   intReq: 0
   lucReq: 0
-  power: 9
+  power: 13
   elementalSheildAffinity: 0.5
   fixedValue: 0
   includeDefeated: 0

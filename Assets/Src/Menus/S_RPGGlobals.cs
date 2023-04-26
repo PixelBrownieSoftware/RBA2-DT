@@ -170,7 +170,8 @@ public class S_RPGGlobals : ScriptableObject
         {
             foreach (var groupCurrent in savedata.currentGroups)
             {
-                if(!groupsDone.groupList.Contains(groupsAvailible.GetGroup(groupCurrent)))
+                s_enemyGroup gr = groupsAvailible.GetGroup(groupCurrent);
+                if (!groupsDone.groupList.Contains(gr) && !gr.perishIfDone)
                     groupsCurrent.AddGroup(groupsAvailible.GetGroup(groupCurrent));
             }
         }
@@ -224,15 +225,6 @@ public class S_RPGGlobals : ScriptableObject
                 if (data.intelligenceGT % level == 0)
                     tempMag++;
                 newCharacter.level++;
-            }
-
-            if (data.secondMove != null)
-            {
-                newCharacter.characterDataSource.secondMove = data.secondMove;
-            }
-            if (data.thirdMove != null)
-            {
-                newCharacter.characterDataSource.thirdMove = data.thirdMove;
             }
             //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();

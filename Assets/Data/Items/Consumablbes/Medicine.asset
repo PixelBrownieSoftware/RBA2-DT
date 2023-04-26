@@ -19,11 +19,15 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 15
-  healHealth: 1
-  healStamina: 0
-  moveType: 2
-  moveTarg: 0
-  element: 0
+  elementalSheildAffinity: 0.5
+  fixedValue: 1
+  includeDefeated: 1
+  consumeTurn: 1
+  moveType: 3
+  moveTarg: 2
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 0e605d2498ec8114aaae852b98ab7fc6, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
   - name: 
@@ -45,13 +49,12 @@ MonoBehaviour:
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
-  onParty: 1
-  fixedValue: 1
   cost: 0
+  customFunc: 
   strBuff: 0
   vitBuff: 0
   dexBuff: 0
   agiBuff: 0
   intBuff: 0
   lucBuff: 0
-  moveRequirements: []
+  guardPoints: 0

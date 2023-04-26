@@ -15,5 +15,5 @@ MonoBehaviour:
   description: Checks if the game has been started so that it dosen't have to load
     the save file every time you go to the overworld menu.
   _isReset: 1
-  boolean: 0
+  boolean: 1
   defaultBoolean: 0
