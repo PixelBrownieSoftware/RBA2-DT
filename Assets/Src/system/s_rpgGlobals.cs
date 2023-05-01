@@ -139,6 +139,7 @@ public class s_RPGSave : dat_save {
             sav_party mem = new sav_party();
             mem.health = a.maxHealth;
             mem.stamina = a.maxStamina;
+            mem.level = a.level;
             mem.name = a.name;
             mem.experience = a.experiencePoints;
 
@@ -356,10 +357,6 @@ public class s_rpgGlobals : s_globals
     public void SwitchToOverworld(bool isFlee)
     {
         SceneManager.UnloadSceneAsync("battle_scene");
-        if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo == "")
-        {
-            s_menuhandler.GetInstance().SwitchMenu("OverworldSelection");
-        }
         /*
         if (!isFlee)
             if (locationObjectName != null)

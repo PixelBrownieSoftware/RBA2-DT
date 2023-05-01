@@ -19,12 +19,15 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 0
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 9
   moveTarg: 2
   moveTargScope: 0
   element: {fileID: 11400000, guid: 557862e97ab269e4f8e9b6a66e719e7c, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
   - name: 
@@ -45,14 +48,11 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
-  statusInflictChance: []
+  statusInflictChance:
+  - status_effect: {fileID: 11400000, guid: 0a9fe53012a09a14b9a5ac786e0d0a77, type: 2}
+    status_inflict_chance: 1
+    duration: 5
+    damage: 0
   cost: 7
   customFunc: 
-  strBuff: 1
-  vitBuff: 0
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

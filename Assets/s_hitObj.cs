@@ -8,6 +8,7 @@ using TMPro;
 public class s_hitObj : o_generic
 {
     public TextMeshProUGUI text;
+    public TextMeshProUGUI additionalText;
     public Animator anim;
     public Image hitObj;
 
@@ -18,6 +19,13 @@ public class s_hitObj : o_generic
     public Sprite blockSprite;
     public Sprite buffUp;
     public Sprite buffDown;
+    public Color currentColour = Color.white;
+
+    private new void Update()
+    {
+        hitObj.color = new Color(currentColour.r, currentColour.g, currentColour.b, hitObj.color.a);
+    }
+
 
     public void MarkDone()
     {
@@ -27,8 +35,8 @@ public class s_hitObj : o_generic
 
     public void PlayAnim(float dmg, string damageType, Color colour)
     {
-        //rendererObj.color = colour;
-        
+        currentColour = colour;
+        hitObj.color = new Color(currentColour.r, currentColour.g, currentColour.b, hitObj.color.a);
         switch (damageType) {
             case "heal_hp":
                 hitObj.sprite = healSprite;
@@ -63,13 +71,17 @@ public class s_hitObj : o_generic
             case "miss_attack":
                 anim.Play("miss_attack");
                 break;
-        }
-        print(hitObj.sprite);
 
+            case "total":
+                additionalText.text = "TOTAL";
+                anim.Play("totalDmg");
+                break;
+        }
         switch (damageType)
         {
             case "heal_sp":
             case "heal_hp":
+            case "total":
                 text.text = "" + dmg;
                 break;
 
@@ -105,37 +117,31 @@ public class s_hitObj : o_generic
 
     public void PlayAnim(int dmg, bool enemy, Color colour, string dmgType)
     {
-        hitObj.color = colour;
-        if (enemy)
-        {
-            switch (dmgType)
-            {
+        currentColour = colour;
+        hitObj.color = new Color(currentColour.r, currentColour.g, currentColour.b, hitObj.color.a);
+        print(hitObj.color);
+        if (enemy) {
+            switch (dmgType) {
                 default:
                     hitObj.sprite = enemy_spr;
                     anim.Play("HitOBJ_enem");
                     break;
                 case "lucky":
+                    additionalText.text = "LUCKY!";
                     anim.Play("HitOBJ_lucky");
                     break;
             }
-        }
-        else
-        {
-            switch (dmgType)
-            {
+        } else {
+            switch (dmgType) {
                 default:
                     hitObj.sprite = player_spr;
-                    if (colour == Color.clear)
-                        anim.Play("HitOBJ_guest");
-                    else
-                        anim.Play("HitOBJ");
+                    anim.Play("HitOBJ");
                     break;
                 case "lucky":
                     anim.Play("HitOBJ_lucky");
                     break;
             }
         }
-
         text.text = "" + dmg;
     }
 }

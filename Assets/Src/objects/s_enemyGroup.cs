@@ -42,13 +42,11 @@ public class s_enemyGroup : ScriptableObject
         public int maxLevel;
         public s_move[] extraSkills;
         public S_Passive[] passives;
-        public o_weapon[] weaponSelections;
     }
     public bool fleeable = true;
     public bool fixedPlayers = false;
     public bool guestInvolved = false;
     public bool perishIfDone = false;
-    public string sceneToGoTo;
     public s_groupMember[] members;
     public s_groupMember[] members_summonable;
     public s_groupMember[] members_pre_summon;

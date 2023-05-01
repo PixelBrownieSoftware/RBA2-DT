@@ -70,6 +70,7 @@ public class S_RPGGlobals : ScriptableObject
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
         {
             newCharacter.name = data.name;
+            newCharacter.level = data.level;
             int tempHP = data.health;
             int tempSP = data.stamina;
             int tempStr = data.strength;
@@ -171,7 +172,7 @@ public class S_RPGGlobals : ScriptableObject
             foreach (var groupCurrent in savedata.currentGroups)
             {
                 s_enemyGroup gr = groupsAvailible.GetGroup(groupCurrent);
-                if (!groupsDone.groupList.Contains(gr) && !gr.perishIfDone)
+                if (!groupsDone.groupList.Contains(gr))
                     groupsCurrent.AddGroup(groupsAvailible.GetGroup(groupCurrent));
             }
         }
@@ -307,6 +308,7 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.maxStamina = data.maxStamina;
 
             newCharacter.currentMoves = data.currentMoves;
+            newCharacter.passives = data.passives;
         }
     }
 

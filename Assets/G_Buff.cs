@@ -6,6 +6,7 @@ using TMPro;
 
 public class G_Buff : MonoBehaviour
 {
+    /*
     public enum GRAPHIC_BUFF_STAT { 
     STR,
     VIT,
@@ -58,4 +59,5 @@ public class G_Buff : MonoBehaviour
             }
         }
     }
+    */
 }

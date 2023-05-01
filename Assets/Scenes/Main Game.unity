@@ -22678,6 +22678,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 368542c61616be547be9a3e4be168200, type: 3}
   - {fileID: 8300000, guid: 018a9d069a92a5345b44df137ccc5459, type: 3}
   - {fileID: 8300000, guid: 2cc6585670aba3640ba721dbf0e091ec, type: 3}
+  - {fileID: 8300000, guid: 35e5f92b213e5564ead9229a768f2654, type: 3}
+  - {fileID: 8300000, guid: de8d7ff2bc1dc454781ddffe3684d9fb, type: 3}
+  - {fileID: 8300000, guid: e49b9609ca18bfb41a8e9532b41f8655, type: 3}
   soundVolume: 1
 --- !u!82 &948263038
 AudioSource:

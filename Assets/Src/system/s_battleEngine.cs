@@ -18,8 +18,8 @@ public class s_skillDraw {
 public enum DAMAGE_FLAGS {
     NONE,
     FRAIL,
-    LUCKY,
     CRITICAL,
+    LUCKY,
     MISS,
     VOID,
     REFLECT,
@@ -120,6 +120,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public R_EnemyGroupList battleGroupDoneRef;
 
     private Dictionary<o_battleCharacter, S_Passive> usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
+    private Dictionary<CH_BattleChar, List<Tuple<DAMAGE_FLAGS, int>>> totalDamageOutput = new Dictionary<CH_BattleChar, List<Tuple<DAMAGE_FLAGS, int>>>();
     private Dictionary<Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>, List<S_Passive>> characterPassiveReference = new Dictionary<Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>, List<S_Passive>>();
 
     public int roundNum;
@@ -244,8 +245,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     #endregion
 
     public o_battleCharacter ReferenceToCharacter(CH_BattleChar refer) {
-        print("Reference: " + refer);
-        print("Reference: " + refer);
         return GetAllCharacters().Find(x => x.referencePoint == refer);
     }
 
@@ -358,23 +357,26 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     SetStatsOpponent(ref c, mem);
                     c.render.color = Color.white;
                 }
-                if (enemyGroup.members_pre_summon.Length > 0)
+                if (enemyGroup.members_pre_summon != null)
                 {
-                    for (int i = 0; i < enemyGroup.members_pre_summon.Length; i++)
+                    if (enemyGroup.members_pre_summon.Length > 0)
                     {
-                        s_enemyGroup.s_groupMember mem = enemyGroup.members_pre_summon[i];
-                        o_battleCharacter c = AddSummonable(mem);
-                        o_battleCharDataN bc = mem.memberDat;
-                        c.persistence = false;
-                        if (bc.secondMove != null)
-                            c.secondMove = bc.secondMove;
-                        if (bc.thirdMove != null)
-                            c.thirdMove = bc.thirdMove;
-                        c.animHandler.runtimeAnimatorController = bc.anim;
-                        c.animHandler.Play("idle");
-                        allCharacterReferences.Add(c.referencePoint);
-                        c.render.color = Color.white;
-                        ReshuffleOpponentPositions();
+                        for (int i = 0; i < enemyGroup.members_pre_summon.Length; i++)
+                        {
+                            s_enemyGroup.s_groupMember mem = enemyGroup.members_pre_summon[i];
+                            o_battleCharacter c = AddSummonable(mem);
+                            o_battleCharDataN bc = mem.memberDat;
+                            c.persistence = false;
+                            if (bc.secondMove != null)
+                                c.secondMove = bc.secondMove;
+                            if (bc.thirdMove != null)
+                                c.thirdMove = bc.thirdMove;
+                            c.animHandler.runtimeAnimatorController = bc.anim;
+                            c.animHandler.Play("idle");
+                            allCharacterReferences.Add(c.referencePoint);
+                            c.render.color = Color.white;
+                            ReshuffleOpponentPositions();
+                        }
                     }
                 }
             }
@@ -910,7 +912,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public IEnumerator DodgeAnimation(o_battleCharacter targ, Vector2 characterPos) {
 
-        SpawnDamageObject(0, characterPos, Color.white, "miss_attack");
         float desirableTime = 0.07f;
         float elapsed = 0f;
         float percentage = 0;
@@ -1081,72 +1082,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         yield return new WaitForSeconds(an.time);
                         break;
 
-                    case s_actionAnim.ACTION_TYPE.ZOOM_CAMERA:
-
-                        /*
-                        switch (an.goal)
-                        {
-                            case s_actionAnim.MOTION.USER_2:
-                                StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom,
-                                    ReferenceToCharacter(currComb.user2).transform.position, 0.9f));
-                                break;
-
-                            case s_actionAnim.MOTION.USER_3:
-                                StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom,
-                                    ReferenceToCharacter(currComb.user3).transform.position, 0.9f));
-                                break;
-
-                            case s_actionAnim.MOTION.USER_4:
-                                StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom,
-                                    ReferenceToCharacter(currComb.user4).transform.position, 0.9f));
-                                break;
-                                
-                            case s_actionAnim.MOTION.USER_5:
-                                StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom,
-                                    ReferenceToCharacter(currComb.user5).transform.position, 0.9f));
-                                break;
-
-                            case s_actionAnim.MOTION.ALL_SELF:
-                                {
-                                    List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ALLY))
-                                    {
-                                        allPositions.Add(v.transform.position);
-                                    }
-                                    StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom, s_camera.GetInstance().GetCentroid(allPositions), 0.9f));
-                                }
-                                break;
-
-                            case s_actionAnim.MOTION.ALL_TARGET:
-                                {
-                                    List<Vector2> allPositions = new List<Vector2>();
-                                    foreach (var v in AllTargets(s_move.MOVE_TARGET.ENEMY))
-                                    {
-                                        allPositions.Add(v.transform.position);
-                                    }
-                                    StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom, s_camera.GetInstance().GetCentroid(allPositions), 0.9f));
-                                }
-                                break;
-
-                            case s_actionAnim.MOTION.TO_TARGET:
-                                if (an.teleport)
-                                    s_camera.GetInstance().TeleportCamera(targ.transform.position);
-                                else
-                                    StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom, targ.transform.position, 0.9f));
-                                
-                                break;
-
-                            case s_actionAnim.MOTION.SELF:
-                                if (an.teleport)
-                                    s_camera.GetInstance().TeleportCamera(user.transform.position);
-                                else
-                                    StartCoroutine(s_camera.GetInstance().ZoomCamera(an.toZoom, user.transform.position, 0.9f));
-                                break;
-                        }
-                        */
-                        yield return new WaitForSeconds(an.time);
-                        break;
-
                     case s_actionAnim.ACTION_TYPE.MOVE:
 
                         print("offk");
@@ -1176,7 +1111,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         break;
                     case s_actionAnim.ACTION_TYPE.CALCULATION:
-                        yield return StartCoroutine(CalculateAttk(targ));
+                        yield return StartCoroutine(DamageAnimation(targ));
                         break;
 
                     case s_actionAnim.ACTION_TYPE.PROJECTILE:
@@ -1240,7 +1175,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         else
         {
-            yield return StartCoroutine(CalculateAttk(targ));
+            yield return StartCoroutine(DamageAnimation(targ));
         }
     }
     public List<o_battleCharacter> AllTargetsLiving(s_move.MOVE_TARGET scope)
@@ -1296,6 +1231,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         return bcs;
     }
+    public bool DisplayTotalDamage() {
+        bool displayDMG = false;
+        foreach (var chara in totalDamageOutput) {
+            List<Tuple<DAMAGE_FLAGS, int>> damageFlags = chara.Value.FindAll(x => x.Item1 < DAMAGE_FLAGS.MISS);
+            if (damageFlags.Count < 2)
+                continue;
+            displayDMG = true;
+            int totDmg = 0;
+            foreach (var dmg in chara.Value) {
+                totDmg += dmg.Item2;
+            }
+            SpawnDamageObject(totDmg, chara.Key.position + new Vector2(40, 0), Color.white, "total");
+        }
+        totalDamageOutput.Clear();
+        return displayDMG;
+    }
     public IEnumerator DisplayMoveName(string moveName)
     {
         displayMoveName.img.gameObject.SetActive(true);
@@ -1322,196 +1273,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         displayMoveName.img.gameObject.SetActive(false);
         displayMoveName.buttonText.gameObject.SetActive(false);
-    }
-    public IEnumerator ExcecuteMove()
-    {
-        s_move mov = currentMove.move;
-        o_battleCharacter user = ReferenceToCharacter(currentCharacter.characterRef);
-        o_battleCharacter targ = ReferenceToCharacter(targetCharacter.characterRef);
-        s_actionAnim[] preAnimations = null;
-        s_actionAnim[] animations = null;
-        s_actionAnim[] endAnimations = null;
-
-        if (mov.element.isMagic)
-        {
-            print("User: " + user);
-            print("Target: " + targ);
-            print("Move: " + mov);
-            user.stamina -= mov.cost;
-        }
-        else
-        {
-            user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
-        }
-        animations = mov.animations;
-
-        #region NOTIFICATION
-        if (playerCharacters.Contains(currentCharacterObject) || currentCharacterObject == guest)
-        {
-            s_soundmanager.sound.PlaySound("notif");
-        }
-        else
-        {
-            s_soundmanager.sound.PlaySound("notif_enemy");
-        }
-
-        /*
-        for (int i = 0; i < 2; i++)
-        {
-            float t = 0;
-            float spd = 13.6f;
-            while (battleAction.user.rend.color != Color.black)
-            {
-                battleAction.user.rend.color = Color.Lerp(Color.white, Color.black, t);
-                t += Time.deltaTime * spd;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            t = 0;
-            while (move.user.rend.color != Color.white)
-            {
-                move.user.rend.color = Color.Lerp(Color.black, Color.white, t);
-                t += Time.deltaTime * spd;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-        }
-        */
-        yield return StartCoroutine(DisplayMoveName(mov.name));
-        #endregion
-
-        if (!mov.consumeTurn)
-        {
-            finalDamageFlag = DAMAGE_FLAGS.PASS;
-        }
-
-        #region PRE ANIM
-        preAnimations = currentMove.move.preAnimations;
-        if (preAnimations != null)
-        {
-            if (preAnimations.Length > 0)
-                yield return StartCoroutine(PlayAttackAnimation(preAnimations, null, currentCharacterObject));
-        }
-
-        currentCharacterObject.SwitchAnimation("idle");
-
-        yield return new WaitForSeconds(0.3f);
-        #endregion
-
-        #region MAIN ANIM
-        if (animations != null)
-        {
-            switch (currentMove.move.moveTargScope)
-            {
-                case s_move.SCOPE_NUMBER.ONE:
-                    targetCharacterObject = targ;
-                    yield return StartCoroutine(PlayAttackAnimation(animations, targ, currentCharacterObject));
-                    break;
-
-                case s_move.SCOPE_NUMBER.ALL:
-                    {
-                        List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
-                        print(bcs.Count);
-                        foreach (var b in bcs)
-                        {
-                            targetCharacterObject = b;
-                            yield return StartCoroutine(PlayAttackAnimation(animations, b, currentCharacterObject));
-                        }
-                    }
-                    break;
-
-                case s_move.SCOPE_NUMBER.RANDOM:
-                    {
-                        List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
-                        int rand = UnityEngine.Random.Range(2, 5);
-                        for (int i = 0; i < rand; i++)
-                        {
-                            bcs = AllTargetsLiving(currentMove.move.moveTarg);
-                            if (bcs.Count == 0)
-                                break;
-                            o_battleCharacter bc = bcs[UnityEngine.Random.Range(0, bcs.Count)];
-                            targetCharacterObject = bc;
-                            yield return StartCoroutine(PlayAttackAnimation(animations, bc, currentCharacterObject));
-                        }
-                    }
-                    break;
-            }
-        }
-        else
-        {
-
-        }
-
-        currentCharacterObject.SwitchAnimation("idle");
-
-        #region PRESS TURN STUFF
-
-        if (currentCharacter != guest)
-        {
-            switch (finalDamageFlag)
-            {
-                case DAMAGE_FLAGS.NONE:
-                    NextTurn();
-                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                    break;
-                case DAMAGE_FLAGS.MISS:
-                case DAMAGE_FLAGS.VOID:
-                    NextTurn();
-                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                    if (netTurn > 0)
-                    {
-                        NextTurn();
-                        StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                    }
-                    break;
-                case DAMAGE_FLAGS.PASS:
-                case DAMAGE_FLAGS.FRAIL:
-                case DAMAGE_FLAGS.LUCKY:
-                case DAMAGE_FLAGS.CRITICAL:
-                    //If there are no full turn icons start taking away instead of turning full icons into half
-                    if (fullTurn > 0)
-                    {
-                        s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
-                        HitWeakness();
-                        StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
-                    }
-                    else
-                    {
-                        HitWeakness();
-                        StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
-                    }
-                    break;
-                case DAMAGE_FLAGS.REFLECT:
-                case DAMAGE_FLAGS.ABSORB:
-                    fullTurn = 0;
-                    halfTurn = 0;
-                    break;
-            }
-        }
-        else
-        {
-            NextTurn();
-        }
-        //if (netTurn == 0)
-         //   break;
-        #endregion
-
-        yield return new WaitForSeconds(0.3f);
-        #endregion
-
-        #region END ANIM
-        endAnimations = currentMove.move.endAnimations;
-        if (endAnimations != null)
-        {
-            if (endAnimations.Length > 0)
-                yield return StartCoroutine(PlayAttackAnimation(endAnimations, null, currentCharacterObject));
-        }
-        currentCharacterObject.SwitchAnimation("idle");
-
-        yield return new WaitForSeconds(0.3f);
-        #endregion
-
-        yield return StartCoroutine(CheckStatusEffectAfterAction());
-        finalDamageFlag = DAMAGE_FLAGS.NONE;
-        battleEngine = BATTLE_ENGINE_STATE.END;
     }
     public IEnumerator CheckStatusEffectAfterAction()
     {
@@ -1543,31 +1304,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public void SpawnDamageObject(float dmg, Vector2 characterPos, Color colour, string damageObjType)
     {
-        /*
-        for (int i = 0; i < damageObjects.Length; i++)
-        {
-            if (!damageObjects[i].isDone)
-                continue;
-            damageObjects[i].transform.position = characterPos;
-            damageObjects[i].
-            break;
-        }
-        */
         s_hitObj ob = s_objpooler.GetInstance().SpawnObject<s_hitObj>("HitObj", characterPos);
         ob.PlayAnim(dmg, damageObjType, colour);
     }
     public void SpawnDamageObject(int dmg, Vector2 characterPos, bool enemy, Color colour, string dmgType)
     {
-        /*
-        for (int i = 0; i < damageObjects.Length; i++)
-        {
-            if (!damageObjects[i].isDone)
-                continue;
-            damageObjects[i].transform.position = characterPos;
-            damageObjects[i].PlayAnim(dmg, enemy, colour);
-            break;
-        }
-        */
         s_hitObj ob = s_objpooler.GetInstance().SpawnObject<s_hitObj>("HitObj", characterPos);
         ob.PlayAnim(dmg, enemy, colour, dmgType);
     }
@@ -1746,10 +1487,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     o_battleCharacter potentialTrg = null;
                     s_move move = ai.move;
-                    if (move.element.isMagic)
-                    {
-                        switch (move.customFunc)
-                        {
+                    if (move.element.isMagic) {
+                        switch (move.customFunc) {
                             case "callAlly":
                             case "callAllies":
                                 if (oppositionCharacters.Count >= 4)
@@ -1758,15 +1497,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                 }
                                 break;
                         }
-                        if (currentCharacterObject.stamina < move.cost)
-                        {
+                        if (currentCharacterObject.stamina < move.cost) {
                             continue;
                         }
-                    }
-                    else
-                    {
-                        if (currentCharacterObject.health <= move.cost)
-                        {
+                    } else {
+                        if (currentCharacterObject.health <= move.cost) {
                             continue;
                         }
                     }
@@ -1776,17 +1511,21 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
                     switch (ai.move.moveTarg) {
                         case s_move.MOVE_TARGET.ALLY:
-                            targets = allies;
+                            if(ai.move.includeDefeated)
+                                targets = allies;
+                            else
+                                targets = allies.FindAll(x => x.inBattle == true && x.health > 0);
                             break;
                         case s_move.MOVE_TARGET.ENEMY:
-                            targets = baddies;
+                            if (ai.move.includeDefeated)
+                                targets = baddies;
+                            else
+                                targets = baddies.FindAll(x => x.inBattle == true && x.health > 0);
                             break;
-
                         case s_move.MOVE_TARGET.ENEMY_ALLY:
                             targets.AddRange(allies);
                             targets.AddRange(baddies);
                             break;
-
                         case s_move.MOVE_TARGET.SELF:
                             targets.Add(currentCharacterObject);
                             break;
@@ -1939,6 +1678,130 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
         }
     }
+    public IEnumerator ExcecuteMove()
+    {
+        s_move mov = currentMove.move;
+        o_battleCharacter user = ReferenceToCharacter(currentCharacter.characterRef);
+        o_battleCharacter targ = ReferenceToCharacter(targetCharacter.characterRef);
+        s_actionAnim[] animations = mov.animations;
+
+
+        if (playerCharacters.Contains(currentCharacterObject) || currentCharacterObject == guest)
+        {
+            s_soundmanager.sound.PlaySound("notif");
+        }
+        else
+        {
+            s_soundmanager.sound.PlaySound("notif_enemy");
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            float t = 0;
+            float spd = 13.6f;
+            while (currentCharacterObject.render.color != Color.black)
+            {
+                currentCharacterObject.render.color = Color.Lerp(Color.white, Color.black, t);
+                t += Time.deltaTime * spd;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            t = 0;
+            while (currentCharacterObject.render.color != Color.white)
+            {
+                currentCharacterObject.render.color = Color.Lerp(Color.black, Color.white, t);
+                t += Time.deltaTime * spd;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        }
+        yield return StartCoroutine(DisplayMoveName(mov.name));
+
+        switch (currentMove.move.moveTargScope)
+        {
+            case s_move.SCOPE_NUMBER.ONE:
+                targetCharacterObject = targ;
+                yield return StartCoroutine(PlayAttackAnimation(animations, targ, currentCharacterObject));
+                break;
+
+            case s_move.SCOPE_NUMBER.ALL:
+                {
+                    List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
+                    print(bcs.Count);
+                    foreach (var b in bcs)
+                    {
+                        targetCharacterObject = b;
+                        yield return StartCoroutine(PlayAttackAnimation(animations, b, currentCharacterObject));
+                    }
+                }
+                break;
+
+            case s_move.SCOPE_NUMBER.RANDOM:
+                {
+                    List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
+                    int rand = UnityEngine.Random.Range(3, 6);
+                    for (int i = 0; i < rand; i++)
+                    {
+                        bcs = AllTargetsLiving(currentMove.move.moveTarg);
+                        if (bcs.Count == 0)
+                            break;
+                        o_battleCharacter bc = bcs[UnityEngine.Random.Range(0, bcs.Count)];
+                        targetCharacterObject = bc;
+                        yield return StartCoroutine(PlayAttackAnimation(animations, bc, currentCharacterObject));
+                    }
+                }
+                break;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        currentCharacterObject.SwitchAnimation("idle");
+        yield return StartCoroutine(CheckStatusEffectAfterAction());
+        FigureFinalFlag();
+        bool dispTotal = DisplayTotalDamage();
+        if (dispTotal) {
+            yield return new WaitForSeconds(1.3f);
+        }
+        //finalDamageFlag = DAMAGE_FLAGS.NONE;
+
+        switch (finalDamageFlag)
+        {
+            case DAMAGE_FLAGS.NONE:
+                NextTurn();
+                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                break;
+            case DAMAGE_FLAGS.MISS:
+            case DAMAGE_FLAGS.VOID:
+                NextTurn();
+                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                if (netTurn > 0)
+                {
+                    NextTurn();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                }
+                break;
+            case DAMAGE_FLAGS.PASS:
+            case DAMAGE_FLAGS.FRAIL:
+            case DAMAGE_FLAGS.LUCKY:
+            case DAMAGE_FLAGS.CRITICAL:
+                //If there are no full turn icons start taking away instead of turning full icons into half
+                if (fullTurn > 0)
+                {
+                    s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
+                    HitWeakness();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
+                }
+                else
+                {
+                    HitWeakness();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                }
+                break;
+            case DAMAGE_FLAGS.REFLECT:
+            case DAMAGE_FLAGS.ABSORB:
+                fullTurn = 0;
+                halfTurn = 0;
+                break;
+        }
+        battleEngine = BATTLE_ENGINE_STATE.END;
+    }
     public List<CH_BattleChar> GetTargets(s_move.MOVE_TARGET scope)
     {
         List<CH_BattleChar> targs = new List<CH_BattleChar>();
@@ -2039,6 +1902,214 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         EndAction();
     }
+    public void AddToTotalDMG(int damage, DAMAGE_FLAGS flag, CH_BattleChar targ) {
+        if (totalDamageOutput == null)
+            totalDamageOutput = new Dictionary<CH_BattleChar, List<Tuple<DAMAGE_FLAGS, int>>>();
+        if (!totalDamageOutput.ContainsKey(targ)) {
+            totalDamageOutput.Add(targ, new List<Tuple<DAMAGE_FLAGS, int>>());
+        }
+        totalDamageOutput[targ].Add(new Tuple<DAMAGE_FLAGS, int>(flag, damage));
+    }
+    public bool PredictStatChance(int userVal, int targVal, float connectMax = 0.95f) {
+        userVal = Mathf.Clamp(userVal, 1, int.MaxValue);
+        targVal = Mathf.Clamp(targVal, 1, int.MaxValue);
+        int totalVal = userVal + targVal;
+        float attackConnectChance = ((float)userVal / (float)totalVal);
+        attackConnectChance = Mathf.Clamp(attackConnectChance, 0, connectMax);
+        float gonnaHit = UnityEngine.Random.Range(0f, 1f);
+        print(connectMax + " maxCon " + attackConnectChance + " chc " + gonnaHit + " gonnaHit");
+        if (gonnaHit > attackConnectChance)
+            return false;
+        return true;
+    }
+    public void FigureFinalFlag() {
+        DAMAGE_FLAGS currFlag = DAMAGE_FLAGS.NONE;
+        foreach (var entry in totalDamageOutput) {
+            foreach (var flg in entry.Value) {
+                currFlag = currFlag < flg.Item1 ? flg.Item1 : currFlag; 
+            }
+        }
+        if (currentCharacter.characterRef == guest.referencePoint)
+            currFlag = DAMAGE_FLAGS.NONE;
+        finalDamageFlag = currFlag;
+    }
+    public ELEMENT_WEAKNESS FigureWeakness(o_battleCharacter targ)
+    {
+        s_move mov = currentMove.move;
+        float elementWeakness = 1;
+        elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
+        if (targ.referencePoint.sheildAffinity != null)
+        {
+            if (targ.referencePoint.sheildAffinity.Item1 == mov.element)
+                elementWeakness = targ.referencePoint.sheildAffinity.Item2;
+        }
+        if (mov.moveType == s_move.MOVE_TYPE.NONE)
+        {
+            return ELEMENT_WEAKNESS.NONE;
+        }
+        else
+        {
+            if (elementWeakness >= 2)
+                return ELEMENT_WEAKNESS.FRAIL;
+            else if (elementWeakness < 2 && elementWeakness > 0)
+                return ELEMENT_WEAKNESS.NONE;
+            else if (elementWeakness == 0)
+                return ELEMENT_WEAKNESS.NULL;
+            else if (elementWeakness < 0 && elementWeakness > -1)
+                return ELEMENT_WEAKNESS.REFLECT;
+            else if (elementWeakness <= -1)
+                return ELEMENT_WEAKNESS.ABSORB;
+        }
+
+        return ELEMENT_WEAKNESS.NONE;
+    }
+    public bool IsCritical(o_battleCharacter targ)
+    {
+        s_move mov = currentMove.move;
+        foreach (var statusEff in targ.statusEffects)
+        {
+            foreach (var element in statusEff.status.criticalOnHit)
+            {
+                if (element == mov.element)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public IEnumerator DamageAnimation(o_battleCharacter targ)
+    {
+        Vector2 characterPos = targ.transform.position;
+        s_move mov = currentMove.move;
+        int dmg = 0;
+        List<float> modifier = new List<float>();
+        switch (currentMove.move.moveType)
+        {
+            case s_move.MOVE_TYPE.HP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_DRAIN:
+            case s_move.MOVE_TYPE.HP_SP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_SP_DRAIN:
+                bool willHit = PredictStatChance(currentCharacterObject.dexterity + 2, targ.agiNet - 1);
+                bool isLucky = PredictStatChance(currentCharacterObject.luckNet, targ.luckNet, 0.30f);
+                bool isCritical = IsCritical(targ);
+                print("Will hit? " + willHit + " Is critical? " + isCritical + " Is lucky? " + isLucky);
+                ELEMENT_WEAKNESS weaknessType = FigureWeakness(targ);
+                if (weaknessType < ELEMENT_WEAKNESS.NULL)
+                {
+                    switch (weaknessType) {
+                        case ELEMENT_WEAKNESS.NONE:
+                            damageFlag = DAMAGE_FLAGS.NONE;
+                            break;
+                        case ELEMENT_WEAKNESS.ABSORB:
+                            damageFlag = DAMAGE_FLAGS.ABSORB;
+                            break;
+                        case ELEMENT_WEAKNESS.FRAIL:
+                            damageFlag = DAMAGE_FLAGS.FRAIL;
+                            break;
+                        case ELEMENT_WEAKNESS.NULL:
+                            damageFlag = DAMAGE_FLAGS.VOID;
+                            break;
+                        case ELEMENT_WEAKNESS.REFLECT:
+                            damageFlag = DAMAGE_FLAGS.REFLECT;
+                            break;
+                    }
+                    if (isCritical)
+                    {
+                        modifier.Add(0.35f);
+                        damageFlag = DAMAGE_FLAGS.CRITICAL;
+                    }
+                    if (isLucky)
+                    {
+                        modifier.Add(0.5f);
+                        damageFlag = DAMAGE_FLAGS.LUCKY;
+                    }
+                }
+                if (willHit)  
+                {
+                    dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
+                }
+                else
+                {
+                    damageFlag = DAMAGE_FLAGS.MISS;
+                }
+                DamageEffect(dmg, targ, characterPos, damageFlag);
+                if (!willHit) {
+                    yield return StartCoroutine(DodgeAnimation(targ, characterPos));
+                }
+                break;
+            case s_move.MOVE_TYPE.HP_RECOVER:
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null);
+                ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
+                targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
+                    0, targetCharacterObject.maxHealth);
+                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                break;
+
+            case s_move.MOVE_TYPE.SP_RECOVER:
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null);
+                targ.stamina += dmg;
+                targ.stamina = Mathf.Clamp(targ.stamina,
+                    0, targ.maxStamina);
+                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
+                break;
+        }
+        List<o_battleCharacter> targs = new List<o_battleCharacter>();
+        switch (mov.customFunc)
+        {
+            case "callAlly":
+                targs.Add(AddSummonableRand());
+                break;
+            case "callAllies":
+                targs.Add(AddSummonableRand());
+                targs.Add(AddSummonableRand());
+                break;
+            default:
+                targs.Add(targ);
+                break;
+        }
+        if (finalDamageFlag != DAMAGE_FLAGS.MISS || finalDamageFlag != DAMAGE_FLAGS.VOID ||
+            finalDamageFlag != DAMAGE_FLAGS.ABSORB || finalDamageFlag != DAMAGE_FLAGS.REFLECT)
+        {
+            foreach (var ch in targs)
+            {
+                if (mov.guardPoints != 0)
+                {
+                    ch.guardPoints += mov.guardPoints;
+                }
+                if (currentMove.move.elementsSheild != null)
+                {
+                    ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, currentMove.move.elementalSheildAffinity);
+                }
+            }
+        }
+
+        //Show Damage output here
+        yield return new WaitForSeconds(0.18f);
+        if (targ.health <= 0)
+        {
+            yield return StartCoroutine(TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT, targ, characterPos));
+        }
+        if (targ.health <= 0)
+        {
+            targ.statusEffects.Clear();
+            if (oppositionCharacters.Contains(targ))
+            {
+                s_soundmanager.GetInstance().PlaySound("enemy_defeat");
+            }
+            else
+            {
+                s_soundmanager.GetInstance().PlaySound("player_defeat");
+            }
+            yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
+            if (oppositionCharacters.Contains(targ) && !targ.persistence)
+            {
+                enemiesReference.Remove(targ.referencePoint);
+                oppositionCharacters.Remove(targ);
+                ReshuffleOpponentPositions();
+            }
+        }
+    }
     public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
     {
         if (target == null)
@@ -2096,6 +2167,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("rpgHit");
+                    SpawnDamageObject(dmg, characterPos, true, new Color(118, 255, 210), "lucky");
+                }
+                else
+                {
+                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
+                    s_soundmanager.GetInstance().PlaySound("pl_dmg");
+                    SpawnDamageObject(dmg, characterPos, true, new Color(118,255,210), "lucky");
+                    //SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour);
+                }
+                break;
+
+            case DAMAGE_FLAGS.CRITICAL:
+                if (oppositionCharacters.Contains(target))
+                {
+                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
+                    s_soundmanager.GetInstance().PlaySound("rpgHit");
                     SpawnDamageObject(dmg, characterPos, true, Color.white, "lucky");
                 }
                 else
@@ -2103,12 +2190,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
                     SpawnDamageObject(dmg, characterPos, true, Color.white, "lucky");
-                    //SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour);
                 }
-                break;
-
-            case DAMAGE_FLAGS.CRITICAL:
-
                 break;
 
             case DAMAGE_FLAGS.FRAIL:
@@ -2129,7 +2211,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 else
                 {
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                    SpawnDamageObject(dmg, characterPos, false, Color.clear, "");
                 }
                 break;
 
@@ -2140,7 +2221,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 SpawnDamageObject(0, characterPos, Color.white, "miss_attack");
                 break;
         }
-
+        AddToTotalDMG(dmg, fl, target.referencePoint);
     }
     public IEnumerator PassiveSkillDo(KeyValuePair<o_battleCharacter, S_Passive> user_skill, Vector2 characterPos)
     {
@@ -2187,73 +2268,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public IEnumerator ApplySmirk(o_battleCharacter target, float chance) {
         yield return new WaitForSeconds(0.1f);
     }
-    /// <summary>
-    /// This returns anyone with an ally trigger
-    /// </summary>
-    /// <param name="dmg"></param>
-    /// <param name="targ">The triggerer</param>
-    /// <param name="passiveTriggers"></param>
-    /// <returns></returns>
-    /*
-    IEnumerator TriggerCharacterPassives(o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers, Vector2 characterPos) {
-        Dictionary<o_battleCharacter, S_Passive> counters = new Dictionary<o_battleCharacter, S_Passive>();
-        List<o_battleCharacter> counterOpts;
-        if (isPlayerTurn)
-        {
-            counterOpts = oppositionCharacters;
-        }
-        else
-        {
-            counterOpts = playerCharacters;
-        }
-        float minimum_res = 6;
-        o_battleCharacter sacrifice = null;
-        foreach (o_battleCharacter bc in counterOpts)
-        {
-            if (bc.health <= 0)
-            {
-                continue;
-            }
-            S_Passive getPassive() {
-                List<S_Passive> passives = new List<S_Passive>();
-                foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers)
-                {
-                    passives.AddRange(bc.GetAllPassives.FindAll(x => x.passiveTrigger == trig));
-                    print(passives[0].name);
-                }
-                foreach (var passiveIndex in passives) {
-
-                    if (usedPassives.ContainsKey(bc) && usedPassives.ContainsValue(passiveIndex))
-                    {
-                        continue;
-                    }
-                    float perc = UnityEngine.Random.Range(0f,1f);
-                    if (perc < passiveIndex.percentage) {
-                        return passiveIndex;
-                    }
-                }
-                return null;
-            }
-
-            S_Passive passiveSelected = getPassive();
-            if (!passiveSelected)
-            {
-                continue;
-            }
-            if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
-            {
-                counters.Add(bc, passiveSelected);
-            }
-        }
-        if (counters.Count > 0) {
-
-            foreach (var item in counters)
-            {
-                yield return StartCoroutine(PassiveSkillDo(item, characterPos));
-            }
-        }
-    }
-    */
     IEnumerator TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER trigger, o_battleCharacter targ, Vector2 characterPos)
     {
         Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter> trigger_char = new Tuple<S_Passive.PASSIVE_TRIGGER, o_battleCharacter>(trigger, targ);
@@ -2277,374 +2291,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         yield return StartCoroutine(PassiveSkillDo(new KeyValuePair<o_battleCharacter, S_Passive>(targ, passiveToDo), characterPos));
     }
-    public IEnumerator CalculateAttk(o_battleCharacter targ)
-    {
-        if (currentMove.move.moveType == s_move.MOVE_TYPE.HP_DAMAGE) {
-            if (targ.health <= 0)
-                yield break;
-        }
-        s_move mov = currentMove.move;
-        int dmg = 0;
-        List<float> modifier = new List<float>();
-        dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
-        Vector2 characterPos = targ.transform.position;
-        switch (currentMove.move.moveType)
-        {
-            #region ATTACK
-            case s_move.MOVE_TYPE.HP_DAMAGE:
-            case s_move.MOVE_TYPE.HP_DRAIN:
-            case s_move.MOVE_TYPE.HP_SP_DAMAGE:
-            case s_move.MOVE_TYPE.HP_SP_DRAIN:
-                #region PRESS TURN STUFF
-                {
-                    float smirkChance = UnityEngine.Random.Range(0, 1);
-                    ELEMENT_WEAKNESS fl = 0;
-                    float elementWeakness = 1;
-                    elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
-                    if (targ.referencePoint.sheildAffinity != null) {
-                        if(targ.referencePoint.sheildAffinity.Item1 == mov.element)
-                            elementWeakness = targ.referencePoint.sheildAffinity.Item2;
-                    }
-                    if (mov.moveType == s_move.MOVE_TYPE.NONE)
-                    {
-                        fl = ELEMENT_WEAKNESS.NONE;
-                    }
-                    else
-                    {
-                        if (elementWeakness >= 2)
-                            fl = ELEMENT_WEAKNESS.FRAIL;
-                        else if (elementWeakness < 2 && elementWeakness > 0)
-                            fl = ELEMENT_WEAKNESS.NONE;
-                        else if (elementWeakness == 0)
-                            fl = ELEMENT_WEAKNESS.NULL;
-                        else if (elementWeakness < 0 && elementWeakness > -1)
-                            fl = ELEMENT_WEAKNESS.REFLECT;
-                        else if (elementWeakness <= -1)
-                            fl = ELEMENT_WEAKNESS.ABSORB;
-                    }
 
-                    switch (fl)
-                    {
-                        case ELEMENT_WEAKNESS.ABSORB:
-                            damageFlag = DAMAGE_FLAGS.ABSORB;
-                            if (finalDamageFlag <= damageFlag)
-                            {
-                                finalDamageFlag = damageFlag;
-                            }
-                            if (smirkChance < 0.65f)
-                            {
-
-                            }
-                            break;
-
-                        case ELEMENT_WEAKNESS.REFLECT:
-                            damageFlag = DAMAGE_FLAGS.REFLECT;
-                            if (finalDamageFlag <= damageFlag)
-                            {
-                                finalDamageFlag = damageFlag;
-                            }
-                            break;
-
-                        case ELEMENT_WEAKNESS.NULL:
-                            damageFlag = DAMAGE_FLAGS.VOID;
-                            if (finalDamageFlag <= damageFlag)
-                            {
-                                finalDamageFlag = damageFlag;
-                            }
-                            break;
-
-                        case ELEMENT_WEAKNESS.NONE:
-                            damageFlag = DAMAGE_FLAGS.NONE;
-                            if (finalDamageFlag == damageFlag)
-                            {
-                                finalDamageFlag = damageFlag;
-                            }
-                            break;
-
-                        case ELEMENT_WEAKNESS.FRAIL:
-                            if (targ.guardPoints == 0)
-                            {
-                                damageFlag = DAMAGE_FLAGS.FRAIL;
-                                if (finalDamageFlag <= damageFlag)
-                                {
-                                    finalDamageFlag = DAMAGE_FLAGS.FRAIL;
-                                }
-                            }
-                            else
-                            {
-                                damageFlag = DAMAGE_FLAGS.NONE;
-                                if (finalDamageFlag <= damageFlag)
-                                {
-                                    finalDamageFlag = DAMAGE_FLAGS.NONE;
-                                }
-                            }
-                            break;
-                    }
-                    #region CALCULATE CRITICALS
-
-                    foreach (var statusEff in targ.statusEffects)
-                    {
-                        foreach (var element in statusEff.status.criticalOnHit)
-                        {
-                            if (element == mov.element)
-                            {
-                                modifier.Add(0.3f);
-                                damageFlag = DAMAGE_FLAGS.CRITICAL;
-                            }
-                        }
-                    }
-                    #endregion
-                    switch (finalDamageFlag)
-                    {
-                        case DAMAGE_FLAGS.NONE:
-                        case DAMAGE_FLAGS.FRAIL:
-                        case DAMAGE_FLAGS.CRITICAL:
-                            #region LUCK CHECK
-                            {
-                                int userLuc = currentCharacterObject.luckNet + 2;
-                                int targLuc = targ.luckNet - 1;
-                                targLuc = Mathf.Clamp(targLuc, 1, int.MaxValue);
-                                int totalLuck = userLuc + targLuc;
-
-                                float luckyChance = ((float)userLuc / (float)totalLuck);
-                                luckyChance = Mathf.Clamp(luckyChance, 0, 0.95f);
-                                float attackConnect = UnityEngine.Random.Range(0f, 1f);
-
-                                if (attackConnect > luckyChance)
-                                {
-                                    if (targ.guardPoints == 0)
-                                    {
-                                        damageFlag = DAMAGE_FLAGS.LUCKY;
-                                        finalDamageFlag = DAMAGE_FLAGS.LUCKY;
-                                    }
-                                    modifier.Add(0.65f);
-                                }
-                            }
-                            #endregion
-                            break;
-                    }
-                }
-                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
-
-                #region PASSIVE BEFORE HIT CHECK
-                {
-                    S_Passive.PASSIVE_TRIGGER[] triggers = {
-                     S_Passive.PASSIVE_TRIGGER.ALLY_BEFORE_HIT,
-                     S_Passive.PASSIVE_TRIGGER.SELF_BEFORE_HIT
-                    };
-                    //yield return StartCoroutine(TriggerSingleTargetPassives( targ,triggers, characterPos));
-                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
-                }
-                #endregion
-
-                #region AGILITY DODGE CHECK
-                {
-                    int userAgil = currentCharacterObject.agiNet + 3;
-                    int targAgil = targ.agiNet - 1;
-                    targAgil = Mathf.Clamp(targAgil, 1, int.MaxValue);
-                    int totalAgil = userAgil + targAgil;
-
-                    float attackConnectChance = ((float)userAgil / (float)totalAgil);
-                    attackConnectChance = Mathf.Clamp(attackConnectChance, 0, 0.95f);
-                    float attackConnect = UnityEngine.Random.Range(0f, 1f);
-
-                    print("user: " + userAgil + " targ: " + targAgil + " dodge: " + attackConnectChance + " total: " + totalAgil);
-                    print("targ: " + targ.agiNet + " targ (rigged): " + targAgil);
-                    if (attackConnect > attackConnectChance)
-                    {
-                        damageFlag = DAMAGE_FLAGS.MISS;
-                        finalDamageFlag = DAMAGE_FLAGS.MISS;
-                        dmg = 0;
-                    }
-                }
-
-                #endregion
-                DamageEffect(dmg, targ, characterPos, damageFlag);
-                if (damageFlag != DAMAGE_FLAGS.MISS)
-                {
-                    enemyWeaknessReveal.AddElementWeakness(targ.referencePoint.characterData.characterDataSource, mov.element);
-                    if (mov.statusInflictChance != null)
-                    {
-                        foreach (s_move.statusInflict statusChance in mov.statusInflictChance)
-                        {
-                            float ch = UnityEngine.Random.Range(0, 1);
-                            if (ch <= statusChance.status_inflict_chance)
-                            {
-                                targetCharacterObject.SetStatus(new s_statusEff(
-                                    statusChance.status_effect,
-                                    statusChance.duration,
-                                    statusChance.damage));
-                                foreach (var statusChange in statusChance.status_effect.statusRemove) {
-                                    targetCharacterObject.RemoveStatus(statusChange);
-                                }
-                            }
-                        }
-                    }
-                    #region ELEMENT STATUS
-                    foreach (var statusEff in mov.element.statusInflict)
-                    {
-                        s_statusEff eff = new s_statusEff();
-                        float ch = UnityEngine.Random.Range(0f, 1f);
-                        S_StatusEffect status = statusEff.statusEffect;
-                        if (ch < statusEff.chance)
-                        {
-                            if (statusEff.add_remove)
-                            {
-                                eff.damage = Mathf.CeilToInt(dmg * (status.regenPercentage * -1));
-                                eff.duration = status.minDuration;
-                                eff.status = status;
-                                targ.SetStatus(eff);
-                            }
-                            else {
-                                targ.RemoveStatus(status);
-                            }
-                        }
-                    }
-                    #endregion
-                    for (int i = 0; i < 2; i++)
-                    {
-                        targ.transform.position = characterPos + new Vector2(15, 0);
-                        yield return new WaitForSeconds(0.02f);
-                        targ.transform.position = characterPos;
-                        yield return new WaitForSeconds(0.02f);
-                        targ.transform.position = characterPos + new Vector2(-15, 0);
-                        yield return new WaitForSeconds(0.02f);
-                        targ.transform.position = characterPos;
-                        yield return new WaitForSeconds(0.02f);
-                    }
-                    #region CHECK FOR COUNTER
-                    {
-                        yield return StartCoroutine(TriggerSingleTargetPassives( S_Passive.PASSIVE_TRIGGER.SELF_HIT ,targ, characterPos));
-                        //targetCharacter.SetCharacter(sacrifice.referencePoint);
-                    }
-                    #endregion
-                }
-                else
-                {
-                    yield return StartCoroutine(DodgeAnimation(targ, characterPos));
-                    yield return new WaitForSeconds(0.02f);
-                }
-
-
-                break;
-                #endregion
-            #endregion
-
-            #region STATUS
-            case s_move.MOVE_TYPE.HP_RECOVER:
-                ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
-                targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
-                    0, targetCharacterObject.maxHealth);
-                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
-                break;
-
-            case s_move.MOVE_TYPE.SP_RECOVER:
-
-                targ.stamina += dmg;
-                targ.stamina = Mathf.Clamp(targ.stamina,
-                    0, targ.maxStamina);
-                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
-                break;
-                #endregion
-        }
-        List<o_battleCharacter> targs = new List<o_battleCharacter>();
-        switch (mov.customFunc)
-        {
-            case "callAlly":
-                targs.Add(AddSummonableRand());
-                break;
-            case "callAllies":
-                targs.Add(AddSummonableRand());
-                targs.Add(AddSummonableRand());
-                break;
-            default:
-                targs.Add(targ);
-                break;
-        }
-        if(finalDamageFlag != DAMAGE_FLAGS.MISS || finalDamageFlag != DAMAGE_FLAGS.VOID ||
-            finalDamageFlag != DAMAGE_FLAGS.ABSORB || finalDamageFlag != DAMAGE_FLAGS.REFLECT){
-            foreach (var ch in targs)
-            {
-                if (mov.intBuff != 0)
-                {
-                    ch.intelligenceBuff += mov.intBuff;
-                    /*
-                    if (targ.intelligenceBuff > 0)
-                    {
-                        SpawnDamageObject(targ.intelligenceBuff, characterPos, Color.blue, "buffVit");
-                        yield return new WaitForSeconds(0.05f);
-                    }
-                    */
-                }
-                if (mov.lucBuff != 0)
-                {
-                    ch.luckBuff += mov.lucBuff;
-                }
-                if (mov.vitBuff != 0)
-                {
-                    ch.vitalityBuff += mov.vitBuff;
-                }
-                if (mov.strBuff != 0)
-                {
-                    ch.strengthBuff += mov.strBuff;
-                }
-                if (mov.dexBuff != 0)
-                {
-                    ch.dexterityBuff += mov.dexBuff;
-                }
-                if (mov.agiBuff != 0)
-                {
-                    ch.agilityBuff += mov.agiBuff;
-                }
-                if (mov.guardPoints != 0)
-                {
-                    ch.guardPoints += mov.guardPoints;
-                }
-                if (currentMove.move.elementsSheild != null)
-                {
-                    ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, currentMove.move.elementalSheildAffinity);
-                }
-            }
-        }
-            
-        //Show Damage output here
-        yield return new WaitForSeconds(0.18f);
-
-        #region CHECK FOR ON DEFEAT
-        if (targ.health <= 0)
-        {
-            /*
-            S_Passive.PASSIVE_TRIGGER[] triggers = {
-                     S_Passive.PASSIVE_TRIGGER.ALLY_DEFEAT,
-                     S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT
-                    };
-            yield return StartCoroutine(TriggerCharacterPassives(targ, triggers, characterPos));
-            */
-            yield return StartCoroutine(TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT, targ, characterPos));
-            //targetCharacter.SetCharacter(sacrifice.referencePoint);
-        }
-        #endregion
-
-        if (targ.health <= 0)
-        {
-            targ.statusEffects.Clear();
-            if (oppositionCharacters.Contains(targ))
-            {
-                s_soundmanager.GetInstance().PlaySound("enemy_defeat");
-            }
-            else
-            {
-                s_soundmanager.GetInstance().PlaySound("player_defeat");
-            }
-            yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
-            if (oppositionCharacters.Contains(targ) && !targ.persistence)
-            {
-                enemiesReference.Remove(targ.referencePoint);
-                oppositionCharacters.Remove(targ);
-                ReshuffleOpponentPositions();
-            }
-        }
-    }
     public IEnumerator ConcludeBattle()
     {
         //Fade
@@ -2760,7 +2407,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         battleGroupRef.AddGroup(battle);
                 }
             }
-            yield return new WaitForSeconds(2.5f);
             foreach (o_battleCharacter c in playerCharacters)
             {
                 c.extraSkills.Clear();

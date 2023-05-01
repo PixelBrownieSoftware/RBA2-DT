@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Burn
   m_EditorClassIdentifier: 
   restriction: 0
-  variableChange: 0
+  variableChange: 1
   maxDuration: 5
   minDuration: 3
   regenPercentage: -0.6
@@ -28,3 +28,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f503bff3124f687409137c8b17d63ac8, type: 2}
   statusImage: {fileID: -792820292854358548, guid: c642104f9a91dd54fb4c6f0ad2dddbdc,
     type: 3}
+  statusReplace: []

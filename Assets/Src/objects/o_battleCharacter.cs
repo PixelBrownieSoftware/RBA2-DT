@@ -382,12 +382,6 @@ public class o_battleCharacter : MonoBehaviour
     public int intelligence;
     public int luck;
 
-    public int strengthBuff;
-    public int vitalityBuff;
-    public int dexterityBuff;
-    public int agilityBuff;
-    public int intelligenceBuff;
-    public int luckBuff;
     private BC_Stats statusStats = new BC_Stats();
     public float experiencePoints;
     public CH_BattleChar referencePoint;
@@ -441,7 +435,7 @@ public class o_battleCharacter : MonoBehaviour
     public int strengthNet {
         get
         {
-            int net = strength + (int)((float)strengthBuff * 2.5f) + statusStats.strength;
+            int net = strength + statusStats.strength;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -450,7 +444,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = vitality + guardPoints + (int)((float)vitalityBuff * 2.5f) + statusStats.vitality;
+            int net = vitality + guardPoints + statusStats.vitality;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -459,7 +453,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = dexterity + (int)((float)dexterityBuff * 2.5f) + statusStats.dexterity;
+            int net = dexterity + statusStats.dexterity;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -468,7 +462,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = agility + (int)((float)agilityBuff * 2.5f) + statusStats.agility;
+            int net = agility  + statusStats.agility;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -477,7 +471,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = intelligence + (int)((float)intelligenceBuff * 2.5f) + statusStats.intelligence;
+            int net = intelligence + statusStats.intelligence;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -486,7 +480,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = luck + (int)((float)luckBuff * 2.5f) + statusStats.luck + statusStats.luck;
+            int net = luck + statusStats.luck;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -583,32 +577,6 @@ public class o_battleCharacter : MonoBehaviour
 
         #endregion
 
-        #region BUFF VISUALS
-        if (agilityBuff != 0)
-            agilityBuffIcon.SetActive(true);
-        else
-            agilityBuffIcon.SetActive(false);
-        if (strengthBuff != 0)
-            strengthBuffIcon.SetActive(true);
-        else
-            strengthBuffIcon.SetActive(false);
-        if (intelligenceBuff != 0)
-            intelligenceBuffIcon.SetActive(true);
-        else
-            intelligenceBuffIcon.SetActive(false);
-        if (vitalityBuff != 0)
-            vitalityBuffIcon.SetActive(true);
-        else
-            vitalityBuffIcon.SetActive(false);
-        if (dexterityBuff != 0)
-            dexterityBuffIcon.SetActive(true);
-        else
-            dexterityBuffIcon.SetActive(false);
-        if (luckBuff != 0)
-            luckBuffIcon.SetActive(true);
-        else
-            luckBuffIcon.SetActive(false);
-        #endregion
     }
     public void SetStatsToPartyData(o_battleCharPartyData dat)
     {

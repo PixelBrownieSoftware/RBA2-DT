@@ -115,7 +115,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 2
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16448250
+    rgba: 4294638330
   m_fontColor: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -567,6 +567,7 @@ MonoBehaviour:
   character: 
   characterCannot: 
   text: {fileID: 4999429939175307291}
+  additionalText: {fileID: 353580310252673259}
   anim: {fileID: 8777529028878976355}
   hitObj: {fileID: 8176530092725237120}
   enemy_spr: {fileID: 8117506818868297461, guid: ee47516c69c530c4b85097a95195ae8d,
@@ -581,6 +582,7 @@ MonoBehaviour:
   buffUp: {fileID: -3190439811001017227, guid: ee47516c69c530c4b85097a95195ae8d, type: 3}
   buffDown: {fileID: 1410876229519445437, guid: ee47516c69c530c4b85097a95195ae8d,
     type: 3}
+  currentColour: {r: 1, g: 1, b: 1, a: 1}
 --- !u!95 &8777529028878976355
 Animator:
   serializedVersion: 4

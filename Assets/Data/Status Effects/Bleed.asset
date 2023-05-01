@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bleed
   m_EditorClassIdentifier: 
   restriction: 0
-  variableChange: 0
+  variableChange: 1
   maxDuration: 6
   minDuration: 4
   regenPercentage: -0.3
@@ -26,5 +26,4 @@ MonoBehaviour:
   removeOnEndRound: 0
   criticalOnHit: []
   statusImage: {fileID: 0}
-  statusRemove:
-  - {fileID: 11400000, guid: b5a5f4f323ac5bc46a98a3e0e75e445a, type: 2}
+  statusReplace: []

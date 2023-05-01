@@ -1,4 +1,944 @@
-﻿//16/04/2023
+﻿//29/04/2023
+/*
+    public void CalculateAttack(o_battleCharacter targ) {
+
+        s_move mov = currentMove.move;
+        int dmg = 0;
+        switch (currentMove.move.moveType)
+        {
+            case s_move.MOVE_TYPE.HP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_DRAIN:
+            case s_move.MOVE_TYPE.HP_SP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_SP_DRAIN:
+                {
+                    float smirkChance = UnityEngine.Random.Range(0, 1);
+                    ELEMENT_WEAKNESS fl = 0;
+                    float elementWeakness = 1;
+                    elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
+                    if (targ.referencePoint.sheildAffinity != null)
+                    {
+                        if (targ.referencePoint.sheildAffinity.Item1 == mov.element)
+                            elementWeakness = targ.referencePoint.sheildAffinity.Item2;
+                    }
+                    if (mov.moveType == s_move.MOVE_TYPE.NONE)
+                    {
+                        fl = ELEMENT_WEAKNESS.NONE;
+                    }
+                    else
+                    {
+                        if (elementWeakness >= 2)
+                            fl = ELEMENT_WEAKNESS.FRAIL;
+                        else if (elementWeakness < 2 && elementWeakness > 0)
+                            fl = ELEMENT_WEAKNESS.NONE;
+                        else if (elementWeakness == 0)
+                            fl = ELEMENT_WEAKNESS.NULL;
+                        else if (elementWeakness < 0 && elementWeakness > -1)
+                            fl = ELEMENT_WEAKNESS.REFLECT;
+                        else if (elementWeakness <= -1)
+                            fl = ELEMENT_WEAKNESS.ABSORB;
+                    }
+
+                    switch (fl)
+                    {
+                        case ELEMENT_WEAKNESS.ABSORB:
+                            damageFlag = DAMAGE_FLAGS.ABSORB;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            if (smirkChance < 0.65f)
+                            {
+
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.REFLECT:
+                            damageFlag = DAMAGE_FLAGS.REFLECT;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.NULL:
+                            damageFlag = DAMAGE_FLAGS.VOID;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.NONE:
+                            damageFlag = DAMAGE_FLAGS.NONE;
+                            if (finalDamageFlag == damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.FRAIL:
+                            if (targ.guardPoints == 0)
+                            {
+                                damageFlag = DAMAGE_FLAGS.FRAIL;
+                                if (finalDamageFlag <= damageFlag)
+                                {
+                                    finalDamageFlag = DAMAGE_FLAGS.FRAIL;
+                                }
+                            }
+                            else
+                            {
+                                damageFlag = DAMAGE_FLAGS.NONE;
+                                if (finalDamageFlag <= damageFlag)
+                                {
+                                    finalDamageFlag = DAMAGE_FLAGS.NONE;
+                                }
+                            }
+                            break;
+                    }
+
+                    foreach (var statusEff in targ.statusEffects)
+                    {
+                        foreach (var element in statusEff.status.criticalOnHit)
+                        {
+                            if (element == mov.element)
+                            {
+                                modifier.Add(0.3f);
+                                damageFlag = DAMAGE_FLAGS.CRITICAL;
+                            }
+                        }
+                    }
+                    switch (finalDamageFlag)
+                    {
+                        case DAMAGE_FLAGS.NONE:
+                        case DAMAGE_FLAGS.FRAIL:
+                        case DAMAGE_FLAGS.CRITICAL:
+                            #region LUCK CHECK
+                            {
+                                int userLuc = currentCharacterObject.luckNet + 2;
+                                int targLuc = targ.luckNet - 1;
+                                targLuc = Mathf.Clamp(targLuc, 1, int.MaxValue);
+                                int totalLuck = userLuc + targLuc;
+
+                                float luckyChance = ((float)userLuc / (float)totalLuck);
+                                luckyChance = Mathf.Clamp(luckyChance, 0, 0.95f);
+                                float attackConnect = UnityEngine.Random.Range(0f, 1f);
+
+                                if (attackConnect > luckyChance)
+                                {
+                                    if (targ.guardPoints == 0)
+                                    {
+                                        damageFlag = DAMAGE_FLAGS.LUCKY;
+                                        finalDamageFlag = DAMAGE_FLAGS.LUCKY;
+                                    }
+                                    modifier.Add(0.65f);
+                                }
+                            }
+                            break;
+                    }
+                }
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
+
+                {
+                    S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_BEFORE_HIT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_BEFORE_HIT
+                    };
+                    //yield return StartCoroutine(TriggerSingleTargetPassives( targ,triggers, characterPos));
+                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
+                }
+                {
+                    int userAgil = currentCharacterObject.agiNet + 3;
+                    int targAgil = targ.agiNet - 1;
+                    targAgil = Mathf.Clamp(targAgil, 1, int.MaxValue);
+                    int totalAgil = userAgil + targAgil;
+
+                    float attackConnectChance = ((float)userAgil / (float)totalAgil);
+                    attackConnectChance = Mathf.Clamp(attackConnectChance, 0, 0.95f);
+                    float attackConnect = UnityEngine.Random.Range(0f, 1f);
+
+                    print("user: " + userAgil + " targ: " + targAgil + " dodge: " + attackConnectChance + " total: " + totalAgil);
+                    print("targ: " + targ.agiNet + " targ (rigged): " + targAgil);
+                    if (attackConnect > attackConnectChance)
+                    {
+                        damageFlag = DAMAGE_FLAGS.MISS;
+                        finalDamageFlag = DAMAGE_FLAGS.MISS;
+                        dmg = 0;
+                    }
+                }
+                DamageEffect(dmg, targ, characterPos, damageFlag);
+
+                break;
+            case s_move.MOVE_TYPE.HP_RECOVER:
+                ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
+                targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
+                    0, targetCharacterObject.maxHealth);
+                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                break;
+
+            case s_move.MOVE_TYPE.SP_RECOVER:
+
+                targ.stamina += dmg;
+                targ.stamina = Mathf.Clamp(targ.stamina,
+                    0, targ.maxStamina);
+                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
+                break;
+        }
+        if (currentMove.move.moveType == s_move.MOVE_TYPE.HP_DAMAGE)
+        {
+            if (targ.health <= 0)
+                yield break;
+        }
+        List<float> modifier = new List<float>();
+        dmg = CalculateDamage(currentCharacterObject, targ, currentMove.move, null);
+        Vector2 characterPos = targ.transform.position;
+        switch (currentMove.move.moveType)
+        {
+            #region ATTACK
+            case s_move.MOVE_TYPE.HP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_DRAIN:
+            case s_move.MOVE_TYPE.HP_SP_DAMAGE:
+            case s_move.MOVE_TYPE.HP_SP_DRAIN:
+                #region PRESS TURN STUFF
+                {
+                    float smirkChance = UnityEngine.Random.Range(0, 1);
+                    ELEMENT_WEAKNESS fl = 0;
+                    float elementWeakness = 1;
+                    elementWeakness = targ.referencePoint.characterData.GetElementWeakness(mov.element);
+                    if (targ.referencePoint.sheildAffinity != null)
+                    {
+                        if (targ.referencePoint.sheildAffinity.Item1 == mov.element)
+                            elementWeakness = targ.referencePoint.sheildAffinity.Item2;
+                    }
+                    if (mov.moveType == s_move.MOVE_TYPE.NONE)
+                    {
+                        fl = ELEMENT_WEAKNESS.NONE;
+                    }
+                    else
+                    {
+                        if (elementWeakness >= 2)
+                            fl = ELEMENT_WEAKNESS.FRAIL;
+                        else if (elementWeakness < 2 && elementWeakness > 0)
+                            fl = ELEMENT_WEAKNESS.NONE;
+                        else if (elementWeakness == 0)
+                            fl = ELEMENT_WEAKNESS.NULL;
+                        else if (elementWeakness < 0 && elementWeakness > -1)
+                            fl = ELEMENT_WEAKNESS.REFLECT;
+                        else if (elementWeakness <= -1)
+                            fl = ELEMENT_WEAKNESS.ABSORB;
+                    }
+
+                    switch (fl)
+                    {
+                        case ELEMENT_WEAKNESS.ABSORB:
+                            damageFlag = DAMAGE_FLAGS.ABSORB;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            if (smirkChance < 0.65f)
+                            {
+
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.REFLECT:
+                            damageFlag = DAMAGE_FLAGS.REFLECT;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.NULL:
+                            damageFlag = DAMAGE_FLAGS.VOID;
+                            if (finalDamageFlag <= damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.NONE:
+                            damageFlag = DAMAGE_FLAGS.NONE;
+                            if (finalDamageFlag == damageFlag)
+                            {
+                                finalDamageFlag = damageFlag;
+                            }
+                            break;
+
+                        case ELEMENT_WEAKNESS.FRAIL:
+                            if (targ.guardPoints == 0)
+                            {
+                                damageFlag = DAMAGE_FLAGS.FRAIL;
+                                if (finalDamageFlag <= damageFlag)
+                                {
+                                    finalDamageFlag = DAMAGE_FLAGS.FRAIL;
+                                }
+                            }
+                            else
+                            {
+                                damageFlag = DAMAGE_FLAGS.NONE;
+                                if (finalDamageFlag <= damageFlag)
+                                {
+                                    finalDamageFlag = DAMAGE_FLAGS.NONE;
+                                }
+                            }
+                            break;
+                    }
+                    #region CALCULATE CRITICALS
+
+                    foreach (var statusEff in targ.statusEffects)
+                    {
+                        foreach (var element in statusEff.status.criticalOnHit)
+                        {
+                            if (element == mov.element)
+                            {
+                                modifier.Add(0.3f);
+                                damageFlag = DAMAGE_FLAGS.CRITICAL;
+                            }
+                        }
+                    }
+                    #endregion
+                    switch (finalDamageFlag)
+                    {
+                        case DAMAGE_FLAGS.NONE:
+                        case DAMAGE_FLAGS.FRAIL:
+                        case DAMAGE_FLAGS.CRITICAL:
+                            #region LUCK CHECK
+                            {
+                                int userLuc = currentCharacterObject.luckNet + 2;
+                                int targLuc = targ.luckNet - 1;
+                                targLuc = Mathf.Clamp(targLuc, 1, int.MaxValue);
+                                int totalLuck = userLuc + targLuc;
+
+                                float luckyChance = ((float)userLuc / (float)totalLuck);
+                                luckyChance = Mathf.Clamp(luckyChance, 0, 0.95f);
+                                float attackConnect = UnityEngine.Random.Range(0f, 1f);
+
+                                if (attackConnect > luckyChance)
+                                {
+                                    if (targ.guardPoints == 0)
+                                    {
+                                        damageFlag = DAMAGE_FLAGS.LUCKY;
+                                        finalDamageFlag = DAMAGE_FLAGS.LUCKY;
+                                    }
+                                    modifier.Add(0.65f);
+                                }
+                            }
+                            #endregion
+                            break;
+                    }
+                }
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
+
+                #region PASSIVE BEFORE HIT CHECK
+                {
+                    S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_BEFORE_HIT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_BEFORE_HIT
+                    };
+                    //yield return StartCoroutine(TriggerSingleTargetPassives( targ,triggers, characterPos));
+                    //targetCharacter.SetCharacter(sacrifice.referencePoint);
+                }
+                #endregion
+
+                #region AGILITY DODGE CHECK
+                {
+                    int userAgil = currentCharacterObject.agiNet + 3;
+                    int targAgil = targ.agiNet - 1;
+                    targAgil = Mathf.Clamp(targAgil, 1, int.MaxValue);
+                    int totalAgil = userAgil + targAgil;
+
+                    float attackConnectChance = ((float)userAgil / (float)totalAgil);
+                    attackConnectChance = Mathf.Clamp(attackConnectChance, 0, 0.95f);
+                    float attackConnect = UnityEngine.Random.Range(0f, 1f);
+
+                    print("user: " + userAgil + " targ: " + targAgil + " dodge: " + attackConnectChance + " total: " + totalAgil);
+                    print("targ: " + targ.agiNet + " targ (rigged): " + targAgil);
+                    if (attackConnect > attackConnectChance)
+                    {
+                        damageFlag = DAMAGE_FLAGS.MISS;
+                        finalDamageFlag = DAMAGE_FLAGS.MISS;
+                        dmg = 0;
+                    }
+                }
+
+                #endregion
+                DamageEffect(dmg, targ, characterPos, damageFlag);
+                if (damageFlag != DAMAGE_FLAGS.MISS)
+                {
+                    enemyWeaknessReveal.AddElementWeakness(targ.referencePoint.characterData.characterDataSource, mov.element);
+                    if (mov.statusInflictChance != null)
+                    {
+                        foreach (s_move.statusInflict statusChance in mov.statusInflictChance)
+                        {
+                            float ch = UnityEngine.Random.Range(0, 1);
+                            if (ch <= statusChance.status_inflict_chance)
+                            {
+                                targetCharacterObject.SetStatus(new s_statusEff(
+                                    statusChance.status_effect,
+                                    statusChance.duration,
+                                    statusChance.damage));
+                                foreach (var statusChange in statusChance.status_effect.statusReplace)
+                                {
+                                    if (targetCharacterObject.HasStatus(statusChange.replace))
+                                    {
+                                        targetCharacterObject.RemoveStatus(statusChange.replace);
+                                        targetCharacterObject.SetStatus(new s_statusEff(
+                                            statusChange.toReplace,
+                                            UnityEngine.Random.Range(
+                                                statusChange.toReplace.minDuration,
+                                                statusChange.toReplace.maxDuration),
+                                            0));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #region ELEMENT STATUS
+                    foreach (var statusEff in mov.element.statusInflict)
+                    {
+                        s_statusEff eff = new s_statusEff();
+                        float ch = UnityEngine.Random.Range(0f, 1f);
+                        S_StatusEffect status = statusEff.statusEffect;
+                        if (ch < statusEff.chance)
+                        {
+                            if (statusEff.add_remove)
+                            {
+                                eff.damage = Mathf.CeilToInt(dmg * (status.regenPercentage * -1));
+                                eff.duration = status.minDuration;
+                                eff.status = status;
+                                targ.SetStatus(eff);
+                            }
+                            else
+                            {
+                                targ.RemoveStatus(status);
+                            }
+                        }
+                    }
+                    #endregion
+                    for (int i = 0; i < 2; i++)
+                    {
+                        targ.transform.position = characterPos + new Vector2(15, 0);
+                        yield return new WaitForSeconds(0.02f);
+                        targ.transform.position = characterPos;
+                        yield return new WaitForSeconds(0.02f);
+                        targ.transform.position = characterPos + new Vector2(-15, 0);
+                        yield return new WaitForSeconds(0.02f);
+                        targ.transform.position = characterPos;
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    #region CHECK FOR COUNTER
+                    {
+                        yield return StartCoroutine(TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER.SELF_HIT, targ, characterPos));
+                        //targetCharacter.SetCharacter(sacrifice.referencePoint);
+                    }
+                    #endregion
+                }
+                else
+                {
+                    yield return StartCoroutine(DodgeAnimation(targ, characterPos));
+                    yield return new WaitForSeconds(0.02f);
+                }
+
+
+                break;
+            #endregion
+            #endregion
+
+            #region STATUS
+            case s_move.MOVE_TYPE.HP_RECOVER:
+                ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
+                targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
+                    0, targetCharacterObject.maxHealth);
+                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                break;
+
+            case s_move.MOVE_TYPE.SP_RECOVER:
+
+                targ.stamina += dmg;
+                targ.stamina = Mathf.Clamp(targ.stamina,
+                    0, targ.maxStamina);
+                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
+                break;
+                #endregion
+        }
+        List<o_battleCharacter> targs = new List<o_battleCharacter>();
+        switch (mov.customFunc)
+        {
+            case "callAlly":
+                targs.Add(AddSummonableRand());
+                break;
+            case "callAllies":
+                targs.Add(AddSummonableRand());
+                targs.Add(AddSummonableRand());
+                break;
+            default:
+                targs.Add(targ);
+                break;
+        }
+        if (finalDamageFlag != DAMAGE_FLAGS.MISS || finalDamageFlag != DAMAGE_FLAGS.VOID ||
+            finalDamageFlag != DAMAGE_FLAGS.ABSORB || finalDamageFlag != DAMAGE_FLAGS.REFLECT)
+        {
+            foreach (var ch in targs)
+            {
+                if (mov.guardPoints != 0)
+                {
+                    ch.guardPoints += mov.guardPoints;
+                }
+                if (currentMove.move.elementsSheild != null)
+                {
+                    ch.referencePoint.sheildAffinity = new Tuple<S_Element, float>(currentMove.move.elementsSheild, currentMove.move.elementalSheildAffinity);
+                }
+            }
+        }
+
+        //Show Damage output here
+        yield return new WaitForSeconds(0.18f);
+
+        #region CHECK FOR ON DEFEAT
+        if (targ.health <= 0)
+        {
+            S_Passive.PASSIVE_TRIGGER[] triggers = {
+                     S_Passive.PASSIVE_TRIGGER.ALLY_DEFEAT,
+                     S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT
+                    };
+            yield return StartCoroutine(TriggerCharacterPassives(targ, triggers, characterPos));
+yield return StartCoroutine(TriggerSingleTargetPassives(S_Passive.PASSIVE_TRIGGER.SELF_DEFEAT, targ, characterPos));
+            //targetCharacter.SetCharacter(sacrifice.referencePoint);
+        }
+        #endregion
+
+        if (targ.health <= 0)
+{
+    targ.statusEffects.Clear();
+    if (oppositionCharacters.Contains(targ))
+    {
+        s_soundmanager.GetInstance().PlaySound("enemy_defeat");
+    }
+    else
+    {
+        s_soundmanager.GetInstance().PlaySound("player_defeat");
+    }
+    yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
+    if (oppositionCharacters.Contains(targ) && !targ.persistence)
+    {
+        enemiesReference.Remove(targ.referencePoint);
+        oppositionCharacters.Remove(targ);
+        ReshuffleOpponentPositions();
+    }
+}
+    }
+ */
+/*
+public IEnumerator ExcecuteMove()
+{
+    s_move mov = currentMove.move;
+    o_battleCharacter user = ReferenceToCharacter(currentCharacter.characterRef);
+    o_battleCharacter targ = ReferenceToCharacter(targetCharacter.characterRef);
+    s_actionAnim[] preAnimations = null;
+    s_actionAnim[] animations = null;
+    s_actionAnim[] endAnimations = null;
+
+    if (mov.element.isMagic)
+    {
+        print("User: " + user);
+        print("Target: " + targ);
+        print("Move: " + mov);
+        user.stamina -= mov.cost;
+    }
+    else
+    {
+        user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
+    }
+    animations = mov.animations;
+
+    #region NOTIFICATION
+    if (playerCharacters.Contains(currentCharacterObject) || currentCharacterObject == guest)
+    {
+        s_soundmanager.sound.PlaySound("notif");
+    }
+    else
+    {
+        s_soundmanager.sound.PlaySound("notif_enemy");
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        float t = 0;
+        float spd = 13.6f;
+        while (battleAction.user.rend.color != Color.black)
+        {
+            battleAction.user.rend.color = Color.Lerp(Color.white, Color.black, t);
+            t += Time.deltaTime * spd;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        t = 0;
+        while (move.user.rend.color != Color.white)
+        {
+            move.user.rend.color = Color.Lerp(Color.black, Color.white, t);
+            t += Time.deltaTime * spd;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+    yield return StartCoroutine(DisplayMoveName(mov.name));
+    #endregion
+
+    if (!mov.consumeTurn)
+    {
+        finalDamageFlag = DAMAGE_FLAGS.PASS;
+    }
+
+    #region PRE ANIM
+    preAnimations = currentMove.move.preAnimations;
+    if (preAnimations != null)
+    {
+        if (preAnimations.Length > 0)
+            yield return StartCoroutine(PlayAttackAnimation(preAnimations, null, currentCharacterObject));
+    }
+
+    currentCharacterObject.SwitchAnimation("idle");
+
+    yield return new WaitForSeconds(0.3f);
+    #endregion
+
+    #region MAIN ANIM
+    if (animations != null)
+    {
+        switch (currentMove.move.moveTargScope)
+        {
+            case s_move.SCOPE_NUMBER.ONE:
+                targetCharacterObject = targ;
+                yield return StartCoroutine(PlayAttackAnimation(animations, targ, currentCharacterObject));
+                break;
+
+            case s_move.SCOPE_NUMBER.ALL:
+                {
+                    List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
+                    print(bcs.Count);
+                    foreach (var b in bcs)
+                    {
+                        targetCharacterObject = b;
+                        yield return StartCoroutine(PlayAttackAnimation(animations, b, currentCharacterObject));
+                    }
+                }
+                break;
+
+            case s_move.SCOPE_NUMBER.RANDOM:
+                {
+                    List<o_battleCharacter> bcs = AllTargets(currentMove.move.moveTarg);
+                    int rand = UnityEngine.Random.Range(2, 5);
+                    for (int i = 0; i < rand; i++)
+                    {
+                        bcs = AllTargetsLiving(currentMove.move.moveTarg);
+                        if (bcs.Count == 0)
+                            break;
+                        o_battleCharacter bc = bcs[UnityEngine.Random.Range(0, bcs.Count)];
+                        targetCharacterObject = bc;
+                        yield return StartCoroutine(PlayAttackAnimation(animations, bc, currentCharacterObject));
+                    }
+                }
+                break;
+        }
+    }
+    else
+    {
+
+    }
+
+    currentCharacterObject.SwitchAnimation("idle");
+
+    #region PRESS TURN STUFF
+
+    if (currentCharacter != guest)
+    {
+        switch (finalDamageFlag)
+        {
+            case DAMAGE_FLAGS.NONE:
+                NextTurn();
+                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                break;
+            case DAMAGE_FLAGS.MISS:
+            case DAMAGE_FLAGS.VOID:
+                NextTurn();
+                StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                if (netTurn > 0)
+                {
+                    NextTurn();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                }
+                break;
+            case DAMAGE_FLAGS.PASS:
+            case DAMAGE_FLAGS.FRAIL:
+            case DAMAGE_FLAGS.LUCKY:
+            case DAMAGE_FLAGS.CRITICAL:
+                //If there are no full turn icons start taking away instead of turning full icons into half
+                if (fullTurn > 0)
+                {
+                    s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
+                    HitWeakness();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
+                }
+                else
+                {
+                    HitWeakness();
+                    StartCoroutine(TurnIconFX(TURN_ICON_FX.FADE, netTurn));
+                }
+                break;
+            case DAMAGE_FLAGS.REFLECT:
+            case DAMAGE_FLAGS.ABSORB:
+                fullTurn = 0;
+                halfTurn = 0;
+                break;
+        }
+    }
+    else
+    {
+        NextTurn();
+    }
+    //if (netTurn == 0)
+    //   break;
+    #endregion
+
+    yield return new WaitForSeconds(0.3f);
+    #endregion
+
+    #region END ANIM
+    endAnimations = currentMove.move.endAnimations;
+    if (endAnimations != null)
+    {
+        if (endAnimations.Length > 0)
+            yield return StartCoroutine(PlayAttackAnimation(endAnimations, null, currentCharacterObject));
+    }
+    currentCharacterObject.SwitchAnimation("idle");
+
+    yield return new WaitForSeconds(0.3f);
+    #endregion
+
+    yield return StartCoroutine(CheckStatusEffectAfterAction());
+    finalDamageFlag = DAMAGE_FLAGS.NONE;
+    battleEngine = BATTLE_ENGINE_STATE.END;
+}
+*/
+/// <summary>
+/// This returns anyone with an ally trigger
+/// </summary>
+/// <param name="dmg"></param>
+/// <param name="targ">The triggerer</param>
+/// <param name="passiveTriggers"></param>
+/// <returns></returns>
+/*
+IEnumerator TriggerCharacterPassives(o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers, Vector2 characterPos) {
+    Dictionary<o_battleCharacter, S_Passive> counters = new Dictionary<o_battleCharacter, S_Passive>();
+    List<o_battleCharacter> counterOpts;
+    if (isPlayerTurn)
+    {
+        counterOpts = oppositionCharacters;
+    }
+    else
+    {
+        counterOpts = playerCharacters;
+    }
+    float minimum_res = 6;
+    o_battleCharacter sacrifice = null;
+    foreach (o_battleCharacter bc in counterOpts)
+    {
+        if (bc.health <= 0)
+        {
+            continue;
+        }
+        S_Passive getPassive() {
+            List<S_Passive> passives = new List<S_Passive>();
+            foreach (S_Passive.PASSIVE_TRIGGER trig in passiveTriggers)
+            {
+                passives.AddRange(bc.GetAllPassives.FindAll(x => x.passiveTrigger == trig));
+                print(passives[0].name);
+            }
+            foreach (var passiveIndex in passives) {
+
+                if (usedPassives.ContainsKey(bc) && usedPassives.ContainsValue(passiveIndex))
+                {
+                    continue;
+                }
+                float perc = UnityEngine.Random.Range(0f,1f);
+                if (perc < passiveIndex.percentage) {
+                    return passiveIndex;
+                }
+            }
+            return null;
+        }
+
+        S_Passive passiveSelected = getPassive();
+        if (!passiveSelected)
+        {
+            continue;
+        }
+        if (currentMove.move.moveTargScope == s_move.SCOPE_NUMBER.ONE)
+        {
+            counters.Add(bc, passiveSelected);
+        }
+    }
+    if (counters.Count > 0) {
+
+        foreach (var item in counters)
+        {
+            yield return StartCoroutine(PassiveSkillDo(item, characterPos));
+        }
+    }
+}
+*/
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+[CustomEditor(typeof(o_locationOverworld))]
+[CanEditMultipleObjects]
+public class ed_tp : Editor
+{
+    public o_locationOverworld[] Locations;
+    private void OnSceneGUI()
+    {
+        if (Locations == null)
+            Locations = FindObjectsOfType<o_locationOverworld>();
+        else if (Locations.Length > 0)
+        {
+
+            for (int i = 0; i < Locations.Length; i++)
+            {
+                if (Locations[i].south != null) {
+                    Handles.DrawLine(Locations[i].transform.position, Locations[i].south.transform.position);
+                }
+                if (Locations[i].north != null)
+                {
+                    Handles.DrawLine(Locations[i].transform.position, Locations[i].north.transform.position);
+                }
+                if (Locations[i].west != null)
+                {
+                    Handles.DrawLine(Locations[i].transform.position, Locations[i].west.transform.position);
+                }
+                if (Locations[i].east != null)
+                {
+                    Handles.DrawLine(Locations[i].transform.position, Locations[i].east.transform.position);
+                }
+            }
+        }
+    }
+
+
+    public o_locationOverworld[] otherLocations;
+    public o_locationOverworld targ;
+    public enum DIR {
+        NORTH,
+        SOUTH,
+        WEST,
+        EAST
+    }
+    public DIR direction;
+
+    public bool IsDir(o_locationOverworld loc) {
+        if (targ.north != loc && 
+            targ.south != loc && 
+            targ.east != loc && 
+            targ.west != loc)
+            return false;
+        return true;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        if (targ == null)
+            targ = (o_locationOverworld)target;
+        else
+        {
+            if (otherLocations == null)
+                otherLocations = FindObjectsOfType<o_locationOverworld>();
+            else
+            {
+                EditorGUILayout.LabelField("Current connections");
+
+                if (targ.north != null)
+                {
+                    if (GUILayout.Button(targ.north.mapName))
+                    {
+                        targ.north.south = null;
+                        targ.north = null;
+                    }
+                }
+                if (targ.west != null)
+                {
+                    if (GUILayout.Button(targ.west.mapName))
+                    {
+                        targ.west.east = null;
+                        targ.west = null;
+                    }
+                }
+                if (targ.south != null)
+                {
+                    if (GUILayout.Button(targ.south.mapName))
+                    {
+                        targ.south.north = null;
+                        targ.south = null;
+                    }
+                }
+                if (targ.east != null)
+                {
+                    if (GUILayout.Button(targ.east.mapName))
+                    {
+                        targ.east.west = null;
+                        targ.east = null;
+                    }
+                }
+
+                EditorGUILayout.LabelField("Unconnected Nodes");
+                direction = (DIR)EditorGUILayout.EnumPopup("", direction);
+                for (int i = 0; i < otherLocations.Length; i++)
+                {
+                    if (otherLocations[i] == targ && IsDir(otherLocations[i]))
+                        continue; 
+                    if (GUILayout.Button(otherLocations[i].mapName))
+                    {
+                        switch (direction)
+                        {
+                            case DIR.NORTH:
+                                if (targ.north == null)
+                                {
+                                    targ.north = otherLocations[i];
+                                    targ.north.south = targ;
+                                }
+                                break;
+                            case DIR.WEST:
+                                if (targ.west == null)
+                                {
+                                    targ.west = otherLocations[i];
+                                    targ.west.east = targ;
+                                }
+                                break;
+                            case DIR.SOUTH:
+                                if (targ.south == null)
+                                {
+                                    targ.south = otherLocations[i];
+                                    targ.south.north = targ;
+                                }
+                                break;
+                            case DIR.EAST:
+                                if (targ.east == null)
+                                {
+                                    targ.east = otherLocations[i];
+                                    targ.east.west = targ;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        Repaint();
+        base.OnInspectorGUI();
+    }
+}
+*/
+//16/04/2023
 /*
 public Dictionary<o_battleCharacter, S_Passive> TriggerOtherCharacterPassives(int dmg, o_battleCharacter targ, S_Passive.PASSIVE_TRIGGER[] passiveTriggers)
 {

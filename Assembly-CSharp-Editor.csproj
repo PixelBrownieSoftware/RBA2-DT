@@ -56,9 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Src\Editor\ed_tp.cs" />
+    <Compile Include="Assets\Src\Editor\ed_enemyGroup.cs" />
     <Compile Include="Assets\Src\Editor\ed_move.cs" />
     <Compile Include="Assets\Src\Editor\ed_CASE.cs" />
+    <Compile Include="Assets\Src\Editor\Ed_Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -46,7 +46,6 @@ public class s_move : s_ability
     {
         public S_StatusEffect status_effect;
         public float status_inflict_chance;
-        public int duration;
         public int damage;
     }
 
@@ -94,39 +93,8 @@ public class s_move : s_ability
 
     public string customFunc;
 
-    public int strBuff;
-    public int vitBuff;
-    public int dexBuff;
-    public int agiBuff;
-    public int intBuff;
-    public int lucBuff;
     public int guardPoints = 0;
 
-    public bool canBuff
-    {
-        get {
-            return
-                strBuff > 0 ||
-                vitBuff > 0 ||
-                dexBuff > 0 ||
-                agiBuff > 0 ||
-                intBuff > 0 ||
-                lucBuff > 0;
-        }
-    }
-    public bool canDebuff
-    {
-        get
-        {
-            return
-                strBuff < 0 ||
-                vitBuff < 0 ||
-                dexBuff < 0 ||
-                agiBuff < 0 ||
-                intBuff < 0 ||
-                lucBuff < 0;
-        }
-    }
 
     /*
     public moveRquirementList[] moveRequirements;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Refresh
   m_EditorClassIdentifier: 
   restriction: 0
-  variableChange: 0
+  variableChange: 1
   maxDuration: 4
   minDuration: 7
   regenPercentage: 0.4
@@ -26,3 +26,4 @@ MonoBehaviour:
   removeOnEndRound: 0
   criticalOnHit: []
   statusImage: {fileID: 0}
+  statusReplace: []

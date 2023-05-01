@@ -1016,12 +1016,8 @@ public class ed_CASE : Editor
                 base.OnInspectorGUI();
                 break;
         }
-
-
     }
 }
-
-
 /*
 superTab = GUILayout.Toolbar(superTab, new string[] { "Characters", "Moves", "Items" });
 switch (superTab) {
@@ -1332,7 +1328,6 @@ switch (superTab) {
         #endregion
 }
 */
-
 /*
 if (GUILayout.Button("Load Character"))
 {
