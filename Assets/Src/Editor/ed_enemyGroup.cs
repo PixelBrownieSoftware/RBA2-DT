@@ -18,9 +18,6 @@ public class ed_enemyGroup : Editor
     bool[] displayCharactersSummonExtraSkills;
     bool[] displayCharactersSummonExtraPassives;
     s_enemyGroup enGroupData;
-    private void OnSceneGUI()
-    {
-    }
     public void SetLevel(ref s_enemyGroup.s_groupMember currentChar) {
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Level ");
@@ -354,6 +351,58 @@ public class ed_enemyGroup : Editor
                                 ref enGroupData.members_pre_summon);
                             EditorGUILayout.Space();
                         }
+                        EditorGUILayout.Space();
+                    }
+                    break;
+                case "Players":
+                    {
+                        if (tab != lastTab)
+                        {
+                            if (displayCharacters == null)
+                                displayCharacters = new bool[enGroupData.members_Player.Length];
+                            if (displayCharactersExtraSkills == null)
+                                displayCharactersExtraSkills = new bool[enGroupData.members_Player.Length];
+                            if (displayCharactersExtraPassives == null)
+                                displayCharactersExtraPassives = new bool[enGroupData.members_Player.Length];
+
+                            if (displayCharacters.Length == 0)
+                                displayCharacters = new bool[enGroupData.members_Player.Length];
+                            if (displayCharactersExtraSkills.Length == 0)
+                                displayCharactersExtraSkills = new bool[enGroupData.members_Player.Length];
+                            if (displayCharactersExtraPassives.Length == 0)
+                                displayCharactersExtraPassives = new bool[enGroupData.members_Player.Length];
+
+                        }
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("Enemies", GUILayout.Width(55f));
+                        if (GUILayout.Button("+", GUILayout.Width(20f)))
+                        {
+                            List<s_enemyGroup.s_groupMember> members = enGroupData.members_Player.ToList();
+                            members.Add(new s_enemyGroup.s_groupMember());
+                            enGroupData.members_Player = members.ToArray();
+                            displayCharacters = new bool[enGroupData.members_Player.Length];
+                            displayCharactersExtraSkills = new bool[enGroupData.members_Player.Length];
+                            displayCharactersExtraPassives = new bool[enGroupData.members_Player.Length];
+                            Repaint();
+                        }
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.EndHorizontal();
+                        for (int i = 0; i < enGroupData.members_Player.Length; i++)
+                        {
+                            s_enemyGroup.s_groupMember currentChar = enGroupData.members_Player[i];
+
+                            DrawCharacterStatus(ref currentChar,
+                                ref displayCharacters[i],
+                                ref displayCharactersExtraSkills[i],
+                                ref displayCharactersExtraPassives[i],
+                                ref displayCharacters,
+                                ref displayCharactersExtraSkills,
+                                ref displayCharactersExtraPassives,
+                                ref enGroupData.members_Player);
+                        }
+                        EditorGUILayout.Space();
+                        EditorGUI.indentLevel--;
+
                         EditorGUILayout.Space();
                     }
                     break;

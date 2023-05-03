@@ -25,7 +25,8 @@ MonoBehaviour:
   lucAffect: 0
   removeOnEndRound: 0
   criticalOnHit: []
-  statusImage: {fileID: 0}
+  statusImage: {fileID: -4221128341782435771, guid: 7f91e6596a7178f40ae4b8c99b1fd6e6,
+    type: 3}
   statusReplace:
   - toReplace: {fileID: 11400000, guid: 0ed829b23c50e9845893c29302e43193, type: 2}
     replace: {fileID: 0}

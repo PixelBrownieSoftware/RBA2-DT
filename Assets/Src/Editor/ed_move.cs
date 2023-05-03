@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -15,43 +16,94 @@ public class ed_move : Editor
     const int buffMax = 5;
     int tabChar = 0;
     bool[] animEnable;
+    string[] projectileAnims = null;
+    string[] genericCharacterAnims = null;
+
+    private string[] GetFileNames(string fileType, string directory) {
+        List<string> projAnims = new List<string>();
+        string[] ob = AssetDatabase.FindAssets("t:" + fileType, new[] {  directory });
+        foreach (var o in ob)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(o);
+            string[] file = path.Split("/");
+            string filename = file[file.Length - 1].Split(".")[0];
+            Debug.Log(filename);
+            projAnims.Add(filename);
+        }
+        return projAnims.ToArray();
+    }
+
+    private void OnEnable()
+    {
+        R_TextArray tx = AssetDatabase.LoadAssetAtPath("Assets/Data/Registers/EditorStuff/CharacterAnims.asset", typeof(R_TextArray)) as R_TextArray;
+        if(tx != null)
+            genericCharacterAnims = tx._textArray;
+        projectileAnims = GetFileNames("animation", "Assets/sprites/Animations/Effects");
+    }
 
     public  void DrawAnimations(ref s_actionAnim animationPeice, int index)
     {
         animationPeice.actionType = (s_actionAnim.ACTION_TYPE)EditorGUILayout.EnumPopup(animationPeice.actionType);
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("^"))
+        if (index < data.animations.Length)
         {
-            s_actionAnim prev = data.animations[index - 1];
-            s_actionAnim curr = data.animations[index];
-            data.animations[index] = prev;
-            data.animations[index - 1] = curr;
-            bool prevEnable = animEnable[index - 1];
-            bool currEnable = animEnable[index];
-            animEnable[index - 1] = currEnable;
-            animEnable[index] = prevEnable;
+            if (GUILayout.Button("v"))
+            {
+                s_actionAnim next = data.animations[index + 1];
+                s_actionAnim curr = data.animations[index];
+                data.animations[index] = next;
+                data.animations[index + 1] = curr;
+                bool nextEnable = animEnable[index + 1];
+                bool currEnable = animEnable[index];
+                animEnable[index + 1] = currEnable;
+                animEnable[index] = nextEnable;
+            }
         }
-        if (GUILayout.Button("v"))
+        if (index > 0)
         {
-            s_actionAnim next = data.animations[index + 1];
-            s_actionAnim curr = data.animations[index];
-            data.animations[index] = next;
-            data.animations[index + 1] = curr;
-            bool nextEnable = animEnable[index + 1];
-            bool currEnable = animEnable[index];
-            animEnable[index + 1] = currEnable;
-            animEnable[index] = nextEnable;
+            if (GUILayout.Button("^"))
+            {
+                s_actionAnim prev = data.animations[index - 1];
+                s_actionAnim curr = data.animations[index];
+                data.animations[index] = prev;
+                data.animations[index - 1] = curr;
+                bool prevEnable = animEnable[index - 1];
+                bool currEnable = animEnable[index];
+                animEnable[index - 1] = currEnable;
+                animEnable[index] = prevEnable;
+            }
         }
         EditorGUILayout.EndHorizontal();
         switch (animationPeice.actionType)
         {
             case s_actionAnim.ACTION_TYPE.CHAR_ANIMATION:
-                EditorGUILayout.LabelField("Yes");
-                EditorGUILayout.LabelField("Yes");
-                EditorGUILayout.LabelField("Yes");
-                EditorGUILayout.LabelField("Yes");
+                animationPeice.animation_id = EditorGUILayout.Popup("Animations", animationPeice.animation_id, genericCharacterAnims);
+                if(genericCharacterAnims.Length > 0)
+                    animationPeice.name = genericCharacterAnims[animationPeice.animation_id];
+                break;
+            case s_actionAnim.ACTION_TYPE.PROJECTILE:
+                animationPeice.animation_id = EditorGUILayout.Popup("Projectile animations", animationPeice.animation_id, projectileAnims);
+                animationPeice.name = projectileAnims[animationPeice.animation_id];
+                break;
+            case s_actionAnim.ACTION_TYPE.CALCULATION:
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Max", GUILayout.Width(70f));
+                animationPeice.maximumPowerRandomness = EditorGUILayout.IntSlider(animationPeice.maximumPowerRandomness, animationPeice.minimumPowerRandomness, 10);
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Min", GUILayout.Width(70f));
+                animationPeice.minimumPowerRandomness = EditorGUILayout.IntSlider(animationPeice.minimumPowerRandomness, -10, animationPeice.maximumPowerRandomness);
+                EditorGUILayout.EndHorizontal();
+                break;
+            case s_actionAnim.ACTION_TYPE.WAIT:
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Time", GUILayout.Width(70f));
+                animationPeice.time = EditorGUILayout.FloatField(animationPeice.time);
+                animationPeice.time = Mathf.Clamp(animationPeice.time, 0, float.MaxValue);
+                EditorGUILayout.EndHorizontal();
                 break;
         }
+        EditorGUILayout.Space();
     }
 
     /*
@@ -345,12 +397,22 @@ public class ed_move : Editor
                 case 2:
                     if (tab != lastTab)
                     {
-                        if (animEnable == null)
-                            animEnable = new bool[data.animations.Length];
+                        if (data.animations != null)
+                            if (animEnable == null)
+                                animEnable = new bool[data.animations.Length];
                     }
                     for (int i =0; i< data.animations.Length;i++) {
                         s_actionAnim anim = data.animations[i];
                         DrawAnimations(ref anim, i);
+                    }
+                    if (GUILayout.Button("+", GUILayout.Width(130f)))
+                    {
+                        List<s_actionAnim> moves = new List<s_actionAnim>();
+                        moves = data.animations.ToList();
+                        moves.Add(new s_actionAnim());
+                        data.animations = moves.ToArray();
+                        Repaint();
+                        return;
                     }
                     break;
 

@@ -192,6 +192,7 @@
     <Compile Include="Assets\Src\system\S_Loader.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
+    <Compile Include="Assets\Src\system\S_ObjectPooler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

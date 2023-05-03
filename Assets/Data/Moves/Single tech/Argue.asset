@@ -19,12 +19,15 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 0
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 9
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 557862e97ab269e4f8e9b6a66e719e7c, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations:
   - name: 
     actionType: 8
@@ -33,6 +36,8 @@ MonoBehaviour:
     goal: 4
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -50,6 +55,8 @@ MonoBehaviour:
     goal: 4
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -61,13 +68,15 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   animations:
-  - name: 
+  - name: idle
     actionType: 7
     teleport: 0
     start: 4
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.4
@@ -85,6 +94,8 @@ MonoBehaviour:
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -103,6 +114,8 @@ MonoBehaviour:
     goal: 4
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -113,14 +126,10 @@ MonoBehaviour:
     targetPos: 0
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
-  statusInflictChance: []
+  statusInflictChance:
+  - statusEffect: {fileID: 11400000, guid: 247133a84466ba24fad0ce9fbfede28e, type: 2}
+    chance: 1
+    add_remove: 1
   cost: 5
   customFunc: 
-  strBuff: 0
-  vitBuff: -1
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

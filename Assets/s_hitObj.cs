@@ -130,6 +130,10 @@ public class s_hitObj : o_generic
                     additionalText.text = "LUCKY!";
                     anim.Play("HitOBJ_lucky");
                     break;
+                case "critical":
+                    additionalText.text = "CRITICAL!";
+                    anim.Play("HitOBJ_lucky");
+                    break;
             }
         } else {
             switch (dmgType) {
@@ -138,6 +142,11 @@ public class s_hitObj : o_generic
                     anim.Play("HitOBJ");
                     break;
                 case "lucky":
+                    additionalText.text = "LUCKY!";
+                    anim.Play("HitOBJ_lucky");
+                    break;
+                case "critical":
+                    additionalText.text = "CRITICAL!";
                     anim.Play("HitOBJ_lucky");
                     break;
             }

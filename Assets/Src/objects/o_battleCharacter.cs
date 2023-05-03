@@ -196,6 +196,8 @@ public class s_actionAnim
     public MOTION goal;
     public Vector2 offset;
     public int animation_id;
+    public int minimumPowerRandomness;
+    public int maximumPowerRandomness;
     public Sprite picture;
     public Animation animframes;
     public float time;
@@ -279,6 +281,10 @@ public class o_battleCharPartyData
 
     public float GetElementWeakness(S_Element element)
     {
+        if (elementals == null)
+            return 1f;
+        if (element == null)
+            return 1f;
         if (!elementals.ContainsKey(element))
         {
             return 1f;
@@ -594,23 +600,29 @@ public class o_battleCharacter : MonoBehaviour
         return false;
     }
 
-    public void SetStatus(s_statusEff statEff)
+    public void SetStatus(S_StatusEffect statEff, int dmg)
     {
-        if (statusEffects.Find(x => x.status == statEff.status) == null)
+        if (statusEffects.Find(x => x.status == statEff) == null)
         {
-            statusEffects.Add(statEff);
+            foreach (var st in statEff.statusReplace) {
+                if(RemoveStatus(st.replace))
+                    statusEffects.Add(new s_statusEff(st.toReplace, Random.Range(st.toReplace.minDuration, st.toReplace.maxDuration), dmg));
+            }
+            statusEffects.Add(new s_statusEff(statEff, Random.Range(statEff.minDuration, statEff.maxDuration), dmg));
             UpdateStatusEffectBuffs();
         }
     }
     public s_statusEff GetStatus(S_StatusEffect statEff) {
         return statusEffects.Find(x => x.status == statEff);
     }
-    public void RemoveStatus(S_StatusEffect statEff)
+    public bool RemoveStatus(S_StatusEffect statEff)
     {
         if (statusEffects.Find(x => x.status == statEff) != null)
         {
             statusEffects.Remove(statusEffects.Find(x => x.status == statEff));
+            return true;
         }
+        return false;
     }
     public void RemoveStatusOnEndTurn()
     {

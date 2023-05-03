@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Src\Editor\ed_enemyGroup.cs" />
+    <Compile Include="Assets\Src\Editor\Ed_Status.cs" />
     <Compile Include="Assets\Src\Editor\ed_move.cs" />
     <Compile Include="Assets\Src\Editor\ed_CASE.cs" />
-    <Compile Include="Assets\Src\Editor\Ed_Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

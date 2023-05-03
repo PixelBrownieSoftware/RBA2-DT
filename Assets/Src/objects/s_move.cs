@@ -88,7 +88,7 @@ public class s_move : s_ability
     public s_actionAnim[] preAnimations;
     public s_actionAnim[] animations;
     public s_actionAnim[] endAnimations;
-    public statusInflict[] statusInflictChance;
+    public S_Element.effect[] statusInflictChance;
     public int cost = 0;
 
     public string customFunc;

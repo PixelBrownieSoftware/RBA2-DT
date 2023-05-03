@@ -1111,7 +1111,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         }
                         break;
                     case s_actionAnim.ACTION_TYPE.CALCULATION:
-                        yield return StartCoroutine(DamageAnimation(targ));
+                        yield return StartCoroutine(DamageAnimation(targ, UnityEngine.Random.Range(an.minimumPowerRandomness, an.maximumPowerRandomness)));
                         break;
 
                     case s_actionAnim.ACTION_TYPE.PROJECTILE:
@@ -1175,7 +1175,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         else
         {
-            yield return StartCoroutine(DamageAnimation(targ));
+            yield return StartCoroutine(DamageAnimation(targ,0));
         }
     }
     public List<o_battleCharacter> AllTargetsLiving(s_move.MOVE_TARGET scope)
@@ -1931,6 +1931,10 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         if (currentCharacter.characterRef == guest.referencePoint)
             currFlag = DAMAGE_FLAGS.NONE;
+        if (!currentMove.move.consumeTurn)
+        {
+            currFlag = DAMAGE_FLAGS.PASS;
+        }
         finalDamageFlag = currFlag;
     }
     public ELEMENT_WEAKNESS FigureWeakness(o_battleCharacter targ)
@@ -1978,19 +1982,22 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
         return false;
     }
-    public IEnumerator DamageAnimation(o_battleCharacter targ)
+    public IEnumerator DamageAnimation(o_battleCharacter targ, int randomValue)
     {
         Vector2 characterPos = targ.transform.position;
         s_move mov = currentMove.move;
         int dmg = 0;
         List<float> modifier = new List<float>();
+        bool willHit = true;
         switch (currentMove.move.moveType)
         {
             case s_move.MOVE_TYPE.HP_DAMAGE:
             case s_move.MOVE_TYPE.HP_DRAIN:
             case s_move.MOVE_TYPE.HP_SP_DAMAGE:
             case s_move.MOVE_TYPE.HP_SP_DRAIN:
-                bool willHit = PredictStatChance(currentCharacterObject.dexterity + 2, targ.agiNet - 1);
+                if (targ.health <= 0)
+                    yield break;
+                willHit = PredictStatChance(currentCharacterObject.dexterity + 2, targ.agiNet - 1);
                 bool isLucky = PredictStatChance(currentCharacterObject.luckNet, targ.luckNet, 0.30f);
                 bool isCritical = IsCritical(targ);
                 print("Will hit? " + willHit + " Is critical? " + isCritical + " Is lucky? " + isLucky);
@@ -2025,9 +2032,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         damageFlag = DAMAGE_FLAGS.LUCKY;
                     }
                 }
-                if (willHit)  
+                if (willHit)
                 {
-                    dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier);
+                    dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, modifier, randomValue);
                 }
                 else
                 {
@@ -2039,7 +2046,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 break;
             case s_move.MOVE_TYPE.HP_RECOVER:
-                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null);
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null, 0);
                 ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
                 targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
                     0, targetCharacterObject.maxHealth);
@@ -2047,7 +2054,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
 
             case s_move.MOVE_TYPE.SP_RECOVER:
-                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null);
+                dmg = CalculateDamage(targ, currentCharacterObject, currentMove.move, null,0);
                 targ.stamina += dmg;
                 targ.stamina = Mathf.Clamp(targ.stamina,
                     0, targ.maxStamina);
@@ -2067,6 +2074,39 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             default:
                 targs.Add(targ);
                 break;
+        }
+        if (willHit)
+        {
+            foreach (var statusInfl in mov.statusInflictChance)
+            {
+                float infChance = UnityEngine.Random.Range(0, 1f);
+                if (infChance <= statusInfl.chance)
+                {
+                    if (statusInfl.add_remove)
+                    {
+                        targ.SetStatus(statusInfl.statusEffect, dmg);
+                    }
+                    else
+                    {
+                        targ.RemoveStatus(statusInfl.statusEffect);
+                    }
+                }
+            }
+            foreach (var statusInfl in mov.element.statusInflict)
+            {
+                float infChance = UnityEngine.Random.Range(0, 1f);
+                if (infChance <= statusInfl.chance)
+                {
+                    if (statusInfl.add_remove)
+                    {
+                        targ.SetStatus(statusInfl.statusEffect, dmg);
+                    }
+                    else
+                    {
+                        targ.RemoveStatus(statusInfl.statusEffect);
+                    }
+                }
+            }
         }
         if (finalDamageFlag != DAMAGE_FLAGS.MISS || finalDamageFlag != DAMAGE_FLAGS.VOID ||
             finalDamageFlag != DAMAGE_FLAGS.ABSORB || finalDamageFlag != DAMAGE_FLAGS.REFLECT)
@@ -2110,7 +2150,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             }
         }
     }
-    public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers)
+    public int CalculateDamage(o_battleCharacter user, o_battleCharacter target, s_move move, List<float> modifiers, int randomVal)
     {
         if (target == null)
             return 0;
@@ -2132,6 +2172,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     multipler += mod;
                 }
             }
+            int mvPower = move.power + randomVal;
+            mvPower = Mathf.Clamp(mvPower, 1, int.MaxValue);
             float elementalDamage =
                 (user.strengthNet * el.strength) +
                 (user.vitalityNet * el.vitality) +
@@ -2167,13 +2209,13 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("rpgHit");
-                    SpawnDamageObject(dmg, characterPos, true, new Color(118, 255, 210), "lucky");
+                    SpawnDamageObject(dmg, characterPos, true, new Color(118 / 255, 255 / 255, 210 / 255), "lucky");
                 }
                 else
                 {
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                    SpawnDamageObject(dmg, characterPos, true, new Color(118,255,210), "lucky");
+                    SpawnDamageObject(dmg, characterPos, true, new Color(118/255,255 / 255, 210 / 255), "lucky");
                     //SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour);
                 }
                 break;
@@ -2181,15 +2223,15 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             case DAMAGE_FLAGS.CRITICAL:
                 if (oppositionCharacters.Contains(target))
                 {
-                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
+                    s_soundmanager.GetInstance().PlaySound("hitWeak");
                     s_soundmanager.GetInstance().PlaySound("rpgHit");
-                    SpawnDamageObject(dmg, characterPos, true, Color.white, "lucky");
+                    SpawnDamageObject(dmg, characterPos, true, Color.white, "critical");
                 }
                 else
                 {
-                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
+                    s_soundmanager.GetInstance().PlaySound("hitWeak");
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                    SpawnDamageObject(dmg, characterPos, true, Color.white, "lucky");
+                    SpawnDamageObject(dmg, characterPos, true, Color.white, "critical");
                 }
                 break;
 
@@ -2238,7 +2280,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
 
                 characterPos = currentCharacterObject.transform.position;
-                dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null);
+                dmg = CalculateDamage(targ, currentCharacterObject, targ.battleCharData.firstMove, null, 0);
 
                 DamageEffect(dmg, currentCharacterObject, characterPos, DAMAGE_FLAGS.NONE);
 
