@@ -9,7 +9,9 @@ public class R_Int : R_Default
     [SerializeField]
     private int defaultInteger = 0;
 
-
+    public void Set(int num) {
+        integer = num;
+    }
     private void OnEnable()
     {
         if (_isReset)

@@ -19,24 +19,19 @@ MonoBehaviour:
   intReq: 0
   lucReq: 0
   power: 0
-  healHealth: 0
-  healStamina: 0
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
-  moveType: 2
+  moveType: 9
   moveTarg: 0
-  element: 0
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 557862e97ab269e4f8e9b6a66e719e7c, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations: []
   endAnimations: []
   statusInflictChance: []
-  onParty: 0
   cost: 0
   customFunc: callAllies
-  strBuff: 0
-  vitBuff: 0
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
-  moveRequirements: []
+  guardPoints: 0

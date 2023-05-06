@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MagnumFoundation2.Objects;
+using UnityEngine.Pool;
+using MagnumFoundation2.System.Core;
 
-public class s_moveanim : o_generic
+public class s_moveanim : MonoBehaviour
 {
     public Animator anim;
     public GameObject subObj;
-    
+    public IObjectPool<s_moveanim> pool;
+
+    public void DespawnObject()
+    {
+        if (pool != null)
+            pool.Release(this);
+    }
+    public void PlaySound(AudioClip cl)
+    {
+        s_soundmanager.GetInstance().PlaySound(cl);
+    }
 
     public void StopAnimation()
     {

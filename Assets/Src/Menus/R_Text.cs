@@ -6,4 +6,7 @@ using UnityEngine;
 public class R_Text : R_Default
 {
     public string text;
+    public void Set(string txt) {
+        text = txt;
+    }
 }

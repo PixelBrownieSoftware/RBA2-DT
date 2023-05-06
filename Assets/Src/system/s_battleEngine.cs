@@ -91,10 +91,23 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     private R_ShopItem shopItems;
     [SerializeField]
     private S_EnemyWeaknessReveal enemyWeaknessReveal;
+    [SerializeField]
+    private S_HitObjSpawner hitObjectSpawner;
+    [SerializeField]
+    private S_ProjectileSpawner projectileSpawner;
 
     public Queue<o_battleCharacter> currentPartyCharactersQueue = new Queue<o_battleCharacter>();
     public List<o_battleCharacter> playerCharacters;
     public List<o_battleCharacter> oppositionCharacters;
+
+    [SerializeField]
+    private R_Int hitObjNumber;
+    [SerializeField]
+    private R_Text hitObjType;
+    [SerializeField]
+    private R_Vector2 hitObjPosition;
+    [SerializeField]
+    private R_Colour hitObjColour;
 
     [SerializeField]
     private R_CharacterList playersReference;
@@ -854,6 +867,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public IEnumerator PlayProjectileAnimation(string objName ,Vector2 start, Vector2 target)
     {
+        yield return new WaitForSeconds(Time.deltaTime);
+        hitObjType.Set(objName);
+        hitObjPosition.Set(start);
+        projectileSpawner.projectilePool.Get();
+        /*
         s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
         Rigidbody2D projRB2d = projectile.GetComponent<Rigidbody2D>();
 
@@ -868,6 +886,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         }
 
         projectile.DespawnObject();
+        */
     }
     public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ, string dmgType) {
 
@@ -884,11 +903,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 Vector2 characterPos = targ.transform.position;
                 if (oppositionCharacters.Contains(targ))
                 {
-                    SpawnDamageObject(dmg, characterPos, true, Color.white, dmgType);
+                    hitObjColour.Set(Color.white);
+                    hitObjNumber.Set(dmg);
+                    hitObjPosition.Set(characterPos);
+                    hitObjType.Set("damage_enemy");
+                    hitObjectSpawner.hitObjectPool.Get();
                 }
                 else
                 {
-                    SpawnDamageObject(dmg, characterPos, false, targ.battleCharData.characterColour, dmgType);
+                    hitObjColour.Set(targ.battleCharData.characterColour);
+                    hitObjNumber.Set(dmg);
+                    hitObjPosition.Set(characterPos);
+                    hitObjType.Set("damage_player");
+                    hitObjectSpawner.hitObjectPool.Get();
                 }
                 for (int i = 0; i < 2; i++)
                 {
@@ -995,8 +1022,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                                         start = targ.transform.position;
                                     break;
                             }
-                            s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
-                            projectile.anim.Play(an.name);
+
+                            hitObjType.Set(an.name);
+                            projectileSpawner.projectilePool.Get();
 
                             while (timer < an.time)
                             {
@@ -1242,7 +1270,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             foreach (var dmg in chara.Value) {
                 totDmg += dmg.Item2;
             }
-            SpawnDamageObject(totDmg, chara.Key.position + new Vector2(40, 0), Color.white, "total");
+            hitObjColour.Set(Color.white);
+            hitObjNumber.Set(totDmg);
+            hitObjPosition.Set(chara.Key.position + new Vector2(40, 0));
+            hitObjType.Set("total");
+            hitObjectSpawner.hitObjectPool.Get();
         }
         totalDamageOutput.Clear();
         return displayDMG;
@@ -1301,16 +1333,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         isPlayerTurn = isPturn;
         battleEngine = BATTLE_ENGINE_STATE.SELECT_CHARACTER;
-    }
-    public void SpawnDamageObject(float dmg, Vector2 characterPos, Color colour, string damageObjType)
-    {
-        s_hitObj ob = s_objpooler.GetInstance().SpawnObject<s_hitObj>("HitObj", characterPos);
-        ob.PlayAnim(dmg, damageObjType, colour);
-    }
-    public void SpawnDamageObject(int dmg, Vector2 characterPos, bool enemy, Color colour, string dmgType)
-    {
-        s_hitObj ob = s_objpooler.GetInstance().SpawnObject<s_hitObj>("HitObj", characterPos);
-        ob.PlayAnim(dmg, enemy, colour, dmgType);
     }
     #endregion
 
@@ -1713,6 +1735,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 yield return new WaitForSeconds(Time.deltaTime);
             }
         }
+        if (mov.element.isMagic)
+        {
+            user.stamina -= mov.cost;
+        }
+        else
+        {
+            user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
+        }
         yield return StartCoroutine(DisplayMoveName(mov.name));
 
         switch (currentMove.move.moveTargScope)
@@ -2050,7 +2080,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 ReferenceToCharacter(targetCharacter.characterRef).health += dmg;
                 targetCharacterObject.health = Mathf.Clamp(targetCharacterObject.health,
                     0, targetCharacterObject.maxHealth);
-                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                hitObjColour.Set(Color.white);
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
+                hitObjType.Set("heal_hp");
+                hitObjectSpawner.hitObjectPool.Get();
                 break;
 
             case s_move.MOVE_TYPE.SP_RECOVER:
@@ -2058,7 +2092,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 targ.stamina += dmg;
                 targ.stamina = Mathf.Clamp(targ.stamina,
                     0, targ.maxStamina);
-                SpawnDamageObject(dmg, characterPos, Color.magenta, "heal_hp");
+                hitObjColour.Set(Color.magenta);
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
+                hitObjType.Set("heal_hp");
+                hitObjectSpawner.hitObjectPool.Get();
                 break;
         }
         List<o_battleCharacter> targs = new List<o_battleCharacter>();
@@ -2205,49 +2243,64 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         {
             case DAMAGE_FLAGS.LUCKY:
 
+                hitObjColour.Set(new Color(95f / 255, 225f / 255f, 215f / 255f));
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
+                hitObjType.Set("lucky");
                 if (oppositionCharacters.Contains(target))
                 {
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("rpgHit");
-                    SpawnDamageObject(dmg, characterPos, true, new Color(118 / 255, 255 / 255, 210 / 255), "lucky");
+                    hitObjectSpawner.hitObjectPool.Get();
                 }
                 else
                 {
                     s_soundmanager.GetInstance().PlaySound("mal_lucky");
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                    SpawnDamageObject(dmg, characterPos, true, new Color(118/255,255 / 255, 210 / 255), "lucky");
+                    hitObjectSpawner.hitObjectPool.Get();
                     //SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour);
                 }
                 break;
 
             case DAMAGE_FLAGS.CRITICAL:
+
+                hitObjColour.Set(Color.white);
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
+                hitObjType.Set("critical");
                 if (oppositionCharacters.Contains(target))
                 {
                     s_soundmanager.GetInstance().PlaySound("hitWeak");
                     s_soundmanager.GetInstance().PlaySound("rpgHit");
-                    SpawnDamageObject(dmg, characterPos, true, Color.white, "critical");
+                    hitObjectSpawner.hitObjectPool.Get();
                 }
                 else
                 {
                     s_soundmanager.GetInstance().PlaySound("hitWeak");
                     s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                    SpawnDamageObject(dmg, characterPos, true, Color.white, "critical");
+                    hitObjectSpawner.hitObjectPool.Get();
                 }
                 break;
 
             case DAMAGE_FLAGS.FRAIL:
             case DAMAGE_FLAGS.NONE:
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
                 if (target != guest)
                 {
                     if (oppositionCharacters.Contains(target))
                     {
                         s_soundmanager.GetInstance().PlaySound("rpgHit");
-                        SpawnDamageObject(dmg, characterPos, true, Color.white, "");
+                        hitObjColour.Set(Color.white);
+                        hitObjType.Set("damage_enemy");
+                        hitObjectSpawner.hitObjectPool.Get();
                     }
                     else
                     {
                         s_soundmanager.GetInstance().PlaySound("pl_dmg");
-                        SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour, "");
+                        hitObjType.Set("damage_player");
+                        hitObjColour.Set(target.battleCharData.characterColour);
+                        hitObjectSpawner.hitObjectPool.Get();
                     }
                 }
                 else
@@ -2257,10 +2310,18 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 break;
 
             case DAMAGE_FLAGS.VOID:
-                SpawnDamageObject(0, characterPos, Color.white, "block");
+                hitObjNumber.Set(0);
+                hitObjPosition.Set(characterPos);
+                hitObjColour.Set(Color.white);
+                hitObjType.Set("block");
+                hitObjectSpawner.hitObjectPool.Get();
                 break;
             case DAMAGE_FLAGS.MISS:
-                SpawnDamageObject(0, characterPos, Color.white, "miss_attack");
+                hitObjNumber.Set(0);
+                hitObjPosition.Set(characterPos);
+                hitObjColour.Set(Color.white);
+                hitObjType.Set("miss_attack");
+                hitObjectSpawner.hitObjectPool.Get();
                 break;
         }
         AddToTotalDMG(dmg, fl, target.referencePoint);
@@ -2301,9 +2362,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 dmg = Mathf.RoundToInt(targ.maxHealth * user_skill.Value.percentageHeal);
                 //int spDmg
                 targ.health += dmg;
-                targ.health = Mathf.Clamp(targ.health,
-                    0, targetCharacterObject.maxHealth);
-                SpawnDamageObject(dmg, characterPos, Color.white, "heal_hp");
+                targ.health = Mathf.Clamp(targ.health, 0, targetCharacterObject.maxHealth);
+                hitObjColour.Set(Color.white);
+                hitObjNumber.Set(dmg);
+                hitObjPosition.Set(characterPos);
+                hitObjType.Set("heal_hp");
+                hitObjectSpawner.hitObjectPool.Get();
                 break;
         }
     }

@@ -70,6 +70,7 @@
     <Compile Include="Assets\Src\Menus\Hub\M_PartyStatus.cs" />
     <Compile Include="Assets\G_Buff.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_SpriteListener.cs" />
+    <Compile Include="Assets\Src\system\S_HitObjSpawner.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
@@ -192,7 +193,9 @@
     <Compile Include="Assets\Src\system\S_Loader.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\system\S_ObjectPooler.cs" />
+    <Compile Include="Assets\Src\Menus\R_Vector2.cs" />
+    <Compile Include="Assets\Src\Menus\R_Colour.cs" />
+    <Compile Include="Assets\Src\system\S_ProjectileSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
