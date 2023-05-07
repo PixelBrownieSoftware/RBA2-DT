@@ -43156,6 +43156,137 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601303124}
   m_CullTransparentMesh: 0
+--- !u!1 &1609086495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1609086500}
+  - component: {fileID: 1609086499}
+  - component: {fileID: 1609086498}
+  - component: {fileID: 1609086497}
+  - component: {fileID: 1609086496}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1609086496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609086495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+--- !u!114 &1609086497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609086495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2390c8967e6a1ba4a9562c911ede7104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!81 &1609086498
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609086495}
+  m_Enabled: 1
+--- !u!20 &1609086499
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609086495}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.09066844, g: 1, b: 0, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 150
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 0
+  m_HDR: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1609086500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609086495}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 330, y: 300, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610199238
 GameObject:
   m_ObjectHideFlags: 0
@@ -50187,6 +50318,7 @@ MonoBehaviour:
   extraPassives: {fileID: 11400000, guid: d7b571d1746471549adc746133ace3f3, type: 2}
   battleGroupRef: {fileID: 11400000, guid: 2137c49ee41941044ab6886d232c5ce9, type: 2}
   battleGroupDoneRef: {fileID: 11400000, guid: 438a58488beb6b5419ea4d794950974e, type: 2}
+  enemyGroupRef: {fileID: 11400000, guid: ac48cee5557201f40b5f54b78202661e, type: 2}
   roundNum: 0
   fullTurn: 0
   halfTurn: 0
@@ -50194,8 +50326,6 @@ MonoBehaviour:
   finalDamageFlag: 0
   menuchoice: 0
   enemyTeam: []
-  enemyGroup: {fileID: 11400000, guid: c18f28a0bdc2eaa4c8b901ec7f062436, type: 2}
-  OnBattleEvents: []
   isCutscene: 0
   defaultAttack: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
   guard: {fileID: 11400000, guid: 217d8f11c0c896942b05a0437489fc07, type: 2}
@@ -50205,6 +50335,10 @@ MonoBehaviour:
   changeMenu: {fileID: 11400000, guid: a858318d54f8fbb4aaca029f553861cc, type: 2}
   perfomMove: {fileID: 11400000, guid: e3f2c7bc83c9d94448c634fed0807e6c, type: 2}
   retreatOption: {fileID: 11400000, guid: 3bdef13bc1ed2ea478316b7ee5ed0934, type: 2}
+  fadeFunc: {fileID: 11400000, guid: e13ad83fb6a76394982d99c00f93eb14, type: 2}
+  onMapLoad: {fileID: 11400000, guid: bab5ca51d168e4340a6eedd966078a8e, type: 2}
+  playSound: {fileID: 11400000, guid: adf0d918638fc224995955e308ed2fa5, type: 2}
+  mapTrans: {fileID: 11400000, guid: 84775e92d44156c46a85dfd6e009d3c9, type: 2}
   fire_picture: {fileID: -5391307981071726051, guid: d3e9e7359b6915748ae623ff276e8a49,
     type: 3}
   water_picture: {fileID: -3293433503042108997, guid: d3e9e7359b6915748ae623ff276e8a49,
@@ -50297,6 +50431,17 @@ MonoBehaviour:
   bg1: {fileID: 650416119}
   bg2: {fileID: 59007576}
   mainBG: {fileID: 1366318932}
+  notificationPlayerSound: {fileID: 8300000, guid: 35e5f92b213e5564ead9229a768f2654,
+    type: 3}
+  notificationEnemySound: {fileID: 8300000, guid: de8d7ff2bc1dc454781ddffe3684d9fb,
+    type: 3}
+  pressTurnSound: {fileID: 8300000, guid: 018a9d069a92a5345b44df137ccc5459, type: 3}
+  playerDefeatSound: {fileID: 8300000, guid: 8da974c1a62f62a4383a59f995be9d7d, type: 3}
+  enemyDefeatSound: {fileID: 8300000, guid: a86f92b87ac6b314ab05bfe3ffc319f2, type: 3}
+  criticalHitSound: {fileID: 8300000, guid: f385c0b95b3946a4eae4dc7f7065b634, type: 3}
+  luckyHitSound: {fileID: 8300000, guid: 2cc6585670aba3640ba721dbf0e091ec, type: 3}
+  enemyHitSound: {fileID: 8300000, guid: 14f67c7995e82e44ea7e88e654d6ebf4, type: 3}
+  playerHitSound: {fileID: 8300000, guid: 852fcaef52344b64ca5e8c5fff8ec0d0, type: 3}
 --- !u!114 &1829423962
 MonoBehaviour:
   m_ObjectHideFlags: 0

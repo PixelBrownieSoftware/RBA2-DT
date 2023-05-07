@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MagnumFoundation2;
 using UnityEngine.UI;
 /*
 public class s_battleMenu : s_menucontroller

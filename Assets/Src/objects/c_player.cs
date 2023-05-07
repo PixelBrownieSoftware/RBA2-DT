@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿/*
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MagnumFoundation2.Objects;
@@ -42,3 +43,4 @@ public class c_player : o_character
         }
     }
 }
+*/

@@ -5,44 +5,44 @@ using UnityEngine;
 
 public class S_ProjectileSpawner : MonoBehaviour
 {
-    private IObjectPool<s_moveanim> m_projectilePool;
+    private IObjectPool<O_ProjectileAnim> m_projectilePool;
     private const int maxPoolSize = 10;
-    public s_moveanim projectilePrefab;
+    public O_ProjectileAnim projectilePrefab;
     [SerializeField]
     private R_Text projectileType;
     [SerializeField]
     private R_Vector2 position;
 
-    public IObjectPool<s_moveanim> projectilePool
+    public IObjectPool<O_ProjectileAnim> projectilePool
     {
         get
         {
             if (m_projectilePool == null)
             {
-                m_projectilePool = new LinkedPool<s_moveanim>(CreateProjectile, OnTakePool, OnReturnPool, DestroyPoolObject, true, maxPoolSize);
+                m_projectilePool = new LinkedPool<O_ProjectileAnim>(CreateProjectile, OnTakePool, OnReturnPool, DestroyPoolObject, true, maxPoolSize);
             }
             return m_projectilePool;
         }
     }
 
-    public s_moveanim CreateProjectile()
+    public O_ProjectileAnim CreateProjectile()
     {
-        s_moveanim obj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        O_ProjectileAnim obj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         obj.pool = projectilePool;
         obj.transform.SetParent(transform);
         return obj;
     }
-    public void OnTakePool(s_moveanim obj)
+    public void OnTakePool(O_ProjectileAnim obj)
     {
         obj.gameObject.SetActive(true);
         obj.transform.position = position.vector2;
         obj.anim.Play(projectileType.text);
     }
-    public void OnReturnPool(s_moveanim obj)
+    public void OnReturnPool(O_ProjectileAnim obj)
     {
         obj.gameObject.SetActive(false);
     }
-    public void DestroyPoolObject(s_moveanim obj)
+    public void DestroyPoolObject(O_ProjectileAnim obj)
     {
         Destroy(obj);
     }

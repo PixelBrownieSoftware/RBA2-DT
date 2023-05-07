@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabbbc4cebe48794c81e4bf29dea4002, type: 3}
   m_Name: SelectedEnemyGroup
   m_EditorClassIdentifier: 
-  description: 
+  description: The enemy group selected from the hub menu and that's used in battle.
   _isReset: 0
   enemyGroup: {fileID: 0}

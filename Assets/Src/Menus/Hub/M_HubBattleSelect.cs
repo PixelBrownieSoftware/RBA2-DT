@@ -7,7 +7,8 @@ public class M_HubBattleSelect : S_MenuSystem
     public B_Int[] buttons;
     public CH_Int selectBattle;
     public CH_Int increment;
-    public CH_Func startBattle;
+    [SerializeField]
+    private CH_MapTransfer mapTransfer;
     public CH_Text menuChanger;
     public R_EnemyGroupList groupList;
     public R_EnemyGroup selectedGroup;
@@ -68,6 +69,6 @@ public class M_HubBattleSelect : S_MenuSystem
     {
         menuChanger.RaiseEvent("");
         selectedGroup.enemyGroup = groupList.groupList[selectBattle];
-        startBattle.RaiseEvent();
+        mapTransfer.RaiseEvent("battle_scene");
     }
 }

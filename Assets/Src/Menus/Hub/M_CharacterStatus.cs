@@ -84,11 +84,11 @@ public class M_CharacterStatus : S_MenuSystem
         }
     }
 
+    /*
     public void SetButton(s_button b, int i, List<s_move> mov)
     {
         b.txt.text = mov[i].name;
     }
-    /*
     public R_Character selectedCharacter;
     public R_CharacterList players;
     public R_CharacterList selectedCharacters;

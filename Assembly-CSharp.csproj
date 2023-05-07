@@ -60,6 +60,8 @@
     <Compile Include="Assets\Src\objects\o_locationOverworld.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_Results.cs" />
     <Compile Include="Assets\Misc\UncompiledCode.cs" />
+    <Compile Include="Assets\Src\system\S_ProjectileSpawner.cs" />
+    <Compile Include="Assets\Src\system\S_FadeController.cs" />
     <Compile Include="Assets\Src\system\menu\s_targetButton.cs" />
     <Compile Include="Assets\Src\system\misc\s_barGui.cs" />
     <Compile Include="Assets\s_hitObj.cs" />
@@ -68,9 +70,10 @@
     <Compile Include="Assets\Src\system\menu\s_buttonSkill.cs" />
     <Compile Include="Assets\Src\system\s_overworldObj.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_PartyStatus.cs" />
-    <Compile Include="Assets\G_Buff.cs" />
+    <Compile Include="Assets\Src\system\S_Transition.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_SpriteListener.cs" />
     <Compile Include="Assets\Src\system\S_HitObjSpawner.cs" />
+    <Compile Include="Assets\G_Buff.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_ItemShop.cs" />
     <Compile Include="Assets\Src\Menus\Battle\M_BattleOptions.cs" />
     <Compile Include="Assets\Src\system\menu\s_statusMenu.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Assets\Src\CH_BattleChar.cs" />
     <Compile Include="Assets\Src\Menus\R_TextArray.cs" />
     <Compile Include="Assets\Src\Menus\R_BattleCharacter.cs" />
+    <Compile Include="Assets\Src\system\S_SceneLoader.cs" />
     <Compile Include="Assets\Src\Menus\R_CharacterSetterList.cs" />
     <Compile Include="Assets\Src\system\menu\s_modeButton.cs" />
     <Compile Include="Assets\Src\objects\s_consumable.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="Assets\Src\system\menu\s_groupSelect.cs" />
     <Compile Include="Assets\Src\Menus\Hub\M_GachaGen.cs" />
     <Compile Include="Assets\Src\system\menu\s_overworldPlayerTargetMenu.cs" />
+    <Compile Include="Assets\Src\Menus\R_Vector2.cs" />
     <Compile Include="Assets\Src\Menus\R_Move.cs" />
     <Compile Include="Assets\Src\objects\S_StatusEffect.cs" />
     <Compile Include="Assets\Src\Menus\S_RPGGlobals.cs" />
@@ -139,7 +144,7 @@
     <Compile Include="Assets\Src\system\menu\s_skillDrawMenu.cs" />
     <Compile Include="Assets\s_hpBoxGUI.cs" />
     <Compile Include="Assets\Src\objects\o_battleCharacter.cs" />
-    <Compile Include="Assets\Src\objects\s_moveanim.cs" />
+    <Compile Include="Assets\Src\objects\O_ProjectileAnim.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyMemberButton.cs" />
     <Compile Include="Assets\Src\Menus\R_MoveList.cs" />
     <Compile Include="Assets\Src\Menus\R_Save.cs" />
@@ -153,6 +158,7 @@
     <Compile Include="Assets\Src\Menus\Battle\M_BattleTarget.cs" />
     <Compile Include="Assets\Src\Channels\CH_BCData.cs" />
     <Compile Include="Assets\Src\objects\o_weapon.cs" />
+    <Compile Include="Assets\Src\Menus\R_Colour.cs" />
     <Compile Include="Assets\Src\Buttons\B_TargetWithUI.cs" />
     <Compile Include="Assets\Src\system\misc\s_buttonList.cs" />
     <Compile Include="Assets\Src\ChannelListeners\CHL_ChangeText.cs" />
@@ -180,6 +186,7 @@
     <Compile Include="Assets\Src\Channels\CH_Func.cs" />
     <Compile Include="Assets\Src\objects\S_Element.cs" />
     <Compile Include="Assets\Src\system\menu\s_partyMenu.cs" />
+    <Compile Include="Assets\Src\system\S_SoundManager.cs" />
     <Compile Include="Assets\Src\S_MenuManager.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_IntegerListener.cs" />
     <Compile Include="Assets\Src\Buttons\B_Function.cs" />
@@ -193,9 +200,6 @@
     <Compile Include="Assets\Src\system\S_Loader.cs" />
     <Compile Include="Assets\Src\Buttons\B_String.cs" />
     <Compile Include="Assets\Src\system\menu\s_groupSelectButton.cs" />
-    <Compile Include="Assets\Src\Menus\R_Vector2.cs" />
-    <Compile Include="Assets\Src\Menus\R_Colour.cs" />
-    <Compile Include="Assets\Src\system\S_ProjectileSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -961,18 +965,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="NewAssembly.csproj">
-      <Project>{04FC43B4-0370-D25B-5C9A-9AB8EC323956}</Project>
-      <Name>NewAssembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="com.magnumfoundation2.editor.csproj">
-      <Project>{3EB6A96B-52E9-C21F-BF51-95DC9380C91A}</Project>
-      <Name>com.magnumfoundation2.editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="com.magnumfoundation2.runtime.csproj">
-      <Project>{6833F637-4B5A-29EB-75DA-3B3710E0FEEE}</Project>
-      <Name>com.magnumfoundation2.runtime</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

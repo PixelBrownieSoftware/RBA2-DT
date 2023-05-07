@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/*
 using MagnumFoundation2.System;
 using MagnumFoundation2.Objects;
 
@@ -26,6 +27,7 @@ public class s_battleEvent
     public bool enabled = true;
     public int int0;
 }
+*/
 
 [CreateAssetMenu(fileName = "New enemy group", menuName = "Battle group")]
 public class s_enemyGroup : ScriptableObject
@@ -52,7 +54,6 @@ public class s_enemyGroup : ScriptableObject
     public s_groupMember[] members_pre_summon;
     public s_groupMember[] members_Player;
     public s_groupMember member_Guest;
-    public s_battleEvent[] events;
 
     public o_battleCharDataN[] unlockCharacters;
 

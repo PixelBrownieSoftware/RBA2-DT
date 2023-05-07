@@ -1,9 +1,9 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class s_mainBattleMenu : s_menucontroller
 {
     public o_battleCharacter battleCharacter;
@@ -13,13 +13,12 @@ public class s_mainBattleMenu : s_menucontroller
     public Sprite staffIcon;
     public R_Items inventory;
 
-    /*
     public override void OnOpen()
     {
         base.OnOpen();
         ResetButton();
         //s_menuhandler.GetInstance().GetMenu<s_battleMenu>("SkillMenu").rpgSkills =
-        
+
         List<Tuple<s_moveComb, s_move>> moves = s_rpgGlobals.rpgGlSingleton.CheckComboRequirementsCharacter3(
         battleCharacter.referencePoint, s_battleEngine.engineSingleton.playerCharacters);
         #region PHYSICAL WEAPON
@@ -67,13 +66,15 @@ public class s_mainBattleMenu : s_menucontroller
         #endregion
 
         if (battleCharacter.extraSkills.Count > 0
-            || battleCharacter.currentMoves.Count > 0) {
+            || battleCharacter.currentMoves.Count > 0)
+        {
             GetButton<s_button>(2);
         }
 
-        if (moves.Count > 0 && s_battleEngine.GetInstance().netTurn > 1) {
+        if (moves.Count > 0 && s_battleEngine.GetInstance().netTurn > 1)
+        {
             GetButton<s_button>(3);
-        } 
+        }
         GetButton<s_button>(4);
 
         if (inventory.inventory.Count > 0)
@@ -89,5 +90,5 @@ public class s_mainBattleMenu : s_menucontroller
             GetButton<s_button>(9).gameObject.SetActive(false);
 
     }
-    */
 }
+*/

@@ -1,5 +1,4 @@
-﻿using MagnumFoundation2.System.Core;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -7,8 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
-using MagnumFoundation2.System;
-using MagnumFoundation2.Objects;
 
 public class s_skillDraw {
     public s_move move;
@@ -27,7 +24,7 @@ public enum DAMAGE_FLAGS {
     PASS = -1
 }
 
-public class s_battleEngine : s_singleton<s_battleEngine>
+public class s_battleEngine : MonoBehaviour
 {
     public bool isEnabled = true;
     /*
@@ -131,6 +128,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public R_Passives extraPassives;
     public R_EnemyGroupList battleGroupRef;
     public R_EnemyGroupList battleGroupDoneRef;
+    public R_EnemyGroup enemyGroupRef;
 
     private Dictionary<o_battleCharacter, S_Passive> usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
     private Dictionary<CH_BattleChar, List<Tuple<DAMAGE_FLAGS, int>>> totalDamageOutput = new Dictionary<CH_BattleChar, List<Tuple<DAMAGE_FLAGS, int>>>();
@@ -154,8 +152,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public int menuchoice;
 
     public List<o_battleCharDataN> enemyTeam;
-    public s_enemyGroup enemyGroup;
-    public s_battleEvent[] OnBattleEvents;
     bool[] battleEvDone;
     public bool isCutscene = false;
 
@@ -168,6 +164,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public CH_Text changeMenu;
     public CH_Func perfomMove;
     public CH_Func retreatOption;
+    public CH_Fade fadeFunc;
+    public CH_Func onMapLoad;
+    public CH_SoundPitch playSound;
+
+    public CH_MapTransfer mapTrans;
     #endregion
 
     #region graphics
@@ -257,6 +258,18 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     };
     #endregion
 
+    #region sounds
+    public AudioClip notificationPlayerSound;
+    public AudioClip notificationEnemySound;
+    public AudioClip pressTurnSound;
+    public AudioClip playerDefeatSound;
+    public AudioClip enemyDefeatSound;
+    public AudioClip criticalHitSound;
+    public AudioClip luckyHitSound;
+    public AudioClip enemyHitSound;
+    public AudioClip playerHitSound;
+    #endregion
+
     public o_battleCharacter ReferenceToCharacter(CH_BattleChar refer) {
         return GetAllCharacters().Find(x => x.referencePoint == refer);
     }
@@ -274,12 +287,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     {
         perfomMove.OnFunctionEvent += EndAction;
         retreatOption.OnFunctionEvent += RunFromBattle;
+        onMapLoad.OnFunctionEvent += StartBattleCoroutine;
     }
 
     private void OnDisable()
     {
         perfomMove.OnFunctionEvent -= EndAction;
         retreatOption.OnFunctionEvent -= RunFromBattle;
+        onMapLoad.OnFunctionEvent -= StartBattleCoroutine;
     }
 
     public void Awake()
@@ -305,14 +320,19 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
     }
 
+    public void StartBattleCoroutine() {
+        StartCoroutine(StartBattle());
+    }
+
     public IEnumerator StartBattle() {
         fullTurn = 0;
         halfTurn = 0;
-        s_menuhandler.GetInstance().SwitchMenu("EMPTY");
+        isEnabled = true;
+        //s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         allCharacterReferences.Clear();
         playersReference.Clear();
         enemiesReference.Clear();
-        SceneManager.UnloadSceneAsync("Overworld");
+        //SceneManager.UnloadSceneAsync("Overworld");
         usedPassives.Clear();
         usedPassives = new Dictionary<o_battleCharacter, S_Passive>();
 
@@ -325,11 +345,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         #region GROUP STUFF 
         {
+            s_enemyGroup enemyGroup = this.enemyGroupRef.enemyGroup;
             bg1.material = enemyGroup.material1;
             bg2.material = enemyGroup.material2;
             bg1.sprite = enemyGroup.bg1;
             bg2.sprite = enemyGroup.bg2;
-            mainBG.sprite = s_rpgGlobals.GetInstance().GetComponent<s_rpgGlobals>().BGBattle;
+            //mainBG.sprite = s_rpgGlobals.GetInstance().GetComponent<s_rpgGlobals>().BGBattle;
 
             nonChangablePlayers = enemyGroup.fixedPlayers;
 
@@ -496,13 +517,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 positions.Add(bc.transform.position);
             }
             //s_camera.cam.TeleportCamera(s_camera.cam.GetCentroid(positions));
-            s_camera.cam.TeleportCamera(new Vector2(360,310));
+            //s_camera.cam.TeleportCamera(new Vector2(360,310));
         }
         #endregion
-
-        StartCoroutine(s_triggerhandler.GetInstance().Fade(Color.clear));
+        fadeFunc.Fade(Color.clear);
         yield return new WaitForSeconds(0.1f);
-        StartCoroutine(s_camera.GetInstance().ZoomCamera(-1, 1.5f));
+        //StartCoroutine(s_camera.GetInstance().ZoomCamera(-1, 1.5f));
         yield return new WaitForSeconds(0.2f);
         {
             List<o_battleCharacter> bcs = new List<o_battleCharacter>();
@@ -551,6 +571,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public o_battleCharacter AddSummonableRand()
     {
+        s_enemyGroup enemyGroup = this.enemyGroupRef.enemyGroup;
         s_enemyGroup.s_groupMember mem = enemyGroup.members_summonable[UnityEngine.Random.Range(0, enemyGroup.members_summonable.Length)];
         o_battleCharacter c = AddSummonable(mem);
         return c;
@@ -888,7 +909,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         projectile.DespawnObject();
         */
     }
-    public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ, string dmgType) {
+    public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ) {
 
         switch (currentMove.move.moveType) {
             case s_move.MOVE_TYPE.HP_DAMAGE:
@@ -1142,6 +1163,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                         yield return StartCoroutine(DamageAnimation(targ, UnityEngine.Random.Range(an.minimumPowerRandomness, an.maximumPowerRandomness)));
                         break;
 
+                    case s_actionAnim.ACTION_TYPE.FADE_SCREEN:
+                        fadeFunc.Fade(an.endColour);
+                        yield return new WaitForSeconds(0.75f);
+                        break;
+
                     case s_actionAnim.ACTION_TYPE.PROJECTILE:
                         {
                             Vector2 start = new Vector2(0, 0);
@@ -1319,7 +1345,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                     }
                     else
                     {
-                        StartCoroutine(DamageAnimation(eff.damage, currentCharacterObject, ""));
+                        StartCoroutine(DamageAnimation(eff.damage, currentCharacterObject));
                     }
                     break;
             }
@@ -1710,11 +1736,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
         if (playerCharacters.Contains(currentCharacterObject) || currentCharacterObject == guest)
         {
-            s_soundmanager.sound.PlaySound("notif");
+            playSound.RaiseEvent(notificationPlayerSound, 1);
         }
         else
         {
-            s_soundmanager.sound.PlaySound("notif_enemy");
+            playSound.RaiseEvent(notificationEnemySound, 1);
         }
 
         for (int i = 0; i < 2; i++)
@@ -1814,7 +1840,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 //If there are no full turn icons start taking away instead of turning full icons into half
                 if (fullTurn > 0)
                 {
-                    s_soundmanager.GetInstance().PlaySound("weakness_smtIV");
+                    playSound.RaiseEvent(pressTurnSound, 1);
                     HitWeakness();
                     StartCoroutine(TurnIconFX(TURN_ICON_FX.HIT, netTurn - halfTurn));
                 }
@@ -1922,14 +1948,12 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     public void GuardOption()
     {
         currentMove.SetMove(guard);
-        s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         battleEngine = BATTLE_ENGINE_STATE.END;
         menuchoice = 0;
     }
     public void SelectSkillOptionGuard()
     {
         currentMove.SetMove(guard);
-        s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         EndAction();
     }
     public void AddToTotalDMG(int damage, DAMAGE_FLAGS flag, CH_BattleChar targ) {
@@ -2173,11 +2197,11 @@ public class s_battleEngine : s_singleton<s_battleEngine>
             targ.statusEffects.Clear();
             if (oppositionCharacters.Contains(targ))
             {
-                s_soundmanager.GetInstance().PlaySound("enemy_defeat");
+                playSound.RaiseEvent(enemyDefeatSound, 1);
             }
             else
             {
-                s_soundmanager.GetInstance().PlaySound("player_defeat");
+                playSound.RaiseEvent(playerDefeatSound, 1);
             }
             yield return StartCoroutine(PlayFadeCharacter(targ, Color.black, Color.clear));
             if (oppositionCharacters.Contains(targ) && !targ.persistence)
@@ -2249,14 +2273,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 hitObjType.Set("lucky");
                 if (oppositionCharacters.Contains(target))
                 {
-                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
-                    s_soundmanager.GetInstance().PlaySound("rpgHit");
+                    playSound.RaiseEvent(luckyHitSound, 1);
+                    playSound.RaiseEvent(enemyHitSound, 1);
                     hitObjectSpawner.hitObjectPool.Get();
                 }
                 else
                 {
-                    s_soundmanager.GetInstance().PlaySound("mal_lucky");
-                    s_soundmanager.GetInstance().PlaySound("pl_dmg");
+                    playSound.RaiseEvent(luckyHitSound, 0.5f);
+                    playSound.RaiseEvent(playerHitSound, 1);
                     hitObjectSpawner.hitObjectPool.Get();
                     //SpawnDamageObject(dmg, characterPos, false, target.battleCharData.characterColour);
                 }
@@ -2270,14 +2294,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 hitObjType.Set("critical");
                 if (oppositionCharacters.Contains(target))
                 {
-                    s_soundmanager.GetInstance().PlaySound("hitWeak");
-                    s_soundmanager.GetInstance().PlaySound("rpgHit");
+                    playSound.RaiseEvent(criticalHitSound, 0.85f);
+                    playSound.RaiseEvent(enemyHitSound, 1);
                     hitObjectSpawner.hitObjectPool.Get();
                 }
                 else
                 {
-                    s_soundmanager.GetInstance().PlaySound("hitWeak");
-                    s_soundmanager.GetInstance().PlaySound("pl_dmg");
+                    playSound.RaiseEvent(criticalHitSound, 0.85f);
+                    playSound.RaiseEvent(playerHitSound, 1);
                     hitObjectSpawner.hitObjectPool.Get();
                 }
                 break;
@@ -2290,14 +2314,14 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 {
                     if (oppositionCharacters.Contains(target))
                     {
-                        s_soundmanager.GetInstance().PlaySound("rpgHit");
+                        playSound.RaiseEvent(enemyHitSound, 1);
                         hitObjColour.Set(Color.white);
                         hitObjType.Set("damage_enemy");
                         hitObjectSpawner.hitObjectPool.Get();
                     }
                     else
                     {
-                        s_soundmanager.GetInstance().PlaySound("pl_dmg");
+                        playSound.RaiseEvent(playerHitSound, 1);
                         hitObjType.Set("damage_player");
                         hitObjColour.Set(target.battleCharData.characterColour);
                         hitObjectSpawner.hitObjectPool.Get();
@@ -2305,7 +2329,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
                 }
                 else
                 {
-                    s_soundmanager.GetInstance().PlaySound("pl_dmg");
+                    playSound.RaiseEvent(playerHitSound, 1);
                 }
                 break;
 
@@ -2400,6 +2424,7 @@ public class s_battleEngine : s_singleton<s_battleEngine>
 
     public IEnumerator ConcludeBattle()
     {
+        s_enemyGroup enemyGroup = this.enemyGroupRef.enemyGroup;
         //Fade
         //EXPResults.SetActive(false);
         //oppositionCharacterTurnQueue.Clear();
@@ -2409,7 +2434,6 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         yield return new WaitForSeconds(0.1f);
         if (!nonChangablePlayers)
         {
-            s_menuhandler.GetInstance().SwitchMenu("ExperienceMenu");
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
             for(int ind =0; ind < playerCharacters.Count; ind++)
             {
@@ -2543,7 +2567,9 @@ public class s_battleEngine : s_singleton<s_battleEngine>
     }
     public IEnumerator GameOver()
     {
-        yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
+        //fadeFunc.raise
+        //yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
+        yield return new WaitForSeconds(0.5f);
         isPlayerTurn = true;
        // players.Clear();
         isEnabled = false;
@@ -2551,7 +2577,8 @@ public class s_battleEngine : s_singleton<s_battleEngine>
         //Destroy(rpg_globals.gl.player.gameObject);
         currentPartyCharactersQueue.Clear();
         battleEngine = BATTLE_ENGINE_STATE.NONE;
-        s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
+        mapTrans.RaiseEvent("Overworld");
+        //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
     public IEnumerator NextTeamTurn()
     {

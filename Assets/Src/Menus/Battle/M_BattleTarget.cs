@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MagnumFoundation2.System;
 
 public class M_BattleTarget : S_MenuSystem
 {
@@ -56,6 +55,7 @@ public class M_BattleTarget : S_MenuSystem
             b.gameObject.SetActive(false);
         }
     }
+    /*
     Vector2 getCentroid()
     {
 
@@ -66,6 +66,7 @@ public class M_BattleTarget : S_MenuSystem
         }
         return s_camera.cam.GetCentroid(allPositions);
     }
+    */
 
     public override void StartMenu()
     {

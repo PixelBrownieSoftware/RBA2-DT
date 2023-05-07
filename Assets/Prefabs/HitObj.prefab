@@ -535,37 +535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f95198e6076d9e4989438ab7588c13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 
-  shadow: {fileID: 0}
-  _Z_offset: 0
-  Z_floor: 0
-  collision: {fileID: 0}
-  terminalSpeedOrigin: 0
-  gravity: 0
-  rbody2d: {fileID: 0}
-  rendererObj: {fileID: 0}
-  animHand: {fileID: 8777529028878976355}
-  useCondition: 0
-  disspearOnConditionTrue: 0
-  logicType: 0
-  flagName: 
-  conditionNum: 0
-  isHover: 0
-  grounded: 1
-  switchA: 0
-  switchB: 0
-  switchC: 0
-  switchD: 0
-  conditions: []
-  eventScript: {fileID: 0}
-  TRIGGER_T: 0
-  graphic: {fileID: 0}
-  issolid: 1
-  layuer:
-    serializedVersion: 2
-    m_Bits: 0
-  character: 
-  characterCannot: 
   text: {fileID: 4999429939175307291}
   additionalText: {fileID: 353580310252673259}
   anim: {fileID: 8777529028878976355}
@@ -583,6 +552,7 @@ MonoBehaviour:
   buffDown: {fileID: 1410876229519445437, guid: ee47516c69c530c4b85097a95195ae8d,
     type: 3}
   currentColour: {r: 1, g: 1, b: 1, a: 1}
+  soundPlay: {fileID: 11400000, guid: adf0d918638fc224995955e308ed2fa5, type: 2}
 --- !u!95 &8777529028878976355
 Animator:
   serializedVersion: 4

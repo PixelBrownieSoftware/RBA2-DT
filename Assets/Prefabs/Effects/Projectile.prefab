@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 9, y: 9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4497451124001022849}
   m_Father: {fileID: 0}
@@ -46,6 +47,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -109,7 +111,7 @@ Rigidbody2D:
   m_Constraints: 0
 --- !u!95 &9012827220040057580
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,6 +124,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -138,37 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb2593a67a418646976aa6c63609a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: Projectile
-  shadow: {fileID: 0}
-  _Z_offset: 0
-  Z_floor: 0
-  collision: {fileID: 0}
-  terminalSpeedOrigin: 0
-  gravity: 0
-  rbody2d: {fileID: 0}
-  rendererObj: {fileID: 1633170657294440410}
-  useCondition: 0
-  disspearOnConditionTrue: 0
-  logicType: 0
-  flagName: 
-  conditionNum: 0
-  isHover: 0
-  grounded: 1
-  switchA: 0
-  switchB: 0
-  switchC: 0
-  switchD: 0
-  conditions: []
-  eventScript: {fileID: 0}
-  graphic: {fileID: 0}
-  issolid: 1
-  layuer:
-    serializedVersion: 2
-    m_Bits: 0
-  character: 
-  characterCannot: 
   anim: {fileID: 9012827220040057580}
   subObj: {fileID: 4683829397918718962}
+  soundPlay: {fileID: 11400000, guid: adf0d918638fc224995955e308ed2fa5, type: 2}
 --- !u!1 &4683829397918718962
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +173,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1633170657294440405}
   m_RootOrder: 0
@@ -213,6 +189,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -276,7 +253,7 @@ Rigidbody2D:
   m_Constraints: 0
 --- !u!95 &6674177899784200293
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -289,6 +266,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

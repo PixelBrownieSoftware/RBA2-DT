@@ -18,6 +18,8 @@ public class S_ExperienceMenu : S_MenuSystem
 
     public B_Function continueButton;
     public B_Function overworldButton;
+    [SerializeField]
+    public CH_MapTransfer mapTrans;
 
     private void OnEnable()
     {
@@ -57,8 +59,7 @@ public class S_ExperienceMenu : S_MenuSystem
     {
         continueButton.gameObject.SetActive(false);
         overworldButton.gameObject.SetActive(false);
-        SceneManager.UnloadSceneAsync("battle_scene");
-        SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
+        mapTrans.RaiseEvent("Overworld");
         changeMenu.RaiseEvent("Hub");
     }
 

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using MagnumFoundation2.System;
-using MagnumFoundation2.System.Core;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -56,7 +54,7 @@ public struct s_moveComb
 }
 */
 [System.Serializable]
-public class s_RPGSave : dat_save {
+public class s_RPGSave {
     [System.Serializable]
     public struct sav_shopItem
     {
@@ -215,6 +213,7 @@ public class s_RPGSave : dat_save {
     }
 }
 
+/*
 public class s_rpgGlobals : s_globals
 {
     public static s_rpgGlobals rpgGlSingleton;
@@ -269,14 +268,12 @@ public class s_rpgGlobals : s_globals
         base.Update();
         if (Input.GetKeyDown(GetKeyPref("select"))) {
             //print("COMBO!");
-            /*
             foreach (Tuple<s_moveComb, s_move> mov in CheckComboRequirementsParty(s_battleEngine.engineSingleton.playerCharacters))
             {
                 string str = "Move name: " + mov.Item2 + " User 1: " + mov.Item1.user1 + " User 2: " + mov.Item1.user2;
                 
                 //print(str);
             }
-            */
         }
         moneyTxt.text = "£" + money._float;
     }
@@ -285,7 +282,6 @@ public class s_rpgGlobals : s_globals
     {
         try
         {
-            /*
             FileStream fs = new FileStream(saveDataName, FileMode.Create);
             BinaryFormatter bin = new BinaryFormatter();
 
@@ -300,19 +296,15 @@ public class s_rpgGlobals : s_globals
             sav.trigStates = objectStates;
             bin.Serialize(fs, sav);
             fs.Close();
-            */
 
         } catch (Exception e) {
             print(e);
         }
 
-        /*s
         new dat_globalflags(GlobalFlags), (int)player.health, (int)player.maxHealth, lev.mapDat.name,  
         
         if (isFixedSaveArea)
             sav.currentmap = fixedSaveAreaName;
-        */
-
     }
 
     public override void StartStuff()
@@ -333,7 +325,6 @@ public class s_rpgGlobals : s_globals
             //AddPartyMember(partyMemberBaseData[6], 35);
             //AddItem("Medicine", 5);
             //AddItem("Energy drink", 5);
-            /*
             if (!isSave.boolean)
             {
                 money._float = 0;
@@ -342,7 +333,6 @@ public class s_rpgGlobals : s_globals
                     rpgManager.AddPartyMember(ind, 1);
                 }
             }
-            */
             print("This is cool");
         } else {
             Destroy(gameObject);
@@ -357,35 +347,27 @@ public class s_rpgGlobals : s_globals
     public void SwitchToOverworld(bool isFlee)
     {
         SceneManager.UnloadSceneAsync("battle_scene");
-        /*
         if (!isFlee)
             if (locationObjectName != null)
                 locationObjectName.isDone = true;
-        */
         s_menuhandler.GetInstance().SwitchMenu("EMPTY");
         //rpgScene.SetActive(false);
         //rpgSceneGUI.SetActive(false);
         //overWorld.SetActive(true);
-        /*
         if(!isFlee)
             locationObjectName.isDone = true;
         
-        */
         s_battleEngine.engineSingleton.isEnabled = false;
         s_camera.cam.ZoomCamera(-1);
         s_camera.cam.cameraMode = s_camera.CAMERA_MODE.CHARACTER_FOCUS;
-        /*
         if (locationObjectName != null)
             AddTriggerState(new triggerState(locationObjectName.name, "Overworld", true));
-        */
         SaveData();
 
         SceneManager.LoadSceneAsync("Overworld", LoadSceneMode.Additive);
         changeMenu.RaiseEvent("Hub");
-        /*
         if (s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo != "")
             SceneManager.LoadScene(s_battleEngine.engineSingleton.enemyGroup.sceneToGoTo);
-        */
     }
     public override void ClearAllThings()
     {
@@ -405,12 +387,12 @@ public class s_rpgGlobals : s_globals
         s_battleEngine.engineSingleton.nonChangablePlayers = false;
         s_battleEngine.engineSingleton.StartCoroutine(s_battleEngine.engineSingleton.StartBattle());
     }
-    /*
+
     public IEnumerator SwitchToBattle(s_enemyGroup gr, o_locationOverworld lc) {
         locationObjectName = lc;
         yield return SwitchToBattle(gr);
     }
-    */
+
     public IEnumerator SwitchToOverworldMenu()
     {
         yield return SceneManager.UnloadSceneAsync("Title", UnloadSceneOptions.None);
@@ -516,10 +498,8 @@ public class s_rpgGlobals : s_globals
             newCharacter.inBattle = data.inBattle;
         }
         partyMembers.Add(newCharacter);
-    }
-    */
+    
 
-    /*
     public void AddPartyMember(o_battleCharDataN data, int level) {
 
         o_battleCharPartyData newCharacter = new o_battleCharPartyData();
@@ -600,8 +580,7 @@ public class s_rpgGlobals : s_globals
         newCharacter.characterDataSource = data;
         partyMembers.Add(newCharacter);
     }
-    */
-    /*
+
     public void SetPartyMemberStats(o_battleCharacter data)
     {
         o_battleCharPartyData newCharacter = partyMembers.Get(data.name);
@@ -621,8 +600,7 @@ public class s_rpgGlobals : s_globals
             newCharacter.currentMoves.AddRange(data.currentMoves.FindAll(x => !newCharacter.currentMoves.Contains(x)));
         }
     }
-    */
-    /*
+
     List<s_move> FindComboMoveReqList(s_move.moveRequirement req, CH_BattleChar pc)
     {
         List<s_move> mov = new List<s_move>();
@@ -690,9 +668,7 @@ public class s_rpgGlobals : s_globals
         }
         return mov;
     }
-    */
 
-    /*
     s_move FindComboMoveReq(s_move.moveRequirement req, o_battleCharacter pc) {
         List<s_move> allMV = new List<s_move>();
         allMV.AddRange(pc.currentMoves);
@@ -733,8 +709,7 @@ public class s_rpgGlobals : s_globals
         }
         return null;
     }
-    */
-    /*
+
     public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsParty(List<o_battleCharacter> members) {
         List<Tuple<s_moveComb, s_move>> movs = new List<Tuple<s_moveComb, s_move>>();
         foreach (s_move m in comboMoveData)
@@ -923,8 +898,7 @@ public class s_rpgGlobals : s_globals
         }
         return movs;
     }
-    */
-    /*
+
     public List<Tuple<s_moveComb, s_move>> CheckComboRequirementsCharacter3(CH_BattleChar PriUser, List<o_battleCharacter> members)
     {
         List<Tuple<s_moveComb, s_move>> movs = new List<Tuple<s_moveComb, s_move>>();
@@ -973,8 +947,6 @@ public class s_rpgGlobals : s_globals
         }
         return movs;
     }
-    */
-    /*
     [MenuItem("AssetDatabase/LoadAssetExample")]
     static void ImportExample()
     {
@@ -1037,12 +1009,9 @@ public class s_rpgGlobals : s_globals
         newCharacter.dataSrc = data;
         partyMembers.Add(newCharacter);
     }
-    */
-
-    /*
     public void SetLocationObject(o_locationOverworld lc)
     {
         locationObjectName = lc;
     }
-    */
 }
+*/

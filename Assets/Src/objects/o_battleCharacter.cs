@@ -1,5 +1,4 @@
-﻿using MagnumFoundation2;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -171,7 +170,8 @@ public class s_actionAnim
         CHAR_ANIMATION,
         MOVE_CAMERA,
         ZOOM_CAMERA,
-        FADE_TARGET
+        FADE_TARGET,
+        FADE_SCREEN
     }
     public ACTION_TYPE actionType;
 

@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,6 @@ using UnityEngine.UI;
 using MagnumFoundation2.System;
 using MagnumFoundation2.System.Core;
 
-/*
 public class s_targetButton : s_button
 {
     public CH_BattleChar battleCharButton;

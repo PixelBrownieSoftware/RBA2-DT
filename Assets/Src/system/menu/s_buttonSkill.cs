@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using MagnumFoundation2.System.Core;
-using MagnumFoundation2.System;
 /*
 public class s_buttonSkill : s_button
 {

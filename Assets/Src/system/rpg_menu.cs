@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿/*
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MagnumFoundation2.System.Core;
@@ -11,3 +12,4 @@ public class rpg_menu : s_mainmenu
         LoadSave<s_RPGSave>();
     }
 }
+*/

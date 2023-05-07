@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.pbrs.magnumfoundation2": {
-      "version": "file:C:/Users/Shadow/Documents/GitHub/Magnum-foundation-2-playground/Packages/Magnum Foundation 2",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

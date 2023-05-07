@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿/*
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MagnumFoundation2.System.Core;
@@ -27,11 +28,9 @@ public class s_rpgEvents : s_triggerhandler
                         pointer = -1;
                         doingEvents = false;
                         //player.rendererObj.color = Color.clear;
-                        /*
                         s_camera.cam.ZoomCamera(10, 250);
                         MagnumFoundation2.System.Core.s_soundmanager.GetInstance().PlaySound("encounter");
                         yield return StartCoroutine(Fade(Color.black));
-                        */
                         s_enemyGroup enGr = (s_enemyGroup)current_ev.scrObj;
                         if (enGr != null)
                         {
@@ -56,3 +55,4 @@ public class s_rpgEvents : s_triggerhandler
 
     }
 }
+*/

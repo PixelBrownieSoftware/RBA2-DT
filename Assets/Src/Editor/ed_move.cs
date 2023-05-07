@@ -102,6 +102,12 @@ public class ed_move : Editor
                 animationPeice.time = Mathf.Clamp(animationPeice.time, 0, float.MaxValue);
                 EditorGUILayout.EndHorizontal();
                 break;
+            case s_actionAnim.ACTION_TYPE.FADE_SCREEN:
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Colour", GUILayout.Width(70f));
+                animationPeice.endColour = EditorGUILayout.ColorField(animationPeice.endColour);
+                EditorGUILayout.EndHorizontal();
+                break;
         }
         EditorGUILayout.Space();
     }

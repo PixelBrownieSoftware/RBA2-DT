@@ -12,6 +12,8 @@ public class M_TitleMenu : S_MenuSystem
     [SerializeField]
     private CH_Func loadGame;
     [SerializeField]
+    private CH_MapTransfer mapTransfer;
+    [SerializeField]
     private CH_Func goToOverworld;
     public R_Save saveData;
     public B_Function loadGameButton;
@@ -25,13 +27,11 @@ public class M_TitleMenu : S_MenuSystem
         newGame.OnFunctionEvent += NewGame;
         loadGame.OnFunctionEvent += LoadGame;
     }
-
     private void OnDisable()
     {
         newGame.OnFunctionEvent -= NewGame;
         loadGame.OnFunctionEvent -= LoadGame;
     }
-
     private void Awake()
     {
         hasStartedGame.boolean = false;
@@ -40,11 +40,10 @@ public class M_TitleMenu : S_MenuSystem
         else
             loadGameButton.gameObject.SetActive(false);
     }
-
     public void NewGame()
     {
-        goToOverworld.RaiseEvent();
         isSave.boolean = false;
+        mapTransfer.RaiseEvent("Overworld");
     }
     public void LoadGame() {
 
@@ -55,5 +54,6 @@ public class M_TitleMenu : S_MenuSystem
         fs.Close();
         saveData.saveData = save;
         goToOverworld.RaiseEvent();
+        mapTransfer.RaiseEvent("Overworld");
     }
 }

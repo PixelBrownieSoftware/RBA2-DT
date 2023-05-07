@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
-using MagnumFoundation2.Objects;
-using MagnumFoundation2.System.Core;
 using TMPro;
 
 public class s_hitObj : MonoBehaviour
@@ -23,6 +21,7 @@ public class s_hitObj : MonoBehaviour
     public Sprite buffDown;
     public Color currentColour = Color.white;
     public IObjectPool<s_hitObj> pool;
+    public CH_SoundPitch soundPlay;
 
     private void Update()
     {
@@ -31,7 +30,7 @@ public class s_hitObj : MonoBehaviour
 
     public void PlaySound(AudioClip cl)
     {
-        s_soundmanager.GetInstance().PlaySound(cl);
+        soundPlay.RaiseEvent(cl, 1);
     }
 
     public void MarkDone()
@@ -99,6 +98,7 @@ public class s_hitObj : MonoBehaviour
                 anim.Play("miss_attack");
                 break;
             case "total":
+                text.text = "" + dmg;
                 additionalText.text = "TOTAL";
                 anim.Play("totalDmg");
                 break;

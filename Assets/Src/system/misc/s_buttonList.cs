@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,3 +23,4 @@ public class s_buttonList : MonoBehaviour
         listOfButtons.ForEach(x => x.gameObject.SetActive(false));
     }
 }
+*/
