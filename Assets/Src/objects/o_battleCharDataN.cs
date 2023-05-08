@@ -19,7 +19,7 @@ public class o_battleCharDataN : ScriptableObject
         public charAI[] ai;
     }
     [System.Serializable]
-    public struct el_weaknesses
+    public class el_weaknesses
     {
         public S_Element element;
         public float value;

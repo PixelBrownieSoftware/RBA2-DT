@@ -5,6 +5,23 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEditor;
 
+public static class EditorAssetHelper {
+    public static string[] GetFileNames(string fileType, string directory)
+    {
+        List<string> projAnims = new List<string>();
+        string[] ob = AssetDatabase.FindAssets("t:" + fileType, new[] { directory });
+        foreach (var o in ob)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(o);
+            string[] file = path.Split("/");
+            string filename = file[file.Length - 1].Split(".")[0];
+            projAnims.Add(filename);
+        }
+        return projAnims.ToArray();
+    }
+
+}
+
 [CanEditMultipleObjects]
 [CustomEditor(typeof(s_move))]
 public class ed_move : Editor
@@ -19,26 +36,13 @@ public class ed_move : Editor
     string[] projectileAnims = null;
     string[] genericCharacterAnims = null;
 
-    private string[] GetFileNames(string fileType, string directory) {
-        List<string> projAnims = new List<string>();
-        string[] ob = AssetDatabase.FindAssets("t:" + fileType, new[] {  directory });
-        foreach (var o in ob)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(o);
-            string[] file = path.Split("/");
-            string filename = file[file.Length - 1].Split(".")[0];
-            Debug.Log(filename);
-            projAnims.Add(filename);
-        }
-        return projAnims.ToArray();
-    }
 
     private void OnEnable()
     {
         R_TextArray tx = AssetDatabase.LoadAssetAtPath("Assets/Data/Registers/EditorStuff/CharacterAnims.asset", typeof(R_TextArray)) as R_TextArray;
         if(tx != null)
             genericCharacterAnims = tx._textArray;
-        projectileAnims = GetFileNames("animation", "Assets/sprites/Animations/Effects");
+        projectileAnims = EditorAssetHelper.GetFileNames("animation", "Assets/sprites/Animations/Effects");
     }
 
     public  void DrawAnimations(ref s_actionAnim animationPeice, int index)

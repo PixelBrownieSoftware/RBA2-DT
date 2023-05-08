@@ -21,7 +21,7 @@ MonoBehaviour:
   vitAffect: -2
   dexAffect: 0
   agiAffect: -1
-  intAffect: 0
+  magAffect: 0
   lucAffect: 0
   removeOnEndRound: 0
   criticalOnHit: []

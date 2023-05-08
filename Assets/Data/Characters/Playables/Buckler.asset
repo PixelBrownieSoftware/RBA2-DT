@@ -16,9 +16,9 @@ MonoBehaviour:
   maxSkillPointsB: 2
   maxHitPointsB: 17
   maxHitPointsGMin: 5
-  maxHitPointsGMax: 8
+  maxHitPointsGMax: 5
   maxSkillPointsGMin: 1
-  maxSkillPointsGMax: 2
+  maxSkillPointsGMax: 5
   agilityB: 1
   strengthB: 5
   vitalityB: 5
@@ -31,18 +31,44 @@ MonoBehaviour:
   luckGT: 4
   intelligenceGT: 5
   dexterityGT: 2
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
   turnIcons: 1
   moveLearn:
   - {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
   - {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
-  elementals: []
+  passiveLearn: []
+  elementals:
+  - element: {fileID: 11400000, guid: 652b6b8f93cdd764f8592830ec566fb8, type: 2}
+    value: 0.56
+  - element: {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
+    value: 0.62
   characterColour: {r: 1, g: 0.7325124, b: 0, a: 1}
   characterColour2: {r: 0.7830189, g: 0.5021409, b: 0.2031417, a: 1}
   aiPages:
-  - ai: []
+  - ai:
+    - move: {fileID: 11400000, guid: a876937db904f40409b605371bd17f6a, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: {fileID: 0}
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
+    - move: {fileID: 11400000, guid: cb5a1a39551785b4a9ad43192c1ae3b1, type: 2}
+      turnCounters: 0
+      AIaction: 0
+      conditions: 0
+      element: {fileID: 0}
+      healthPercentage: 0
+      name: 
+      onParty: 0
+      isImportant: 0
+      number1: 0
+      number2: 0
   anim: {fileID: 9100000, guid: 5aef83e9d7b213e489bc029ea5e6ff5f, type: 2}
   items: []
   firstMove: {fileID: 11400000, guid: a9fd51b61c4cf1f41aeb13a0409adcea, type: 2}

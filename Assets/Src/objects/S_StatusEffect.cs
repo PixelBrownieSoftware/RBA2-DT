@@ -7,7 +7,7 @@ using UnityEngine;
 public class S_StatusEffect : ScriptableObject
 {
     [System.Serializable]
-    public struct s_statusReplace {
+    public class s_statusReplace {
         public S_StatusEffect toReplace;
         public S_StatusEffect replace;
     }
@@ -24,7 +24,7 @@ public class S_StatusEffect : ScriptableObject
     public int vitAffect;
     public int dexAffect;
     public int agiAffect;
-    public int intAffect;
+    public int magAffect;
     public int lucAffect;
 
     public bool removeOnEndRound = false;

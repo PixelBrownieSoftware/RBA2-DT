@@ -124,11 +124,22 @@ public class ed_CASE : Editor
     public List<s_move> skilldata;
     Vector2 scrollPos;
     public bool[] aiBoolList;
-
+    private S_Element[] elementList;
+    private List<o_battleCharDataN.el_weaknesses> elWeaknesses;
 
     public void OnEnable()
     {
         charaData = (o_battleCharDataN)target;
+        string[] fileNames = EditorAssetHelper.GetFileNames("S_Element", "Assets/Data/Elements/");
+        List<string> fn = fileNames.ToList();
+        fn.Remove("Heal");
+        fn.Remove("Status");
+        fileNames = fn.ToArray();
+        elementList = new S_Element[fn.Count];
+        for (int i = 0; i < fileNames.Length; i++)
+        {
+            elementList[i] = AssetDatabase.LoadAssetAtPath<S_Element>("Assets/Data/Elements/" + fileNames[i] + ".asset");
+        }
     }
 
     public charAI[] GetAIList() {
@@ -600,6 +611,7 @@ public class ed_CASE : Editor
                 EditorGUILayout.LabelField("Name: ");
                 charaData.name = EditorGUILayout.TextArea(charaData.name);
                 EditorGUILayout.EndHorizontal();
+                charaData.anim = EditorGUILayout.ObjectField(charaData.anim, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Base stats: ");
@@ -609,13 +621,21 @@ public class ed_CASE : Editor
                 EditorGUILayout.LabelField("Health: ");
                 charaData.maxHitPointsB = EditorGUILayout.IntSlider(charaData.maxHitPointsB, 1, 60);
                 EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Health increase: ");
+                charaData.maxHitPointsGMin = EditorGUILayout.IntSlider(charaData.maxHitPointsGMin, 0, 20);
+                charaData.maxHitPointsGMax = EditorGUILayout.IntSlider(charaData.maxHitPointsGMin, charaData.maxHitPointsGMin, 30);
+                EditorGUILayout.EndHorizontal();
                 EditorGUILayout.Space();
-
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Stamina: ");
                 charaData.maxSkillPointsB = EditorGUILayout.IntSlider(charaData.maxSkillPointsB, 1, 50);
                 EditorGUILayout.EndHorizontal();
-
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Stamina increase: ");
+                charaData.maxSkillPointsGMin = EditorGUILayout.IntSlider(charaData.maxSkillPointsGMin, 0, 10);
+                charaData.maxSkillPointsGMax = EditorGUILayout.IntSlider(charaData.maxSkillPointsGMax, charaData.maxSkillPointsGMin, 15);
+                EditorGUILayout.EndHorizontal();
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Base Strength: ");
@@ -713,18 +733,49 @@ public class ed_CASE : Editor
 
             case 3:
 
-                EditorGUILayout.BeginHorizontal();
-                /*
-                float elementWeakness = 0f;
-                if (elementSliderSelector > ELEMENT.UNKNOWN && elementSliderSelector < ELEMENT.PSYCHIC + 1)
+                elWeaknesses = charaData.elementals.ToList();
+                for (int i = 0; i < elementList.Length; i++)
                 {
-                    elementWeakness = charaData.elementAffinities[(int)elementSliderSelector];
-                    EditorGUILayout.LabelField(element + ": ");
-                    charaData.elementAffinities[(int)elementSliderSelector] = 
-                        ChangeStatFloatSlider(ref charaData.elementAffinities[(int)elementSliderSelector], -1.9f, 2.9f);
+                    S_Element curEl = elementList[i];
+                    EditorGUILayout.BeginHorizontal();
+                    GUI.color = curEl.elementColour;
+                    EditorGUILayout.LabelField(curEl.name, GUILayout.Width(120f));
+                    GUI.color = Color.white;
+                    o_battleCharDataN.el_weaknesses elWeak = elWeaknesses.Find(x => x.element == curEl);
+                    if (elWeak != null)
+                    {
+                        GUI.backgroundColor = Color.white;
+                        float prevVal = elWeak.value;
+                        elWeak.value = EditorGUILayout.Slider(elWeak.value, -2, 2.5f);
+                        elWeak.value = Mathf.Round(elWeak.value * 100f) / 100f;
+                        float currVal = elWeak.value;
+                        if (currVal != prevVal)
+                        {
+                            charaData.elementals = elWeaknesses.ToArray();
+                        }
+                        if (GUILayout.Button("-"))
+                        {
+                            elWeaknesses.Remove(elWeak);
+                            charaData.elementals = elWeaknesses.ToArray();
+                        }
+                        GUI.backgroundColor = Color.white;
+                    }
+                    else
+                    {
+                        GUI.backgroundColor = Color.grey;
+                        if (GUILayout.Button(""))
+                        {
+                            o_battleCharDataN.el_weaknesses wk = new o_battleCharDataN.el_weaknesses();
+                            wk.value = 1f;
+                            wk.element = curEl;
+                            elWeaknesses.Add(wk);
+                            Debug.Log("OK");
+                            charaData.elementals = elWeaknesses.ToArray();
+                        }
+                        GUI.backgroundColor = Color.white;
+                    }
+                    EditorGUILayout.EndHorizontal();
                 }
-                */
-                EditorGUILayout.EndHorizontal();
                 break;
 
             #region AI

@@ -9,7 +9,7 @@ public class BC_Stats {
     public int vitality;
     public int dexterity;
     public int agility;
-    public int intelligence;
+    public int magic;
     public int luck;
 }
 
@@ -477,7 +477,7 @@ public class o_battleCharacter : MonoBehaviour
     {
         get
         {
-            int net = intelligence + statusStats.intelligence;
+            int net = intelligence + statusStats.magic;
             net = Mathf.Clamp(net, 1, int.MaxValue);
             return net;
         }
@@ -498,7 +498,7 @@ public class o_battleCharacter : MonoBehaviour
         int str = 0;
         int vit = 0;
         int agi = 0;
-        int intel = 0;
+        int mag = 0;
         int dex = 0;
         int luc = 0;
 
@@ -507,15 +507,15 @@ public class o_battleCharacter : MonoBehaviour
             str += statEff.strAffect;
             vit += statEff.vitAffect;
             agi += statEff.agiAffect;
-            intel += statEff.intAffect;
+            mag += statEff.magAffect;
             dex += statEff.dexAffect;
             luc += statEff.lucAffect;
         }
 
         statusStats.strength = str; 
         statusStats.vitality = vit; 
-        statusStats.strength = agi; 
-        statusStats.strength = intel; 
+        statusStats.agility = agi; 
+        statusStats.magic = mag; 
         statusStats.dexterity = dex;
         statusStats.luck = luc;
     }
