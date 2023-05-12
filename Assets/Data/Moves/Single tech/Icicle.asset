@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Icicle
   m_EditorClassIdentifier: 
-  strReq: 0
+  strReq: 4
   dxReq: 0
-  vitReq: 0
+  vitReq: 5
   agiReq: 0
-  intReq: 0
+  intReq: 4
   lucReq: 0
-  power: 15
+  power: 8
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 0
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 9960c19a89a5aaf45b4f2e65d6db53ad, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
   - name: 
@@ -34,6 +37,8 @@ MonoBehaviour:
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -51,6 +56,8 @@ MonoBehaviour:
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.6
@@ -68,6 +75,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.3
@@ -85,6 +94,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -102,6 +113,8 @@ MonoBehaviour:
     goal: 3
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -119,6 +132,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -131,13 +146,6 @@ MonoBehaviour:
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
   statusInflictChance: []
-  cost: 9
+  cost: 7
   customFunc: 
-  strBuff: 0
-  vitBuff: 0
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

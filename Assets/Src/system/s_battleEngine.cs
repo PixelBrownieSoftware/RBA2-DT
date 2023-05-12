@@ -1964,14 +1964,14 @@ public class s_battleEngine : MonoBehaviour
         }
         totalDamageOutput[targ].Add(new Tuple<DAMAGE_FLAGS, int>(flag, damage));
     }
-    public bool PredictStatChance(int userVal, int targVal, float connectMax = 0.95f) {
+    public bool PredictStatChance(int userVal, int targVal, float connectMax) {
         userVal = Mathf.Clamp(userVal, 1, int.MaxValue);
         targVal = Mathf.Clamp(targVal, 1, int.MaxValue);
         int totalVal = userVal + targVal;
-        float attackConnectChance = ((float)userVal / (float)totalVal);
-        attackConnectChance = Mathf.Clamp(attackConnectChance, 0, connectMax);
+        float userModify = (float)userVal + ((float)userVal * connectMax);
+        print("User chance: " + userModify + " enemy chance: " + targVal);
+        float attackConnectChance = (userModify / (float)totalVal);
         float gonnaHit = UnityEngine.Random.Range(0f, 1f);
-        print(connectMax + " maxCon " + attackConnectChance + " chc " + gonnaHit + " gonnaHit");
         if (gonnaHit > attackConnectChance)
             return false;
         return true;
@@ -2051,8 +2051,8 @@ public class s_battleEngine : MonoBehaviour
             case s_move.MOVE_TYPE.HP_SP_DRAIN:
                 if (targ.health <= 0)
                     yield break;
-                willHit = PredictStatChance(currentCharacterObject.dexterity + 2, targ.agiNet - 1);
-                bool isLucky = PredictStatChance(currentCharacterObject.luckNet, targ.luckNet, 0.30f);
+                willHit = PredictStatChance(currentCharacterObject.dexterity, targ.agiNet, 0.65f);
+                bool isLucky = PredictStatChance(currentCharacterObject.luckNet, targ.luckNet, -0.80f);
                 bool isCritical = IsCritical(targ);
                 print("Will hit? " + willHit + " Is critical? " + isCritical + " Is lucky? " + isLucky);
                 ELEMENT_WEAKNESS weaknessType = FigureWeakness(targ);
@@ -2139,22 +2139,10 @@ public class s_battleEngine : MonoBehaviour
         }
         if (willHit)
         {
-            foreach (var statusInfl in mov.statusInflictChance)
-            {
-                float infChance = UnityEngine.Random.Range(0, 1f);
-                if (infChance <= statusInfl.chance)
-                {
-                    if (statusInfl.add_remove)
-                    {
-                        targ.SetStatus(statusInfl.statusEffect, dmg);
-                    }
-                    else
-                    {
-                        targ.RemoveStatus(statusInfl.statusEffect);
-                    }
-                }
-            }
-            foreach (var statusInfl in mov.element.statusInflict)
+            List<S_Element.effect> statusEffsInflictChance = new List<S_Element.effect>();
+            statusEffsInflictChance.AddRange(mov.statusInflictChance);
+            statusEffsInflictChance.AddRange(mov.element.statusInflict);
+            foreach (var statusInfl in statusEffsInflictChance)
             {
                 float infChance = UnityEngine.Random.Range(0, 1f);
                 if (infChance <= statusInfl.chance)
@@ -2424,7 +2412,8 @@ public class s_battleEngine : MonoBehaviour
 
     public IEnumerator ConcludeBattle()
     {
-        s_enemyGroup enemyGroup = this.enemyGroupRef.enemyGroup;
+        s_enemyGroup enemyGroup = enemyGroupRef.enemyGroup;
+        print(enemyGroup.name);
         //Fade
         //EXPResults.SetActive(false);
         //oppositionCharacterTurnQueue.Clear();
@@ -2435,6 +2424,7 @@ public class s_battleEngine : MonoBehaviour
         if (!nonChangablePlayers)
         {
             bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
+            print("All gone?" + allDefeated);
             for(int ind =0; ind < playerCharacters.Count; ind++)
             {
                 o_battleCharacter c = playerCharacters[ind];
@@ -2522,9 +2512,15 @@ public class s_battleEngine : MonoBehaviour
                 }
             }
             if (allDefeated && !battleGroupDoneRef.groupList.Contains(enemyGroup)) {
-                battleGroupDoneRef.AddGroup(enemyGroup);
-                if (enemyGroup.perishIfDone) {
-                    battleGroupRef.RemoveGroup(enemyGroup);
+                //battleGroupDoneRef.AddGroup(enemyGroup);
+                if (enemyGroup.perishBranches != null)
+                {
+                    foreach (var br in enemyGroup.perishBranches)
+                    {
+                        print(br.name);
+                        battleGroupRef.RemoveGroup(br);
+                        battleGroupDoneRef.AddGroup(br);
+                    }
                 }
                 if (enemyGroup.shopItems != null)
                 {

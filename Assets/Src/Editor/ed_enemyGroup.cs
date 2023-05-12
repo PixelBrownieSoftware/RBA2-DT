@@ -154,6 +154,12 @@ public class ed_enemyGroup : Editor
         enGroupData = (s_enemyGroup)target;
         if (enGroupData != null)
         {
+            if (GUILayout.Button("Save"))
+            {
+                EditorUtility.SetDirty(enGroupData);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
             List<string> optionsMenuList = new List<string>() { "Overview", "Enemies", "Enemy summonables"};
             
             if (enGroupData.fixedPlayers) {
@@ -181,11 +187,6 @@ public class ed_enemyGroup : Editor
                         EditorGUILayout.LabelField("Fleeable? ");
                         enGroupData.fleeable = EditorGUILayout.Toggle(enGroupData.fleeable);
                         EditorGUILayout.EndHorizontal();
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("Complete once? ");
-                        enGroupData.perishIfDone = EditorGUILayout.Toggle(enGroupData.perishIfDone);
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUILayout.Space();
                         foreach (var chara in enGroupData.members)
                         {
                             string display = "";
@@ -229,6 +230,38 @@ public class ed_enemyGroup : Editor
                                 Repaint();
                             }
                             EditorGUILayout.EndHorizontal();
+                        }
+                        EditorGUILayout.Space();
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("Remove");
+                        if (GUILayout.Button("+", GUILayout.Width(20f)))
+                        {
+
+                            List<s_enemyGroup> groups = null;
+                            if (enGroupData.perishBranches != null)
+                                groups = enGroupData.perishBranches.ToList();
+                            else
+                                groups = new List<s_enemyGroup>();
+                            groups.Add(new s_enemyGroup());
+                            enGroupData.perishBranches = groups.ToArray();
+                            Repaint();
+                        }
+                        EditorGUILayout.EndHorizontal();
+                        if (enGroupData.perishBranches != null)
+                        {
+                            for (int i = 0; i < enGroupData.perishBranches.Length; i++)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                enGroupData.perishBranches[i] = EditorGUILayout.ObjectField(enGroupData.perishBranches[i], typeof(s_enemyGroup), false) as s_enemyGroup;
+                                if (GUILayout.Button("-", GUILayout.Width(20f)))
+                                {
+                                    List<s_enemyGroup> groups = enGroupData.perishBranches.ToList();
+                                    groups.RemoveAt(i);
+                                    enGroupData.perishBranches = groups.ToArray();
+                                    Repaint();
+                                }
+                                EditorGUILayout.EndHorizontal();
+                            }
                         }
                         EditorGUILayout.Space();
                         EditorGUILayout.BeginHorizontal();

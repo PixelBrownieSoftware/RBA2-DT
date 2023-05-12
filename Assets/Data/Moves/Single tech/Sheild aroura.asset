@@ -36,6 +36,8 @@ MonoBehaviour:
     goal: 4
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -53,6 +55,8 @@ MonoBehaviour:
     goal: 6
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.2
@@ -71,6 +75,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.15
@@ -88,6 +94,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -106,6 +114,8 @@ MonoBehaviour:
     goal: 6
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0.3
@@ -117,10 +127,9 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   statusInflictChance:
-  - status_effect: {fileID: 11400000, guid: 0ed829b23c50e9845893c29302e43193, type: 2}
-    status_inflict_chance: 1
-    duration: 5
-    damage: 0
+  - statusEffect: {fileID: 11400000, guid: 0ed829b23c50e9845893c29302e43193, type: 2}
+    chance: 1
+    add_remove: 1
   cost: 7
   customFunc: 
   guardPoints: 0

@@ -48,7 +48,6 @@ public class s_enemyGroup : ScriptableObject
     public bool fleeable = true;
     public bool fixedPlayers = false;
     public bool guestInvolved = false;
-    public bool perishIfDone = false;
     public s_groupMember[] members;
     public s_groupMember[] members_summonable;
     public s_groupMember[] members_pre_summon;
@@ -58,6 +57,7 @@ public class s_enemyGroup : ScriptableObject
     public o_battleCharDataN[] unlockCharacters;
 
     public s_enemyGroup[] branches;
+    public s_enemyGroup[] perishBranches;
     public Shop_item[] shopItems;
 
     public Sprite bg1;

@@ -86,6 +86,12 @@ public class ed_move : Editor
                     animationPeice.name = genericCharacterAnims[animationPeice.animation_id];
                 break;
             case s_actionAnim.ACTION_TYPE.PROJECTILE:
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Start", GUILayout.Width(70f));
+                animationPeice.start = (s_actionAnim.MOTION)EditorGUILayout.EnumPopup(animationPeice.start);
+                EditorGUILayout.LabelField("Goal", GUILayout.Width(70f));
+                animationPeice.goal = (s_actionAnim.MOTION)EditorGUILayout.EnumPopup(animationPeice.goal);
+                EditorGUILayout.EndHorizontal();
                 animationPeice.animation_id = EditorGUILayout.Popup("Projectile animations", animationPeice.animation_id, projectileAnims);
                 animationPeice.name = projectileAnims[animationPeice.animation_id];
                 break;
@@ -160,6 +166,12 @@ public class ed_move : Editor
         data = (s_move)target;
         if (data != null)
         {
+            if (GUILayout.Button("Save"))
+            {
+                EditorUtility.SetDirty(data);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
             tab = GUILayout.Toolbar(tab, new string[] { "Overview", "Properties", "Animation", "Raw data" });
             switch (tab)
             {

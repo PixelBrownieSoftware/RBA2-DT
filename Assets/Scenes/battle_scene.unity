@@ -25941,6 +25941,7 @@ MonoBehaviour:
     type: 2}
   continueButton: {fileID: 630467167}
   overworldButton: {fileID: 283886254}
+  mapTrans: {fileID: 11400000, guid: 84775e92d44156c46a85dfd6e009d3c9, type: 2}
 --- !u!1001 &986312882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43280,7 +43281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609086495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 330, y: 300, z: -10}
+  m_LocalPosition: {x: 360, y: 300, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

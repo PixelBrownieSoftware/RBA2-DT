@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
   m_Name: looney_battle
   m_EditorClassIdentifier: 
-  fleeable: 1
+  fleeable: 0
   fixedPlayers: 0
   guestInvolved: 0
-  perishIfDone: 1
   members:
   - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
     levType: 1
@@ -33,12 +32,13 @@ MonoBehaviour:
     maxLevel: 3
     extraSkills: []
     passives: []
-  events: []
   unlockCharacters: []
   branches:
   - {fileID: 11400000, guid: bed4826738019064aa4c08769f0b2aca, type: 2}
   - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}
   - {fileID: 11400000, guid: 82ee284ea79be4d48bf57eeb80c8795a, type: 2}
+  perishBranches:
+  - {fileID: 11400000}
   shopItems:
   - item: {fileID: 11400000, guid: 42051bcfd37f1864d93345d3049f7fa4, type: 2}
     price: 0.5

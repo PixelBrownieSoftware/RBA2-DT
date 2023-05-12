@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -359,15 +360,15 @@ public class s_statusEff
     public s_statusEff()
     {
     }
-    public s_statusEff(S_StatusEffect status, int duration) {
+    public s_statusEff(S_StatusEffect status) {
         this.status = status;
-        this.duration = duration;
+        duration = Random.Range(status.minDuration, status.maxDuration);
     }
-    public s_statusEff(S_StatusEffect status, int duration, int damage)
+    public s_statusEff(S_StatusEffect status, int damage)
     {
         this.damage = damage;
         this.status = status;
-        this.duration = duration;
+        duration = Random.Range(status.minDuration, status.maxDuration);
     }
 
     public S_StatusEffect status;
@@ -602,13 +603,19 @@ public class o_battleCharacter : MonoBehaviour
 
     public void SetStatus(S_StatusEffect statEff, int dmg)
     {
+        bool cancelOut = false;
         if (statusEffects.Find(x => x.status == statEff) == null)
         {
             foreach (var st in statEff.statusReplace) {
                 if(RemoveStatus(st.replace))
-                    statusEffects.Add(new s_statusEff(st.toReplace, Random.Range(st.toReplace.minDuration, st.toReplace.maxDuration), dmg));
+                    statusEffects.Add(new s_statusEff(st.toReplace, dmg));
+                if (st.replace.statusReplace.ToList().Find(x => x.toReplace == st.replace) != null) {
+                    cancelOut = true;
+                    RemoveStatus(st.replace);
+                }
             }
-            statusEffects.Add(new s_statusEff(statEff, Random.Range(statEff.minDuration, statEff.maxDuration), dmg));
+            if(!cancelOut)
+                statusEffects.Add(new s_statusEff(statEff, dmg));
             UpdateStatusEffectBuffs();
         }
     }

@@ -79,6 +79,15 @@ public class S_RPGGlobals : ScriptableObject
             int tempMag = data.intelligence;
             int tempAgi = data.agility;
             int tempLuc = data.luck;
+            newCharacter.health = newCharacter.maxHealth = tempHP;
+            newCharacter.stamina = newCharacter.maxStamina = tempSP;
+            newCharacter.experiencePoints = data.experience;
+            newCharacter.strength = tempStr;
+            newCharacter.vitality = tempVit;
+            newCharacter.dexterity = tempDx;
+            newCharacter.agility = tempAgi;
+            newCharacter.intelligence = tempMag;
+            newCharacter.luck = tempLuc;
             newCharacter.characterDataSource = allCharactersData.characterSetters.Find(x => x.name == data.characterDataSource);
             newCharacter.currentMoves = new List<s_move>();
             newCharacter.passives = new List<S_Passive>();
@@ -100,15 +109,6 @@ public class S_RPGGlobals : ScriptableObject
             {
                 newCharacter.extraPassives.Add(passiveDatabase.GetPassive(pd));
             }
-            newCharacter.health = newCharacter.maxHealth = tempHP;
-            newCharacter.stamina = newCharacter.maxStamina = tempSP;
-            newCharacter.experiencePoints = data.experience;
-            newCharacter.strength = tempStr;
-            newCharacter.vitality = tempVit;
-            newCharacter.dexterity = tempDx;
-            newCharacter.agility = tempAgi;
-            newCharacter.intelligence = tempMag;
-            newCharacter.luck = tempLuc;
             newCharacter.inBattle = data.inBattle;
             foreach (var elem in allElements.elementsList)
             {
