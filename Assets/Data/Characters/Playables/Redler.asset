@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Redler
   m_EditorClassIdentifier: 
   money: 0
-  maxSkillPointsB: 15
+  maxSkillPointsB: 8
   maxHitPointsB: 23
   maxHitPointsGMin: 3
-  maxHitPointsGMax: 6
-  maxSkillPointsGMin: 2
-  maxSkillPointsGMax: 4
+  maxHitPointsGMax: 3
   agilityB: 3
   strengthB: 4
   vitalityB: 3

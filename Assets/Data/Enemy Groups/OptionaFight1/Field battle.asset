@@ -10,31 +10,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
-  m_Name: op_FG_1_1_h
+  m_Name: Field battle
   m_EditorClassIdentifier: 
   fleeable: 1
+  fixedPlayers: 0
+  guestInvolved: 0
+  perishIfDone: 0
   sceneToGoTo: 
   members:
   - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
-    levType: 0
-    level: 3
-    maxLevel: 6
+    levType: 1
+    level: 1
+    maxLevel: 1
     extraSkills: []
     passives: []
     weaponSelections: []
-  - memberDat: {fileID: 11400000, guid: 0ec938a4357528b48be71c7985cec35f, type: 2}
-    levType: 0
-    level: 3
-    maxLevel: 5
-    extraSkills:
-    - {fileID: 11400000, guid: 046974abf3ae3954abe88b2280960a49, type: 2}
-    passives: []
-    weaponSelections: []
   - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
-    levType: 0
-    level: 3
-    maxLevel: 5
-    extraSkills:
-    - {fileID: 11400000, guid: c63ea329416670b4c8f105c835a54106, type: 2}
+    levType: 1
+    level: 1
+    maxLevel: 1
+    extraSkills: []
     passives: []
     weaponSelections: []
+  members_summonable: []
+  members_pre_summon: []
+  members_Player: []
+  member_Guest:
+    memberDat: {fileID: 0}
+    levType: 0
+    level: 0
+    maxLevel: 0
+    extraSkills: []
+    passives: []
+    weaponSelections: []
+  events: []
+  unlockCharacters: []
+  branches: []
+  shopItems: []
+  bg1: {fileID: 0}
+  bg2: {fileID: 0}
+  material1: {fileID: 0}
+  material2: {fileID: 0}

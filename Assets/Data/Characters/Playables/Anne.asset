@@ -17,8 +17,6 @@ MonoBehaviour:
   maxHitPointsB: 18
   maxHitPointsGMin: 3
   maxHitPointsGMax: 5
-  maxSkillPointsGMin: 3
-  maxSkillPointsGMax: 5
   agilityB: 4
   strengthB: 2
   vitalityB: 3
@@ -45,43 +43,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01a0ae9f5f6120d4590d6f290771e30c, type: 2}
   passiveLearn: []
   elementals: []
+  elementDiscounts: []
   characterColour: {r: 0.85310155, g: 0.5518868, b: 1, a: 1}
   characterColour2: {r: 0.8040012, g: 0.34242615, b: 0.8962264, a: 1}
-  aiPages:
-  - ai:
-    - move: {fileID: 11400000, guid: 1320b6891d218294eaea5295ae029e6f, type: 2}
-      turnCounters: 0
-      AIaction: 0
-      conditions: 0
-      element: {fileID: 0}
-      healthPercentage: 0
-      name: 
-      onParty: 0
-      isImportant: 0
-      number1: 0
-      number2: 0
-    - move: {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
-      turnCounters: 0
-      AIaction: 0
-      conditions: 19
-      element: {fileID: 0}
-      healthPercentage: 0.5
-      name: 
-      onParty: 1
-      isImportant: 1
-      number1: 0
-      number2: 0
-    - move: {fileID: 11400000, guid: f2e619f5244c4ed4a846c71f177b0c4c, type: 2}
-      turnCounters: 0
-      AIaction: 0
-      conditions: 0
-      element: {fileID: 0}
-      healthPercentage: 0
-      name: 
-      onParty: 0
-      isImportant: 0
-      number1: 0
-      number2: 0
+  characterAI: []
   anim: {fileID: 9100000, guid: cbb4da77196c51742ad00cece7bae808, type: 2}
   items: []
   firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}

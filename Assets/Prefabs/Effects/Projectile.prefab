@@ -144,6 +144,7 @@ MonoBehaviour:
   anim: {fileID: 9012827220040057580}
   subObj: {fileID: 4683829397918718962}
   soundPlay: {fileID: 11400000, guid: adf0d918638fc224995955e308ed2fa5, type: 2}
+  rb2d: {fileID: 6203398613072036465}
 --- !u!1 &4683829397918718962
 GameObject:
   m_ObjectHideFlags: 0

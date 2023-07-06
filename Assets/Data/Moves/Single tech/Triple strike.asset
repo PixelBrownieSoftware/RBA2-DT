@@ -18,13 +18,16 @@ MonoBehaviour:
   agiReq: 0
   intReq: 0
   lucReq: 0
-  power: 9
+  power: 5
+  elementalSheildAffinity: 0.5
   fixedValue: 0
+  includeDefeated: 0
   consumeTurn: 1
   moveType: 0
   moveTarg: 1
   moveTargScope: 0
   element: {fileID: 11400000, guid: 81504f4499685fc499bcc9e748ff37b0, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
   - name: 
@@ -34,6 +37,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: -3
+    maximumPowerRandomness: 3
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -51,6 +56,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: -6
+    maximumPowerRandomness: 2
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -68,6 +75,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: -5
+    maximumPowerRandomness: 4
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -82,11 +91,4 @@ MonoBehaviour:
   statusInflictChance: []
   cost: 18
   customFunc: 
-  strBuff: 0
-  vitBuff: 0
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
   guardPoints: 0
-  moveRequirements: []

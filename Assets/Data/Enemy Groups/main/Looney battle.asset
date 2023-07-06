@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
-  m_Name: looney_battle
+  m_Name: Looney battle
   m_EditorClassIdentifier: 
   fleeable: 0
   fixedPlayers: 0
@@ -32,7 +32,8 @@ MonoBehaviour:
     maxLevel: 3
     extraSkills: []
     passives: []
-  unlockCharacters: []
+  unlockCharacters:
+  - {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
   branches:
   - {fileID: 11400000, guid: bed4826738019064aa4c08769f0b2aca, type: 2}
   - {fileID: 11400000, guid: 782512ea65a87fb438c250065522dfb9, type: 2}

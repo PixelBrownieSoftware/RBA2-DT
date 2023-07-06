@@ -10,37 +10,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
-  m_Name: main_battle_blueler
+  m_Name: Gang fight
   m_EditorClassIdentifier: 
   fleeable: 1
   fixedPlayers: 0
-  guestInvolved: 1
-  perishIfDone: 1
-  sceneToGoTo: 
+  guestInvolved: 0
   members:
   - memberDat: {fileID: 11400000, guid: 96ed822c9b2791140ac520b584458c08, type: 2}
     levType: 1
+    level: 10
+    maxLevel: 10
+    extraSkills:
+    - {fileID: 11400000, guid: da93aad31180e584898f50a4fa080ea8, type: 2}
+    passives: []
+  members_summonable:
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+    levType: 1
     level: 6
-    maxLevel: 0
+    maxLevel: 6
     extraSkills: []
     passives: []
-    weaponSelections: []
-  members_summonable: []
-  members_pre_summon: []
+  - memberDat: {fileID: 11400000, guid: 0ec938a4357528b48be71c7985cec35f, type: 2}
+    levType: 1
+    level: 6
+    maxLevel: 6
+    extraSkills: []
+    passives: []
+  members_pre_summon:
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+    levType: 1
+    level: 6
+    maxLevel: 6
+    extraSkills: []
+    passives: []
+  - memberDat: {fileID: 11400000, guid: 68930e960aa065c4ab479460675cf5e4, type: 2}
+    levType: 1
+    level: 6
+    maxLevel: 6
+    extraSkills: []
+    passives: []
   members_Player: []
   member_Guest:
     memberDat: {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
     levType: 1
     level: 4
-    maxLevel: 0
+    maxLevel: 4
     extraSkills: []
     passives: []
-    weaponSelections: []
-  events: []
-  unlockCharacters:
-  - {fileID: 11400000, guid: ba9e99366ea8060409f4a9ff998ce5c7, type: 2}
+  unlockCharacters: []
   branches:
   - {fileID: 11400000, guid: bf9967c61284e9c499eb2edd7f5b9453, type: 2}
+  perishBranches: []
   shopItems: []
   bg1: {fileID: 0}
   bg2: {fileID: 0}

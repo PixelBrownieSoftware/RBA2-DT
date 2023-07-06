@@ -159,7 +159,6 @@ public class s_battleEngine : MonoBehaviour
     public s_move guard;
     public s_move passMove;
     public s_move nothingMove;
-    public bool nonChangablePlayers = false;
 
     public CH_Text changeMenu;
     public CH_Func perfomMove;
@@ -352,8 +351,6 @@ public class s_battleEngine : MonoBehaviour
             bg2.sprite = enemyGroup.bg2;
             //mainBG.sprite = s_rpgGlobals.GetInstance().GetComponent<s_rpgGlobals>().BGBattle;
 
-            nonChangablePlayers = enemyGroup.fixedPlayers;
-
             oppositionCharacters = new List<o_battleCharacter>();
 
             {
@@ -417,31 +414,15 @@ public class s_battleEngine : MonoBehaviour
             playerCharacters = new List<o_battleCharacter>();
             {
                 int charIndex = 0;
-                if (nonChangablePlayers)
-                {
-                    List<Vector2> plPos = battlePositionsPlayer[enemyGroup.members_Player.Length - 1];
-                    for (int i = 0; i < enemyGroup.members_Player.Length; i++)
-                    {
-                        o_battleCharacter c = playerSlots[i];
-                        s_enemyGroup.s_groupMember mem = enemyGroup.members_Player[i];
-                        o_battleCharDataN bc = mem.memberDat;
-                        c.transform.position = plPos[i];
-                        if (bc.secondMove != null)
-                            c.secondMove = bc.secondMove;
-                        if (bc.thirdMove != null)
-                            c.thirdMove = bc.thirdMove;
-                        c.animHandler.runtimeAnimatorController = bc.anim;
-                        c.animHandler.Play("idle");
-                        allCharacterReferences.Add(c.referencePoint);
-                        SetStatsPlayer(ref c, mem);
-                        c.render.color = Color.white;
-                        HPGUIMan.SetPartyMember(charIndex, c);
-                        charIndex++;
-                    }
-                }
+                int playablesLeng = 1;
+                if (enemyGroup.tempOnly)
+                    playablesLeng = (partyMembers.battleCharList.Count - 1) + (enemyGroup.members_Player.Length - 1);
                 else
-                {
-                    List<Vector2> plPos = battlePositionsPlayer[partyMembers.battleCharList.Count - 1];
+                    playablesLeng = (enemyGroup.members_Player.Length - 1);
+                playablesLeng = Mathf.Clamp(playablesLeng, 1, 5);
+                List<Vector2> plPos = battlePositionsPlayer[playablesLeng];
+
+                if (!enemyGroup.tempOnly)
                     for (int i = 0; i < partyMembers.battleCharList.Count; i++)
                     {
                         o_battleCharacter c = playerSlots[i];
@@ -464,11 +445,30 @@ public class s_battleEngine : MonoBehaviour
                         {
                             if (c.inBattle)
                             {
-                                HPGUIMan.SetPartyMember(charIndex,c);
+                                HPGUIMan.SetPartyMember(charIndex, c);
                                 charIndex++;
                             }
                         }
                     }
+                for (int i = 0; i < enemyGroup.members_Player.Length; i++)
+                {
+                    if (charIndex == 5)
+                        break;
+                    o_battleCharacter c = playerSlots[i];
+                    s_enemyGroup.s_groupMember mem = enemyGroup.members_Player[i];
+                    o_battleCharDataN bc = mem.memberDat;
+                    c.transform.position = plPos[i];
+                    if (bc.secondMove != null)
+                        c.secondMove = bc.secondMove;
+                    if (bc.thirdMove != null)
+                        c.thirdMove = bc.thirdMove;
+                    c.animHandler.runtimeAnimatorController = bc.anim;
+                    c.animHandler.Play("idle");
+                    allCharacterReferences.Add(c.referencePoint);
+                    SetStatsPlayer(ref c, mem);
+                    c.render.color = Color.white;
+                    HPGUIMan.SetPartyMember(charIndex, c);
+                    charIndex++;
                 }
             }
             hasGuest = enemyGroup.guestInvolved;
@@ -589,6 +589,7 @@ public class s_battleEngine : MonoBehaviour
         c.animHandler.Play("idle");
         c.persistence = false;
         allCharacterReferences.Add(c.referencePoint);
+        StartCoroutine(PlayFadeCharacter(c, Color.clear, Color.white));
         SetStatsOpponent(ref c, mem);
         ReshuffleOpponentPositions();
         c.render.color = Color.white;
@@ -603,6 +604,10 @@ public class s_battleEngine : MonoBehaviour
         for (int i = 0; i < oppositionCharacters.Count; i++)
         {
             oppositionCharacters[i].transform.position = new Vector2((enPos[i].x * -1) + 725f, enPos[i].y);
+            if (oppositionCharacters[i].health <= 0) {
+                continue;
+            }
+            oppositionCharacters[i].render.color = Color.white;
         }
     }
 
@@ -672,9 +677,7 @@ public class s_battleEngine : MonoBehaviour
         charObj.battleCharData = enem;
         {
             int tempHPMin = enem.maxHitPointsGMin;
-            int tempSPMin = enem.maxSkillPointsGMin;
             int tempHPMax = enem.maxHitPointsGMax;
-            int tempSPMax = enem.maxSkillPointsGMax;
 
             int tempStr = enem.strengthB;
             int tempVit = enem.vitalityB;
@@ -687,7 +690,6 @@ public class s_battleEngine : MonoBehaviour
             {
                 //print("Level "  + i + " name: " + enem.name);
                 tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
-                tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
                 //print("HP " + tempHP + " name: " + enem.name);
 
                 if (i % enem.strengthGT == 0)
@@ -757,7 +759,7 @@ public class s_battleEngine : MonoBehaviour
         totalMoves.AddRange(charObj.extraSkills);
         charObj.referencePoint.characterData = rpgManager.SetPartyCharacterStats(charObj);
 
-        charObj.character_AI.ai = GetAIList(totalMoves);
+        charObj.character_AI = GetAIList(totalMoves);
         charObj.referencePoint.characterData.elementals = enem.GetElements;
         if (mem.passives != null)
         {
@@ -886,28 +888,23 @@ public class s_battleEngine : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         };
     }
-    public IEnumerator PlayProjectileAnimation(string objName ,Vector2 start, Vector2 target)
+    public IEnumerator PlayProjectileAnimation(O_ProjectileAnim projectile ,Vector2 start, Vector2 target)
     {
         yield return new WaitForSeconds(Time.deltaTime);
-        hitObjType.Set(objName);
         hitObjPosition.Set(start);
-        projectileSpawner.projectilePool.Get();
-        /*
-        s_moveanim projectile = s_objpooler.GetInstance().SpawnObject<s_moveanim>("Projectile", start);
-        Rigidbody2D projRB2d = projectile.GetComponent<Rigidbody2D>();
-
-        projectile.anim.Play(objName);
-
-        Vector2 dir = (target - start).normalized;
-
-        while (Vector2.Distance(target, projectile.transform.position) > 20)
+        projectile.transform.position = start;
+        if (start != target)
         {
-            projRB2d.velocity = (dir * 215);
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
+            Vector2 dir = (target - start).normalized;
+            Rigidbody2D projRB2d = projectile.rb2d;
+            while (Vector2.Distance(target, projectile.transform.position) > 20)
+            {
+                projRB2d.velocity = (dir * 10);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
 
-        projectile.DespawnObject();
-        */
+            projectile.DespawnObject();
+        }
     }
     public IEnumerator DamageAnimation(int dmg, o_battleCharacter targ) {
 
@@ -1037,20 +1034,29 @@ public class s_battleEngine : MonoBehaviour
                                 case s_actionAnim.MOTION.SELF:
                                     start = user.transform.position;
                                     break;
-                                //If the move was random this sets the target
                                 case s_actionAnim.MOTION.TO_TARGET:
                                     if(targ != null)
                                         start = targ.transform.position;
                                     break;
                             }
-
                             hitObjType.Set(an.name);
-                            projectileSpawner.projectilePool.Get();
-
-                            while (timer < an.time)
+                            O_ProjectileAnim projectile = projectileSpawner.projectilePool.Get();
+                            StartCoroutine(PlayProjectileAnimation(projectile, start, start));
+                            if (an.time > 0)
                             {
-                                timer += Time.deltaTime;
-                                yield return new WaitForSeconds(Time.deltaTime);
+                                while (timer < an.time)
+                                {
+                                    timer += Time.deltaTime;
+                                    yield return new WaitForSeconds(Time.deltaTime);
+                                }
+                            }
+                            else
+                            {
+                                while (timer < projectile.GetAnimHandlerState())
+                                {
+                                    timer += Time.deltaTime;
+                                    yield return new WaitForSeconds(Time.deltaTime);
+                                }
                             }
                         }
                         break;
@@ -1173,41 +1179,14 @@ public class s_battleEngine : MonoBehaviour
                             Vector2 start = new Vector2(0, 0);
                             Vector2 end = new Vector2(0, 0);
 
-                            /*
-                            switch (battleAction.move.moveTarg) {
-                                case s_move.MOVE_TARGET.RANDOM:
-                                    if (isPlayerTurn)
-                                    {
-                                        if (battleAction.move.onParty)
-
-                                            end = playerCharacters[Random.Range(0, playerCharacters.Count)].transform.position;
-                                        else
-                                            end = oppositionCharacters[Random.Range(0, oppositionCharacters.Count)].transform.position;
-                                    }
-                                    break;
-                                case s_move.MOVE_TARGET.SINGLE:
-                                    if (isPlayerTurn)
-                                    {
-                                        targetToBeCalculated = battleAction.target.transform.position;
-                                    }
-                                    break;
-                            }
-                            */
                             switch (an.start)
                             {
                                 case s_actionAnim.MOTION.SELF:
                                     start = user.transform.position;
                                     break;
-                                //If the move was random this sets the target
                                 case s_actionAnim.MOTION.TO_TARGET:
                                     start = targ.transform.position;
                                     break;
-
-                                    /*
-                                case s_actionAnim.MOTION.USER_2:
-                                    start = ReferenceToCharacter(currComb.user2).transform.position;
-                                    break;
-                                    */
                             }
 
                             switch (an.goal)
@@ -1215,12 +1194,13 @@ public class s_battleEngine : MonoBehaviour
                                 case s_actionAnim.MOTION.SELF:
                                     end = user.transform.position;
                                     break;
-                                //If the move was random this sets the target
                                 case s_actionAnim.MOTION.TO_TARGET:
                                     end = targ.transform.position;
                                     break;
                             }
-                            yield return StartCoroutine(PlayProjectileAnimation(an.name, start, end));
+                            hitObjType.Set(an.name);
+                            O_ProjectileAnim projectile = projectileSpawner.projectilePool.Get();
+                            yield return StartCoroutine(PlayProjectileAnimation(projectile, start, end));
                         }
                         break;
                 }
@@ -1274,20 +1254,26 @@ public class s_battleEngine : MonoBehaviour
                     break;
             }
         }
-        if (scope == s_move.MOVE_TARGET.ENEMY_ALLY) {
-            bcs.AddRange(playerCharacters);
-            if (hasGuest)
-                bcs.Add(guest);
-            bcs.AddRange(oppositionCharacters);
-        }
-        if (scope == s_move.MOVE_TARGET.SELF){
-            bcs.Add(currentCharacterObject);
+        switch (scope)
+        {
+            case s_move.MOVE_TARGET.ENEMY_ALLY:
+                bcs.AddRange(playerCharacters);
+                if (hasGuest)
+                    bcs.Add(guest);
+                bcs.AddRange(oppositionCharacters);
+                break;
+            case s_move.MOVE_TARGET.NONE:
+            case s_move.MOVE_TARGET.SELF:
+                bcs.Add(currentCharacterObject);
+                break;
         }
         return bcs;
     }
     public bool DisplayTotalDamage() {
         bool displayDMG = false;
         foreach (var chara in totalDamageOutput) {
+            if (playerCharacters.Contains(ReferenceToCharacter(chara.Key)))
+                continue;
             List<Tuple<DAMAGE_FLAGS, int>> damageFlags = chara.Value.FindAll(x => x.Item1 < DAMAGE_FLAGS.MISS);
             if (damageFlags.Count < 2)
                 continue;
@@ -1529,10 +1515,11 @@ public class s_battleEngine : MonoBehaviour
                 bool fufilled = false;
                 bool notAlways = false;
 
-                List<s_move> alwaysMoves = new List<s_move>();
+                Dictionary<s_move, float> alwaysMoves = new Dictionary<s_move, float>();
 
-                foreach (charAI ai in  currentCharacterObject.character_AI.ai)
+                foreach (charAI ai in  currentCharacterObject.character_AI)
                 {
+                    float inclination = UnityEngine.Random.Range(0.01f, 1.5f);
                     o_battleCharacter potentialTrg = null;
                     s_move move = ai.move;
                     if (move.element.isMagic) {
@@ -1558,6 +1545,7 @@ public class s_battleEngine : MonoBehaviour
                     }
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
                     switch (ai.move.moveTarg) {
+
                         case s_move.MOVE_TARGET.ALLY:
                             if(ai.move.includeDefeated)
                                 targets = allies;
@@ -1575,6 +1563,7 @@ public class s_battleEngine : MonoBehaviour
                             targets.AddRange(baddies);
                             break;
                         case s_move.MOVE_TARGET.SELF:
+                        case s_move.MOVE_TARGET.NONE:
                             targets.Add(currentCharacterObject);
                             break;
                     }
@@ -1599,8 +1588,8 @@ public class s_battleEngine : MonoBehaviour
                             continue;
 
                         case charAI.CONDITIONS.ALWAYS:
-                            potentialTrg = targets[UnityEngine.Random.Range(0, targets.Count)];
-                            alwaysMoves.Add(move);
+                            potentialTrg = targets[UnityEngine.Random.Range(0, targets.Count - 1)];
+                            alwaysMoves.Add(move, (inclination * ai.inclinationPercentage));
                             print(move.name);
                             break;
 
@@ -1687,7 +1676,18 @@ public class s_battleEngine : MonoBehaviour
                 }
                 else if(!notAlways)
                 {
-                    currentMove.SetMove(alwaysMoves[UnityEngine.Random.Range(0, alwaysMoves.Count - 1)]);
+                    s_move selectedMV = null;
+                    {
+                        float bestInc = float.MinValue;
+                        foreach (var mov in alwaysMoves) {
+                            if (mov.Value > bestInc)
+                            {
+                                bestInc = mov.Value;
+                                selectedMV = mov.Key;
+                            }
+                        }
+                    }
+                    currentMove.SetMove(selectedMV);
                     List<o_battleCharacter> targets = new List<o_battleCharacter>();
                     targets = AllTargetsLiving(currentMove.move.moveTarg);
                     targetCharacter.SetCharacter(targets[UnityEngine.Random.Range(0, targets.Count-1)].referencePoint);
@@ -1807,7 +1807,7 @@ public class s_battleEngine : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         currentCharacterObject.SwitchAnimation("idle");
         yield return StartCoroutine(CheckStatusEffectAfterAction());
         FigureFinalFlag();
@@ -2142,18 +2142,29 @@ public class s_battleEngine : MonoBehaviour
             List<S_Element.effect> statusEffsInflictChance = new List<S_Element.effect>();
             statusEffsInflictChance.AddRange(mov.statusInflictChance);
             statusEffsInflictChance.AddRange(mov.element.statusInflict);
+            HashSet<S_StatusEffect> hasInflicted = new HashSet<S_StatusEffect>();
             foreach (var statusInfl in statusEffsInflictChance)
             {
                 float infChance = UnityEngine.Random.Range(0, 1f);
                 if (infChance <= statusInfl.chance)
                 {
+                    if (hasInflicted.Contains(statusInfl.statusEffect))
+                        continue;
                     if (statusInfl.add_remove)
                     {
-                        targ.SetStatus(statusInfl.statusEffect, dmg);
+                        if (!targ.HasStatus(statusInfl.statusEffect))
+                        {
+                            hasInflicted.Add(statusInfl.statusEffect);
+                            targ.SetStatus(statusInfl.statusEffect, dmg);
+                        }
                     }
                     else
                     {
-                        targ.RemoveStatus(statusInfl.statusEffect);
+                        if (targ.HasStatus(statusInfl.statusEffect))
+                        {
+                            hasInflicted.Add(statusInfl.statusEffect);
+                            targ.RemoveStatus(statusInfl.statusEffect);
+                        }
                     }
                 }
             }
@@ -2421,125 +2432,127 @@ public class s_battleEngine : MonoBehaviour
         currentPartyCharactersQueue.Clear();
         battleEngine = BATTLE_ENGINE_STATE.NONE;
         yield return new WaitForSeconds(0.1f);
-        if (!nonChangablePlayers)
+        bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
+        print("All gone?" + allDefeated);
+        for (int ind = 0; ind < playerCharacters.Count; ind++)
         {
-            bool allDefeated = oppositionCharacters.FindAll(x => x.health <= 0).Count == oppositionCharacters.Count;
-            print("All gone?" + allDefeated);
-            for(int ind =0; ind < playerCharacters.Count; ind++)
+            o_battleCharacter c = playerCharacters[ind];
+            if (c.isTemp)
+                continue;
+            if (c == guest)
+                continue;
+            float exp = TotalEXP(c);
+            int initailTotal = (int)(exp * 100);
+            print(initailTotal);
+            //we add the exp and make it so that it checks for a level up
+            for (int i = 0; i < initailTotal; i++)
             {
-                o_battleCharacter c = playerCharacters[ind];
-                if (c == guest)
-                    continue;
-                float exp = TotalEXP(c);
-                int initailTotal = (int)(exp * 100);
-                print(initailTotal);
-                //we add the exp and make it so that it checks for a level up
-                for (int i = 0; i < initailTotal; i++)
+                c.experiencePoints += 0.01f;
+                c.experiencePoints = MathF.Round(c.experiencePoints * 100f) / 100f;
+                print(c.experiencePoints);
+                if (c.experiencePoints >= 1f)
                 {
-                    c.experiencePoints += 0.01f;
-                    c.experiencePoints = MathF.Round(c.experiencePoints * 100f) / 100f;
-                    print(c.experiencePoints);
-                    if (c.experiencePoints >= 1f)
+                    c.level++;
+                    o_battleCharDataN chdat = c.battleCharData;
+                    if (c.level % chdat.strengthGT == 0)
+                        c.strength++;
+                    if (c.level % chdat.vitalityGT == 0)
+                        c.vitality++;
+                    if (c.level % chdat.dexterityGT == 0)
+                        c.dexterity++;
+                    if (c.level % chdat.intelligenceGT == 0)
+                        c.intelligence++;
+                    if (c.level % chdat.agilityGT == 0)
+                        c.agility++;
+                    if (c.level % chdat.luckGT == 0)
+                        c.luck++;
+                    c.experiencePoints = 0;
+                    exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
+                    c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
+                    List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c) && !c.currentMoves.Contains(x));
+                    if (mv2Learn != null)
                     {
-                        c.level++;
-                        o_battleCharDataN chdat = c.battleCharData;
-                        if (c.level % chdat.strengthGT == 0)
-                            c.strength++;
-                        if (c.level % chdat.vitalityGT == 0)
-                            c.vitality++;
-                        if (c.level % chdat.dexterityGT == 0)
-                            c.dexterity++;
-                        if (c.level % chdat.intelligenceGT == 0)
-                            c.intelligence++;
-                        if (c.level % chdat.agilityGT == 0)
-                            c.agility++;
-                        if (c.level % chdat.luckGT == 0)
-                            c.luck++;
-                        c.experiencePoints = 0;
-                        exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
-                        c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
-                        c.maxStamina += UnityEngine.Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1);
-                        List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c) && !c.currentMoves.Contains(x));
-                        if (mv2Learn != null) {
-                            c.currentMoves.AddRange(mv2Learn);
-                        }
-                        print(c.name + "Level up! Lv." + c.level);
+                        c.currentMoves.AddRange(mv2Learn);
                     }
+                    print(c.name + "Level up! Lv." + c.level);
                 }
-                rpgManager.SetPartyMemberStats(c);
             }
+            rpgManager.SetPartyMemberStats(c);
+        }
 
-            List<string> extSkillLearn = new List<string>();
-            changeMenu.RaiseEvent("ExperienceMenu");
-            foreach (o_battleCharacter en in oppositionCharacters)
+        List<string> extSkillLearn = new List<string>();
+        changeMenu.RaiseEvent("ExperienceMenu");
+        foreach (o_battleCharacter en in oppositionCharacters)
+        {
+            if (en.health > 0)
+                continue;
+            //For now it's going to be a random amount... later it'll be "en.battleCharData.money"
+            float moneyGiven = en.battleCharData.money;
+            money._float += moneyGiven;
+            foreach (s_move mv in en.currentMoves)
             {
-                if (en.health > 0)
-                    continue;
-                //For now it's going to be a random amount... later it'll be "en.battleCharData.money"
-                float moneyGiven = en.battleCharData.money;
-                money._float += moneyGiven;
-                foreach (s_move mv in en.currentMoves)
+                if (!extraSkills.ListContains(mv))
+                {
+                    print("Added skill");
+                    extraSkills.AddMove(mv);
+                    extSkillLearn.Add(mv.name);
+                }
+            }
+            if (en.extraSkills != null)
+            {
+                foreach (s_move mv in en.extraSkills)
                 {
                     if (!extraSkills.ListContains(mv))
                     {
                         print("Added skill");
                         extraSkills.AddMove(mv);
                         extSkillLearn.Add(mv.name);
-                    } 
-                }
-                if (en.extraSkills != null)
-                {
-                    foreach (s_move mv in en.extraSkills)
-                    {
-                        if (!extraSkills.ListContains(mv))
-                        {
-                            print("Added skill");
-                            extraSkills.AddMove(mv);
-                            extSkillLearn.Add(mv.name);
-                        }
-                    }
-                }
-                if (en.extraPassives != null)
-                {
-                    foreach (var mv in en.extraPassives)
-                    {
-                        if (!extraPassives.ListContains(mv))
-                        {
-                            extraPassives.AddMove(mv);
-                            extSkillLearn.Add(mv.name);
-                        }
                     }
                 }
             }
-            if (allDefeated && !battleGroupDoneRef.groupList.Contains(enemyGroup)) {
-                //battleGroupDoneRef.AddGroup(enemyGroup);
-                if (enemyGroup.perishBranches != null)
-                {
-                    foreach (var br in enemyGroup.perishBranches)
-                    {
-                        print(br.name);
-                        battleGroupRef.RemoveGroup(br);
-                        battleGroupDoneRef.AddGroup(br);
-                    }
-                }
-                if (enemyGroup.shopItems != null)
-                {
-                    foreach (var item in enemyGroup.shopItems)
-                        shopItems.AddItem(item);
-                }
-                if (enemyGroup.branches != null)
-                {
-                    foreach (var battle in enemyGroup.branches)
-                        battleGroupRef.AddGroup(battle);
-                }
-            }
-            foreach (o_battleCharacter c in playerCharacters)
+            if (en.extraPassives != null)
             {
-                c.extraSkills.Clear();
-                c.extraPassives.Clear();
-                if (c == guest)
-                    continue;
+                foreach (var mv in en.extraPassives)
+                {
+                    if (!extraPassives.ListContains(mv))
+                    {
+                        extraPassives.AddMove(mv);
+                        extSkillLearn.Add(mv.name);
+                    }
+                }
             }
+        }
+        if (allDefeated)
+        {
+            //battleGroupDoneRef.AddGroup(enemyGroup);
+            if (enemyGroup.perishBranches != null)
+            {
+                foreach (var br in enemyGroup.perishBranches)
+                {
+                    print(br.name);
+                    battleGroupRef.RemoveGroup(br);
+                    battleGroupDoneRef.AddGroup(br);
+                }
+            }
+            if (enemyGroup.shopItems != null)
+            {
+                foreach (var item in enemyGroup.shopItems)
+                    shopItems.AddItem(item);
+            }
+            if (enemyGroup.branches != null)
+            {
+                foreach (var battle in enemyGroup.branches)
+                    battleGroupRef.AddGroup(battle);
+            }
+        }
+        foreach (o_battleCharacter c in playerCharacters)
+        {
+            c.extraSkills.Clear();
+            c.extraPassives.Clear();
+            if (c == guest)
+                continue;
+        }
+        if (enemyGroup.unlockCharacters != null)
             if (enemyGroup.unlockCharacters.Length > 0)
             {
                 foreach (o_battleCharDataN c in enemyGroup.unlockCharacters)
@@ -2547,7 +2560,6 @@ public class s_battleEngine : MonoBehaviour
                     rpgManager.AddPartyMember(c, rpgManager.MeanLevel);
                 }
             }
-        }
         rpgManager.SaveData();
         //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
@@ -2563,18 +2575,12 @@ public class s_battleEngine : MonoBehaviour
     }
     public IEnumerator GameOver()
     {
-        //fadeFunc.raise
-        //yield return StartCoroutine(s_triggerhandler.trigSingleton.Fade(Color.black));
         yield return new WaitForSeconds(0.5f);
         isPlayerTurn = true;
-       // players.Clear();
         isEnabled = false;
-        //s_rpgGlobals.rpgGlSingleton.ClearAllThings();
-        //Destroy(rpg_globals.gl.player.gameObject);
         currentPartyCharactersQueue.Clear();
         battleEngine = BATTLE_ENGINE_STATE.NONE;
         mapTrans.RaiseEvent("Overworld");
-        //s_rpgGlobals.rpgGlSingleton.SwitchToOverworld(false);
     }
     public IEnumerator NextTeamTurn()
     {

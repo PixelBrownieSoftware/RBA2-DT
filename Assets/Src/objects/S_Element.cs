@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "Elements", menuName = "Element holder")]
 public class S_Element : ScriptableObject
 {

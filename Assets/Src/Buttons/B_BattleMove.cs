@@ -15,7 +15,7 @@ public class B_BattleMove: O_Button
     }
 
 
-    public void SetBattleButton(s_move move, int cost) {
+    public void SetBattleButton(s_move move, string cost) {
         this.move = move;
         if(text != null)
             text.text = "" + move.name;

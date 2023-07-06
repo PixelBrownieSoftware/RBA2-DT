@@ -160,11 +160,8 @@ public class ed_enemyGroup : Editor
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
             }
-            List<string> optionsMenuList = new List<string>() { "Overview", "Enemies", "Enemy summonables"};
+            List<string> optionsMenuList = new List<string>() { "Overview", "Enemies", "Enemy summonables", "Temp players"};
             
-            if (enGroupData.fixedPlayers) {
-                optionsMenuList.Add("Players");
-            }
             if (enGroupData.guestInvolved)
             {
                 optionsMenuList.Add("Guest");
@@ -176,8 +173,8 @@ public class ed_enemyGroup : Editor
                 case "Overview":
                     {
                         EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("Fixed players? ");
-                        enGroupData.fixedPlayers = EditorGUILayout.Toggle(enGroupData.fixedPlayers);
+                        EditorGUILayout.LabelField("Temp only? ");
+                        enGroupData.tempOnly = EditorGUILayout.Toggle(enGroupData.tempOnly);
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField("Has guest? ");
@@ -212,24 +209,31 @@ public class ed_enemyGroup : Editor
                         EditorGUILayout.LabelField("Branches ");
                         if (GUILayout.Button("+", GUILayout.Width(20f)))
                         {
-                            List<s_enemyGroup> groups = enGroupData.branches.ToList();
+                            List<s_enemyGroup> groups = null;
+                            if (enGroupData.branches != null)
+                                groups = enGroupData.branches.ToList();
+                            else
+                                groups = new List<s_enemyGroup>();
                             groups.Add(new s_enemyGroup());
                             enGroupData.branches = groups.ToArray();
                             Repaint();
                         }
                         EditorGUILayout.EndHorizontal();
-                        for (int i = 0; i < enGroupData.branches.Length; i++)
+                        if (enGroupData.branches != null)
                         {
-                            EditorGUILayout.BeginHorizontal();
-                            enGroupData.branches[i] = EditorGUILayout.ObjectField(enGroupData.branches[i], typeof(s_enemyGroup), false) as s_enemyGroup;
-                            if (GUILayout.Button("-", GUILayout.Width(20f)))
+                            for (int i = 0; i < enGroupData.branches.Length; i++)
                             {
-                                List<s_enemyGroup> groups = enGroupData.branches.ToList();
-                                groups.RemoveAt(i);
-                                enGroupData.branches = groups.ToArray();
-                                Repaint();
+                                EditorGUILayout.BeginHorizontal();
+                                enGroupData.branches[i] = EditorGUILayout.ObjectField(enGroupData.branches[i], typeof(s_enemyGroup), false) as s_enemyGroup;
+                                if (GUILayout.Button("-", GUILayout.Width(20f)))
+                                {
+                                    List<s_enemyGroup> groups = enGroupData.branches.ToList();
+                                    groups.RemoveAt(i);
+                                    enGroupData.branches = groups.ToArray();
+                                    Repaint();
+                                }
+                                EditorGUILayout.EndHorizontal();
                             }
-                            EditorGUILayout.EndHorizontal();
                         }
                         EditorGUILayout.Space();
                         EditorGUILayout.BeginHorizontal();
@@ -387,7 +391,7 @@ public class ed_enemyGroup : Editor
                         EditorGUILayout.Space();
                     }
                     break;
-                case "Players":
+                case "Temp players":
                     {
                         if (tab != lastTab)
                         {
@@ -407,7 +411,7 @@ public class ed_enemyGroup : Editor
 
                         }
                         EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("Enemies", GUILayout.Width(55f));
+                        EditorGUILayout.LabelField("Players", GUILayout.Width(55f));
                         if (GUILayout.Button("+", GUILayout.Width(20f)))
                         {
                             List<s_enemyGroup.s_groupMember> members = enGroupData.members_Player.ToList();

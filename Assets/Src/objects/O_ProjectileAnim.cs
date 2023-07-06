@@ -9,7 +9,7 @@ public class O_ProjectileAnim : MonoBehaviour
     public GameObject subObj;
     public IObjectPool<O_ProjectileAnim> pool;
     public CH_SoundPitch soundPlay;
-
+    public Rigidbody2D rb2d;
     public void DespawnObject()
     {
         if (pool != null)
@@ -18,6 +18,10 @@ public class O_ProjectileAnim : MonoBehaviour
     public void PlaySound(AudioClip cl)
     {
         soundPlay.RaiseEvent(cl, 1);
+    }
+    public float GetAnimHandlerState()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public void StopAnimation()

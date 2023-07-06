@@ -85,6 +85,14 @@ public class ed_move : Editor
                 if(genericCharacterAnims.Length > 0)
                     animationPeice.name = genericCharacterAnims[animationPeice.animation_id];
                 break;
+            case s_actionAnim.ACTION_TYPE.ANIMATION:
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Start", GUILayout.Width(70f));
+                animationPeice.start = (s_actionAnim.MOTION)EditorGUILayout.EnumPopup(animationPeice.start);
+                EditorGUILayout.EndHorizontal();
+                animationPeice.animation_id = EditorGUILayout.Popup("Projectile animations", animationPeice.animation_id, projectileAnims);
+                animationPeice.name = projectileAnims[animationPeice.animation_id];
+                break;
             case s_actionAnim.ACTION_TYPE.PROJECTILE:
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Start", GUILayout.Width(70f));

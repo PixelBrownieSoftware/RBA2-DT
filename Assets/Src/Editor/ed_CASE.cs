@@ -290,9 +290,6 @@ public class ed_CASE : Editor
                         tempHPMax += charaData.maxHitPointsGMax;
                         tempHPMin += charaData.maxHitPointsGMin;
                         
-                        tempSPMax += charaData.maxSkillPointsGMax;
-                        tempSPMin += charaData.maxSkillPointsGMin;
-                        
                         if (i % charaData.strengthGT == 0)
                             tempStr++;
                         if (i % charaData.vitalityGT == 0)
@@ -629,12 +626,7 @@ public class ed_CASE : Editor
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Stamina: ");
-                charaData.maxSkillPointsB = EditorGUILayout.IntSlider(charaData.maxSkillPointsB, 1, 50);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Stamina increase: ");
-                charaData.maxSkillPointsGMin = EditorGUILayout.IntSlider(charaData.maxSkillPointsGMin, 0, 10);
-                charaData.maxSkillPointsGMax = EditorGUILayout.IntSlider(charaData.maxSkillPointsGMax, charaData.maxSkillPointsGMin, 15);
+                charaData.maxSkillPointsB = EditorGUILayout.IntSlider(charaData.maxSkillPointsB, 1, 20);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
@@ -780,18 +772,13 @@ public class ed_CASE : Editor
 
             #region AI
             case 4:
-                if (charaData.aiPages != null)
+                if (charaData.characterAI != null)
                 {
-                    if (charaData.aiPages.Length > 1)
-                        charAIPageNum = EditorGUILayout.IntSlider(charAIPageNum, 0, charaData.aiPages.Length);
-                    else
-                        charAIPageNum = 0;
-                    o_battleCharDataN.ai_page page = charaData.aiPages[charAIPageNum];
-                    if (charaData.aiPages[charAIPageNum].ai.Length <= 0) {
-                        charaData.aiPages[charAIPageNum].ai = GetAIList();
+                    if (charaData.characterAI.Length <= 0) {
+                        charaData.characterAI = GetAIList();
                     }
 
-                    if (aiBoolList == null || aiBoolList.Length != charaData.aiPages[charAIPageNum].ai.Length)
+                    if (aiBoolList == null || aiBoolList.Length != charaData.characterAI.Length)
                     {
                         aiBoolList = new bool[charaData.moveLearn.Count];
                     }
@@ -799,9 +786,9 @@ public class ed_CASE : Editor
                     {
                         int ind = 0;
 
-                        for (int im = 0; im < page.ai.Length; im++)
+                        for (int im = 0; im < charaData.characterAI.Length; im++)
                         {
-                            charAI ai = page.ai[im];
+                            charAI ai = charaData.characterAI[im];
                             EditorGUILayout.BeginHorizontal();
                             aiBoolList[ind] = EditorGUILayout.Toggle(aiBoolList[ind]);
                             EditorGUILayout.EndHorizontal();
@@ -812,6 +799,8 @@ public class ed_CASE : Editor
                                 EditorGUILayout.LabelField("Important");
                                 ai.isImportant = EditorGUILayout.Toggle(ai.isImportant);
                                 ai.conditions = (charAI.CONDITIONS)EditorGUILayout.EnumPopup(ai.conditions);
+                                EditorGUILayout.LabelField("Inclination");
+                                ai.inclinationPercentage = EditorGUILayout.Slider(ai.inclinationPercentage, 0.1f, 1.5f);
                                 switch (ai.conditions)
                                 {
 
@@ -1056,8 +1045,7 @@ public class ed_CASE : Editor
                     */
                 }
                 else {
-                    charaData.aiPages = new o_battleCharDataN.ai_page[1];
-                    charaData.aiPages[0].ai = new charAI[charaData.moveLearn.Count];
+                    charaData.characterAI = new charAI[charaData.moveLearn.Count];
                 }
                 break;
             #endregion

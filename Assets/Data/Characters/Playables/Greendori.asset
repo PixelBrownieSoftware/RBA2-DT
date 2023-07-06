@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Greendori
   m_EditorClassIdentifier: 
   money: 0
-  maxSkillPointsB: 20
+  maxSkillPointsB: 15
   maxHitPointsB: 19
   maxHitPointsGMin: 2
-  maxHitPointsGMax: 3
-  maxSkillPointsGMin: 4
-  maxSkillPointsGMax: 5
+  maxHitPointsGMax: 2
   agilityB: 1
   strengthB: 2
   vitalityB: 3
@@ -31,7 +29,6 @@ MonoBehaviour:
   luckGT: 4
   intelligenceGT: 2
   dexterityGT: 5
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
   turnIcons: 1
@@ -40,6 +37,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e004f0abe01793b428f1e9f535c47678, type: 2}
   - {fileID: 11400000, guid: 8611df83a319228449f18cf5d64ba02a, type: 2}
   - {fileID: 11400000, guid: c56eb97e398912640b97b41642878e38, type: 2}
+  passiveLearn: []
   elementals:
   - element: {fileID: 11400000, guid: d4b24f652d5fddc4a8adc781375323bc, type: 2}
     value: 2

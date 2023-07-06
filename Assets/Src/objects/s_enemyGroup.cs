@@ -44,9 +44,10 @@ public class s_enemyGroup : ScriptableObject
         public int maxLevel;
         public s_move[] extraSkills;
         public S_Passive[] passives;
+        public charAI[] extraSkillsAI;
     }
     public bool fleeable = true;
-    public bool fixedPlayers = false;
+    public bool tempOnly = false;
     public bool guestInvolved = false;
     public s_groupMember[] members;
     public s_groupMember[] members_summonable;

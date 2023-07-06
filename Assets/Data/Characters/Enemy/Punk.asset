@@ -17,8 +17,6 @@ MonoBehaviour:
   maxHitPointsB: 18
   maxHitPointsGMin: 3
   maxHitPointsGMax: 6
-  maxSkillPointsGMin: 4
-  maxSkillPointsGMax: 5
   agilityB: 1
   strengthB: 3
   vitalityB: 2
@@ -31,33 +29,35 @@ MonoBehaviour:
   luckGT: 2
   intelligenceGT: 3
   dexterityGT: 2
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 0}
   turnIcons: 1
   moveLearn:
   - {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
+  passiveLearn: []
   elementals:
   - element: {fileID: 11400000, guid: d4b24f652d5fddc4a8adc781375323bc, type: 2}
     value: 0.5
+  elementDiscounts: []
   characterColour: {r: 0.61166894, g: 0.735849, b: 0.12148449, a: 1}
   characterColour2: {r: 0.41119078, g: 0.6037736, b: 0.17942329, a: 1}
-  aiPages:
-  - ai:
-    - move: {fileID: 11400000, guid: f99543df2c5533f49ac540c5b75b50f0, type: 2}
-      turnCounters: 0
-      AIaction: 0
-      conditions: 0
-      element: {fileID: 0}
-      healthPercentage: 0
-      name: 
-      onParty: 0
-      isImportant: 0
-      number1: 0
-      number2: 0
+  characterAI:
+  - move: {fileID: 0}
+    turnCounters: 0
+    AIaction: 0
+    conditions: 0
+    element: {fileID: 0}
+    healthPercentage: 0
+    inclinationPercentage: 1
+    name: 
+    onParty: 0
+    isImportant: 0
+    number1: 0
+    number2: 0
   anim: {fileID: 9100000, guid: fb4dea88e31fe0f42b42a88e92b89f96, type: 2}
   items: []
-  defaultPhysWeapon: {fileID: 0}
-  defaultRangedWeapon: {fileID: 0}
+  firstMove: {fileID: 0}
+  secondMove: {fileID: 0}
+  thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
   equip_gun: 1

@@ -160,24 +160,28 @@ public class s_RPGSave {
             partySave.Add(mem);
         }
         List<string> groupsCurrentList = new List<string>();
-        foreach (var groupCurrent in currentGroups.groupList)
-        {
-            groupsCurrentList.Add(groupCurrent.name);
+        if (currentGroups.groupList != null) {
+            foreach (var groupCurrent in currentGroups.groupList) {
+                groupsCurrentList.Add(groupCurrent.name);
+            }
         }
         List<string> groupsDoneList = new List<string>();
-        foreach (var groupDone in groupsDone.groupList)
-        {
-            groupsDoneList.Add(groupDone.name);
+        if (groupsDone.groupList != null) {
+            foreach (var groupDone in groupsDone.groupList) {
+                groupsDoneList.Add(groupDone.name);
+            }
         }
         List<string> exMoves = new List<string>();
-        foreach (var exMV in extraMoves.moveListRef)
-        {
-            exMoves.Add(exMV.name);
+        if (extraMoves.moveListRef != null) {
+            foreach (var exMV in extraMoves.moveListRef) {
+                exMoves.Add(exMV.name);
+            }
         }
         List<string> exPassives = new List<string>();
-        foreach (var exPs in extraPassives.passives)
-        {
-            exPassives.Add(exPs.name);
+        if (extraPassives.passives != null) {
+            foreach (var exPs in extraPassives.passives) {
+                exPassives.Add(exPs.name);
+            }
         }
 
         foreach (var enWK in enemyWeaknesses.enemyElementWeaknesses)

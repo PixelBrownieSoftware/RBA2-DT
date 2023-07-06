@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Buckler
   m_EditorClassIdentifier: 
   money: 0
-  maxSkillPointsB: 2
+  maxSkillPointsB: 8
   maxHitPointsB: 17
   maxHitPointsGMin: 5
   maxHitPointsGMax: 5
-  maxSkillPointsGMin: 1
-  maxSkillPointsGMax: 5
   agilityB: 1
   strengthB: 5
   vitalityB: 5

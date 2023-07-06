@@ -115,11 +115,21 @@ public class M_BattleOptions : S_MenuSystem
                     {
                         var button = buttons[i];
                         button.SetButonText(moves[i].name);
+                        string strCost = "";
                         int cost = 0;
                         if (moves[i].element.isMagic)
+                        {
                             cost = moves[i].cost;
+                            strCost = cost + " SP";
+                        }
                         else
-                            cost = s_calculation.DetermineHPCost(moves[i], currentCharacter.characterRef.strengthNet, currentCharacter.characterRef.vitalityNet, currentCharacter.characterRef.maxHealth);
+                        {
+                            cost = s_calculation.DetermineHPCost(moves[i], currentCharacter.characterRef.strengthNet, 
+                                currentCharacter.characterRef.vitalityNet,
+                                currentCharacter.characterRef.maxHealth);
+                            strCost = cost + " HP";
+                        }
+                           
                         bool canUse = true;
                         if (moves[i].element.isMagic)
                             canUse = currentCharacter.characterRef.stamina >= cost;
@@ -129,14 +139,14 @@ public class M_BattleOptions : S_MenuSystem
                         {
                             button.SetButtonColour(Color.grey);
                             button.SetButonTextColour(Color.grey);
-                            button.SetBattleButton(moves[i], moves[i].cost);
+                            button.SetBattleButton(moves[i], strCost);
                             button.move = null;
                         }
                         else
                         {
                             button.SetButtonColour(Color.white);
                             button.SetButonTextColour(Color.white);
-                            button.SetBattleButton(moves[i], moves[i].cost);
+                            button.SetBattleButton(moves[i], strCost);
                         }
                         button.gameObject.SetActive(true);
                     }
@@ -226,7 +236,7 @@ public class M_BattleOptions : S_MenuSystem
                     foreach (var item in items.inventory) {
 
                         var button = buttons[ind];
-                        button.SetBattleButton(item.Key, item.Value);
+                        button.SetBattleButton(item.Key, "" + item.Value);
                         button.SetButonText(item.Key.name);
                         button.gameObject.SetActive(true);
                         ind++;

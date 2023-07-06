@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5774f209b82f4a47a46bdfa88e191a2, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  strength: 1.4
-  vitality: 1.2
-  intelligence: 1
+  strength: 0.7
+  vitality: 0.6
+  intelligence: 0.5
   agility: 0
   dexterity: 0
   luck: 0

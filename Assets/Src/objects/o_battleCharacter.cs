@@ -150,6 +150,7 @@ public class charAI
     public CONDITIONS conditions;
     public S_Element element;
     public float healthPercentage;
+    public float inclinationPercentage = 1;
     public string name;
     public bool onParty;
     public bool isImportant = false;
@@ -397,7 +398,7 @@ public class o_battleCharacter : MonoBehaviour
     public List<s_move> extraSkills;
     public List<S_Passive> passives;
     public List<S_Passive> extraPassives;
-    public o_battleCharDataN.ai_page character_AI;
+    public charAI[] character_AI;
     public int characterPage;
     public s_rpganim animations;
 
@@ -411,6 +412,7 @@ public class o_battleCharacter : MonoBehaviour
     public SpriteRenderer shadow;
 
     public bool persistence = true;
+    public bool isTemp = false;
     public bool inBattle;
 
     public o_weapon physWeapon;
@@ -609,10 +611,13 @@ public class o_battleCharacter : MonoBehaviour
             foreach (var st in statEff.statusReplace) {
                 if(RemoveStatus(st.replace))
                     statusEffects.Add(new s_statusEff(st.toReplace, dmg));
-                if (st.replace.statusReplace.ToList().Find(x => x.toReplace == st.replace) != null) {
-                    cancelOut = true;
-                    RemoveStatus(st.replace);
-                }
+                if (st.replace != null)
+                    if (st.replace.statusReplace != null)
+                        if (st.replace.statusReplace.ToList().Find(x => x.toReplace == st.replace) != null)
+                        {
+                            cancelOut = true;
+                            RemoveStatus(st.replace);
+                        }
             }
             if(!cancelOut)
                 statusEffects.Add(new s_statusEff(statEff, dmg));

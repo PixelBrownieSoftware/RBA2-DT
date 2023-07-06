@@ -197,9 +197,7 @@ public class S_RPGGlobals : ScriptableObject
             int tempSP = data.maxSkillPointsB;
 
             int tempHPMin = data.maxHitPointsGMin;
-            int tempSPMin = data.maxSkillPointsGMin;
             int tempHPMax = data.maxHitPointsGMax;
-            int tempSPMax = data.maxSkillPointsGMax;
 
             int tempStr = data.strengthB;
             int tempVit = data.vitalityB;
@@ -211,7 +209,6 @@ public class S_RPGGlobals : ScriptableObject
             for (int i = 1; i < level; i++)
             {
                 tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
-                tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
 
                 if (data.strengthGT % level == 0)
                     tempStr++;
@@ -349,7 +346,6 @@ public class S_RPGGlobals : ScriptableObject
                 ch.experiencePoints = 0;
                 expPts = expPts * (float)((float)i / (float)initailTotal);
                 ch.maxHealth += Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
-                ch.maxStamina +=Random.Range(chdat.maxSkillPointsGMin, chdat.maxSkillPointsGMax + 1); 
                 List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(ch));
                 if (mv2Learn != null)
                 {

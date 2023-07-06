@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: Blueler
   m_EditorClassIdentifier: 
   money: 0
-  maxSkillPointsB: 14
+  maxSkillPointsB: 6
   maxHitPointsB: 22
   maxHitPointsGMin: 3
-  maxHitPointsGMax: 6
-  maxSkillPointsGMin: 2
-  maxSkillPointsGMax: 3
+  maxHitPointsGMax: 3
   agilityB: 2
   strengthB: 2
   vitalityB: 3
-  luckB: 0
+  luckB: 1
   intelligenceB: 1
   dexterityB: 3
   agilityGT: 2
@@ -31,7 +29,6 @@ MonoBehaviour:
   luckGT: 3
   intelligenceGT: 3
   dexterityGT: 3
-  characterPassive: {fileID: 0}
   battleImage: {fileID: 1381836505166282007, guid: 7d21b2944a8d5364ea023bb87a4e3308,
     type: 3}
   turnIcons: 1
@@ -42,6 +39,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9cffe38418803cf44895ecaf958e529b, type: 2}
   - {fileID: 11400000, guid: 7d93ac692514f384f82c62bb6f2365d6, type: 2}
   - {fileID: 11400000, guid: 4b4282b160628ff4592cecd61d782832, type: 2}
+  passiveLearn: []
   elementals:
   - element: {fileID: 11400000, guid: b033c1bbf082d0442bc3ebdff03d8154, type: 2}
     value: 2
