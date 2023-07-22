@@ -30,13 +30,15 @@ MonoBehaviour:
   elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
-  - name: 
+  - name: attack
     actionType: 7
     teleport: 0
     start: 0
     goal: 0
     offset: {x: 0, y: 0}
-    animation_id: 0
+    animation_id: 1
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -54,6 +56,27 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
+    picture: {fileID: 0}
+    animframes: {fileID: 0}
+    time: 0
+    speed: 0
+    toZoom: 0
+    initialZoom: 0
+    simulteneous: 0
+    targetPos: 0
+    startColour: {r: 0, g: 0, b: 0, a: 0}
+    endColour: {r: 0, g: 0, b: 0, a: 0}
+  - name: 
+    actionType: 5
+    teleport: 0
+    start: 0
+    goal: 0
+    offset: {x: 0, y: 0}
+    animation_id: 0
+    minimumPowerRandomness: -3
+    maximumPowerRandomness: 5
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0

@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74766be3ba5a3943b643ccaee4c18ff, type: 3}
   m_Name: greendori_battle
   m_EditorClassIdentifier: 
-  fleeable: 1
-  fixedPlayers: 0
-  guestInvolved: 1
-  perishIfDone: 0
-  sceneToGoTo: 
+  fleeable: 0
+  tempOnly: 0
+  guestInvolved: 0
   members:
   - memberDat: {fileID: 11400000, guid: 18ec62cac97072b408c0a211001035fe, type: 2}
     levType: 1
@@ -24,36 +22,44 @@ MonoBehaviour:
     maxLevel: 10
     extraSkills: []
     passives: []
-    weaponSelections: []
+    extraSkillsAI: []
   - memberDat: {fileID: 11400000, guid: 544a4062f4d32b144b4b8d97e5996861, type: 2}
     levType: 1
     level: 10
     maxLevel: 10
     extraSkills: []
     passives: []
-    weaponSelections: []
+    extraSkillsAI: []
   - memberDat: {fileID: 11400000, guid: 295c5b5ccc470f248b48e9a7f4ce6ddd, type: 2}
     levType: 1
     level: 10
     maxLevel: 10
     extraSkills: []
     passives: []
-    weaponSelections: []
+    extraSkillsAI: []
   members_summonable: []
   members_pre_summon: []
-  members_Player: []
+  members_Player:
+  - memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
+    levType: 1
+    level: 7
+    maxLevel: 7
+    extraSkills: []
+    passives: []
+    extraSkillsAI: []
   member_Guest:
     memberDat: {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
     levType: 1
     level: 7
-    maxLevel: 0
+    maxLevel: 7
     extraSkills: []
     passives: []
-    weaponSelections: []
-  events: []
-  unlockCharacters: []
+    extraSkillsAI: []
+  unlockCharacters:
+  - {fileID: 11400000, guid: 7f0771a10a97eec43860c8390a2cb0d0, type: 2}
   branches:
   - {fileID: 11400000, guid: a64cb0e89cf8a7145b8c5b32cb7a90bd, type: 2}
+  perishBranches: []
   shopItems: []
   bg1: {fileID: 0}
   bg2: {fileID: 0}

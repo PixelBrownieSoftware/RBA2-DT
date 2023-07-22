@@ -755,6 +755,10 @@ public class s_battleEngine : MonoBehaviour
             }
         }
         List<s_move> totalMoves = new List<s_move>();
+        if (charObj.battleCharData.secondMove)
+            totalMoves.Add(charObj.battleCharData.secondMove);
+        if(charObj.battleCharData.thirdMove)
+            totalMoves.Add(charObj.battleCharData.thirdMove);
         totalMoves.AddRange(charObj.currentMoves);
         totalMoves.AddRange(charObj.extraSkills);
         charObj.referencePoint.characterData = rpgManager.SetPartyCharacterStats(charObj);
@@ -1532,13 +1536,6 @@ public class s_battleEngine : MonoBehaviour
                                 }
                                 break;
                         }
-                        if (currentCharacterObject.stamina < move.cost) {
-                            continue;
-                        }
-                    } else {
-                        if (currentCharacterObject.health <= move.cost) {
-                            continue;
-                        }
                     }
                     if (!currentCharacterObject.GetAllMoves.Contains(move)) {
                         continue;
@@ -1680,7 +1677,19 @@ public class s_battleEngine : MonoBehaviour
                     {
                         float bestInc = float.MinValue;
                         foreach (var mov in alwaysMoves) {
-                            if (mov.Value > bestInc)
+                            float movCost = mov.Value;
+                            float randomVariance = mov.Value *  UnityEngine.Random.Range(0, 1.5f);
+                            if (mov.Key.element.isMagic)
+                                movCost = randomVariance * (((mov.Key.cost / currentCharacter.characterRef.maxStamina) - 1) * -1);
+                            else
+                                movCost = randomVariance * 
+                                    ((((s_calculation.DetermineHPCost(mov.Key, 
+                                    currentCharacter.characterRef.strengthNet,
+                                    currentCharacter.characterRef.vitalityNet,
+                                    currentCharacter.characterRef.maxHealth))
+                                    / currentCharacter.characterRef.maxHealth
+                                    ) - 1) * -1);
+                            if (movCost > bestInc)
                             {
                                 bestInc = mov.Value;
                                 selectedMV = mov.Key;
@@ -1761,13 +1770,16 @@ public class s_battleEngine : MonoBehaviour
                 yield return new WaitForSeconds(Time.deltaTime);
             }
         }
-        if (mov.element.isMagic)
+        if (playersReference.ListContains(user.referencePoint))
         {
-            user.stamina -= mov.cost;
-        }
-        else
-        {
-            user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
+            if (mov.element.isMagic)
+            {
+                user.stamina -= mov.cost;
+            }
+            else
+            {
+                user.health -= s_calculation.DetermineHPCost(mov, user.strengthNet, user.vitalityNet, user.maxHealth);
+            }
         }
         yield return StartCoroutine(DisplayMoveName(mov.name));
 

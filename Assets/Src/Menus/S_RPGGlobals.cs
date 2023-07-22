@@ -99,7 +99,15 @@ public class S_RPGGlobals : ScriptableObject
             List<s_move> mv2Learn = newCharacter.characterDataSource.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
             if (mv2Learn != null)
             {
-                newCharacter.currentMoves.AddRange(mv2Learn);
+                foreach (var mv in mv2Learn)
+                {
+                    bool staminaHPCondMet = mv.element.isMagic ? mv.cost <= newCharacter.maxStamina
+                        : mv.cost < newCharacter.maxHealth;
+                    if (staminaHPCondMet)
+                    {
+                        newCharacter.currentMoves.Add(mv);
+                    }
+                }
             }
             foreach (string pd in data.assignedSkills)
             {
@@ -227,16 +235,6 @@ public class S_RPGGlobals : ScriptableObject
             //newCharacter.elementAffinities = data.elementAffinities;
             newCharacter.currentMoves = new List<s_move>();
 
-            List<S_Passive> passive2Learn = data.passiveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
-            if (passive2Learn != null)
-            {
-                newCharacter.passives.AddRange(passive2Learn);
-            }
-            List<s_move> mv2Learn = data.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
-            if (mv2Learn != null)
-            {
-                newCharacter.currentMoves.AddRange(mv2Learn);
-            }
             newCharacter.health = newCharacter.maxHealth = tempHP;
             newCharacter.stamina = newCharacter.maxStamina = tempSP;
 
@@ -246,6 +244,24 @@ public class S_RPGGlobals : ScriptableObject
             newCharacter.intelligence = tempMag;
             newCharacter.luck = tempLuc;
             newCharacter.agility = tempAgi;
+
+            List<S_Passive> passive2Learn = data.passiveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (passive2Learn != null)
+            {
+                newCharacter.passives.AddRange(passive2Learn);
+            }
+            List<s_move> mv2Learn = data.moveLearn.FindAll(x => x.MeetsRequirements(newCharacter));
+            if (mv2Learn != null)
+            {
+                foreach (var mv in mv2Learn)
+                {
+                    bool staminaHPCondMet = mv.element.isMagic ? mv.cost <= newCharacter.maxStamina 
+                        : mv.cost < newCharacter.maxHealth;
+                    if (staminaHPCondMet) {
+                        newCharacter.currentMoves.Add(mv);
+                    }
+                }
+            }
         }
         newCharacter.characterDataSource = data;
         return newCharacter;
@@ -349,7 +365,15 @@ public class S_RPGGlobals : ScriptableObject
                 List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(ch));
                 if (mv2Learn != null)
                 {
-                    ch.currentMoves.AddRange(mv2Learn);
+                    foreach (var mv in mv2Learn)
+                    {
+                        bool staminaHPCondMet = mv.element.isMagic ? mv.cost <= ch.maxStamina
+                            : mv.cost < ch.maxHealth;
+                        if (staminaHPCondMet)
+                        {
+                            ch.currentMoves.Add(mv);
+                        }
+                    }
                 }
                 if (ch.level == 50)
                 {

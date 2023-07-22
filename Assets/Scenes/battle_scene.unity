@@ -31843,7 +31843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -476.479, y: 415.3455}
+  m_AnchoredPosition: {x: -467, y: 546}
   m_SizeDelta: {x: 414.9615, y: 60.347}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1207618450
@@ -50332,7 +50332,6 @@ MonoBehaviour:
   guard: {fileID: 11400000, guid: 217d8f11c0c896942b05a0437489fc07, type: 2}
   passMove: {fileID: 11400000, guid: 39ed5711de49e3a47925739bf6a68dd1, type: 2}
   nothingMove: {fileID: 11400000, guid: e6714d584708f474f9720cc1c24eaeba, type: 2}
-  nonChangablePlayers: 0
   changeMenu: {fileID: 11400000, guid: a858318d54f8fbb4aaca029f553861cc, type: 2}
   perfomMove: {fileID: 11400000, guid: e3f2c7bc83c9d94448c634fed0807e6c, type: 2}
   retreatOption: {fileID: 11400000, guid: 3bdef13bc1ed2ea478316b7ee5ed0934, type: 2}

@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13985d004c2b78e4984f8196d8f1acc4, type: 3}
   m_Name: Feint
   m_EditorClassIdentifier: 
-  strReq: 2
+  strReq: 5
   dxReq: 3
   vitReq: 0
-  agiReq: 0
+  agiReq: 3
   intReq: 0
   lucReq: 0
-  power: 0
-  healHealth: 0
-  healStamina: 0
-  moveType: 2
+  power: 7
+  elementalSheildAffinity: 0.5
+  fixedValue: 0
+  includeDefeated: 0
+  consumeTurn: 1
+  moveType: 0
   moveTarg: 0
-  element: 0
+  moveTargScope: 0
+  element: {fileID: 11400000, guid: 8dd0b5c09e80f644688ec0f30df3dc25, type: 2}
+  elementsSheild: {fileID: 0}
   preAnimations: []
   animations:
   - name: 
@@ -33,6 +37,8 @@ MonoBehaviour:
     goal: 0
     offset: {x: 0, y: 0}
     animation_id: 0
+    minimumPowerRandomness: 0
+    maximumPowerRandomness: 0
     picture: {fileID: 0}
     animframes: {fileID: 0}
     time: 0
@@ -44,14 +50,10 @@ MonoBehaviour:
     startColour: {r: 0, g: 0, b: 0, a: 0}
     endColour: {r: 0, g: 0, b: 0, a: 0}
   endAnimations: []
-  statusInflictChance: []
-  onParty: 0
-  fixedValue: 0
+  statusInflictChance:
+  - statusEffect: {fileID: 11400000, guid: f5e3030252e594141a1e3e74f8ad9606, type: 2}
+    chance: 1
+    add_remove: 1
   cost: 4
-  strBuff: -1
-  vitBuff: 0
-  dexBuff: 0
-  agiBuff: 0
-  intBuff: 0
-  lucBuff: 0
-  moveRequirements: []
+  customFunc: 
+  guardPoints: 0

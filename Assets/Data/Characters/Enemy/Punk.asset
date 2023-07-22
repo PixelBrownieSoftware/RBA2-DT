@@ -55,8 +55,8 @@ MonoBehaviour:
     number2: 0
   anim: {fileID: 9100000, guid: fb4dea88e31fe0f42b42a88e92b89f96, type: 2}
   items: []
-  firstMove: {fileID: 0}
-  secondMove: {fileID: 0}
+  firstMove: {fileID: 11400000, guid: c43cec380879a2d47b831867822132bc, type: 2}
+  secondMove: {fileID: 11400000, guid: b85cbcc55138ff444a3467c9821ae8d8, type: 2}
   thirdMove: {fileID: 0}
   persistence: 0
   equip_fist: 1
