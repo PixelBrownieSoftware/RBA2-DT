@@ -7,3 +7,5 @@ Although I will update this from time to time, I do encourage people to make the
 
 ## S_battlemanager
 This is the heart of the battle system, it manages the flow of the battle from selecting moves, targets, having the user excecture their moves and the press turn system. It's basically a monolith.
+
+## More soon...
