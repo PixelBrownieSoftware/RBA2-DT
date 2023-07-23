@@ -678,6 +678,8 @@ public class s_battleEngine : MonoBehaviour
         {
             int tempHPMin = enem.maxHitPointsGMin;
             int tempHPMax = enem.maxHitPointsGMax;
+            int tempSPMin = enem.maxStaminaGMin;
+            int tempSPMax = enem.maxStaminaGMax;
 
             int tempStr = enem.strengthB;
             int tempVit = enem.vitalityB;
@@ -690,6 +692,7 @@ public class s_battleEngine : MonoBehaviour
             {
                 //print("Level "  + i + " name: " + enem.name);
                 tempHP += UnityEngine.Random.Range(tempHPMin, tempHPMax);
+                tempSP += UnityEngine.Random.Range(tempSPMin, tempSPMax);
                 //print("HP " + tempHP + " name: " + enem.name);
 
                 if (i % enem.strengthGT == 0)
@@ -2481,6 +2484,7 @@ public class s_battleEngine : MonoBehaviour
                     c.experiencePoints = 0;
                     exp = TotalEXP(c) * (float)((float)i / (float)initailTotal);
                     c.maxHealth += UnityEngine.Random.Range(chdat.maxHitPointsGMin, chdat.maxHitPointsGMax + 1);
+                    c.maxStamina += UnityEngine.Random.Range(chdat.maxStaminaGMin, chdat.maxStaminaGMax + 1);
                     List<s_move> mv2Learn = chdat.moveLearn.FindAll(x => x.MeetsRequirements(c) && !c.currentMoves.Contains(x));
                     if (mv2Learn != null)
                     {

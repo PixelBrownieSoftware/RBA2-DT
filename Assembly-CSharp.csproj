@@ -175,7 +175,7 @@
     <Compile Include="Assets\Src\system\s_HPGuiManager.cs" />
     <Compile Include="Assets\Src\objects\c_player.cs" />
     <Compile Include="Assets\Src\Menus\R_Elements.cs" />
-    <Compile Include="Assets\Src\objects\S_Passive.cs" />
+    <Compile Include="Assets\Src\objects\s_passive.cs" />
     <Compile Include="Assets\Src\Menus\S_ExperienceMenu.cs" />
     <Compile Include="Assets\Src\ChannelListeners\S_BooleanListener.cs" />
     <Compile Include="Assets\Src\Menus\R_CharacterUnlock.cs" />

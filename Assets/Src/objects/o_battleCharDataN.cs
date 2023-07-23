@@ -37,6 +37,8 @@ public class o_battleCharDataN : ScriptableObject
 
     public int maxHitPointsGMin = 1;
     public int maxHitPointsGMax = 1;
+    public int maxStaminaGMin = 1;
+    public int maxStaminaGMax = 1;
 
     public int agilityB = 1;
     public int strengthB = 1;

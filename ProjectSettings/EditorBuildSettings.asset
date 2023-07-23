@@ -6,36 +6,36 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Overworld.unity
-    guid: f16c95c9d1aa8a64cb084c9a13af84dc
-  - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Main Game.unity
-    guid: 5d83d160be7769746a8f82ea585b6e8e
-  - enabled: 1
-    path: Assets/Scenes/Intro.unity
-    guid: 34dd89e0f495d1a41b1f130dcc4362db
-  - enabled: 1
-    path: Assets/Scenes/3d.unity
-    guid: 03e183f6be639b24382b99cd4bfa07ea
+    path: Assets/Scenes/Overworld.unity
+    guid: f16c95c9d1aa8a64cb084c9a13af84dc
   - enabled: 1
     path: Assets/Scenes/battle_scene.unity
     guid: 1260f7814899ad44785b5c7fb058f7b0
   - enabled: 1
+    path: Assets/Scenes/Main Game.unity
+    guid: 5d83d160be7769746a8f82ea585b6e8e
+  - enabled: 0
+    path: Assets/Scenes/Intro.unity
+    guid: 34dd89e0f495d1a41b1f130dcc4362db
+  - enabled: 0
+    path: Assets/Scenes/3d.unity
+    guid: 03e183f6be639b24382b99cd4bfa07ea
+  - enabled: 0
     path: Assets/Scenes/cutscene1.unity
     guid: afd809c68dc32084da607a42cac9e108
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RBA1FinalBoss.unity
     guid: 5637412530960634a81504354a90cd46
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EMPTY_SCENE.unity
     guid: c1cf75604d5d452429cec8154478b504
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/prentice_training.unity
     guid: 02af41e676e25f24b83d3b28543b141b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/afterRBA1FinalBoss.unity
     guid: 4615a7a24c4921d4ebfeb4ce8a52d44d
   m_configObjects:

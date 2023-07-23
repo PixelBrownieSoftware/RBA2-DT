@@ -289,7 +289,9 @@ public class ed_CASE : Editor
                     {
                         tempHPMax += charaData.maxHitPointsGMax;
                         tempHPMin += charaData.maxHitPointsGMin;
-                        
+                        tempSPMax += charaData.maxStaminaGMax;
+                        tempSPMin += charaData.maxStaminaGMin;
+
                         if (i % charaData.strengthGT == 0)
                             tempStr++;
                         if (i % charaData.vitalityGT == 0)
@@ -628,6 +630,12 @@ public class ed_CASE : Editor
                 EditorGUILayout.LabelField("Stamina: ");
                 charaData.maxSkillPointsB = EditorGUILayout.IntSlider(charaData.maxSkillPointsB, 1, 20);
                 EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Stamina increase: ");
+                charaData.maxStaminaGMin = EditorGUILayout.IntSlider(charaData.maxStaminaGMin, 0, 10);
+                charaData.maxStaminaGMax = EditorGUILayout.IntSlider(charaData.maxStaminaGMin, charaData.maxStaminaGMax, 20);
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.Space();
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Base Strength: ");
